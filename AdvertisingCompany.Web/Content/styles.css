@@ -7378,7 +7378,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'BlissPro', Arial, sans-serif;
+  font-family: 'Segoe UI', 'BlissPro', Arial, sans-serif;
 }
 .highcharts-container {
   width: 100% !important;
@@ -7462,9 +7462,7 @@ h6 {
   width: 8em;
   /*padding: 50px 0 0 0;*/
   position: fixed;
-  /*border-right: 1px solid gray;*/
-  /*background-color: #2a2f36;*/
-  /*background: @sidebar-image;*/
+  background-color: #242424;
 }
 .sidebar-wrapper .sidebar {
   position: relative;

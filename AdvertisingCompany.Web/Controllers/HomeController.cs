@@ -10,6 +10,11 @@ namespace AdvertisingCompany.Web.Controllers
     {
         public ActionResult Index()
         {
+            if (User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            }
+
             return View();
         }
     }

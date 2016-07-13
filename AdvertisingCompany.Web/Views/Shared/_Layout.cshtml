@@ -1,45 +1,101 @@
 ﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <title>@ViewBag.Title – приложение ASP.NET</title>
+    <title>@ViewBag.Title</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<body style="display: none" data-bind="visible: true">
+    <div class="wrapper container-fluid">
+        <div class="row">
+            <div class="sidebar-wrapper">
+                <div class="sidebar">
+                    @*<header>
+                            <a class="brand" href="/">ОАО АТМ-Кубань</a>
+                            @Html.Partial("_LoginPartial")
+                        </header>*@
+
+                    @*<div class="user-img">
+                        <a href="#" data-bind="click: navigateToProfile"><img src="@Url.Content("~/Content/images/user2.jpg")" class="circle"></a>
+                    </div>
+
+                    <img class="trenner" src="~/Content/images/trenner.png">
+
+                    <div class="list-group">
+                        <a class="list-group-item task active" href="#" data-bind="click: navigateToTask">
+                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                            <div class="list-group-item-text">Заявки</div>
+                        </a>
+                        <img class="trenner" src="~/Content/images/trenner.png">
+                        <a class="list-group-item employee" href="#" data-bind="click: navigateToEmployee">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <div class="list-group-item-text">Сотрудники</div>
+                        </a>
+                        <img class="trenner" src="~/Content/images/trenner.png">
+                        <a class="list-group-item crashType" href="#" data-bind="click: navigateToCrashType">
+                            <i class="fa fa-gear" aria-hidden="true"></i>
+                            <div class="list-group-item-text">Поломки</div>
+                        </a>
+                        <img class="trenner" src="~/Content/images/trenner.png">
+                        <a class="list-group-item sparePart" href="#" data-bind="click: navigateToSparePart">
+                            <i class="fa fa-archive" aria-hidden="true"></i>
+                            <div class="list-group-item-text">Склад</div>
+                        </a>
+                        <img class="trenner" src="~/Content/images/trenner.png">
+                        <a class="list-group-item report" href="#" data-bind="click: navigateToReport">
+                            <i class="fa fa-pie-chart" aria-hidden="true"></i>
+                            <div class="list-group-item-text">Отчёты</div>
+                        </a>
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            <a class="list-group-item logout" href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();">
+                                <i class="glyphicon glyphicon-off"></i>
+                                <div class="list-group-item-text">Выйти</div>
+                            </a>
+
+                            using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+                                @Html.AntiForgeryToken()
+                            }
+                        }
+                    </div>*@
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            <div class="main-wrapper pull-right">
+                <div class="main">
+                    @*<nav class="nav-top">
+                        <div class="left-part">
+                            <button type="button" class="btn back btn-primary btn-circle" data-bind="click: backlink"><i class="glyphicon glyphicon-repeat mirror"></i></button>
+                            <ol class="breadcrumb">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Library</a></li>
+                                <li class="active">Data</li>
+                            </ol>
+                        </div>
+                        <div class="right-part">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                            <span>Рекламная компания</span>
+                        </div>
+                    </nav>*@
+                    <div class="main-tab">
+                        @RenderBody()
+                        @RenderSection("SPAViews", required: false)
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        @RenderSection("SPAViews", required: false)
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-        </footer>
-    </div>
+    <footer></footer>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/highcharts")
     @RenderSection("Scripts", required: false)
 </body>
 </html>

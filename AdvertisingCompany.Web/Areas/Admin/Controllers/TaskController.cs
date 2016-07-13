@@ -20,6 +20,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         //public ActionResult Index()
         //{
         //    var clients = UnitOfWork.Repository<ApplicationUser>()

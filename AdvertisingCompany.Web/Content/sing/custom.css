@@ -1,0 +1,57 @@
+﻿@font-face {
+    font-family: 'BlissPro';
+    src: url('../../../Fonts/blisspro-regular-webfont.eot');
+    src: url('../../../Fonts/blisspro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../../Fonts/blisspro-regular-webfont.woff') format('woff'),
+         url('../../../Fonts/blisspro-regular-webfont.ttf') format('truetype'),
+         url('../../../Fonts/blisspro-regular-webfont.svg#BlissPro') format('svg');
+    font-style: normal;
+    font-weight: normal;
+}
+
+body, h1, h2, h3, h4, h5, h6 { font-family: 'BlissPro', Arial, sans-serif; }
+
+.wrap { margin-bottom: 36px; }
+
+.float-left { float: left; }
+
+.mrgauto { margin: auto !important; }
+
+.mrgtop12 { margin-top: 12px; }
+
+.mrgtop24 { margin-top: 24px; }
+
+.mrgtop36 { margin-top: 36px; }
+
+.mrgbtm12 { margin-bottom: 12px; }
+
+.mrgbtm24 { margin-bottom: 24px; }
+
+.mrgbtm36 { margin-bottom: 36px; }
+
+.pdleft16 { padding-left: 16px; }
+
+.full-width { width: 100%; }
+
+.float-right { float: right; }
+
+.monospace {
+    font-family: monospace;
+}
+
+.required-legend { 
+    font-size: 1.2em;
+    margin-bottom: 25px;
+}
+
+.glyph {
+    color:red;
+    font-weight: bold;
+}
+
+.back-link {
+  margin-top: 6px;
+  font-size: 2em;
+  float: left;
+  margin-right: 12px;
+}

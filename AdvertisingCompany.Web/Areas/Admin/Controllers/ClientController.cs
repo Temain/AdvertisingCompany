@@ -26,31 +26,31 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Get(int page = 1, int pageSize = 10)
-        {
-            if (Request.IsAjaxRequest())
-            {
-                var clientsList = UnitOfWork.Repository<ApplicationUser>()
-                    .GetQ(orderBy: o => o.OrderByDescending(x => x.CreatedAt));
+        //[HttpPost]
+        //public ActionResult Get(int page = 1, int pageSize = 10)
+        //{
+        //    if (Request.IsAjaxRequest())
+        //    {
+        //        var clientsList = UnitOfWork.Repository<ApplicationUser>()
+        //            .GetQ(orderBy: o => o.OrderByDescending(x => x.CreatedAt));
 
-                var clients = clientsList
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize)
-                    .ToList();
+        //        var clients = clientsList
+        //            .Skip((page - 1) * pageSize)
+        //            .Take(pageSize)
+        //            .ToList();
 
-                var clientsViewModel = Mapper.Map<List<ApplicationUser>, List<ClientViewModel>>(clients);
-                var viewModel = new ListClientsViewModel
-                {
-                    Clients = clientsViewModel,
-                    PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
-                    SelectedPage = page
-                };
+        //        var clientsViewModel = Mapper.Map<List<ApplicationUser>, List<ClientViewModel>>(clients);
+        //        var viewModel = new ListClientsViewModel
+        //        {
+        //            Clients = clientsViewModel,
+        //            PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
+        //            SelectedPage = page
+        //        };
 
-                return Json(viewModel);
-            }
+        //        return Json(viewModel);
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
     }
 }

@@ -32,12 +32,13 @@
 <div class="content-wrap">
     <main id="content" class="content" role="main">
         @RenderBody()
+        @RenderSection("SPAViews", required: false)
     </main>
 </div>
 
 @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/knockout")
+@Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/sing")
 @RenderSection("Scripts", required: false)
 

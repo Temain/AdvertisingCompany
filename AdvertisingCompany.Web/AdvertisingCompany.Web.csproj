@@ -235,6 +235,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AddressController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Admin\Models\AddressViewModel.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
@@ -297,6 +299,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\app\app.datamodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\app.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\common.js" />
+    <Content Include="Areas\Admin\Scripts\app\home.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\task.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\_run.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -349,6 +357,17 @@
     <Content Include="Content\highcharts\themes\grid.js" />
     <Content Include="Content\highcharts\themes\sand-signika.js" />
     <Content Include="Content\highcharts\themes\skies.js" />
+    <Content Include="Content\images\a1.jpg" />
+    <Content Include="Content\images\a2.jpg" />
+    <Content Include="Content\images\a3.jpg" />
+    <Content Include="Content\images\a4.jpg" />
+    <Content Include="Content\images\a5.jpg" />
+    <Content Include="Content\images\a6.jpg" />
+    <Content Include="Content\sing\application-ie9-part2.css" />
+    <Content Include="Content\sing\application.commented.css" />
+    <Content Include="Content\sing\application.css" />
+    <Content Include="Content\sing\application.min.css" />
+    <Content Include="Content\sing\custom.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\styles.css">
       <DependentUpon>styles.less</DependentUpon>
@@ -418,7 +437,7 @@
     <Content Include="Fonts\google\roboto-regular.woff" />
     <Content Include="Areas\Admin\Views\Address\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Address\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\IndexOld2.cshtml" />
     <Content Include="Areas\Admin\Views\Client\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\Report\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -426,7 +445,6 @@
     <Content Include="Areas\Admin\Views\Shared\_Navbar.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Sidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Task\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
@@ -511,10 +529,15 @@
     <Content Include="Content\variables.less" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
+    <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\_Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\_Home.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <Content Include="Content\sing\application.min.css.bak" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -551,15 +574,92 @@
     <Content Include="Scripts\knockout.bindings.js" />
     <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\knockout.validation.min.js" />
+    <Content Include="Scripts\logging.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\pace.js\pace.js" />
+    <Content Include="Scripts\pace.js\pace.min.js" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-barber-shop.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-big-counter.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-bounce.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-center-atom.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-center-circle.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-center-radar.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-center-simple.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-corner-indicator.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-fill-left.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-flash.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-flat-top.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-loading-bar.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-mac-osx.css" />
+    <Content Include="Scripts\pace.js\themes\pace-theme-minimal.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sammy-0.7.5.js" />
     <Content Include="Scripts\sammy-0.7.5.min.js" />
+    <Content Include="Scripts\sing\app.js" />
+    <Content Include="Scripts\sing\calendar.js" />
+    <Content Include="Scripts\sing\charts.js" />
+    <Content Include="Scripts\sing\clientfivelogin.js" />
+    <Content Include="Scripts\sing\clientfiveloginshare.js" />
+    <Content Include="Scripts\sing\clientfourlogin.js" />
+    <Content Include="Scripts\sing\clientone.js" />
+    <Content Include="Scripts\sing\clientonelike.js" />
+    <Content Include="Scripts\sing\clientonelogin.js" />
+    <Content Include="Scripts\sing\client_5_autoShare.js" />
+    <Content Include="Scripts\sing\compose.js" />
+    <Content Include="Scripts\sing\csbuttons.js" />
+    <Content Include="Scripts\sing\custom.js" />
+    <Content Include="Scripts\sing\form-elements.js" />
+    <Content Include="Scripts\sing\form-validation.js" />
+    <Content Include="Scripts\sing\form-wizard.js" />
+    <Content Include="Scripts\sing\gallery.js" />
+    <Content Include="Scripts\sing\gmap.js" />
+    <Content Include="Scripts\sing\grid.js" />
+    <Content Include="Scripts\sing\inbox.js" />
+    <Content Include="Scripts\sing\index.js" />
+    <Content Include="Scripts\sing\invoice.js" />
+    <Content Include="Scripts\sing\maps-vector.js" />
+    <Content Include="Scripts\sing\modified_charts.js" />
+    <Content Include="Scripts\sing\mytest.js" />
+    <Content Include="Scripts\sing\settings.js" />
+    <Content Include="Scripts\sing\share_setting.js" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_close_small.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date1_disabled.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date1_down.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date1_over.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date1_up.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date2_disabled.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date2_down.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date2_over.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date2_up.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date_disabled.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date_down.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date_over.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_date_up.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_del_small.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\btn_info.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\OLDbtn.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\s.gif" />
+    <Content Include="Scripts\sing\spiffyCal\images\spiffycal.cur" />
+    <Content Include="Scripts\sing\spiffyCal\images\spiffycal2.cur" />
+    <Content Include="Scripts\sing\spiffyCal\images\spiffycal3.cur" />
+    <Content Include="Scripts\sing\spiffyCal\spiffyCal_v2_1.css" />
+    <Content Include="Scripts\sing\spiffyCal\spiffyCal_v2_1.js" />
+    <Content Include="Scripts\sing\tables-basic.js" />
+    <Content Include="Scripts\sing\tables-dynamic.js" />
+    <Content Include="Scripts\sing\timeline.js" />
+    <Content Include="Scripts\sing\ui-buttons.js" />
+    <Content Include="Scripts\sing\ui-components.js" />
+    <Content Include="Scripts\sing\ui-list-groups.js" />
+    <Content Include="Scripts\sing\ui-notifications.js" />
+    <Content Include="Scripts\sing\useridentity.js" />
+    <Content Include="Scripts\sing\widgets.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Scripts\widgster\widgster.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Scripts\app\_run.js" />
     <Content Include="Scripts\app\app.datamodel.js" />
@@ -589,7 +689,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -607,9 +706,33 @@
     <Content Include="Scripts\jQuery-slimScroll\slimScroll.jquery.json" />
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Error\BadRequest.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Scripts\sing\spiffyCal\images\Thumbs.db" />
+    <Content Include="Scripts\sing\spiffyCal\spiffyCal_v2_1.js_13092011" />
+    <Content Include="Scripts\widgster\.bower.json" />
+    <Content Include="Scripts\widgster\bower.json" />
+    <Content Include="Scripts\widgster\LICENSE" />
+    <Content Include="Scripts\widgster\README.md" />
+    <Content Include="Scripts\pace.js\.bower.json" />
+    <Content Include="Scripts\pace.js\bower.json" />
+    <Content Include="Scripts\pace.js\LICENSE" />
+    <Content Include="Scripts\pace.js\pace.coffee" />
+    <Content Include="Scripts\pace.js\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\pace.js\themes\black\" />
+    <Folder Include="Scripts\pace.js\themes\blue\" />
+    <Folder Include="Scripts\pace.js\themes\green\" />
+    <Folder Include="Scripts\pace.js\themes\orange\" />
+    <Folder Include="Scripts\pace.js\themes\pink\" />
+    <Folder Include="Scripts\pace.js\themes\purple\" />
+    <Folder Include="Scripts\pace.js\themes\red\" />
+    <Folder Include="Scripts\pace.js\themes\silver\" />
+    <Folder Include="Scripts\pace.js\themes\white\" />
+    <Folder Include="Scripts\pace.js\themes\yellow\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />

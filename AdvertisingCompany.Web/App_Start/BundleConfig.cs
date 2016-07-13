@@ -43,6 +43,13 @@
                 ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl)
                 .Include("~/Content/font-awesome.css"));
 
+            bundles.Add(new StyleBundle("~/Content/sing")
+                .Include("~/Content/sing/application.css")
+                .Include("~/Content/sing/custom.css"));
+
+            bundles.Add(new StyleBundle("~/Content/sing-ie9")
+                .Include("~/Content/sing/application-ie9-part2.css"));
+
             bundles.Add(new StyleBundle("~/Content/datepicker")
                 .Include("~/Content/bootstrap-datetimepicker.css"));
 
@@ -108,11 +115,20 @@
 
             Bundle appBundle = new ScriptBundle("~/bundles/app")
                 .Include("~/Scripts/sammy-{version}.js")
+                .Include("~/Scripts/app/common.js")
                 .Include("~/Scripts/app/app.datamodel.js")
                 .Include("~/Scripts/app/app.viewmodel.js")
-                .Include("~/Scripts/knockout.bindings.js")
                 .Include("~/Scripts/app/_run.js");
             bundles.Add(appBundle);
+
+            Bundle appAdminBundle = new ScriptBundle("~/bundles/app-admin")
+                .Include("~/Scripts/sammy-{version}.js")
+                .Include("~/Areas/Admin/Scripts/app/common.js")
+                .Include("~/Areas/Admin/Scripts/app/app.datamodel.js")
+                .Include("~/Areas/Admin/Scripts/app/app.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/home.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/_run.js");
+            bundles.Add(appAdminBundle);
 
             Bundle knockoutBundle = new ScriptBundle("~/bundles/knockout")
                 .Include("~/Scripts/knockout-{version}.js")
@@ -120,6 +136,21 @@
                 .Include("~/Scripts/knockout.validation.js")
                 .Include("~/Scripts/knockout.bindings.js");
             bundles.Add(knockoutBundle);
+
+            Bundle singBundle = new ScriptBundle("~/bundles/sing")
+                .Include("~/Scripts/bootstrap/transition.js")
+                .Include("~/Scripts/bootstrap/collapse.js")
+                .Include("~/Scripts/bootstrap/button.js")
+                .Include("~/Scripts/bootstrap/tooltip.js")
+                .Include("~/Scripts/bootstrap/alert.js")
+                .Include("~/Scripts/jQuery-slimScroll/jquery.slimscroll.js")
+                .Include("~/Scripts/widgster/widgster.js")
+                //.Include("~/Scripts/pace.js/pace.min.js")
+                .Include("~/Scripts/sing/settings.js")
+                .Include("~/Scripts/sing/app.js")
+                .Include("~/Scripts/sing/index.js")
+                .Include("~/Scripts/sing/custom.js");
+            bundles.Add(singBundle);
 
             Bundle datepickerBundle = new ScriptBundle("~/bundles/datepicker")
                 .Include("~/Scripts/moment-with-locales.min.js")
@@ -145,7 +176,8 @@
             // copy of the script instead.
             Bundle failoverCoreBundle = new ScriptBundle("~/bundles/site")
                 .Include("~/Scripts/fallback/styles.js")
-                .Include("~/Scripts/fallback/scripts.js");
+                .Include("~/Scripts/fallback/scripts.js")
+                .Include("~/Scripts/logging.js");
             bundles.Add(failoverCoreBundle);
         }
     }
