@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 
 namespace AdvertisingCompany.Web.Areas.Admin
 {
@@ -12,10 +13,18 @@ namespace AdvertisingCompany.Web.Areas.Admin
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
+            context.Routes.AppendTrailingSlash = true;
+
+            context.Routes.MapHttpRoute(
+                "Admin_Api",
+                "Admin/api/{controller}/{id}",
+                new { controller = "Home", id = RouteParameter.Optional }
+            );
+
             context.MapRoute(
-                "Admin_default",
+                "Admin_Default",
                 "Admin/{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );

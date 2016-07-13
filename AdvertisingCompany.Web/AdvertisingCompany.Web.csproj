@@ -223,6 +223,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NLogConfig.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AddressController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AnalyticsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
@@ -299,10 +301,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\app\client.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\analytics.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.datamodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\common.js" />
-    <Content Include="Areas\Admin\Scripts\app\home.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\task.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\_run.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -532,7 +535,7 @@
     <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\_Home.cshtml" />
+    <Content Include="Areas\Admin\Views\Analytics\_Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

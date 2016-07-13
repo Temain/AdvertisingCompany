@@ -54,11 +54,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle dropdown-toggle-notifications" id="notifications-dropdown-toggle" data-toggle="dropdown">
-                        <span class="thumb-sm avatar pull-left">
-                            <img class="img-circle" src="@Url.Content("~/Content/Images/a5.jpg")" alt="...">
+                        @*<span class="thumb-sm avatar pull-left">
+                            <img class="img-circle" src="@Url.Content("~/Content/Images/a5.jpg")" alt="...">                      
                         </span>
                         &nbsp;
-                        @ViewBag.UserName &nbsp;
+                        @ViewBag.UserName &nbsp;*@
                         <span class="circle bg-warning fw-bold">
                             13
                         </span>
@@ -101,7 +101,8 @@
                             <div id="notifications-list" class="list-group thin-scroll">
                                 <div class="list-group-item">
                                     <span class="thumb-sm pull-left mr clearfix">
-                                        <img class="img-circle" src="@Url.Content("~/Content/Images/a3.jpg")" alt="...">
+                                        @*<img class="img-circle" src="@Url.Content("~/Content/Images/a3.jpg")" alt="...">*@
+                                        <i class="glyphicon glyphicon-upload fa-lg"></i>
                                     </span>
                                     <p class="no-margin overflow-hidden">
                                         1 new user just signed up! Check out
@@ -206,14 +207,23 @@
                         <i class="fa fa-cog fa-lg"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> &nbsp; My Account</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Calendar</a></li>
-                        <li><a href="#">Inbox &nbsp;&nbsp;<span class="badge bg-danger animated bounceIn">9</span></a></li>
-                        <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out"></i> &nbsp; Log Out</a></li>
-                    </ul>
+                    <li><a href="#"><i class="glyphicon glyphicon-user"></i> &nbsp; My Account</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Calendar</a></li>
+                    <li><a href="#">Inbox &nbsp;&nbsp;<span class="badge bg-danger animated bounceIn">9</span></a></li>
+                    <li class="divider"></li>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li><a href="javascript:sessionStorage.removeItem('accessToken');$('#logoutForm').submit();"><i class="fa fa-sign-out"></i> &nbsp; Log Out</a></li>
+                    }
+                </ul>
                 </li>
+
+                @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+                }
+
                 @*<li>
                     <a href="#" data-toggle="chat-sidebar">
                         <i class="fa fa-globe fa-lg"></i>

@@ -4,7 +4,7 @@ using NLog.Config;
 using NLog.Targets;
 using NLog.Targets.Wrappers;
 
-namespace SaleOfDetails.Web
+namespace AdvertisingCompany.Web
 {
     public class NLogConfig
     {

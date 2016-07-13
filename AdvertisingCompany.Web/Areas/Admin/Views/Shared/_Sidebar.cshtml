@@ -2,7 +2,7 @@
     <!-- need this .js class to initiate slimscroll -->
     <div class="js-sidebar-content">
         <header class="logo hidden-xs">
-            <a href="index.html">sing</a>
+            <a href="#">sing</a>
         </header>
         <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
              looks good, so adding it and enhancing with notifications -->
@@ -22,49 +22,47 @@
             </a>
             <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
         </div>
-        <!-- main notification links are placed inside of .sidebar-nav -->
         <ul class="sidebar-nav">
             <li class="active">
-                <!-- an example of nested submenu. basic bootstrap collapse component -->
-                <a href="#sidebar-dashboard" data-toggle="collapse" data-parent="#sidebar">
+                <a href="#sidebar-management" data-toggle="collapse" data-parent="#sidebar">
                     <span class="icon">
                         <i class="fa fa-desktop"></i>
                     </span>
-                    Компания
+                    Управление
                     <i class="toggle fa fa-angle-down"></i>
                 </a>
-                <ul id="sidebar-dashboard" class="collapse in">
-                    <li class="active"><a href="@Url.Action("Index", "Client")">Клиенты</a></li>
-                    <li><a href="@Url.Action("Index", "Task")">Задания</a></li>
-                    <li><a href="@Url.Action("Index", "Address")">Объекты</a></li>
+                <ul id="sidebar-management" class="collapse in">
+                    <li class="active"><a href="#" data-bind="click: navigateToClient">Клиенты</a></li>
+                    <li><a href="#">Рекламные кампании</a></li>
+                    <li><a href="#">Рекламные поверхности</a></li>
                 </ul>
             </li>
             <li>
-                <a href="inbox.html">
+                <a href="#sidebar-dictionary" data-toggle="collapse" data-parent="#sidebar">
                     <span class="icon">
-                        <i class="fa fa-envelope"></i>
+                        <i class="fa fa-book"></i>
                     </span>
-                    Почта
-                    <span class="label label-danger">
-                        9
-                    </span>
+                    Справочники
+                    <i class="toggle fa fa-angle-down"></i>
                 </a>
+                <ul id="sidebar-dictionary" class="collapse in">                  
+                    <li><a href="#">Виды деятельности</a></li>
+                </ul>
             </li>
             <li>
-                <a href="charts.html">
+                <a href="#" data-bind="click: navigateToAnalytics">
                     <span class="icon">
                         <i class="glyphicon glyphicon-stats"></i>
                     </span>
                     Аналитика
                 </a>
             </li>
-        </ul>       
-        <h5 class="sidebar-nav-title">Метки <a class="action-link" href="#"><i class="glyphicon glyphicon-plus"></i></a></h5>
-        <!-- some styled links in sidebar. ready to use as links to email folders, projects, groups, etc -->
+        </ul>
+
+        <h5 class="sidebar-nav-title">Метки <a class="action-link" href="#"><i class="glyphicon glyphicon-plus"></i></a></h5>       
         <ul class="sidebar-labels">
             <li>
                 <a href="#">
-                    <!-- yep, .circle again -->
                     <i class="fa fa-circle text-warning mr-xs"></i>
                     <span class="label-name">My Recent</span>
                 </a>

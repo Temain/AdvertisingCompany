@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AdvertisingCompany.Web.Controllers;
 using NLog;
+using SaleOfDetails.Web;
 
 namespace AdvertisingCompany.Web
 {
@@ -20,6 +21,8 @@ namespace AdvertisingCompany.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            NLogConfig.Configure();
+            AutoMapperConfig.Configure();
         }
 
         // Обработка HTTP исключений

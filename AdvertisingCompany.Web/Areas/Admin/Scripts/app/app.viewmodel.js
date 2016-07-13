@@ -52,6 +52,10 @@
                 }
             }
 
+            if (self.view() !== viewItem) {
+                return null;
+            }
+
             return self.Views[options.name];
         });
 
@@ -67,7 +71,32 @@
         self["navigateTo" + options.name] = navigator;
     };
 
+    //self.markLinkAsActive = function (liClass) {
+    //    $('.sidebar .list-group-item').removeClass('active');
+    //    $('.sidebar .list-group-item.' + liClass).addClass('active');
+    //};
+
+    //self.breadcrumb = function (links) {
+    //    $('.nav-top .breadcrumb').html('');
+    //    var content = "";
+
+    //    $.each(links, function (index, link) {
+    //        var li = "<li><a href='#'>" + link + "</a></li>";
+
+    //        if (links[links.length - 1] == link) {
+    //            li = "<li class='active'>" + link + "</li>";
+    //        }
+
+    //        $('.nav-top .breadcrumb').append(li);
+    //    });
+    //};
+
+    self.backlink = function () {
+        window.location.hash = app.returnUrl;
+    }
+
     self.initialize = function () {
+        // app.returnUrl = '#task';
         Sammy().run();
     }
 }

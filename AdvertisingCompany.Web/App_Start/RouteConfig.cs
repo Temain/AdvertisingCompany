@@ -13,6 +13,10 @@ namespace AdvertisingCompany.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.LowercaseUrls = true;
+
+            // routes.AppendTrailingSlash = true;
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

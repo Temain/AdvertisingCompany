@@ -52,6 +52,10 @@
                 }
             }
 
+            if (self.view() !== viewItem) {
+                return null;
+            }
+
             return self.Views[options.name];
         });
 
