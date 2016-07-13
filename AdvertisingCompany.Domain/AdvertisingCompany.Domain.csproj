@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D9CE2C02-EAE4-42B8-8137-91F80B4D5D12}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AdvertisingCompany.Domain</RootNamespace>
+    <AssemblyName>AdvertisingCompany.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\ApplicationDbContext.cs" />
+    <Compile Include="DataAccess\Interfaces\IGenericRepository.cs" />
+    <Compile Include="DataAccess\Interfaces\IExtendedRepository.cs" />
+    <Compile Include="DataAccess\Interfaces\IUnitOfWork.cs" />
+    <Compile Include="DataAccess\Repositories\GenericRepository.cs" />
+    <Compile Include="DataAccess\Repositories\ExtendedRepository.cs" />
+    <Compile Include="DataAccess\UnitOfWork.cs" />
+    <Compile Include="Migrations\201607130716566_Init.cs" />
+    <Compile Include="Migrations\201607130716566_Init.Designer.cs">
+      <DependentUpon>201607130716566_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607130800342_FixRelationsAndMaxLength.cs" />
+    <Compile Include="Migrations\201607130800342_FixRelationsAndMaxLength.Designer.cs">
+      <DependentUpon>201607130800342_FixRelationsAndMaxLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607130814013_AddChangeDateColumnsToTables.cs" />
+    <Compile Include="Migrations\201607130814013_AddChangeDateColumnsToTables.Designer.cs">
+      <DependentUpon>201607130814013_AddChangeDateColumnsToTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607130824121_AddAreaKladrCodeFieldToAreaTable.cs" />
+    <Compile Include="Migrations\201607130824121_AddAreaKladrCodeFieldToAreaTable.Designer.cs">
+      <DependentUpon>201607130824121_AddAreaKladrCodeFieldToAreaTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ActivityType.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
+    <Compile Include="Models\Area.cs" />
+    <Compile Include="Models\Campaign.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\ClientStatus.cs" />
+    <Compile Include="Models\LogEntry.cs" />
+    <Compile Include="Models\Microdistrict.cs" />
+    <Compile Include="Models\PaymentOrder.cs" />
+    <Compile Include="Models\PaymentStatus.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\PlacementFormat.cs" />
+    <Compile Include="Models\AddressReport.cs" />
+    <Compile Include="Models\Street.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201607130716566_Init.resx">
+      <DependentUpon>201607130716566_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607130800342_FixRelationsAndMaxLength.resx">
+      <DependentUpon>201607130800342_FixRelationsAndMaxLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607130814013_AddChangeDateColumnsToTables.resx">
+      <DependentUpon>201607130814013_AddChangeDateColumnsToTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607130824121_AddAreaKladrCodeFieldToAreaTable.resx">
+      <DependentUpon>201607130824121_AddAreaKladrCodeFieldToAreaTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,107 @@
+﻿<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo hidden-xs">
+            <a href="index.html">sing</a>
+        </header>
+        <!-- seems like lots of recent admin template have this feature of user info in the sidebar.
+             looks good, so adding it and enhancing with notifications -->
+        <div class="sidebar-status visible-xs">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="thumb-sm avatar pull-right">
+                    <img class="img-circle" src="@Url.Content("~/Content/Images/a5.jpg")" alt="...">
+                </span>
+                <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
+                     should be used with bg-* and text-* classes for colors -->
+                <span class="circle bg-warning fw-bold text-gray-dark">
+                    13
+                </span>
+                &nbsp;
+                Philip <strong>Smith</strong>
+                <b class="caret"></b>
+            </a>
+            <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
+        </div>
+        <!-- main notification links are placed inside of .sidebar-nav -->
+        <ul class="sidebar-nav">
+            <li class="active">
+                <!-- an example of nested submenu. basic bootstrap collapse component -->
+                <a href="#sidebar-dashboard" data-toggle="collapse" data-parent="#sidebar">
+                    <span class="icon">
+                        <i class="fa fa-desktop"></i>
+                    </span>
+                    Компания
+                    <i class="toggle fa fa-angle-down"></i>
+                </a>
+                <ul id="sidebar-dashboard" class="collapse in">
+                    <li class="active"><a href="@Url.Action("Index", "Client")">Клиенты</a></li>
+                    <li><a href="@Url.Action("Index", "Task")">Задания</a></li>
+                    <li><a href="@Url.Action("Index", "Address")">Объекты</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="inbox.html">
+                    <span class="icon">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                    Почта
+                    <span class="label label-danger">
+                        9
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="charts.html">
+                    <span class="icon">
+                        <i class="glyphicon glyphicon-stats"></i>
+                    </span>
+                    Аналитика
+                </a>
+            </li>
+        </ul>       
+        <h5 class="sidebar-nav-title">Метки <a class="action-link" href="#"><i class="glyphicon glyphicon-plus"></i></a></h5>
+        <!-- some styled links in sidebar. ready to use as links to email folders, projects, groups, etc -->
+        <ul class="sidebar-labels">
+            <li>
+                <a href="#">
+                    <!-- yep, .circle again -->
+                    <i class="fa fa-circle text-warning mr-xs"></i>
+                    <span class="label-name">My Recent</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-circle text-gray mr-xs"></i>
+                    <span class="label-name">Starred</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-circle text-danger mr-xs"></i>
+                    <span class="label-name">Background</span>
+                </a>
+            </li>
+        </ul>
+
+        @*<h5 class="sidebar-nav-title">Projects</h5>*@
+        <!-- A place for sidebar notifications & alerts -->
+        @*<div class="sidebar-alerts">
+            <div class="alert fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
+                <span class="text-white fw-semi-bold">Sales Report</span> <br>
+                <div class="progress progress-xs mt-xs mb-0">
+                    <div class="progress-bar progress-bar-gray-light" style="width: 16%"></div>
+                </div>
+                <small>Calculating x-axis bias... 65%</small>
+            </div>
+            <div class="alert fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-hidden="true">&times;</a>
+                <span class="text-white fw-semi-bold">Personal Responsibility</span> <br>
+                <div class="progress progress-xs mt-xs mb-0">
+                    <div class="progress-bar progress-bar-danger" style="width: 23%"></div>
+                </div>
+                <small>Provide required notes</small>
+            </div>
+        </div>*@
+    </div>
+</nav>

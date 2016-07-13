@@ -1,0 +1,86 @@
+﻿@model IEnumerable<AdvertisingCompany.Web.Areas.Admin.Models.ReportViewModel>
+@{
+    ViewBag.Title = "Администрирование | Отчеты";
+}
+
+
+@*<div class="page-header">
+    <a href="@Url.Action("Index", "Administration")">
+        <span class="glyphicon glyphicon-circle-arrow-left back-link"></span>
+    </a>
+    <h1>
+        Отчеты <small>@ViewBag.Address</small>
+    </h1>
+</div>*@
+
+<a href="@Url.Action("Index", "Address", new { area = "Admin" })">
+    <span class="glyphicon glyphicon-circle-arrow-left back-link"></span>
+</a>
+
+<h2>Отчеты</h2>
+<h4>@ViewBag.Address</h4>
+<hr />
+
+@if (@TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible mrgtop12" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @TempData["Message"]
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-3 mrgbtm24">
+        <a href="@Url.Action("Create", "Report")" class="btn btn-default full-width" data-bind="tooltip: { title: 'Добавить отчёт', placement: 'top', trigger: 'hover' }">
+            <span class="glyphicon glyphicon-plus action-icon-font"></span>
+            Добавить отчёт
+        </a>
+    </div>
+</div>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-hover table-condensed">
+            <thead>
+            <tr>
+                @*<th class="text-center">№</th>*@
+                <th class="text-center">Дата отчёта</th>
+                <th class="text-center">Примечание</th>
+                <th class="text-center">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var report in Model)
+            {
+                <tr>
+                    <td class="text-center">@report.ReportDate</td>
+                    <td class="text-center">@report.Comment</td>
+                    <td class="text-center">
+                        <a href="#" class="btn btn-link action-link" data-toggle="tooltip" data-placement="top" title="Просмотреть фото">
+                            <span class="glyphicon glyphicon-picture text-success icon"></span>
+                        </a>
+                        <a href="#" class="btn btn-link action-link" data-toggle="tooltip" data-placement="top" title="Удалить отчёт">
+                            <span class="glyphicon glyphicon-remove text-danger icon"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info alert-dismissible mrgtop12" role="alert">
+        Для данного рекламного объекта ещё не было добавлено ни одного отчета.  
+    </div>
+}
+
+@section Scripts {
+    <script>       
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}
