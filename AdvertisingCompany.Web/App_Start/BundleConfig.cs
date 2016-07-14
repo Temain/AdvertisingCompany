@@ -55,6 +55,9 @@
 
             bundles.Add(new StyleBundle("~/Content/select")
                 .Include("~/Content/bootstrap-select.css"));
+
+            bundles.Add(new StyleBundle("~/Content/datatables")
+                .Include("~/Content/datatables/jquery.dataTables.css"));
         }
 
         /// <summary>
@@ -172,6 +175,11 @@
                 .Include("~/Scripts/highcharts/modules/data.js")
                 .Include("~/Scripts/highcharts/modules/exporting.js");
             bundles.Add(highchartsBundle);
+
+            Bundle datatableBundle = new ScriptBundle("~/bundles/datatables")
+                .Include("~/Scripts/datatables/jquery.dataTables.js")
+                .Include("~/Scripts/datatables/tables-dynamic.js");
+            bundles.Add(datatableBundle);
 
             // Script bundle for the site. The fall-back scripts are for when a CDN fails, in this case we load a local
             // copy of the script instead.

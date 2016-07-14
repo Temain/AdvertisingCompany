@@ -9,7 +9,7 @@
     font-weight: normal;
 }
 
-body, h1, h2, h3, h4, h5, h6 { font-family: 'BlissPro', Arial, sans-serif; }
+body, h1, h2, h3, h4, h5, h6 { font-family: /*'Segoe UI',*/ 'BlissPro', Arial, sans-serif; }
 
 .wrap { margin-bottom: 36px; }
 
@@ -54,4 +54,15 @@ body, h1, h2, h3, h4, h5, h6 { font-family: 'BlissPro', Arial, sans-serif; }
   font-size: 2em;
   float: left;
   margin-right: 12px;
+}
+
+.sidebar-avatar {
+    margin-top: 3em;
+    margin-bottom: 2em;
+    text-align: center;
+}
+
+.avatar-lg {
+    width: 6em;
+    height: 6em;
 }

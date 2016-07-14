@@ -73,10 +73,10 @@ namespace AdvertisingCompany.Web.Controllers
             {
                 UserProfile = UserManager.FindById(userId);
                 ViewBag.UserProfile = UserProfile;
-                //ViewBag.UserName = UserProfile.Person.ShortName;
+                ViewBag.UserName = UserProfile.UserName;
 
                 var roles = UserManager.GetRoles(userId);
-                var currentRole = roles.LastOrDefault(r => r != "Admin") ?? "Admin";
+                var currentRole = roles.LastOrDefault(r => r != "Administrator") ?? "Administrator";
                 UserRole = RoleManager.FindByName(currentRole);
                 ViewBag.RoleName = UserRole.FullName ?? "";
             }           

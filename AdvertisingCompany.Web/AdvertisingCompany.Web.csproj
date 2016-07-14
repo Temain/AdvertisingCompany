@@ -318,6 +318,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datatables\jquery.dataTables.css" />
+    <Content Include="Content\datatables\jquery.dataTables.min.css" />
+    <Content Include="Content\datatables\jquery.dataTables_themeroller.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\highcharts\adapters\standalone-framework.js" />
@@ -360,12 +363,26 @@
     <Content Include="Content\highcharts\themes\grid.js" />
     <Content Include="Content\highcharts\themes\sand-signika.js" />
     <Content Include="Content\highcharts\themes\skies.js" />
-    <Content Include="Content\images\a1.jpg" />
-    <Content Include="Content\images\a2.jpg" />
-    <Content Include="Content\images\a3.jpg" />
-    <Content Include="Content\images\a4.jpg" />
-    <Content Include="Content\images\a5.jpg" />
-    <Content Include="Content\images\a6.jpg" />
+    <Content Include="Content\images\sing\a1.jpg" />
+    <Content Include="Content\images\sing\a2.jpg" />
+    <Content Include="Content\images\sing\a3.jpg" />
+    <Content Include="Content\images\sing\a4.jpg" />
+    <Content Include="Content\images\sing\a5.jpg" />
+    <Content Include="Content\images\sing\a6.jpg" />
+    <Content Include="Content\images\datatables\back_disabled.png" />
+    <Content Include="Content\images\datatables\back_enabled.png" />
+    <Content Include="Content\images\datatables\back_enabled_hover.png" />
+    <Content Include="Content\images\datatables\favicon.ico" />
+    <Content Include="Content\images\datatables\forward_disabled.png" />
+    <Content Include="Content\images\datatables\forward_enabled.png" />
+    <Content Include="Content\images\datatables\forward_enabled_hover.png" />
+    <Content Include="Content\images\datatables\sort_asc.png" />
+    <Content Include="Content\images\datatables\sort_asc_disabled.png" />
+    <Content Include="Content\images\datatables\sort_both.png" />
+    <Content Include="Content\images\datatables\sort_desc.png" />
+    <Content Include="Content\images\datatables\sort_desc_disabled.png" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\sing\search.png" />
     <Content Include="Content\sing\application-ie9-part2.css" />
     <Content Include="Content\sing\application.commented.css" />
     <Content Include="Content\sing\application.css" />
@@ -378,7 +395,6 @@
     <Content Include="Content\styles.min.css">
       <DependentUpon>styles.css</DependentUpon>
     </Content>
-    <Content Include="favicon.ico" />
     <Content Include="Fonts\blisspro-bold-webfont.svg" />
     <Content Include="Fonts\blisspro-bolditalic-webfont.svg" />
     <Content Include="Fonts\blisspro-italic-webfont.svg" />
@@ -541,6 +557,7 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Content\sing\application.min.css.bak" />
+    <Content Include="Content\images\datatables\Sorting icons.psd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -548,6 +565,9 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap3-typeahead.js" />
     <Content Include="Scripts\bootstrap3-typeahead.min.js" />
+    <Content Include="Scripts\datatables\jquery.dataTables.js" />
+    <Content Include="Scripts\datatables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\datatables\tables-dynamic.js" />
     <Content Include="Scripts\fallback\scripts.js" />
     <Content Include="Scripts\fallback\styles.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

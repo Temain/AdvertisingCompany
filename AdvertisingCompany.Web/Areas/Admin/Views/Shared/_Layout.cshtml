@@ -9,6 +9,10 @@
         @Styles.Render("~/Content/sing-ie9")
     <![endif]-->
 
+    @Styles.Render("~/Content/select")
+    @Styles.Render("~/Content/datatables")
+
+    <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -39,6 +43,7 @@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/knockout")
 @Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/select")
 @Scripts.Render("~/bundles/sing")
 @RenderSection("Scripts", required: false)
 
