@@ -129,7 +129,7 @@
                 .Include("~/Areas/Admin/Scripts/app/common.js")
                 .Include("~/Areas/Admin/Scripts/app/app.datamodel.js")
                 .Include("~/Areas/Admin/Scripts/app/app.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/client.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/client/client.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/analytics.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/_run.js");
             bundles.Add(appAdminBundle);
@@ -149,7 +149,7 @@
                 .Include("~/Scripts/bootstrap/alert.js")
                 .Include("~/Scripts/jQuery-slimScroll/jquery.slimscroll.js")
                 .Include("~/Scripts/widgster/widgster.js")
-                //.Include("~/Scripts/pace.js/pace.min.js")
+                .Include("~/Scripts/pace.js/pace.min.js")
                 .Include("~/Scripts/sing/settings.js")
                 .Include("~/Scripts/sing/app.js")
                 .Include("~/Scripts/sing/index.js")

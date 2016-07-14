@@ -236,7 +236,6 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AddressController.cs" />
     <Compile Include="Areas\Admin\Controllers\AnalyticsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
@@ -301,10 +300,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Scripts\app\client.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\client\client.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\analytics.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.datamodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\client\create.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\common.js" />
     <Content Include="Areas\Admin\Scripts\app\task.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\_run.js" />
@@ -460,7 +460,6 @@
     <Content Include="Areas\Admin\Views\Client\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\Report\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Navbar.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Sidebar.cshtml" />
     <Content Include="Areas\Admin\Views\Task\Create.cshtml" />
@@ -552,6 +551,7 @@
     <Content Include="Areas\Admin\Views\Client\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Analytics\_Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\_Create.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
