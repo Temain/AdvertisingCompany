@@ -15,6 +15,11 @@ namespace AdvertisingCompany.Domain.Models
     [Table("Client", Schema = "dbo")]
     public class Client
     {
+        public Client()
+        {
+            CreatedAt = DateTime.Now;
+        }
+
         public int ClientId { get; set; }
 
         /// <summary>

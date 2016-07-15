@@ -223,6 +223,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\KoJsonValidateAttribute.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Constants\ApplicationSettings.cs" />
     <Compile Include="Constants\ContentDeliveryNetwork.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
@@ -289,6 +291,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -367,6 +370,7 @@
     <Content Include="Content\highcharts\themes\grid.js" />
     <Content Include="Content\highcharts\themes\sand-signika.js" />
     <Content Include="Content\highcharts\themes\skies.js" />
+    <Content Include="Content\images\required.svg" />
     <Content Include="Content\images\sing\a1.jpg" />
     <Content Include="Content\images\sing\a2.jpg" />
     <Content Include="Content\images\sing\a3.jpg" />
@@ -549,6 +553,8 @@
     <Content Include="Content\bootstrap\wells.less" />
     <Content Include="Content\styles.less" />
     <Content Include="Content\variables.less" />
+    <Content Include="Scripts\bootstrap-notify\bootstrap-notify.js" />
+    <Content Include="Scripts\bootstrap-notify\bootstrap-notify.min.js" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
@@ -598,7 +604,10 @@
     <Content Include="Scripts\jQuery-slimScroll\jquery.slimscroll.min.js" />
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
+    <Content Include="Scripts\knockout-server-side-validation.js" />
     <Content Include="Scripts\knockout.bindings.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\knockout.validation.min.js" />
     <Content Include="Scripts\logging.js" />

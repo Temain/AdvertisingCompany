@@ -214,9 +214,7 @@ var CreateTaskViewModel = function (app, dataModel) {
         required: {
             params: true,
             message: "Необходимо выбрать вид работы.",
-            onlyIf: function () {
-                return self.isValidationEnabled();
-            }
+            onlyIf: function () { return self.isValidationEnabled(); }
         }
     });
     self.crashTypes = ko.observable([]);

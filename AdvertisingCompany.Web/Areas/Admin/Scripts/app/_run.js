@@ -4,8 +4,8 @@
     // Активировать Knockout
     ko.validation.init({
         decorateInputElement: true,
-        errorClass: 'validation-error-message',
+        errorClass: 'ko-field-validation-error',
         grouping: { observable: false }
     });
-    ko.applyBindings(app);
+    ko.applyBindingsWithValidation(app);
 });

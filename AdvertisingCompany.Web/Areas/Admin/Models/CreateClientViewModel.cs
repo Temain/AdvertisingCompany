@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using AdvertisingCompany.Domain.Models;
+using AdvertisingCompany.Web.Constants;
 using AdvertisingCompany.Web.Models.Mapping;
 using AutoMapper;
 
@@ -11,11 +12,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
 {
     public class CreateClientViewModel : IHaveCustomMappings
     {
-        [Required]
+        [Required(ErrorMessage = "Необходимо указать наименование компании.")]
         [StringLength(1000)]
         [Display(Name = "Название компании")]
         public string CompanyName { get; set; }
 
+        [Required(ErrorMessage = "Необходимо указать вид деятельности клиента.")]
         [Display(Name = "Вид деятельности клиента")]
         public int ActivityTypeId { get; set; }
         public IEnumerable<ActivityTypeViewModel> ActivityTypes { get; set; }
@@ -26,11 +28,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
         /// </summary>
         public int ResponsiblePersonId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите фамилию.")]
         [Display(Name = "Фамилия")]
         public string ResponsiblePersonLastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите имя.")]
         [Display(Name = "Имя")]
         public string ResponsiblePersonFirstName { get; set; }
 
@@ -38,7 +40,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
         public string ResponsiblePersonMiddleName { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "Введите номер телефона.")]
         [StringLength(100)]
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
@@ -49,15 +51,17 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
         [Display(Name = "Адрес электронной почты")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Введите имя пользователя.")]
         [Display(Name = "Логин")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите пароль.")]
         [StringLength(100, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Введите подтверждение пароля.")]
         [DataType(DataType.Password)]
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
@@ -65,20 +69,18 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
 
         public void CreateMappings(IConfiguration configuration)
         {
+            configuration.CreateMap<Client, CreateClientViewModel>("Client");
+
             configuration.CreateMap<CreateClientViewModel, Client>("Client")
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.ActivityTypeId, opt => opt.MapFrom(s => s.ActivityTypeId))
                 .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
                 .ForMember(m => m.AdditionalPhoneNumber, opt => opt.MapFrom(s => s.AdditionalPhoneNumber))
                 .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
-                .ForMember(m => m.ApplicationUsers, opt => opt.MapFrom(s => s))
                 .ForMember(m => m.ResponsiblePerson, opt => opt.MapFrom(s => s))
-                .ForMember(m => m.ClientStatusId, opt => opt.Ignore())
+                .ForMember(m => m.ClientStatusId, opt => opt.MapFrom(s => ClientStatuses.Active))
+                .ForMember(m => m.ApplicationUsers, opt => opt.Ignore())
                 .ForMember(m => m.CreatedAt, opt => opt.Ignore());
-
-            //configuration.CreateMap<CreateClientViewModel, ApplicationUser>("ClientUser")
-            //    .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
-            //    .ForMember(m => m.UserName, opt => opt.MapFrom(s => s.UserName));
 
             configuration.CreateMap<CreateClientViewModel, Person>("ClientPerson")
                 .ForMember(m => m.LastName, opt => opt.MapFrom(s => s.ResponsiblePersonLastName))

@@ -7,9 +7,11 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
 using AdvertisingCompany.Domain.Models;
+using AdvertisingCompany.Web.ActionFilters;
 using AdvertisingCompany.Web.Areas.Admin.Models;
 using AdvertisingCompany.Web.Controllers;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
 using SaleOfDetails.Web.Models;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
@@ -62,7 +64,19 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         //}
 
         // GET: api/Client/5
-        [ResponseType(typeof(Client))]
+        [ResponseType(typeof(CreateClientViewModel))]
+        public IHttpActionResult GetClient()
+        {
+            var viewModel = new CreateClientViewModel();
+            var activityTypes = UnitOfWork.Repository<ActivityType>()
+                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory));
+            viewModel.ActivityTypes = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
+
+            return Ok(viewModel);
+        }
+
+        // GET: api/Client/5
+        [ResponseType(typeof(ClientViewModel))]
         public IHttpActionResult GetClient(int id)
         {
             var client = UnitOfWork.Repository<Client>()
@@ -121,23 +135,36 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         //}
 
         // POST: api/Client
+        [KoJsonValidate]
         [ResponseType(typeof(Client))]
         public IHttpActionResult PostClient(CreateClientViewModel viewModel)
         {
+            var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
+
+            var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email };
+            var result = UserManager.Create(user, viewModel.Password);
+            if (result.Succeeded)
+            {                
+                UnitOfWork.Repository<Client>().Insert(client);
+                UnitOfWork.Save();
+
+                user.ClientId = client.ClientId;
+                UserManager.Update(user);
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
-            // client.Person.CreatedAt = DateTime.Now;
-            client.CreatedAt = DateTime.Now;
-
-            UnitOfWork.Repository<Client>().Insert(client);
-            UnitOfWork.Save();
-
+            
             return Ok();
-            // return CreatedAtRoute("DefaultApi", new { id = client.ClientId }, client);
         }
 
         // DELETE: api/Client/5

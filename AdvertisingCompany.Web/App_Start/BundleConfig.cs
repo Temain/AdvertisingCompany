@@ -56,6 +56,10 @@
             bundles.Add(new StyleBundle("~/Content/select")
                 .Include("~/Content/bootstrap-select.css"));
 
+            bundles.Add(new StyleBundle("~/Content/select2")
+                .Include("~/Content/select2/select2.css")
+                .Include("~/Content/select2/select2-bootstrap.css"));
+
             bundles.Add(new StyleBundle("~/Content/datatables")
                 .Include("~/Content/datatables/jquery.dataTables.css"));
         }
@@ -139,6 +143,7 @@
                 .Include("~/Scripts/knockout-{version}.js")
                 .Include("~/Scripts/knockout.mapping-latest.js")
                 .Include("~/Scripts/knockout.validation.js")
+                .Include("~/Scripts/knockout-server-side-validation.js")
                 .Include("~/Scripts/knockout.bindings.js");
             bundles.Add(knockoutBundle);
 
@@ -166,6 +171,11 @@
                 .Include("~/Scripts/bootstrap-select.min.js");
             bundles.Add(selectBundle);
 
+            Bundle select2Bundle = new ScriptBundle("~/bundles/select2")
+                .Include("~/Scripts/select2/select2.min.js")
+                .Include("~/Scripts/select2/select2_locale_ru.js");;
+            bundles.Add(select2Bundle);
+
             Bundle typeaheadBundle = new ScriptBundle("~/bundles/typeahead")
                 .Include("~/Scripts/bootstrap3-typeahead.min.js");
             bundles.Add(typeaheadBundle);
@@ -181,6 +191,10 @@
                 .Include("~/Scripts/datatables/jquery.dataTables.js")
                 .Include("~/Scripts/datatables/tables-dynamic.js");
             bundles.Add(datatableBundle);
+
+            Bundle notifyBundle = new ScriptBundle("~/bundles/bootstrap-notify")
+                .Include("~/Scripts/bootstrap-notify/bootstrap-notify.js");
+            bundles.Add(notifyBundle);
 
             // Script bundle for the site. The fall-back scripts are for when a CDN fails, in this case we load a local
             // copy of the script instead.

@@ -214,7 +214,7 @@
                     }
                 }
             }
-        } );
+        });
 
         var unsortableColumns = [];
         $('#datatable-table').find('thead th').each(function(){
@@ -258,6 +258,7 @@
                 }
             },
             "aoColumns": unsortableColumns
+            //"scrollX": true
         });
 
         $(".dataTables_length select").selectpicker({
