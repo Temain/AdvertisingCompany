@@ -130,6 +130,7 @@
                 .Include("~/Areas/Admin/Scripts/app/app.datamodel.js")
                 .Include("~/Areas/Admin/Scripts/app/app.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/client/client.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/client/create.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/analytics.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/_run.js");
             bundles.Add(appAdminBundle);

@@ -57,19 +57,16 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Дата создания записи
         /// </summary>
-        [JsonIgnore]
         public DateTime? CreatedAt { get; set; }
 
         /// <summary>
         /// Дата обновления записи
         /// </summary>
-        [JsonIgnore]
         public DateTime? UpdatedAt { get; set; }
 
         /// <summary>
         /// Дата удаления записи
         /// </summary>
-        [JsonIgnore]
         public DateTime? DeletedAt { get; set; }
 
         /// <summary>
@@ -77,5 +74,7 @@ namespace AdvertisingCompany.Domain.Models
         /// </summary>
         public int ClientStatusId { get; set; }
         public ClientStatus ClientStatus { get; set; }
+
+        public ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

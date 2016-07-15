@@ -236,12 +236,16 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AddressController.cs" />
     <Compile Include="Areas\Admin\Controllers\AnalyticsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
+    <Compile Include="Areas\Admin\Models\ActivityTypeViewModel.cs" />
     <Compile Include="Areas\Admin\Models\AddressViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ClientStatusViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ClientViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateAddressViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CreateClientViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateTaskViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ListAddressesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ListClientsViewModel.cs" />

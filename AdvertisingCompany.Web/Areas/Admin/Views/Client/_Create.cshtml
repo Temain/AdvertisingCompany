@@ -1,6 +1,79 @@
 ﻿<!-- ko with: createClient -->
-<div>
-    Create client form
-</div>
+<ol class="breadcrumb">
+    <li>ВЫ ЗДЕСЬ</li>
+    <li class="active">Клиенты</li>
+    <li class="active">Добавление нового клиента</li>
+</ol>
+<h1 class="page-title">Добавление нового клиента</h1>
+<section class="widget">
+    <div class="widget-body">
+        <form class="form-horizontal mrgtop24" role="form">
+            <fieldset>
+                <div class="form-group required">
+                    <label for="companyName" class="col-sm-3 control-label">Название компании</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="companyName" class="form-control" data-bind="value: companyName">
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="activityTypeId" class="col-sm-3 control-label">Род деятельности</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="activityTypeId" class="form-control" data-bind="value: activityTypeId">
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="responsiblePersonLastName" class="col-sm-3 control-label">Ответственное лицо</label>
+                    <div class="col-sm-2">
+                        <input type="text" id="responsiblePersonLastName" class="form-control" data-bind="value: responsiblePersonLastName" placeholder="Фамилия">
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" id="responsiblePersonFirstName" class="form-control" data-bind="value: responsiblePersonFirstName" placeholder="Имя">
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="text" id="responsiblePersonMiddleName" class="form-control" data-bind="value: responsiblePersonMiddleName" placeholder="Отчество">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber" class="col-sm-3 control-label">Номер телефона</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="phoneNumber" class="form-control" data-bind="value: phoneNumber" placeholder="Основной">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" id="additionalPhoneNumber" class="form-control" data-bind="value: additionalPhoneNumber" placeholder="Дополнительный">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="col-sm-3 control-label">Адрес электронной почты</label>
+                    <div class="col-sm-6">
+                        <input type="email" id="email" class="form-control" data-bind="value: email">
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="userName" class="col-sm-3 control-label">Логин</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="userName" class="form-control" data-bind="value: userName">
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="password" class="col-sm-3 control-label">Пароль</label>
+                    <div class="col-sm-3">
+                        <input type="password" id="password" class="form-control" data-bind="value: password" placeholder="Пароль">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="password" id="confirmPassword" class="form-control" data-bind="value: confirmPassword" placeholder="Подтверждение пароля">
+                    </div>
+                </div>              
+            </fieldset>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-sm-offset-3 col-sm-6">
+                        <button type="submit" class="btn btn-success" data-bind="click: submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                        @*<button type="button" class="btn btn-inverse">Отмена</button>*@
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
 <!-- /ko -->
 

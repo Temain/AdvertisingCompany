@@ -17,3 +17,5 @@ app.addViewModel({
     bindingMemberName: "client",
     factory: ClientViewModel
 });
+
+

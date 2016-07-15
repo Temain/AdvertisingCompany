@@ -39,9 +39,9 @@ body, h1, h2, h3, h4, h5, h6 { font-family: /*'Segoe UI',*/ 'BlissPro', Arial, s
     font-family: monospace;
 }
 
-.required-legend { 
-    font-size: 1.2em;
-    margin-bottom: 25px;
+.form-group.required .control-label:after { 
+   content:" *";
+   color:red;
 }
 
 .glyph {
