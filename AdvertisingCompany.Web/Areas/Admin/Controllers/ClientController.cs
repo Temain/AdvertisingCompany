@@ -23,64 +23,26 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        //// GET: api/Client
-        //public IEnumerable<ClientViewModel> GetClients()
-        //{
-        //    var clients = UnitOfWork.Repository<Client>()
-        //        .Get(
-        //            orderBy: o => o.OrderBy(p => p.Person.LastName)
-        //                .ThenBy(p => p.Person.FirstName),
-        //            includeProperties: "Person");
-
-        //    var clientViewModels = Mapper.Map<IEnumerable<Client>, IEnumerable<ClientViewModel>>(clients);
-
-        //    return clientViewModels;
-        //}
-
-        //// GET: api/Client
-        //public ListViewModel<ClientViewModel> GetClients(int page, int pageSize = 10)
-        //{
-        //    var clientsList = UnitOfWork.Repository<Client>()
-        //        .GetQ(
-        //            orderBy: o => o.OrderBy(p => p.Person.LastName)
-        //                .ThenBy(p => p.Person.FirstName),
-        //            includeProperties: "Person");
-
-        //    var clients = clientsList
-        //        .Skip((page - 1) * pageSize)
-        //        .Take(pageSize)
-        //        .ToList();
-
-        //    var clientViewModels = Mapper.Map<IEnumerable<Client>, IEnumerable<ClientViewModel>>(clients);
-        //    var viewModel = new ListViewModel<ClientViewModel>
-        //    {
-        //        Items = clientViewModels,
-        //        ItemsCount = clientsList.Count(),
-        //        PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
-        //        SelectedPage = page
-        //    };
-
-        //    return viewModel;
-        //}
-
-        // GET: api/clients/5
+        // GET: admin/api/clients
         [HttpGet]
-        [Route("create")]
-        [ResponseType(typeof(CreateClientViewModel))]
-        public IHttpActionResult CreateClient()
+        [Route("")]
+        [ResponseType(typeof(IEnumerable<ClientViewModel>))]
+        public IEnumerable<ClientViewModel> GetClients()
         {
-            var viewModel = new CreateClientViewModel();
-            var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory));
-            viewModel.ActivityTypes = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
+            var clients = UnitOfWork.Repository<Client>()
+                .Get(orderBy: o => o.OrderBy(c => c.CreatedAt), 
+                    includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
-            return Ok(viewModel);
+            var clientViewModels = Mapper.Map<IEnumerable<Client>, IEnumerable<ClientViewModel>>(clients);
+
+            return clientViewModels;
         }
 
+        // GET: admin/api/clients/0 (new) or admin/api/clients/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateClientViewModel))]
-        public IHttpActionResult EditClient(int id)
+        public IHttpActionResult GetClient(int id)
         {
             var viewModel = new CreateClientViewModel();
             var activityTypes = UnitOfWork.Repository<ActivityType>()
@@ -107,7 +69,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         //    return Ok(clientViewModel);
         //}
 
-        //// PUT: api/Client/5
+        //// PUT: admin/api/clients/5
         //[ResponseType(typeof(void))]
         //public IHttpActionResult PutClient(ClientViewModel viewModel)
         //{
@@ -149,9 +111,10 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         //    return StatusCode(HttpStatusCode.NoContent);
         //}
 
-        // POST: api/Client
+        // POST: admin/api/clients
+        [HttpPost]
         [KoJsonValidate]
-        [ResponseType(typeof(Client))]
+        [ResponseType(typeof(CreateClientViewModel))]
         public IHttpActionResult PostClient(CreateClientViewModel viewModel)
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
@@ -159,7 +122,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email };
             var result = UserManager.Create(user, viewModel.Password);
             if (result.Succeeded)
-            {                
+            {
                 UnitOfWork.Repository<Client>().Insert(client);
                 UnitOfWork.Save();
 
@@ -178,29 +141,29 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             return Ok();
         }
 
-        // DELETE: api/Client/5
-        [ResponseType(typeof(Client))]
-        public IHttpActionResult DeleteClient(int id)
-        {
-            Client client = UnitOfWork.Repository<Client>().GetById(id);
-            if (client == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: admin/api/clients/5
+        //[ResponseType(typeof(Client))]
+        //public IHttpActionResult DeleteClient(int id)
+        //{
+        //    Client client = UnitOfWork.Repository<Client>().GetById(id);
+        //    if (client == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            UnitOfWork.Repository<Client>().Delete(client);
-            UnitOfWork.Save();
+        //    UnitOfWork.Repository<Client>().Delete(client);
+        //    UnitOfWork.Save();
 
-            return Ok(client);
-        }
+        //    return Ok(client);
+        //}
 
-        private bool ClientExists(int id)
-        {
-            return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id) > 0;
-        }
+        //private bool ClientExists(int id)
+        //{
+        //    return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id) > 0;
+        //}
     }
 }

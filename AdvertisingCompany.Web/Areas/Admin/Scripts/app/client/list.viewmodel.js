@@ -43,8 +43,8 @@ function ClientViewModel(app, dataModel) {
 }
 
 app.addViewModel({
-    name: "ClientList",
-    bindingMemberName: "clientList",
-    factory: ClientListViewModel
+    name: "ClientsList",
+    bindingMemberName: "clientsList",
+    factory: ClientsListViewModel
 });
 

@@ -19,6 +19,12 @@ namespace AdvertisingCompany.Web.Areas.Admin
             context.Routes.AppendTrailingSlash = true;
 
             context.MapHttpRoute(
+                name: "Admin_WithActionApi",
+                routeTemplate: "admin/api/{controller}/create",
+                defaults: new { area = "admin" }
+            );
+
+            context.MapHttpRoute(
                 name: "Admin_Api",
                 routeTemplate: "admin/api/{controller}/{id}",
                 defaults: new { area = "admin", id = RouteParameter.Optional }

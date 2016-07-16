@@ -66,10 +66,10 @@
     });;
 
     Sammy(function () {
-        this.get('#client/create', function () {
+        this.get('#clients/create', function () {
             $.ajax({
                 method: 'get',
-                url: '/admin/api/clients/',
+                url: '/admin/api/clients/0',
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
