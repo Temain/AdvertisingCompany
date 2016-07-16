@@ -69,7 +69,7 @@
         this.get('#client/create', function () {
             $.ajax({
                 method: 'get',
-                url: '/admin/api/client/',
+                url: '/admin/api/clients/',
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
@@ -98,7 +98,7 @@
 
         $.ajax({
             method: 'post',
-            url: '/admin/api/client/',
+            url: '/admin/api/clients/',
             data: postData,
             contentType: "application/json; charset=utf-8",
             headers: {

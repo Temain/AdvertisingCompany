@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Mvc;
+using AdvertisingCompany.Web.Extensions;
 
 namespace AdvertisingCompany.Web.Areas.Admin
 {
@@ -17,10 +18,10 @@ namespace AdvertisingCompany.Web.Areas.Admin
         {
             context.Routes.AppendTrailingSlash = true;
 
-            context.Routes.MapHttpRoute(
-                "Admin_Api",
-                "Admin/api/{controller}/{id}",
-                new { controller = "Home", id = RouteParameter.Optional }
+            context.MapHttpRoute(
+                name: "Admin_Api",
+                routeTemplate: "admin/api/{controller}/{id}",
+                defaults: new { area = "admin", id = RouteParameter.Optional }
             );
 
             context.MapRoute(

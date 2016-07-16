@@ -224,6 +224,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionFilters\KoJsonValidateAttribute.cs" />
+    <Compile Include="App_Start\AreaHttpControllerSelector.cs" />
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Extensions\AreaRegistrationContextExtensions.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -307,7 +309,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Scripts\app\client\client.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\client\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\analytics.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.datamodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.viewmodel.js" />

@@ -12,13 +12,13 @@ using AdvertisingCompany.Web.Areas.Admin.Models;
 using AdvertisingCompany.Web.Controllers;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
-using SaleOfDetails.Web.Models;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    public class ClientController : BaseApiController
+    [RoutePrefix("admin/api/clients")]
+    public class ClientsController : BaseApiController
     {
-        public ClientController(IUnitOfWork unitOfWork)
+        public ClientsController(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
@@ -63,9 +63,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         //    return viewModel;
         //}
 
-        // GET: api/Client/5
+        // GET: api/clients/5
+        [HttpGet]
+        [Route("create")]
         [ResponseType(typeof(CreateClientViewModel))]
-        public IHttpActionResult GetClient()
+        public IHttpActionResult CreateClient()
         {
             var viewModel = new CreateClientViewModel();
             var activityTypes = UnitOfWork.Repository<ActivityType>()
@@ -75,22 +77,35 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok(viewModel);
         }
 
-        // GET: api/Client/5
-        [ResponseType(typeof(ClientViewModel))]
-        public IHttpActionResult GetClient(int id)
+        [HttpGet]
+        [Route("{id:int}")]
+        [ResponseType(typeof(CreateClientViewModel))]
+        public IHttpActionResult EditClient(int id)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == id, includeProperties: "Person")
-                .SingleOrDefault();
-            if (client == null)
-            {
-                return NotFound();
-            }
+            var viewModel = new CreateClientViewModel();
+            var activityTypes = UnitOfWork.Repository<ActivityType>()
+                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory));
+            viewModel.ActivityTypes = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
 
-            var clientViewModel = Mapper.Map<Client, ClientViewModel>(client);
-
-            return Ok(clientViewModel);
+            return Ok(viewModel);
         }
+
+        //// GET: api/Client/5
+        //[ResponseType(typeof(ClientViewModel))]
+        //public IHttpActionResult GetClient(int id)
+        //{
+        //    var client = UnitOfWork.Repository<Client>()
+        //        .Get(x => x.ClientId == id, includeProperties: "Person")
+        //        .SingleOrDefault();
+        //    if (client == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var clientViewModel = Mapper.Map<Client, ClientViewModel>(client);
+
+        //    return Ok(clientViewModel);
+        //}
 
         //// PUT: api/Client/5
         //[ResponseType(typeof(void))]
