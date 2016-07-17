@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     [RoutePrefix("admin/api/clients")]
     public class ClientsController : BaseApiController
     {
@@ -26,16 +27,31 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // GET: admin/api/clients
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(IEnumerable<ClientViewModel>))]
-        public IEnumerable<ClientViewModel> GetClients()
+        [ResponseType(typeof(ListClientsViewModel))]
+        public ListClientsViewModel GetClients(string query, int page = 1, int pageSize = 10)
         {
-            var clients = UnitOfWork.Repository<Client>()
-                .Get(orderBy: o => o.OrderBy(c => c.CreatedAt), 
+            var clientsList = UnitOfWork.Repository<Client>()
+                .GetQ(orderBy: o => o.OrderBy(c => c.CreatedAt),
                     includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
-            var clientViewModels = Mapper.Map<IEnumerable<Client>, IEnumerable<ClientViewModel>>(clients);
+            if (query != null)
+            {
+                clientsList = clientsList.Where(x => x.CompanyName.Contains(query));
+            }
 
-            return clientViewModels;
+            var clients = clientsList
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var clientViewModels = Mapper.Map<List<Client>, List<ClientViewModel>>(clients);
+            var viewModel = new ListClientsViewModel
+            {
+                Clients = clientViewModels,
+                PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
+                Page = page
+            };
+            return viewModel;
         }
 
         // GET: admin/api/clients/0 (new) or admin/api/clients/5 (edit)

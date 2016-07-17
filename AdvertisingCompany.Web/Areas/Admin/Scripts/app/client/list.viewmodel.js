@@ -2,22 +2,53 @@
     var self = this;
 
     self.clients = ko.observableArray([]);
+    self.page = ko.observable(1);
+    self.pagesCount = ko.observable(1);
+    self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
+    self.pageSize = ko.observable(10);
+    self.searchQuery = ko.observable('');
+
+    self.loadClients = function() {
+        $.ajax({
+            method: 'get',
+            url: '/admin/api/clients',
+            data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
+            contentType: "application/json; charset=utf-8",
+            headers: {
+                'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+            },
+            error: function (response) { },
+            success: function (response) {
+                ko.mapping.fromJS(response.clients, {}, self.clients);
+                self.page(response.page);
+                self.pagesCount(response.pagesCount);              
+            }
+        });
+    };
+
+    self.pageChanged = function (page) {
+        self.page(page);
+        self.loadClients();
+
+        window.scrollTo(0, 0);
+    };
+
+    self.pageSizeChanged = function () {
+        self.page(1);
+        self.loadClients();
+
+        window.scrollTo(0, 0);
+    };
+
+    self.search = _.debounce(function () {
+        self.page(1);
+        self.loadClients();
+    }, 300);
 
     Sammy(function () {
         this.get('#clients', function () {
-            $.ajax({
-                method: 'get',
-                url: '/admin/api/clients',
-                contentType: "application/json; charset=utf-8",
-                headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
-                },
-                error: function (response) { },
-                success: function (response) {
-                    ko.mapping.fromJS(response, {}, self.clients);
-                    app.view(self);
-                }
-            });
+            self.loadClients();
+            app.view(self);
         });
     });
 

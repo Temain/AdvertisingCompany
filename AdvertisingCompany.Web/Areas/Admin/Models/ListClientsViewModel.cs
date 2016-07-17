@@ -6,6 +6,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
     {
         public List<ClientViewModel> Clients { get; set; }
         public int PagesCount { get; set; }
-        public int SelectedPage { get; set; }
+        public int Page { get; set; }
     }
 }

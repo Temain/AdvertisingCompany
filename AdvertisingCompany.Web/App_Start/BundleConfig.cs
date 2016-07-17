@@ -129,6 +129,7 @@
             bundles.Add(appBundle);
 
             Bundle appAdminBundle = new ScriptBundle("~/bundles/app-admin")
+                .Include("~/Scripts/underscore.min.js")
                 .Include("~/Scripts/sammy-{version}.js")
                 .Include("~/Areas/Admin/Scripts/app/common.js")
                 .Include("~/Areas/Admin/Scripts/app/app.datamodel.js")

@@ -466,7 +466,7 @@
     <Content Include="Fonts\google\roboto-regular.woff" />
     <Content Include="Areas\Admin\Views\Address\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Address\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\IndexOld2.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\Report\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -560,7 +560,7 @@
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\_Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\_IndexOld3.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Analytics\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\_Create.cshtml" />
