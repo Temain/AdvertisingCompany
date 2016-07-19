@@ -238,11 +238,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AnalyticsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ActivityController.cs" />
-    <Compile Include="Areas\Admin\Controllers\AddressController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CampaignController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ActivitiesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AddressesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CampaignsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\ActivityType\ActivityTypeViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\AddressViewModel.cs" />
@@ -309,14 +309,17 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Scripts\app\client\edit.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\client\list.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\analytics.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\activities\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\addresses\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\campaigns\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\clients\edit.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\clients\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\analytics\analytics.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.datamodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\client\create.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\clients\create.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\common.js" />
-    <Content Include="Areas\Admin\Scripts\app\task.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\reports\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\_run.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
@@ -465,10 +468,10 @@
     <Content Include="Fonts\google\roboto-light.woff" />
     <Content Include="Fonts\google\roboto-medium.woff" />
     <Content Include="Fonts\google\roboto-regular.woff" />
-    <Content Include="Areas\Admin\Views\Address\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Address\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\_Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Report\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\CreateOld.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\IndexOld.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\_Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Reports\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Navbar.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Sidebar.cshtml" />
@@ -559,8 +562,12 @@
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Analytics\_Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\_Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\_Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Reports\_Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Campaigns\_Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Activities\_Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

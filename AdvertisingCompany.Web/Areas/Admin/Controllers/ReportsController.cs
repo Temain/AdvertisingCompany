@@ -17,9 +17,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
     [RoutePrefix("admin/api/reports")]
-    public class ReportController : BaseApiController
+    public class ReportsController : BaseApiController
     {
-        public ReportController(IUnitOfWork unitOfWork)
+        public ReportsController(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }

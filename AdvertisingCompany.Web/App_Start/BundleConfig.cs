@@ -134,10 +134,14 @@
                 .Include("~/Areas/Admin/Scripts/app/common.js")
                 .Include("~/Areas/Admin/Scripts/app/app.datamodel.js")
                 .Include("~/Areas/Admin/Scripts/app/app.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/client/list.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/client/create.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/client/edit.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/analytics.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/clients/list.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/clients/create.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/clients/edit.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/activities/list.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/addresses/list.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/campaigns/list.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/reports/list.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/analytics/analytics.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/_run.js")
                 .Include("~/Scripts/progress.js");
             bundles.Add(appAdminBundle);

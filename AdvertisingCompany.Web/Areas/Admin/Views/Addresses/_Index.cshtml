@@ -1,0 +1,136 @@
+﻿<!-- ko with: addressesList -->
+<ol class="breadcrumb">
+    <li>ВЫ ЗДЕСЬ</li>
+    <li class="active">Рекламные поверхности</li>
+</ol>
+<h1 class="page-title">Рекламные поверхности</h1>
+<div class="mrgbtm24">
+    <a href="/admin/#addresses/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить адрес</a>
+</div>
+<section class="widget">
+    <div class="widget-body">
+        <div class="dataTables_wrapper form-inline no-footer">
+            <div class="row">
+                <div class="col-md-6 hidden-xs">
+                    <div class="dataTables_length" id="datatable-table_length">
+                        <label>
+                            Показать
+                            <select id="pageSize" class="form-control" title="" data-size="10" data-bind="selectPicker: pageSize, selectPickerOptions : { optionsArray : pageSizes, width: '70px' }, event : { change: pageSizeChanged }"></select>
+                            записей
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="datatable-table_filter" class="pull-right">
+                        <label>Поиск:<input type="search" class="form-control input-rounded ml-sm" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', event:{keyup:search}"></label>
+                    </div>
+                </div>
+            </div>
+            <div id="progress" class="row" style="display: none">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="progress progress-striped active mt">
+                        <div class="progress-bar progress-bar-info fw-semi-bold" style="width: 100%;">
+                            Загрузка...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<table id="datatable-table" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th class="col-md-3">Компания</th>
+                    <th class="col-md-2 hidden-xs">Деятельность</th>
+                    <th class="col-md-1 hidden-xs">Ответственный</th>
+                    <th class="col-md-1 no-sort hidden-xs">Телефоны</th>
+                    <th class="col-md-1 no-sort hidden-xs">Email</th>
+                    <th class="col-md-1">Логин</th>
+                    <th class="col-md-1">Статус</th>
+                    <th class="col-md-1 hidden-xs">Добавлен</th>
+                    <th class="col-md-1 no-sort">Редактирование</th>
+                </tr>
+                </thead>
+                <tbody data-bind="foreach: clients">
+                <tr>
+                    <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
+                    <td>
+                        <span class="fw-semi-bold" data-bind="text: companyName"></span></td>
+                    <td class="hidden-xs" data-bind="text: activityTypeName"></td>
+                    <td class="hidden-xs" data-bind="text: responsiblePersonShortName"></td>
+                    <td class="hidden-xs">
+                        <span data-bind="text: phoneNumber"></span><br/>
+                        <span data-bind="text: additionalPhoneNumber"></span>
+                    </td>
+                    <td class="hidden-xs" data-bind="text: email"></td>
+                    <td data-bind="foreach: userNames">
+                        <span data-bind="text: $data"></span>
+                    </td>
+                    <td>                      
+                        <select data-bind="attr: { 'data-style' : 'btn-' + clientStatusLabelClass() }, selectPicker: clientStatusId, selectPickerOptions: { optionsArray : $parent.clientStatuses, initValue : clientStatusInitialId, initialized : clientStatusInitialized }, optionsValue: 'clientStatusId', optionsText: 'clientStatusName', event : { change : $parent.clientStatusChanged }"></select>
+                    </td>
+                    <td class="hidden-xs" data-bind="text: createdAt"></td>
+                    <td class="actions">
+                        <a href="#" data-bind="tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'left', trigger: 'hover' }">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/edit' }, tooltip: { title: 'Перейти к редактированию информации о клиенте', placement: 'left', trigger: 'hover' }">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x text-success"></i>
+                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="#" data-bind="tooltip: { title: 'Удалить клиента', placement: 'left', trigger: 'hover' }">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x text-danger"></i>
+                                <i class="fa fa-times fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>*@
+
+            <!-- ko if: addresses().length > 0 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + addresses().length) + ' из ' + ((pagesCount() - 1) * pageSize() + clients().length) + ' записей'"></div>
+                </div>
+                <div class="col-md-6">
+                    <!-- ko if: pagesCount() > 1 -->
+                    <div class="dataTables_paginate paging_bootstrap">
+                        <ul class="pagination no-margin">
+                            <li class="prev disabled">
+                                <a href="#" aria-label="Previous">
+                                    @*<span aria-hidden="true">&laquo;</span>*@
+                                    Предыдущая
+                                </a>
+                            </li>
+
+                            <!-- ko foreach: new Array(pagesCount()) -->
+                            <!-- ko if: $index() >= $parent.page() - 4 && $index() <= $parent.page() + 2 -->
+                            <li data-bind="attr: { 'class' : $parent.page() == ($index() + 1) ? 'active' : '' }">
+                                <a href="#" data-bind="text: $index() + 1, click: function () { $parent.pageChanged($index() + 1); }"></a>
+                            </li>
+                            <!-- /ko -->
+                            <!-- /ko -->
+
+                            <li class="next">
+                                <a href="#" aria-label="Next">
+                                    @*<span aria-hidden="true">&raquo;</span>*@
+                                    Следующая
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+</section>
+<!-- /ko -->
+
