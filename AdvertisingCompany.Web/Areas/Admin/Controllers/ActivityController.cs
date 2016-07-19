@@ -16,19 +16,19 @@ using Microsoft.AspNet.Identity;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/reports")]
-    public class ReportController : BaseApiController
+    [RoutePrefix("admin/api/activity")]
+    public class ActivityController : BaseApiController
     {
-        public ReportController(IUnitOfWork unitOfWork)
+        public ActivityController(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        // GET: admin/api/reports
+        // GET: admin/api/activity
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListClientsViewModel))]
-        public ListClientsViewModel GetReports(string query, int page = 1, int pageSize = 10)
+        public ListClientsViewModel GetActivityTypes(string query, int page = 1, int pageSize = 10)
         {
             var clientsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
@@ -59,12 +59,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return viewModel;
         }
 
-        // GET: admin/api/reports/0 (new) or admin/api/reports/5 (edit)
+        // GET: admin/api/activity/0 (new) or admin/api/activity/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateClientViewModel))]
         [ResponseType(typeof(EditClientViewModel))]
-        public IHttpActionResult GetReport(int id)
+        public IHttpActionResult GetActivityType(int id)
         {
             var activityTypes = UnitOfWork.Repository<ActivityType>()
                 .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory))
@@ -96,12 +96,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
 
-        // PUT: admin/api/reports/5
+        // PUT: admin/api/activity/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutReport(EditClientViewModel viewModel)
+        public IHttpActionResult PutActivityType(EditClientViewModel viewModel)
         {
             var client = UnitOfWork.Repository<Client>()
                 .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
@@ -123,7 +123,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ReportExists(viewModel.ClientId))
+                if (!ActivityTypeExists(viewModel.ClientId))
                 {
                     return NotFound();
                 }
@@ -142,12 +142,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/reports
+        // POST: admin/api/activity
         [HttpPost]
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostReport(CreateClientViewModel viewModel)
+        public IHttpActionResult PostActivityType(CreateClientViewModel viewModel)
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
 
@@ -178,11 +178,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok();
         }
 
-        // DELETE: admin/api/reports/5
+        // DELETE: admin/api/activity/5
         [HttpDelete]
         [Route("")]
         [ResponseType(typeof(Client))]
-        public IHttpActionResult DeleteReport(int id)
+        public IHttpActionResult DeleteActivityType(int id)
         {
             var client = UnitOfWork.Repository<Client>()
                 .Get(x => x.ClientId == id && x.DeletedAt == null)
@@ -201,7 +201,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ReportExists(id))
+                if (!ActivityTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -214,7 +214,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok(client);
         }
 
-        private bool ReportExists(int id)
+        private bool ActivityTypeExists(int id)
         {
             return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id && e.DeletedAt == null) > 0;
         }
