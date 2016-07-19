@@ -244,17 +244,16 @@
     <Compile Include="Areas\Admin\Controllers\CampaignController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Models\ActivityTypeViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\AddressViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ClientStatusViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ClientViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\CreateAddressViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\EditClientViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\CreateClientViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\CreateTaskViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ListAddressesViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ListClientsViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ReportViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ActivityType\ActivityTypeViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Address\AddressViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Client\ClientStatusViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Client\ClientViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Address\CreateAddressViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Client\EditClientViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Client\CreateClientViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Address\ListAddressesViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Client\ListClientsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Report\ReportViewModel.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -773,6 +772,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\Analytics\" />
+    <Folder Include="Areas\Admin\Models\Campaign\" />
     <Folder Include="Scripts\pace.js\themes\black\" />
     <Folder Include="Scripts\pace.js\themes\blue\" />
     <Folder Include="Scripts\pace.js\themes\green\" />
