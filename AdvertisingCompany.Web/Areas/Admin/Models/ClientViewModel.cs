@@ -53,7 +53,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
         /// Статус клиента
         /// </summary>
         public int ClientStatusId { get; set; }
+        //public int ClientStatusInitialId { get; set; }
         public string ClientStatusName { get; set; }
+        public string ClientStatusLabelClass { get; set; }
 
         /// <summary>
         /// Дата создания записи
@@ -75,7 +77,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
                 .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
                 .ForMember(m => m.UserNames, opt => opt.MapFrom(s => s.ApplicationUsers.Select(x => x.UserName)))
                 .ForMember(m => m.ClientStatusId, opt => opt.MapFrom(s => s.ClientStatusId))
+                //.ForMember(m => m.ClientStatusInitialId, opt => opt.MapFrom(s => s.ClientStatusId))
                 .ForMember(m => m.ClientStatusName, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusName))
+                .ForMember(m => m.ClientStatusLabelClass, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusLabelClass))
                 .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt.HasValue ? s.CreatedAt.Value.ToShortDateString() : ""));
         }
     }

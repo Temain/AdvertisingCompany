@@ -86,6 +86,24 @@ input.required {
     width: 12em;
 }
 
+.actions > a {
+    text-decoration: none !important;
+}
+
+/* Tables
+------------------------------------------*/
+td .bootstrap-select {
+    width: 8em !important;
+}
+td .bootstrap-select button {
+    padding: 0 1.5em 0 0.3em;
+}
+td .bootstrap-select button > span {
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
 /* Knockout validation
 ------------------------------------------*/
 span.ko-field-validation-error {
@@ -101,7 +119,7 @@ select.ko-field-validation-error {
 ------------------------------------------*/
 .dropdown-menu.open {
     border: 1px solid #5897fb;
-    border-top: none;
+    /*border-top: none;*/
     border-radius: 0 0 4px 4px;
 }
 .dropdown-menu.open li > a:hover {

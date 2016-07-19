@@ -85,7 +85,7 @@
                     };
 
                     ko.mapping.fromJS(response, mappings, self);
-                    $('#activityTypeId').selectpicker('refresh')
+                    $('#activityTypeId').selectpicker('refresh');
                 }
             });
             app.view(self);

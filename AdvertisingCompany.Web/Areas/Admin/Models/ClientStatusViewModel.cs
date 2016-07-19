@@ -15,6 +15,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
         [Required]
         public string ClientStatusName { get; set; }
 
+        public string ClientStatusLabelClass { get; set; }
+
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<ClientStatusViewModel, ClientStatus>("ClientStatus");

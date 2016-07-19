@@ -31,7 +31,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public ListClientsViewModel GetClients(string query, int page = 1, int pageSize = 10)
         {
             var clientsList = UnitOfWork.Repository<Client>()
-                .GetQ(orderBy: o => o.OrderBy(c => c.CreatedAt),
+                .GetQ(x => x.DeletedAt == null,
+                    orderBy: o => o.OrderBy(c => c.CreatedAt),
                     includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
             if (query != null)
@@ -45,9 +46,13 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 .ToList();
 
             var clientViewModels = Mapper.Map<List<Client>, List<ClientViewModel>>(clients);
+            var clientStatuses = UnitOfWork.Repository<ClientStatus>().Get().ToList();
+            var clientStatusViewModels = Mapper.Map<List<ClientStatus>, List<ClientStatusViewModel>>(clientStatuses);
+
             var viewModel = new ListClientsViewModel
             {
                 Clients = clientViewModels,
+                ClientStatuses = clientStatusViewModels,
                 PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
                 Page = page
             };
@@ -68,69 +73,54 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok(viewModel);
         }
 
-        //// GET: api/Client/5
-        //[ResponseType(typeof(ClientViewModel))]
-        //public IHttpActionResult GetClient(int id)
-        //{
-        //    var client = UnitOfWork.Repository<Client>()
-        //        .Get(x => x.ClientId == id, includeProperties: "Person")
-        //        .SingleOrDefault();
-        //    if (client == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    var clientViewModel = Mapper.Map<Client, ClientViewModel>(client);
+        // PUT: admin/api/clients/5
+        [HttpPut]
+        [Route("")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutClient(ClientViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    return Ok(clientViewModel);
-        //}
+            var client = UnitOfWork.Repository<Client>()
+                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null)
+                .SingleOrDefault();
+            if (client == null)
+            {
+                return BadRequest();
+            }
 
-        //// PUT: admin/api/clients/5
-        //[ResponseType(typeof(void))]
-        //public IHttpActionResult PutClient(ClientViewModel viewModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+            Mapper.Map<ClientViewModel, Client>(viewModel, client);
+            client.UpdatedAt = DateTime.Now;
 
-        //    var client = UnitOfWork.Repository<Client>()
-        //        .Get(x => x.ClientId == viewModel.ClientId)
-        //        .SingleOrDefault();
-        //    if (client == null)
-        //    {
-        //        return BadRequest();
-        //    }
+            UnitOfWork.Repository<Client>().Update(client);
 
-        //    Mapper.Map<ClientViewModel, Client>(viewModel, client);
-        //    client.Person.UpdatedAt = DateTime.Now;
-        //    client.UpdatedAt = DateTime.Now;
+            try
+            {
+                UnitOfWork.Save();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClientExists(viewModel.ClientId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    UnitOfWork.Repository<Client>().Update(client);
-
-        //    try
-        //    {
-        //        UnitOfWork.Save();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ClientExists(viewModel.ClientId))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
+            return StatusCode(HttpStatusCode.NoContent);
+        }
 
         // POST: admin/api/clients
         [HttpPost]
+        [Route("")]
         [KoJsonValidate]
-        [ResponseType(typeof(CreateClientViewModel))]
         public IHttpActionResult PostClient(CreateClientViewModel viewModel)
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
@@ -161,25 +151,81 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok();
         }
 
-        //// DELETE: admin/api/clients/5
-        //[ResponseType(typeof(Client))]
-        //public IHttpActionResult DeleteClient(int id)
-        //{
-        //    Client client = UnitOfWork.Repository<Client>().GetById(id);
-        //    if (client == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPut]
+        [Route("{clientId:int}/status/{statusId:int}")]
+        public IHttpActionResult ChangeStatus(int clientId, int statusId)
+        {
+            var client = UnitOfWork.Repository<Client>()
+                .Get(x => x.ClientId == clientId && x.DeletedAt == null)
+                .SingleOrDefault();
+            if (client == null)
+            {
+                return BadRequest();
+            }
 
-        //    UnitOfWork.Repository<Client>().Delete(client);
-        //    UnitOfWork.Save();
+            client.ClientStatusId = statusId;
+            client.UpdatedAt = DateTime.Now;
 
-        //    return Ok(client);
-        //}
+            UnitOfWork.Repository<Client>().Update(client);
 
-        //private bool ClientExists(int id)
-        //{
-        //    return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id) > 0;
-        //}
+            try
+            {
+                UnitOfWork.Save();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClientExists(clientId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // DELETE: admin/api/clients/5
+        [HttpDelete]
+        [Route("")]
+        [ResponseType(typeof(Client))]
+        public IHttpActionResult DeleteClient(int id)
+        {
+            var client = UnitOfWork.Repository<Client>()
+                .Get(x => x.ClientId == id && x.DeletedAt == null)
+                .SingleOrDefault();
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            client.DeletedAt = DateTime.Now;
+            UnitOfWork.Repository<Client>().Update(client);
+
+            try
+            {
+                UnitOfWork.Save();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClientExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok(client);
+        }
+
+        private bool ClientExists(int id)
+        {
+            return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id && e.DeletedAt == null) > 0;
+        }
     }
 }

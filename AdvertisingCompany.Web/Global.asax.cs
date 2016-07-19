@@ -25,6 +25,9 @@ namespace AdvertisingCompany.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             NLogConfig.Configure();
             AutoMapperConfig.Configure();
+
+            // All attribute routes
+            var allDirectRoutes = WebApiConfig.GlobalObservableDirectRouteProvider.DirectRoutes;
         }
 
         // Обработка HTTP исключений

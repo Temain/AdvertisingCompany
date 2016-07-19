@@ -137,7 +137,8 @@
                 .Include("~/Areas/Admin/Scripts/app/client/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/client/create.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/analytics.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/_run.js");
+                .Include("~/Areas/Admin/Scripts/app/_run.js")
+                .Include("~/Scripts/progress.js");
             bundles.Add(appAdminBundle);
 
             Bundle knockoutBundle = new ScriptBundle("~/bundles/knockout")
@@ -163,6 +164,22 @@
                 .Include("~/Scripts/sing/custom.js");
             bundles.Add(singBundle);
 
+            Bundle singLoginBundle = new ScriptBundle("~/bundles/sing-login")
+                .Include("~/Scripts/bootstrap/transition.js")
+                .Include("~/Scripts/bootstrap/collapse.js")
+                .Include("~/Scripts/bootstrap/dropdown.js")
+                .Include("~/Scripts/bootstrap/button.js")
+                .Include("~/Scripts/bootstrap/tooltip.js")
+                .Include("~/Scripts/bootstrap/alert.js")
+                .Include("~/Scripts/jQuery-slimScroll/jquery.slimscroll.js")
+                .Include("~/Scripts/widgster/widgster.js")
+                //.Include("~/Scripts/pace.js/pace.min.js")
+                .Include("~/Scripts/sing/settings.js")
+                .Include("~/Scripts/sing/app.js")
+                .Include("~/Scripts/sing/index.js")
+                .Include("~/Scripts/sing/custom.js");
+            bundles.Add(singLoginBundle);
+
             Bundle datepickerBundle = new ScriptBundle("~/bundles/datepicker")
                 .Include("~/Scripts/moment-with-locales.min.js")
                 .Include("~/Scripts/bootstrap-datetimepicker.js");      
@@ -171,11 +188,6 @@
             Bundle selectBundle = new ScriptBundle("~/bundles/select")
                 .Include("~/Scripts/bootstrap-select.min.js");
             bundles.Add(selectBundle);
-
-            Bundle select2Bundle = new ScriptBundle("~/bundles/select2")
-                .Include("~/Scripts/select2/select2.min.js")
-                .Include("~/Scripts/select2/select2_locale_ru.js");;
-            bundles.Add(select2Bundle);
 
             Bundle typeaheadBundle = new ScriptBundle("~/bundles/typeahead")
                 .Include("~/Scripts/bootstrap3-typeahead.min.js");

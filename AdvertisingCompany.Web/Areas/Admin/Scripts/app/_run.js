@@ -7,5 +7,5 @@
         errorClass: 'ko-field-validation-error',
         grouping: { observable: false }
     });
-    ko.applyBindingsWithValidation(app);
+    ko.applyBindingsWithValidation(app);   
 });

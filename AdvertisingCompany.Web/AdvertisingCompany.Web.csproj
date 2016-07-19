@@ -229,6 +229,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NLogConfig.cs" />
+    <Compile Include="App_Start\ObservableDirectRouteProvider.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -241,7 +242,6 @@
     <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
-    <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Admin\Models\ActivityTypeViewModel.cs" />
     <Compile Include="Areas\Admin\Models\AddressViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ClientStatusViewModel.cs" />
@@ -251,9 +251,7 @@
     <Compile Include="Areas\Admin\Models\CreateTaskViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ListAddressesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ListClientsViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\ListTasksViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ReportViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\TaskViewModel.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -467,13 +465,10 @@
     <Content Include="Areas\Admin\Views\Address\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Address\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\_Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\Report\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Navbar.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Sidebar.cshtml" />
-    <Content Include="Areas\Admin\Views\Task\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Task\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -559,8 +554,6 @@
     <Content Include="Scripts\bootstrap-notify\bootstrap-notify.min.js" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
-    <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Client\_IndexOld3.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Analytics\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\_Create.cshtml" />
@@ -577,6 +570,18 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap3-typeahead.js" />
     <Content Include="Scripts\bootstrap3-typeahead.min.js" />
+    <Content Include="Scripts\bootstrap\affix.js" />
+    <Content Include="Scripts\bootstrap\alert.js" />
+    <Content Include="Scripts\bootstrap\button.js" />
+    <Content Include="Scripts\bootstrap\carousel.js" />
+    <Content Include="Scripts\bootstrap\collapse.js" />
+    <Content Include="Scripts\bootstrap\dropdown.js" />
+    <Content Include="Scripts\bootstrap\modal.js" />
+    <Content Include="Scripts\bootstrap\popover.js" />
+    <Content Include="Scripts\bootstrap\scrollspy.js" />
+    <Content Include="Scripts\bootstrap\tab.js" />
+    <Content Include="Scripts\bootstrap\tooltip.js" />
+    <Content Include="Scripts\bootstrap\transition.js" />
     <Content Include="Scripts\datatables\jquery.dataTables.js" />
     <Content Include="Scripts\datatables\jquery.dataTables.min.js" />
     <Content Include="Scripts\datatables\tables-dynamic.js" />
@@ -632,6 +637,7 @@
     <Content Include="Scripts\pace.js\themes\pace-theme-loading-bar.css" />
     <Content Include="Scripts\pace.js\themes\pace-theme-mac-osx.css" />
     <Content Include="Scripts\pace.js\themes\pace-theme-minimal.css" />
+    <Content Include="Scripts\progress.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sammy-0.7.5.js" />
@@ -758,6 +764,7 @@
     <Content Include="Scripts\pace.js\LICENSE" />
     <Content Include="Scripts\pace.js\pace.coffee" />
     <Content Include="Scripts\pace.js\README.md" />
+    <Content Include="Views\Account\LoginOld.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,6 +10,8 @@ namespace AdvertisingCompany.Web
 {
     public static class WebApiConfig
     {
+        public static ObservableDirectRouteProvider GlobalObservableDirectRouteProvider = new ObservableDirectRouteProvider();
+
         public static void Register(HttpConfiguration config)
         {
             // Конфигурация и службы Web API
@@ -21,7 +23,7 @@ namespace AdvertisingCompany.Web
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             // Маршруты Web API
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes(GlobalObservableDirectRouteProvider);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

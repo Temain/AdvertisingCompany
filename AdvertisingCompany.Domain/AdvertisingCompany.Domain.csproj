@@ -84,6 +84,14 @@
     <Compile Include="Migrations\201607130824121_AddAreaKladrCodeFieldToAreaTable.Designer.cs">
       <DependentUpon>201607130824121_AddAreaKladrCodeFieldToAreaTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607171336275_AddLabelClassFieldToClientStatus.cs" />
+    <Compile Include="Migrations\201607171336275_AddLabelClassFieldToClientStatus.Designer.cs">
+      <DependentUpon>201607171336275_AddLabelClassFieldToClientStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607171341512_RenameLabelClassFieldInClientStatus.cs" />
+    <Compile Include="Migrations\201607171341512_RenameLabelClassFieldInClientStatus.Designer.cs">
+      <DependentUpon>201607171341512_RenameLabelClassFieldInClientStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -116,6 +124,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607130824121_AddAreaKladrCodeFieldToAreaTable.resx">
       <DependentUpon>201607130824121_AddAreaKladrCodeFieldToAreaTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607171336275_AddLabelClassFieldToClientStatus.resx">
+      <DependentUpon>201607171336275_AddLabelClassFieldToClientStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607171341512_RenameLabelClassFieldInClientStatus.resx">
+      <DependentUpon>201607171341512_RenameLabelClassFieldInClientStatus.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

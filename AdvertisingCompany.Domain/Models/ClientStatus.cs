@@ -22,6 +22,8 @@ namespace AdvertisingCompany.Domain.Models
         [Required]
         public string ClientStatusName { get; set; }
 
+        public string ClientStatusLabelClass { get; set; }
+
         public ICollection<Client> Clients { get; set; }
     }
 }

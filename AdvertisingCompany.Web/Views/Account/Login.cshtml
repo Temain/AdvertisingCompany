@@ -4,13 +4,13 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
+@*<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8"/>
     <title>@ViewBag.Title</title>
-    <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/fa")
     @Styles.Render("~/Content/css")
@@ -68,10 +68,100 @@
         </div>
     </div>
 </div>
-    <footer></footer>
+<footer></footer>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>*@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/sing")
+
+    <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
+    <!--[if IE 9]>
+        @Styles.Render("~/Content/sing-ie9")
+    <![endif]-->
+
+    <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script>
+        /*
+           https://code.google.com/p/chromium/issues/detail?id=167083
+           https://code.google.com/p/chromium/issues/detail?id=332189
+         */
+    </script>
+</head>
+<body class="login-page">
+    <div class="container">
+        <main id="content" class="widget-login-container" role="main">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 col-xs-10 col-lg-offset-4 col-sm-offset-3 col-xs-offset-1">
+                    @*<h4 class="widget-login-logo animated fadeInUp">
+                        <i class="fa fa-circle text-gray"></i>
+                        рекламная компания                     
+                        <i class="fa fa-circle text-warning"></i>
+                    </h4>*@
+                    <section class="widget widget-login animated fadeInUp">
+                        <header>
+                            <h3>Выполнить вход</h3>
+                        </header>
+                        <div class="widget-body">
+                            <p class="widget-login-info">
+                                Для входа введите имя пользователя и пароль.
+                            </p>
+                            <p class="widget-login-info">
+                                @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                {
+                                    @Html.ValidationSummary(true)
+                                    @*<div class="alert alert-danger" role="alert">@Html.ValidationSummary(true)</div>*@
+                                }
+                            </p>
+                            @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "login-form mt-lg", role = "form"}))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Email, "Логин", new { @class = "form-control", placeholder = "Имя пользователя" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    @*<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Имя пользователя">*@
+                                </div>
+                                <div class="form-group">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Пароль" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    @*<input class="form-control" id="pswd" type="text" placeholder="Пароль">*@
+                                </div>
+                                <div class="clearfix">
+                                    <div class="btn-toolbar pull-right">
+                                        @*<button type="button" class="btn btn-default btn-sm">Create an Account</button>*@
+                                        <button type="submit" value="Выполнить вход" class="btn btn-inverse btn-sm full-width"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Войти</button>
+                                        @*<a class="btn btn-inverse btn-sm" href="index.html">Войти</a>*@
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+        @*<footer class="page-footer">
+            2016 &copy;
+        </footer>*@
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/sing-login")
 </body>
 </html>
