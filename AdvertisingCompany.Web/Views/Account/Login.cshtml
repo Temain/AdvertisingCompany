@@ -134,8 +134,8 @@
                                 @Html.AntiForgeryToken()
 
                                 <div class="form-group">
-                                    @Html.TextBoxFor(m => m.Email, "Логин", new { @class = "form-control", placeholder = "Имя пользователя" })
-                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(m => m.UserName, "Логин", new { @class = "form-control", placeholder = "Имя пользователя" })
+                                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                                     @*<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Имя пользователя">*@
                                 </div>
                                 <div class="form-group">

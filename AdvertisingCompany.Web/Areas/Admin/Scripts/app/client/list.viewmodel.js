@@ -112,8 +112,8 @@
 
     Sammy(function () {
         this.get('#clients', function () {
-            self.loadClients();
             app.view(self);
+            self.loadClients();
         });
     });
 

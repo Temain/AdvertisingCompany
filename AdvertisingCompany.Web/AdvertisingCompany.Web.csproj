@@ -247,6 +247,7 @@
     <Compile Include="Areas\Admin\Models\ClientStatusViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ClientViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateAddressViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\EditClientViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateClientViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateTaskViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ListAddressesViewModel.cs" />
@@ -307,6 +308,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\app\client\edit.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\client\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\analytics.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\app.datamodel.js" />
@@ -557,6 +559,7 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Analytics\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Client\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Client\_Edit.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

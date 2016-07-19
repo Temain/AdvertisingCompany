@@ -136,6 +136,7 @@
                 .Include("~/Areas/Admin/Scripts/app/app.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/client/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/client/create.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/client/edit.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/analytics.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/_run.js")
                 .Include("~/Scripts/progress.js");

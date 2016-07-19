@@ -111,6 +111,7 @@ span.ko-field-validation-error {
 }
 
 input.ko-field-validation-error,
+input.ko-input-validation-error,
 select.ko-field-validation-error {
     border: 1px solid #dd5826;
 }

@@ -98,6 +98,9 @@
     self.initialize = function () {
         // app.returnUrl = '#task';
         Sammy().run();
+        Sammy(function() {
+            this.post('/account/logoff/', function () { return true; });
+        }); 
     }
 }
 

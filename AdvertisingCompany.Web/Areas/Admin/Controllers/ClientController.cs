@@ -63,37 +63,56 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateClientViewModel))]
+        [ResponseType(typeof(EditClientViewModel))]
         public IHttpActionResult GetClient(int id)
         {
-            var viewModel = new CreateClientViewModel();
             var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory));
-            viewModel.ActivityTypes = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
+                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory))
+                .ToList();
+            var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
 
-            return Ok(viewModel);
+            if (id == 0)
+            {
+                var viewModel = new CreateClientViewModel();
+                viewModel.ActivityTypes = activityTypeViewModels;
+                return Ok(viewModel);
+            }
+            else
+            {
+                var client = UnitOfWork.Repository<Client>()
+                    .Get(x => x.ClientId == id && x.DeletedAt == null,
+                        includeProperties: "ResponsiblePerson, ApplicationUsers")
+                    .SingleOrDefault();
+                if (client == null)
+                {
+                    return BadRequest();
+                }
+
+                var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
+                viewModel.ActivityTypes = activityTypeViewModels;
+
+                return Ok(viewModel);
+            }
         }
 
 
         // PUT: admin/api/clients/5
         [HttpPut]
         [Route("")]
+        [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutClient(ClientViewModel viewModel)
+        public IHttpActionResult PutClient(EditClientViewModel viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null)
+                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
+                    includeProperties: "ResponsiblePerson, ApplicationUsers")
                 .SingleOrDefault();
             if (client == null)
             {
                 return BadRequest();
             }
 
-            Mapper.Map<ClientViewModel, Client>(viewModel, client);
+            Mapper.Map<EditClientViewModel, Client>(viewModel, client);
             client.UpdatedAt = DateTime.Now;
 
             UnitOfWork.Repository<Client>().Update(client);
@@ -114,6 +133,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
+            // См. атрибут KoJsonValidate 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -121,11 +146,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpPost]
         [Route("")]
         [KoJsonValidate]
+        [ResponseType(typeof(void))]
         public IHttpActionResult PostClient(CreateClientViewModel viewModel)
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
 
-            var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email };
+            var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
             var result = UserManager.Create(user, viewModel.Password);
             if (result.Succeeded)
             {
@@ -143,6 +169,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
+            // См. атрибут KoJsonValidate 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -153,6 +180,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         [HttpPut]
         [Route("{clientId:int}/status/{statusId:int}")]
+        [ResponseType(typeof(void))]
         public IHttpActionResult ChangeStatus(int clientId, int statusId)
         {
             var client = UnitOfWork.Repository<Client>()

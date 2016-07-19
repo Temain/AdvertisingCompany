@@ -10,8 +10,10 @@ using AutoMapper;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Models
 {
-    public class CreateClientViewModel : IHaveCustomMappings
+    public class EditClientViewModel : IHaveCustomMappings
     {
+        public int ClientId { get; set; }
+
         [Required(ErrorMessage = "Необходимо указать наименование компании.")]
         [StringLength(1000)]
         [Display(Name = "Название компании")]
@@ -56,34 +58,42 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
         [Display(Name = "Логин")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Введите пароль.")]
-        [StringLength(100, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
-        public string Password { get; set; }
-
-        [Required(ErrorMessage = "Введите подтверждение пароля.")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Подтверждение пароля")]
-        [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
-        public string ConfirmPassword { get; set; }
-
         public void CreateMappings(IConfiguration configuration)
         {
-            configuration.CreateMap<Client, CreateClientViewModel>("Client");
+            configuration.CreateMap<Client, EditClientViewModel>("Client")
+                .ForMember(x => x.ResponsiblePersonLastName, opt => opt.MapFrom(s => s.ResponsiblePerson.LastName))
+                .ForMember(x => x.ResponsiblePersonFirstName, opt => opt.MapFrom(s => s.ResponsiblePerson.FirstName))
+                .ForMember(x => x.ResponsiblePersonMiddleName, opt => opt.MapFrom(s => s.ResponsiblePerson.MiddleName))
+                .AfterMap((s, d) =>
+                {
+                    var applicationUser = s.ApplicationUsers.FirstOrDefault();
+                    if (applicationUser != null)
+                    {
+                        d.UserName = applicationUser.UserName;
+                    }
+                });
 
-            configuration.CreateMap<CreateClientViewModel, Client>("Client")
+            configuration.CreateMap<EditClientViewModel, Client>("Client")
+                .ForMember(m => m.ClientId, opt => opt.MapFrom(s => s.ClientId))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.ActivityTypeId, opt => opt.MapFrom(s => s.ActivityTypeId))
                 .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
                 .ForMember(m => m.AdditionalPhoneNumber, opt => opt.MapFrom(s => s.AdditionalPhoneNumber))
                 .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
                 .ForMember(m => m.ResponsiblePerson, opt => opt.MapFrom(s => s))
-                .ForMember(m => m.ClientStatusId, opt => opt.MapFrom(s => ClientStatuses.Active))
                 .ForMember(m => m.ApplicationUsers, opt => opt.Ignore())
-                .ForMember(m => m.CreatedAt, opt => opt.Ignore());
+                .ForMember(m => m.ResponsiblePersonId, opt => opt.Ignore())
+                .ForMember(m => m.CreatedAt, opt => opt.Ignore())
+                .AfterMap((s, d) =>
+                {
+                    var applicationUser = d.ApplicationUsers.FirstOrDefault();
+                    if (applicationUser != null)
+                    {
+                        applicationUser.UserName = s.UserName;
+                    }
+                });
 
-            configuration.CreateMap<CreateClientViewModel, Person>("ClientPerson")
+            configuration.CreateMap<EditClientViewModel, Person>("ClientPerson")
                 .ForMember(m => m.LastName, opt => opt.MapFrom(s => s.ResponsiblePersonLastName))
                 .ForMember(m => m.FirstName, opt => opt.MapFrom(s => s.ResponsiblePersonFirstName))
                 .ForMember(m => m.MiddleName, opt => opt.MapFrom(s => s.ResponsiblePersonMiddleName));

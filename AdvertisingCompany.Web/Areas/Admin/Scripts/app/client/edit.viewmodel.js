@@ -1,12 +1,14 @@
-﻿var CreateClientViewModel = function (app, dataModel) {
+﻿var EditClientViewModel = function (app, dataModel) {
     var self = this;
     self.isValidationEnabled = ko.observable(false);
 
+    self.clientId = ko.observable(dataModel.activityTypeId || '').extend({
+        required: { params: true }
+    });
     self.companyName = ko.observable(dataModel.companyName || '').extend({
         required: {
             params: true,
-            message: "Необходимо указать наименование компании.",
-            onlyIf: function () { return self.isValidationEnabled(); }
+            message: "Необходимо указать наименование компании."
         }
     });
     self.activityTypeId = ko.observable(dataModel.activityTypeId || '').extend({
@@ -15,61 +17,59 @@
             message: "Необходимо указать вид деятельности клиента.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
+
+    self.activityTypeInitialId = ko.observable();
+    self.activityTypeInitialized = ko.observable(false);
     self.activityTypes = ko.observableArray(dataModel.activityTypes || []);
 
     self.responsiblePersonId = ko.observable(dataModel.responsiblePersonId || '');
     self.responsiblePersonLastName = ko.observable(dataModel.responsiblePersonLastName || '').extend({
         required: {
             params: true,
-            message: "Введите фамилию.",
-            onlyIf: function () { return self.isValidationEnabled(); }
+            message: "Введите фамилию."
         }
-    });;
+    });
     self.responsiblePersonFirstName = ko.observable(dataModel.responsiblePersonFirstName || '').extend({
         required: {
             params: true,
-            message: "Введите имя.",
-            onlyIf: function () { return self.isValidationEnabled(); }
+            message: "Введите имя."
         }
-    });;
+    });
     self.responsiblePersonMiddleName = ko.observable(dataModel.responsiblePersonMiddleName || '');
     self.phoneNumber = ko.observable(dataModel.phoneNumber || '').extend({
         required: {
             params: true,
-            message: "Введите номер телефона.",
-            onlyIf: function () { return self.isValidationEnabled(); }
+            message: "Введите номер телефона."
         }
-    });;
+    });
     self.additionalPhoneNumber = ko.observable(dataModel.additionalPhoneNumber || '');
     self.email = ko.observable(dataModel.email || '');
     self.userName = ko.observable(dataModel.userName || '').extend({
         required: {
             params: true,
-            message: "Введите имя пользователя.",
-            onlyIf: function () { return self.isValidationEnabled(); }
+            message: "Введите имя пользователя."
         }
-    });;
+    });
     self.password = ko.observable(dataModel.password || '').extend({
         required: {
             params: true,
-            message: "Введите пароль.",
-            onlyIf: function () { return self.isValidationEnabled(); }
+            message: "Введите пароль."
         }
-    });;
+    });
     self.confirmPassword = ko.observable(dataModel.confirmPassword || '').extend({
         required: {
             params: true,
-            message: "Введите подтверждение пароля.",
-            onlyIf: function () { return self.isValidationEnabled(); }
+            message: "Введите подтверждение пароля."
         }
-    });;
+    });
 
     Sammy(function () {
-        this.get('#clients/create', function () {
+        this.get('#clients/:id/edit', function () {
+            var id = this.params['id'];
             $.ajax({
                 method: 'get',
-                url: '/admin/api/clients/0',
+                url: '/admin/api/clients/' + id,
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
@@ -85,9 +85,12 @@
                     };
 
                     ko.mapping.fromJS(response, mappings, self);
-                    $('#activityTypeId').selectpicker('refresh');
 
                     app.view(self);
+
+                    // TODO: Найти способ задать значение во время маппинга
+                    self.activityTypeId(response.activityTypeId);
+                    self.activityTypeInitialId(response.activityTypeId);
                 }
             });
         });
@@ -98,7 +101,7 @@
         var postData = ko.toJSON(self);
 
         $.ajax({
-            method: 'post',
+            method: 'put',
             url: '/admin/api/clients/',
             data: postData,
             contentType: "application/json; charset=utf-8",
@@ -123,7 +126,7 @@
                 Sammy().setLocation('#clients');
                 $.notify({
                     icon: 'glyphicon glyphicon-ok',
-                    message: "Клиент успешно сохранён."
+                    message: "Клиент успешно изменён."
                 }, {
                     type: 'success'
                 });
@@ -143,7 +146,7 @@
 }
 
 app.addViewModel({
-    name: "CreateClient",
-    bindingMemberName: "createClient",
-    factory: CreateClientViewModel
+    name: "EditClient",
+    bindingMemberName: "editClient",
+    factory: EditClientViewModel
 });
