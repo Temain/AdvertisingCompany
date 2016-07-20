@@ -3,7 +3,7 @@ using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.Models.Mapping;
 using AutoMapper;
 
-namespace AdvertisingCompany.Web.Areas.Admin.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
 {
     public class ClientStatusViewModel : IHaveCustomMappings
     {

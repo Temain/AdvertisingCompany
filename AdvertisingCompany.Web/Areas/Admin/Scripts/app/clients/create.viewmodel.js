@@ -15,7 +15,7 @@
             message: "Необходимо указать вид деятельности клиента.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.activityTypes = ko.observableArray(dataModel.activityTypes || []);
 
     self.responsiblePersonId = ko.observable(dataModel.responsiblePersonId || '');
@@ -25,14 +25,14 @@
             message: "Введите фамилию.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.responsiblePersonFirstName = ko.observable(dataModel.responsiblePersonFirstName || '').extend({
         required: {
             params: true,
             message: "Введите имя.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.responsiblePersonMiddleName = ko.observable(dataModel.responsiblePersonMiddleName || '');
     self.phoneNumber = ko.observable(dataModel.phoneNumber || '').extend({
         required: {
@@ -40,7 +40,7 @@
             message: "Введите номер телефона.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.additionalPhoneNumber = ko.observable(dataModel.additionalPhoneNumber || '');
     self.email = ko.observable(dataModel.email || '');
     self.userName = ko.observable(dataModel.userName || '').extend({
@@ -49,21 +49,21 @@
             message: "Введите имя пользователя.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.password = ko.observable(dataModel.password || '').extend({
         required: {
             params: true,
             message: "Введите пароль.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.confirmPassword = ko.observable(dataModel.confirmPassword || '').extend({
         required: {
             params: true,
             message: "Введите подтверждение пароля.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
 
     Sammy(function () {
         this.get('#clients/create', function () {

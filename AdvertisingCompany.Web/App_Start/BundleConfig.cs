@@ -62,6 +62,9 @@
 
             bundles.Add(new StyleBundle("~/Content/datatables")
                 .Include("~/Content/datatables/jquery.dataTables.css"));
+
+            bundles.Add(new StyleBundle("~/Content/kladr")
+                .Include("~/Content/kladr/jquery.kladr.min.css"));
         }
 
         /// <summary>
@@ -139,6 +142,7 @@
                 .Include("~/Areas/Admin/Scripts/app/clients/edit.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/activities/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/addresses/list.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/addresses/create.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/campaigns/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/reports/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/analytics/analytics.viewmodel.js")
@@ -213,6 +217,11 @@
             Bundle notifyBundle = new ScriptBundle("~/bundles/bootstrap-notify")
                 .Include("~/Scripts/bootstrap-notify/bootstrap-notify.js");
             bundles.Add(notifyBundle);
+
+            Bundle kladrBundle = new ScriptBundle("~/bundles/kladr")
+                .Include("~/Scripts/kladr/jquery.kladr.min.js")
+                .Include("~/Scripts/kladr/form_with_map.js");
+            bundles.Add(kladrBundle);
 
             // Script bundle for the site. The fall-back scripts are for when a CDN fails, in this case we load a local
             // copy of the script instead.

@@ -9,6 +9,8 @@ using AdvertisingCompany.Domain.DataAccess.Interfaces;
 using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.ActionFilters;
 using AdvertisingCompany.Web.Areas.Admin.Models;
+using AdvertisingCompany.Web.Areas.Admin.Models.ActivityType;
+using AdvertisingCompany.Web.Areas.Admin.Models.Client;
 using AdvertisingCompany.Web.Controllers;
 using AutoMapper;
 using Microsoft.AspNet.Identity;

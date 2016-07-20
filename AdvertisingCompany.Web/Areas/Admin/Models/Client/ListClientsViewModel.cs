@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AdvertisingCompany.Web.Areas.Admin.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
 {
     public class ListClientsViewModel
     {

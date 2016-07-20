@@ -23,6 +23,12 @@ namespace AdvertisingCompany.Domain.Models
         public string MicrodistrictName { get; set; }
 
         /// <summary>
+        /// Сокращённое наименование микрорайона
+        /// </summary>
+        [Required]
+        public string MicrodistrictShortName { get; set; }
+
+        /// <summary>
         /// Рекламные кампании клиентов с данным микрорайоном
         /// </summary>
         public ICollection<Campaign> Campaigns { get; set; }
@@ -31,10 +37,5 @@ namespace AdvertisingCompany.Domain.Models
         /// Рекламные поверхности данного микрорайона
         /// </summary>
         public ICollection<Address> Addresses { get; set; }
-
-        /// <summary>
-        /// Улицы данного микрорайона
-        /// </summary>
-        public ICollection<Street> Streets { get; set; }
     }
 }

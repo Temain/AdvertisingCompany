@@ -245,6 +245,7 @@
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\ActivityType\ActivityTypeViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Address\MicrodistrictViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\AddressViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Client\ClientStatusViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Client\ClientViewModel.cs" />
@@ -310,6 +311,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Scripts\app\activities\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\addresses\create.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\addresses\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\campaigns\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\clients\edit.viewmodel.js" />
@@ -397,6 +399,9 @@
     <Content Include="Content\images\datatables\sort_desc_disabled.png" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\sing\search.png" />
+    <Content Include="Content\images\spinner.png" />
+    <Content Include="Content\kladr\jquery.kladr.min.css" />
+    <Content Include="Content\kladr\style.css" />
     <Content Include="Content\sing\application-ie9-part2.css" />
     <Content Include="Content\sing\application.commented.css" />
     <Content Include="Content\sing\application.css" />
@@ -468,8 +473,6 @@
     <Content Include="Fonts\google\roboto-light.woff" />
     <Content Include="Fonts\google\roboto-medium.woff" />
     <Content Include="Fonts\google\roboto-regular.woff" />
-    <Content Include="Areas\Admin\Views\Addresses\CreateOld.cshtml" />
-    <Content Include="Areas\Admin\Views\Addresses\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\Clients\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Reports\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -568,6 +571,7 @@
     <Content Include="Areas\Admin\Views\Reports\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Campaigns\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Activities\_Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\_Create.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -620,6 +624,11 @@
     <Content Include="Scripts\jQuery-slimScroll\examples\style.css" />
     <Content Include="Scripts\jQuery-slimScroll\jquery.slimscroll.js" />
     <Content Include="Scripts\jQuery-slimScroll\jquery.slimscroll.min.js" />
+    <Content Include="Scripts\kladr\core.js" />
+    <Content Include="Scripts\kladr\form_with_map.js" />
+    <Content Include="Scripts\kladr\jquery.kladr.min.js" />
+    <Content Include="Scripts\kladr\kladr.js" />
+    <Content Include="Scripts\kladr\kladr_zip.js" />
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\knockout-server-side-validation.js" />

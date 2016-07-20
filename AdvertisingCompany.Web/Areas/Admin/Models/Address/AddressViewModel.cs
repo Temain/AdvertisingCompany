@@ -1,7 +1,6 @@
-﻿using AdvertisingCompany.Domain.Models;
-using AdvertisingCompany.Web.Models.Mapping;
+﻿using AdvertisingCompany.Web.Models.Mapping;
 
-namespace AdvertisingCompany.Web.Areas.Admin.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
 {
     public class AddressViewModel : IHaveCustomMappings
     {
@@ -21,14 +20,14 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
-            configuration.CreateMap<Address, AddressViewModel>("Address")
-                .ForMember(m => m.AddressId, opt => opt.MapFrom(s => s.AddressId))
-                .ForMember(m => m.City, opt => opt.MapFrom(s => s.Street.City.CityName))
-                .ForMember(m => m.Area, opt => opt.MapFrom(s => s.Area.AreaName))
-                .ForMember(m => m.Street, opt => opt.MapFrom(s => s.Street.StreetName))
-                .ForMember(m => m.HouseNumber, opt => opt.MapFrom(s => s.HouseNumber))
-                .ForMember(m => m.BuildingNumber, opt => opt.MapFrom(s => s.BuildingNumber));
-                //.ForMember(m => m.PorchNumber, opt => opt.MapFrom(s => s.PorchNumber));
+            configuration.CreateMap<Domain.Models.Address, AddressViewModel>("Address");
+            //.ForMember(m => m.AddressId, opt => opt.MapFrom(s => s.AddressId))
+            //.ForMember(m => m.City, opt => opt.MapFrom(s => s.Street.City.CityName))
+            //.ForMember(m => m.Area, opt => opt.MapFrom(s => s.Area.AreaName))
+            //.ForMember(m => m.Street, opt => opt.MapFrom(s => s.Street.StreetName))
+            //.ForMember(m => m.HouseNumber, opt => opt.MapFrom(s => s.HouseNumber))
+            //.ForMember(m => m.BuildingNumber, opt => opt.MapFrom(s => s.BuildingNumber));
+            //.ForMember(m => m.PorchNumber, opt => opt.MapFrom(s => s.PorchNumber));
         }
     }
 }

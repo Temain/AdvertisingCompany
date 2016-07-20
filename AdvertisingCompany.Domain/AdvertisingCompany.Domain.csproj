@@ -92,12 +92,26 @@
     <Compile Include="Migrations\201607171341512_RenameLabelClassFieldInClientStatus.Designer.cs">
       <DependentUpon>201607171341512_RenameLabelClassFieldInClientStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607200929215_RemakeAddressTables.cs" />
+    <Compile Include="Migrations\201607200929215_RemakeAddressTables.Designer.cs">
+      <DependentUpon>201607200929215_RemakeAddressTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607200950069_AddFieldsToAddressTable.cs" />
+    <Compile Include="Migrations\201607200950069_AddFieldsToAddressTable.Designer.cs">
+      <DependentUpon>201607200950069_AddFieldsToAddressTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607201001453_AddLatitudeAndLongitudeToAddressTable.cs" />
+    <Compile Include="Migrations\201607201001453_AddLatitudeAndLongitudeToAddressTable.Designer.cs">
+      <DependentUpon>201607201001453_AddLatitudeAndLongitudeToAddressTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607201011220_AddShortNameToMicrodistrictTable.cs" />
+    <Compile Include="Migrations\201607201011220_AddShortNameToMicrodistrictTable.Designer.cs">
+      <DependentUpon>201607201011220_AddShortNameToMicrodistrictTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
-    <Compile Include="Models\Area.cs" />
     <Compile Include="Models\Campaign.cs" />
-    <Compile Include="Models\City.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientStatus.cs" />
@@ -108,7 +122,6 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\PlacementFormat.cs" />
     <Compile Include="Models\AddressReport.cs" />
-    <Compile Include="Models\Street.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -130,6 +143,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607171341512_RenameLabelClassFieldInClientStatus.resx">
       <DependentUpon>201607171341512_RenameLabelClassFieldInClientStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607200929215_RemakeAddressTables.resx">
+      <DependentUpon>201607200929215_RemakeAddressTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607200950069_AddFieldsToAddressTable.resx">
+      <DependentUpon>201607200950069_AddFieldsToAddressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607201001453_AddLatitudeAndLongitudeToAddressTable.resx">
+      <DependentUpon>201607201001453_AddLatitudeAndLongitudeToAddressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607201011220_AddShortNameToMicrodistrictTable.resx">
+      <DependentUpon>201607201011220_AddShortNameToMicrodistrictTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

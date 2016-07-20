@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 using AdvertisingCompany.Domain.Models;
-using AdvertisingCompany.Web.Constants;
+using AdvertisingCompany.Web.Areas.Admin.Models.ActivityType;
 using AdvertisingCompany.Web.Models.Mapping;
 using AutoMapper;
 
-namespace AdvertisingCompany.Web.Areas.Admin.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
 {
     public class EditClientViewModel : IHaveCustomMappings
     {
@@ -60,7 +58,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
 
         public void CreateMappings(IConfiguration configuration)
         {
-            configuration.CreateMap<Client, EditClientViewModel>("Client")
+            configuration.CreateMap<Domain.Models.Client, EditClientViewModel>("Client")
                 .ForMember(x => x.ResponsiblePersonLastName, opt => opt.MapFrom(s => s.ResponsiblePerson.LastName))
                 .ForMember(x => x.ResponsiblePersonFirstName, opt => opt.MapFrom(s => s.ResponsiblePerson.FirstName))
                 .ForMember(x => x.ResponsiblePersonMiddleName, opt => opt.MapFrom(s => s.ResponsiblePerson.MiddleName))
@@ -73,7 +71,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
                     }
                 });
 
-            configuration.CreateMap<EditClientViewModel, Client>("Client")
+            configuration.CreateMap<EditClientViewModel, Domain.Models.Client>("Client")
                 .ForMember(m => m.ClientId, opt => opt.MapFrom(s => s.ClientId))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.ActivityTypeId, opt => opt.MapFrom(s => s.ActivityTypeId))

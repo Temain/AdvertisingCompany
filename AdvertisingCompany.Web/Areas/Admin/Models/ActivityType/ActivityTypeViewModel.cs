@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.Models.Mapping;
 using AutoMapper;
 
-namespace AdvertisingCompany.Web.Areas.Admin.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.ActivityType
 {
     public class ActivityTypeViewModel : IHaveCustomMappings
     {
@@ -19,9 +18,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
 
         public void CreateMappings(IConfiguration configuration)
         {
-            configuration.CreateMap<ActivityTypeViewModel, ActivityType>("ActivityType");
+            configuration.CreateMap<ActivityTypeViewModel, Domain.Models.ActivityType>("ActivityType");
 
-            configuration.CreateMap<ActivityType, ActivityTypeViewModel>("ActivityType");
+            configuration.CreateMap<Domain.Models.ActivityType, ActivityTypeViewModel>("ActivityType");
         }
     }
 }

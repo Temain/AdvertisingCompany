@@ -10,9 +10,7 @@ namespace AdvertisingCompany.Domain.Context
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressReport> AddressReports { get; set; }
-        public DbSet<Area> Areas { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<City> Cities { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientStatus> ClientStatuses { get; set; }
         public DbSet<Microdistrict> Microdistricts { get; set; }
@@ -20,7 +18,6 @@ namespace AdvertisingCompany.Domain.Context
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<PlacementFormat> PlacementFormats { get; set; }
-        public DbSet<Street> Streets { get; set; }
         public DbSet<LogEntry> LogEntries { get; set; }
 
         public ApplicationDbContext()

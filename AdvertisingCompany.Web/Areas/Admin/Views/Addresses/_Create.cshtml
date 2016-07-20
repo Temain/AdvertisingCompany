@@ -1,0 +1,76 @@
+﻿<!-- ko with: createAddress -->
+<ol class="breadcrumb">
+    <li>ВЫ ЗДЕСЬ</li>
+    <li>Рекламные поверхности</li>
+    <li class="active">Добавление нового адреса</li>
+</ol>
+<h1 class="page-title">Добавление нового адреса</h1>
+<section class="widget">
+    <div class="widget-body">
+        <div class="row address mrgtop12">
+            <div class="col-md-5 col-md-offset-1">
+                <form class="form-horizontal js-form-address">
+                    <fieldset>
+                        <div class="form-group field">
+                            <label for="region" class="col-sm-4 control-label">Регион</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="region" id="region" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group field">
+                            <label for="district" class="col-sm-4 control-label">Район</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="district" id="district" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group field">
+                            <label for="city" class="col-sm-4 control-label">Город</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="city" id="city" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group field">
+                            <label for="street" class="col-sm-4 control-label">Улица</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="street" id="street" class="form-control" data-bind="value: street">
+                            </div>
+                        </div>
+                        <div class="form-group field">
+                            <label for="building" class="col-sm-4 control-label">Номер дома</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="building" id="building" class="form-control">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="addition">
+                    <div class="block">
+                        <p class="title">Текстовое представление адреса</p>
+                        <p id="address" class="value">350020, край. Краснодарский, г. Краснодар, ул. Красная, д. 105</p>
+                    </div>
+                    <div class="block">
+                        <p class="title">Выбранный объект</p>
+                        <ul class="js-log">
+                            <li data-prop="id" style="display: none;"><span class="name">Код:</span> <span class="value"></span></li>
+                            <li data-prop="zip" style="display: none;"><span class="name">Почтовый индекс:</span> <span class="value"></span></li>
+                            <li data-prop="name" style="display: none;"><span class="name">Название:</span> <span class="value"></span></li>
+                            <li data-prop="type" style="display: none;"><span class="name">Подпись:</span> <span class="value"></span></li>
+                            <li data-prop="typeShort" style="display: none;"><span class="name">Подпись коротко:</span> <span class="value"></span></li>
+                            <li data-prop="contentType" style="display: none;">
+                                <span class="name">Тип объекта:</span> <span class="value"></span>
+                            </li>
+                            <li data-prop="okato" style="display: none;">
+                                <span class="name">ОКАТО:</span> <span class="value"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="map" class="panel-map" style="width:500px; height: 500px;"></div>
+            </div>           
+        </div>
+    </div>
+</section>
+<!-- /ko -->
+

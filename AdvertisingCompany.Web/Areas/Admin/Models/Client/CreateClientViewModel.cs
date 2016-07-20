@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using AdvertisingCompany.Domain.Models;
+using AdvertisingCompany.Web.Areas.Admin.Models.ActivityType;
 using AdvertisingCompany.Web.Constants;
 using AdvertisingCompany.Web.Models.Mapping;
 using AutoMapper;
 
-namespace AdvertisingCompany.Web.Areas.Admin.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
 {
     public class CreateClientViewModel : IHaveCustomMappings
     {
@@ -70,9 +68,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
 
         public void CreateMappings(IConfiguration configuration)
         {
-            configuration.CreateMap<Client, CreateClientViewModel>("Client");
+            configuration.CreateMap<Domain.Models.Client, CreateClientViewModel>("Client");
 
-            configuration.CreateMap<CreateClientViewModel, Client>("Client")
+            configuration.CreateMap<CreateClientViewModel, Domain.Models.Client>("Client")
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.ActivityTypeId, opt => opt.MapFrom(s => s.ActivityTypeId))
                 .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))

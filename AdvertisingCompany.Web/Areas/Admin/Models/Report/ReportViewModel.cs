@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.Models.Mapping;
 
-namespace AdvertisingCompany.Web.Areas.Admin.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
 {
     public class ReportViewModel : IHaveCustomMappings
     {

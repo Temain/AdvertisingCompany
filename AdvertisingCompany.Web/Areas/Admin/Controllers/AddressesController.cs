@@ -9,6 +9,9 @@ using AdvertisingCompany.Domain.DataAccess.Interfaces;
 using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.ActionFilters;
 using AdvertisingCompany.Web.Areas.Admin.Models;
+using AdvertisingCompany.Web.Areas.Admin.Models.ActivityType;
+using AdvertisingCompany.Web.Areas.Admin.Models.Address;
+using AdvertisingCompany.Web.Areas.Admin.Models.Client;
 using AdvertisingCompany.Web.Controllers;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -62,37 +65,39 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // GET: admin/api/addresses/0 (new) or admin/api/addresses/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
-        [ResponseType(typeof(CreateClientViewModel))]
-        [ResponseType(typeof(EditClientViewModel))]
+        [ResponseType(typeof(CreateAddressViewModel))]
+        // [ResponseType(typeof(EditClientViewModel))]
         public IHttpActionResult GetAddress(int id)
         {
-            var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory))
+            var microdistricts = UnitOfWork.Repository<Microdistrict>()
+                .Get(orderBy: o => o.OrderBy(p => p.MicrodistrictName))
                 .ToList();
-            var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
+            var microdistrictViewModels = Mapper.Map<IEnumerable<Microdistrict>, IEnumerable<MicrodistrictViewModel>>(microdistricts);
 
             if (id == 0)
             {
-                var viewModel = new CreateClientViewModel();
-                viewModel.ActivityTypes = activityTypeViewModels;
+                var viewModel = new CreateAddressViewModel();
+                viewModel.Microdistricts = microdistrictViewModels;
                 return Ok(viewModel);
             }
             else
             {
-                var client = UnitOfWork.Repository<Client>()
-                    .Get(x => x.ClientId == id && x.DeletedAt == null,
-                        includeProperties: "ResponsiblePerson, ApplicationUsers")
-                    .SingleOrDefault();
-                if (client == null)
-                {
-                    return BadRequest();
-                }
+                //var client = UnitOfWork.Repository<Client>()
+                //    .Get(x => x.ClientId == id && x.DeletedAt == null,
+                //        includeProperties: "ResponsiblePerson, ApplicationUsers")
+                //    .SingleOrDefault();
+                //if (client == null)
+                //{
+                //    return BadRequest();
+                //}
 
-                var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
-                viewModel.ActivityTypes = activityTypeViewModels;
+                //var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
+                //viewModel.Microdistricts = microdistrictViewModels;
 
-                return Ok(viewModel);
+                //return Ok(viewModel);
             }
+
+            return Ok();
         }
 
 

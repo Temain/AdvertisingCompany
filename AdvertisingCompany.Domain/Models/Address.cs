@@ -24,18 +24,6 @@ namespace AdvertisingCompany.Domain.Models
         public string ManagementCompanyName { get; set; }
 
         /// <summary>
-        /// Район
-        /// </summary>
-        public int? AreaId { get; set; }
-        public virtual Area Area { get; set; }
-
-        /// <summary>
-        /// Город
-        /// </summary>
-        public int? CityId { get; set; }
-        public City City { get; set; }
-
-        /// <summary>
         /// Микрорайон города
         /// </summary>
         public int MicrodistrictId { get; set; }
@@ -44,8 +32,7 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Улица 
         /// </summary>
-        public int StreetId { get; set; }
-        public Street Street { get; set; }
+        public string Street { get; set; }
 
         /// <summary>
         /// Номер дома
@@ -75,10 +62,30 @@ namespace AdvertisingCompany.Domain.Models
         /// </summary>
         public int NumberOfFloors { get; set; }
 
-        ///// <summary>
-        ///// Номер подъезда
-        ///// </summary>
-        //public string PorchNumber { get; set; }
+        /// <summary>
+        /// Идентификатор КЛАДР
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
+        /// Почтовый индекс
+        /// </summary>
+        public string Zip { get; set; }
+
+        /// <summary>
+        /// Идентификатор ОКАТО
+        /// </summary>
+        public string Okato { get; set; }
+
+        /// <summary>
+        /// Широта
+        /// </summary>
+        public double Latitude { get; set; }
+
+        /// <summary>
+        /// Долгота
+        /// </summary>
+        public double Longitude { get; set; }
 
         /// <summary>
         /// Дата заключения договора
@@ -88,19 +95,16 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Дата создания записи
         /// </summary>
-        [JsonIgnore]
         public DateTime? CreatedAt { get; set; }
 
         /// <summary>
         /// Дата обновления записи
         /// </summary>
-        [JsonIgnore]
         public DateTime? UpdatedAt { get; set; }
 
         /// <summary>
         /// Дата удаления записи
         /// </summary>
-        [JsonIgnore]
         public DateTime? DeletedAt { get; set; }
 
         /// <summary>

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Linq;
-using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.Models.Mapping;
-using Newtonsoft.Json;
 
-namespace AdvertisingCompany.Web.Areas.Admin.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
 {
     public class ClientViewModel : IHaveCustomMappings
     {
@@ -65,7 +61,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
-            configuration.CreateMap<Client, ClientViewModel>("Client")
+            configuration.CreateMap<Domain.Models.Client, ClientViewModel>("Client")
                 .ForMember(m => m.ClientId, opt => opt.MapFrom(s => s.ClientId))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.ActivityTypeId, opt => opt.MapFrom(s => s.ActivityTypeId))

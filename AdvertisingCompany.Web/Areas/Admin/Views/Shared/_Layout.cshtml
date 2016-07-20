@@ -4,6 +4,7 @@
     <title>Рекламная компания</title>
     @Styles.Render("~/Content/select")
     @Styles.Render("~/Content/datatables")
+    @Styles.Render("~/Content/kladr")
     @Styles.Render("~/Content/sing")
 
     <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
@@ -45,6 +46,8 @@
 @Scripts.Render("~/bundles/bootstrap")
 @Scripts.Render("~/bundles/bootstrap-notify")
 @Scripts.Render("~/bundles/sing")
+@Scripts.Render("~/bundles/kladr")
+<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 @RenderSection("Scripts", required: false)
 </body>
 </html>
