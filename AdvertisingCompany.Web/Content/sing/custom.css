@@ -64,6 +64,10 @@ input.required {
     font-weight: bold;
 }
 
+.text-usual {
+    color: #666666 !important;
+}
+
 .back-link {
   margin-top: 6px;
   font-size: 2em;
@@ -88,6 +92,10 @@ input.required {
 
 .actions > a {
     text-decoration: none !important;
+}
+
+.actions > a:hover  .text-usual {
+    color: #333333 !important;
 }
 
 /* Tables
