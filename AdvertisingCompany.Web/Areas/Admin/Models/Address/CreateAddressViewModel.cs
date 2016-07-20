@@ -7,11 +7,33 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
 {
     public class CreateAddressViewModel : IHaveCustomMappings
     {
+        public CreateAddressViewModel()
+        {
+            NumberOfEntrances = 1;
+            NumberOfFloors = 1;
+            NumberOfSurfaces = 1;
+        }
+
         /// <summary>
         /// Наименование управляющей компании или ТСЖ 
         /// </summary>
         [Required]
         public string ManagementCompanyName { get; set; }
+
+        /// <summary>
+        /// Регион 
+        /// </summary>
+        public LocationViewModel Region { get; set; }
+
+        /// <summary>
+        /// Район
+        /// </summary>
+        public LocationViewModel District { get; set; }
+
+        /// <summary>
+        /// Город
+        /// </summary>
+        public LocationViewModel City { get; set; }
 
         /// <summary>
         /// Микрорайон города
@@ -22,14 +44,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// <summary>
         /// Улица 
         /// </summary>
-        public string Street { get; set; }
+        public LocationViewModel Street { get; set; }
 
         /// <summary>
         /// Номер строения
         /// </summary>
-        [Required]
-        [StringLength(10)]
-        public string Building { get; set; }
+        public LocationViewModel Building { get; set; }
 
         /// <summary>
         /// Количество подъездов
@@ -47,21 +67,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         public int NumberOfFloors { get; set; }
 
         /// <summary>
-        /// Идентификатор КЛАДР
-        /// </summary>
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Почтовый индекс
-        /// </summary>
-        public string Zip { get; set; }
-
-        /// <summary>
-        /// Идентификатор ОКАТО
-        /// </summary>
-        public string Okato { get; set; }
-
-        /// <summary>
         /// Широта
         /// </summary>
         public double Latitude { get; set; }
@@ -76,9 +81,16 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// </summary>
         public DateTime? ContractDate { get; set; }
 
+
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
-            configuration.CreateMap<CreateAddressViewModel, Domain.Models.Address>("Address");
+            configuration.CreateMap<CreateAddressViewModel, Domain.Models.Address>("Address")
+                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => DateTime.Now))
+                .ForMember(m => m.RegionId, opt => opt.Ignore())
+                .ForMember(m => m.DistrictId, opt => opt.Ignore())
+                .ForMember(m => m.CityId, opt => opt.Ignore())
+                .ForMember(m => m.StreetId, opt => opt.Ignore())
+                .ForMember(m => m.BuildingId, opt => opt.Ignore());
         }
     }
 }

@@ -245,6 +245,8 @@
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\ActivityType\ActivityTypeViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Address\LocationViewModelOld.cs" />
+    <Compile Include="Areas\Admin\Models\Address\LocationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\MicrodistrictViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\AddressViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Client\ClientStatusViewModel.cs" />

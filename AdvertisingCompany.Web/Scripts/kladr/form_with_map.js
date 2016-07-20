@@ -78,7 +78,7 @@ var kladrWithMap = {
         $city.kladr('withParents', true);
         $street.kladr('withParents', true);
         $building.kladr('withParents', true);
-
+        
         // Отключаем проверку введённых данных для строений
         $building.kladr('verify', false);
 
@@ -87,7 +87,7 @@ var kladrWithMap = {
             map_created = true;
 
             map = new ymaps.Map('map', {
-                center: [55.76, 37.64],
+                center: [38.951409, 45.272365],
                 zoom: 12,
                 controls: []
             });
@@ -98,6 +98,10 @@ var kladrWithMap = {
                     top: 10
                 }
             });
+
+            // Значения по умолчанию [ Краснодарский край, город Краснодар ]
+            $region.kladr('controller').setValueById("2300000000000");
+            $city.kladr('controller').setValueById("2300000100000");
         });
 
         function setLabel($input, text) {

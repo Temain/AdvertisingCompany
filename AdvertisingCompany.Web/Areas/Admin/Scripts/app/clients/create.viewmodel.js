@@ -142,6 +142,12 @@
     };
 }
 
+CreateClientViewModel.prototype.toJSON = function () {
+    var copy = ko.toJS(this);
+    delete copy.activityTypes;
+    return copy;
+}
+
 app.addViewModel({
     name: "CreateClient",
     bindingMemberName: "createClient",

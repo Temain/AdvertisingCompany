@@ -159,8 +159,8 @@
             bundles.Add(knockoutBundle);
 
             Bundle singBundle = new ScriptBundle("~/bundles/sing")
-                .Include("~/Scripts/bootstrap/transition.js")
-                .Include("~/Scripts/bootstrap/collapse.js")
+                //.Include("~/Scripts/bootstrap/transition.js")
+                //.Include("~/Scripts/bootstrap/collapse.js")
                 .Include("~/Scripts/bootstrap/button.js")
                 .Include("~/Scripts/bootstrap/tooltip.js")
                 .Include("~/Scripts/bootstrap/alert.js")

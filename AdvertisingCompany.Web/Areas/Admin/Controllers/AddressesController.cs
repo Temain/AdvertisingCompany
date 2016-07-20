@@ -152,27 +152,67 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostAddress(CreateClientViewModel viewModel)
+        public IHttpActionResult PostAddress(CreateAddressViewModel viewModel)
         {
-            var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
+            var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
 
-            var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
-            var result = UserManager.Create(user, viewModel.Password);
-            if (result.Succeeded)
+            var locationProperties = address
+                .GetType()
+                .GetProperties()
+                .Where(p => p.PropertyType == typeof(Location))
+                .Select(x => x.GetValue(address))
+                .Where(x => x != null)
+                .Cast<Location>();
+           
+            var locationTypes = locationProperties.Select(p => p.LocationType.LocationTypeName);
+            var locationTypesInDb = UnitOfWork.Repository<LocationType>()
+                .GetQ(x => locationTypes.Contains(x.LocationTypeName));
+            var locationTypesNotInDb = locationTypes.Except(locationTypesInDb.Select(x => x.LocationTypeName));
+            var locationTypesForInsert = locationProperties.Where(p => locationTypesNotInDb.Contains(p.LocationType.LocationTypeName))
+                .Select(p => p.LocationType);
+            foreach(var locationType in locationTypesForInsert)
             {
-                UnitOfWork.Repository<Client>().Insert(client);
+                UnitOfWork.Repository<LocationType>().Insert(locationType);
                 UnitOfWork.Save();
-
-                user.ClientId = client.ClientId;
-                UserManager.Update(user);
             }
-            else
+
+            if (address.Region != null)
             {
-                foreach (var error in result.Errors)
+                var region = UnitOfWork.Repository<Location>()
+                    .GetQ(r => r.Code == address.Region.Code)
+                    .SingleOrDefault();
+                if(region != null)
                 {
-                    ModelState.AddModelError("", error);
+
+                }
+                else
+                {
+
                 }
             }
+
+            if (address.District != null)
+            {
+
+            }
+
+            if (address.City != null)
+            {
+
+            }
+
+            if (address.Street != null)
+            {
+
+            }
+
+            if (address.Building != null)
+            {
+
+            }
+
+            // UnitOfWork.Repository<Address>().Insert(address);
+            // UnitOfWork.Save();
 
             // См. атрибут KoJsonValidate 
             if (!ModelState.IsValid)
