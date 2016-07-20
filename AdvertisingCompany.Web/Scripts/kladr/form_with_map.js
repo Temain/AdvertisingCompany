@@ -73,8 +73,11 @@ var kladrWithMap = {
         $building.kladr('type', $.kladr.type.building);
 
         // Включаем получение родительских объектов для населённых пунктов
+        $region.kladr('withParents', true);
+        $district.kladr('withParents', true);
         $city.kladr('withParents', true);
         $street.kladr('withParents', true);
+        $building.kladr('withParents', true);
 
         // Отключаем проверку введённых данных для строений
         $building.kladr('verify', false);

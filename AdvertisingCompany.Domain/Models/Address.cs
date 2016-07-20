@@ -24,6 +24,27 @@ namespace AdvertisingCompany.Domain.Models
         public string ManagementCompanyName { get; set; }
 
         /// <summary>
+        /// Регион 
+        /// </summary>
+        public int RegionId { get; set; }
+        [ForeignKey("RegionId")]
+        public Location Region { get; set; }
+
+        /// <summary>
+        /// Район
+        /// </summary>
+        public int? DistrictId { get; set; }
+        [ForeignKey("DistrictId")]
+        public Location District { get; set; }
+
+        /// <summary>
+        /// Город
+        /// </summary>
+        public int CityId { get; set; }
+        [ForeignKey("CityId")]
+        public Location City { get; set; }
+
+        /// <summary>
         /// Микрорайон города
         /// </summary>
         public int MicrodistrictId { get; set; }
@@ -32,20 +53,16 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Улица 
         /// </summary>
-        public string Street { get; set; }
+        public int StreetId { get; set; }
+        [ForeignKey("StreetId")]
+        public Location Street { get; set; }
 
         /// <summary>
-        /// Номер дома
+        /// Номер строения
         /// </summary>
-        [Required]
-        [StringLength(10)]
-        public string HouseNumber { get; set; }
-
-        /// <summary>
-        /// Номер корпуса
-        /// </summary>
-        [StringLength(10)]
-        public string BuildingNumber { get; set; }
+        public int BuildingId { get; set; }
+        [ForeignKey("BuildingId")]
+        public Location Building { get; set; }
 
         /// <summary>
         /// Количество подъездов
@@ -60,22 +77,7 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Количество этажей
         /// </summary>
-        public int NumberOfFloors { get; set; }
-
-        /// <summary>
-        /// Идентификатор КЛАДР
-        /// </summary>
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Почтовый индекс
-        /// </summary>
-        public string Zip { get; set; }
-
-        /// <summary>
-        /// Идентификатор ОКАТО
-        /// </summary>
-        public string Okato { get; set; }
+        public int NumberOfFloors { get; set; }  
 
         /// <summary>
         /// Широта

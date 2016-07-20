@@ -25,17 +25,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         public string Street { get; set; }
 
         /// <summary>
-        /// Номер дома
+        /// Номер строения
         /// </summary>
         [Required]
         [StringLength(10)]
-        public string HouseNumber { get; set; }
-
-        /// <summary>
-        /// Номер корпуса
-        /// </summary>
-        [StringLength(10)]
-        public string BuildingNumber { get; set; }
+        public string Building { get; set; }
 
         /// <summary>
         /// Количество подъездов

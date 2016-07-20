@@ -38,7 +38,7 @@
                         <div class="form-group field">
                             <label for="building" class="col-sm-4 control-label">Номер дома</label>
                             <div class="col-sm-6">
-                                <input type="text" name="building" id="building" class="form-control">
+                                <input type="text" name="building" id="building" class="form-control" data-bind="value: building">
                             </div>
                         </div>
                     </fieldset>
@@ -46,10 +46,10 @@
                 <div class="addition">
                     <div class="block">
                         <p class="title">Текстовое представление адреса</p>
-                        <p id="address" class="value">350020, край. Краснодарский, г. Краснодар, ул. Красная, д. 105</p>
+                        <p id="address" class="value"></p>
                     </div>
                     <div class="block">
-                        <p class="title">Выбранный объект</p>
+                        <p class="title">Выбранный объект:</p>
                         <ul class="js-log">
                             <li data-prop="id" style="display: none;"><span class="name">Код:</span> <span class="value"></span></li>
                             <li data-prop="zip" style="display: none;"><span class="name">Почтовый индекс:</span> <span class="value"></span></li>

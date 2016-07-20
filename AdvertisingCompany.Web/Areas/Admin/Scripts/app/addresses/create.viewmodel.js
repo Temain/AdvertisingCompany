@@ -5,8 +5,7 @@
     self.microdistrictId = ko.observable(dataModel.microdistrictId || '');
     self.microdistricts = ko.observableArray(dataModel.microdistricts || []);
     self.street = ko.observable(dataModel.street || '');
-    self.houseNumber = ko.observable(dataModel.houseNumber || '');
-    self.buildingNumber = ko.observable(dataModel.buildingNumber || '');
+    self.building = ko.observable(dataModel.building || '');
     self.numberOfEntrances = ko.observable(dataModel.numberOfEntrances || '');
     self.numberOfSurfaces = ko.observable(dataModel.numberOfSurfaces || '');
     self.numberOfFloors = ko.observable(dataModel.numberOfFloors || '');

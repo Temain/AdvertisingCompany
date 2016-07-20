@@ -29,6 +29,13 @@ namespace AdvertisingCompany.Domain.Models
         public string MicrodistrictShortName { get; set; }
 
         /// <summary>
+        /// Город
+        /// </summary>
+        public int CityId { get; set; }
+        [ForeignKey("CityId")]
+        public Location City { get; set; }
+
+        /// <summary>
         /// Рекламные кампании клиентов с данным микрорайоном
         /// </summary>
         public ICollection<Campaign> Campaigns { get; set; }
