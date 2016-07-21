@@ -171,7 +171,10 @@
                 .Include("~/Scripts/sing/settings.js")
                 .Include("~/Scripts/sing/app.js")
                 .Include("~/Scripts/sing/index.js")
-                .Include("~/Scripts/sing/custom.js");
+                .Include("~/Scripts/sing/custom.js")
+                .Include("~/Scripts/shufflejs/dist/jquery.shuffle.modernizr.min.js")
+                .Include("~/Scripts/magnific-popup/dist/jquery.magnific-popup.min.js")
+                .Include("~/Scripts/sing/gallery.js"); 
             bundles.Add(singBundle);
 
             Bundle singLoginBundle = new ScriptBundle("~/bundles/sing-login")

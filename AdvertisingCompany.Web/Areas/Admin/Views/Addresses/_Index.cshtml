@@ -64,6 +64,18 @@
                     <td class="text-center" data-bind="text: numberOfFloors"></td>
                     <td class="text-center" data-bind="text: contractDate"></td>
                     <td class="actions text-center">
+                        <a href="#" data-bind="attr : { href : '/admin/#addresses/' + addressId() + '/edit' }, tooltip: { title: 'Загрузить отчёт', placement: 'left', trigger: 'hover' }">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x white"></i>
+                                <i class="fa fa-arrow-circle-o-up fa-stack-2x text-usual"></i>
+                            </span>
+                        </a>
+                        @*<a href="#" data-bind="attr : { href : '/admin/#addresses/' + addressId() + '/edit' }, tooltip: { title: 'Просмотреть отчёты', placement: 'left', trigger: 'hover' }">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x white"></i>
+                                <i class="fa fa-eye fa-stack-2x text-usual"></i>
+                            </span>
+                        </a>*@
                         <a href="#" data-bind="attr : { href : '/admin/#addresses/' + addressId() + '/edit' }, tooltip: { title: 'Перейти к редактированию адреса', placement: 'left', trigger: 'hover' }">
                             <span class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x text-usual"></i>

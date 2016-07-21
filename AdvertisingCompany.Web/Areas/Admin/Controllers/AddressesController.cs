@@ -158,7 +158,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
 
             var addressExists = UnitOfWork.Repository<Address>()
-                .GetQ().Count(x => x.Building.Code == address.Building.Code && x.DeletedAt == null) > 0;
+                .GetQ().Count(x => x.Building.Code == address.Building.Code 
+                    && x.Building.LocationName == address.Building.LocationName 
+                    && x.DeletedAt == null) > 0;
             if (addressExists)
             {
                 ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");

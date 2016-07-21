@@ -72,10 +72,10 @@
                     app.view(self);
                     kladrWithMap.init({
                         defaultValues: {
-                            regionId: response.region.id,
-                            regionName: response.region.name,
-                            cityId: response.city.id,
-                            cityName: response.city.name,
+                            regionId: "2300000000000",
+                            regionName: "Краснодарский",
+                            cityId: "2300000100000",
+                            cityName: "Краснодар",
                         }
                     });
                 }
