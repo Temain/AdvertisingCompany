@@ -48,6 +48,15 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
 
         public void CreateMappings(IConfiguration configuration)
         {
+            configuration.CreateMap<Domain.Models.Location, LocationViewModel>("Location")
+                .ForMember(m => m.Id, opt => opt.MapFrom(s => s.Code))
+                .ForMember(m => m.ContentType, opt => opt.MapFrom(s => s.LocationLevel.LocationLevelName))
+                .ForMember(m => m.Name, opt => opt.MapFrom(s => s.LocationName))
+                .ForMember(m => m.Type, opt => opt.MapFrom(s => s.LocationType.LocationTypeShortName))
+                .ForMember(m => m.TypeShort, opt => opt.MapFrom(s => s.LocationType.LocationTypeShortName))
+                .ForMember(m => m.Zip, opt => opt.MapFrom(s => s.Zip))
+                .ForMember(m => m.Okato, opt => opt.MapFrom(s => s.Okato));
+
             configuration.CreateMap<LocationViewModel, Domain.Models.Location>("Location")
                 .ForMember(m => m.Code, opt => opt.MapFrom(s => s.Id.Trim()))
                 .ForMember(m => m.LocationName, opt => opt.MapFrom(s => s.Name.Trim()))

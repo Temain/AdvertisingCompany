@@ -82,7 +82,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             else
             {
                 var client = UnitOfWork.Repository<Client>()
-                    .Get(x => x.ClientId == id && x.DeletedAt == null,
+                    .GetQ(x => x.ClientId == id && x.DeletedAt == null,
                         includeProperties: "ResponsiblePerson, ApplicationUsers")
                     .SingleOrDefault();
                 if (client == null)

@@ -6,6 +6,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
     {
         public List<AddressViewModel> Addresses { get; set; }
         public int PagesCount { get; set; }
-        public int SelectedPage { get; set; }
+        public int Page { get; set; }
     }
 }

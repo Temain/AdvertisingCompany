@@ -6,28 +6,52 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
     {
         public int AddressId { get; set; }
 
-        public string City { get; set; }
+        /// <summary>
+        /// Наименование управляющей компании или ТСЖ 
+        /// </summary>
+        public string ManagementCompanyName { get; set; }
 
-        public string Area { get; set; }
+        /// <summary>
+        /// Микрорайон города
+        /// </summary>
+        public string MicrodistrictShortName { get; set; }
 
-        public string Street { get; set; }
+        /// <summary>
+        /// Улица
+        /// </summary>
+        public string StreetName { get; set; }
 
-        public string HouseNumber { get; set; }
-
+        /// <summary>
+        /// Дом / корпус
+        /// </summary>
         public string BuildingNumber { get; set; }
 
-        public string PorchNumber { get; set; }
+        /// <summary>
+        /// Количество подъездов
+        /// </summary>
+        public int NumberOfEntrances { get; set; }
+
+        /// <summary>
+        /// Количество рекламных поверхностей
+        /// </summary>
+        public int NumberOfSurfaces { get; set; }
+
+        /// <summary>
+        /// Количество этажей
+        /// </summary>
+        public int NumberOfFloors { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
-            configuration.CreateMap<Domain.Models.Address, AddressViewModel>("Address");
-            //.ForMember(m => m.AddressId, opt => opt.MapFrom(s => s.AddressId))
-            //.ForMember(m => m.City, opt => opt.MapFrom(s => s.Street.City.CityName))
-            //.ForMember(m => m.Area, opt => opt.MapFrom(s => s.Area.AreaName))
-            //.ForMember(m => m.Street, opt => opt.MapFrom(s => s.Street.StreetName))
-            //.ForMember(m => m.HouseNumber, opt => opt.MapFrom(s => s.HouseNumber))
-            //.ForMember(m => m.BuildingNumber, opt => opt.MapFrom(s => s.BuildingNumber));
-            //.ForMember(m => m.PorchNumber, opt => opt.MapFrom(s => s.PorchNumber));
+            configuration.CreateMap<Domain.Models.Address, AddressViewModel>("Address")
+                .ForMember(m => m.AddressId, opt => opt.MapFrom(s => s.AddressId))
+                .ForMember(m => m.ManagementCompanyName, opt => opt.MapFrom(s => s.ManagementCompanyName))
+                .ForMember(m => m.MicrodistrictShortName, opt => opt.MapFrom(s => s.Microdistrict.MicrodistrictShortName))
+                .ForMember(m => m.StreetName, opt => opt.MapFrom(s => s.Street.LocationType.LocationTypeShortName + ". " + s.Street.LocationName))
+                .ForMember(m => m.BuildingNumber, opt => opt.MapFrom(s => s.Building.LocationType.LocationTypeShortName + ". " + s.Building.LocationName))
+                .ForMember(m => m.NumberOfEntrances, opt => opt.MapFrom(s => s.NumberOfEntrances))
+                .ForMember(m => m.NumberOfSurfaces, opt => opt.MapFrom(s => s.NumberOfSurfaces))
+                .ForMember(m => m.NumberOfFloors, opt => opt.MapFrom(s => s.NumberOfFloors));
         }
     }
 }

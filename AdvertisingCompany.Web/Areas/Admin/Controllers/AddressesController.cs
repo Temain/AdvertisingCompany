@@ -30,33 +30,32 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // GET: admin/api/addresses
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(ListClientsViewModel))]
-        public ListClientsViewModel GetAddresses(string query, int page = 1, int pageSize = 10)
+        [ResponseType(typeof(ListAddressesViewModel))]
+        public ListAddressesViewModel GetAddresses(string query, int page = 1, int pageSize = 10)
         {
-            var clientsList = UnitOfWork.Repository<Client>()
+            var addressesList = UnitOfWork.Repository<Address>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderBy(c => c.CreatedAt),
-                    includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
+                    includeProperties: @"Region, Region.LocationLevel, Region.LocationType, District, District.LocationLevel, District.LocationType, 
+                            City, City.LocationLevel, City.LocationType, Street, Street.LocationLevel, Street.LocationType,
+                            Building, Building.LocationLevel, Building.LocationType, Microdistrict");
 
-            if (query != null)
-            {
-                clientsList = clientsList.Where(x => x.CompanyName.Contains(query));
-            }
+            //if (query != null)
+            //{
+            //    addressesList = addressesList.Where(x => x.Contains(query));
+            //}
 
-            var clients = clientsList
+            var addresses = addressesList
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            var clientViewModels = Mapper.Map<List<Client>, List<ClientViewModel>>(clients);
-            var clientStatuses = UnitOfWork.Repository<ClientStatus>().Get().ToList();
-            var clientStatusViewModels = Mapper.Map<List<ClientStatus>, List<ClientStatusViewModel>>(clientStatuses);
+            var addressViewModels = Mapper.Map<List<Address>, List<AddressViewModel>>(addresses);
 
-            var viewModel = new ListClientsViewModel
+            var viewModel = new ListAddressesViewModel
             {
-                Clients = clientViewModels,
-                ClientStatuses = clientStatusViewModels,
-                PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
+                Addresses = addressViewModels,
+                PagesCount = (int)Math.Ceiling((double)addressesList.Count() / pageSize),
                 Page = page
             };
             return viewModel;
@@ -82,19 +81,20 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
             else
             {
-                //var client = UnitOfWork.Repository<Client>()
-                //    .Get(x => x.ClientId == id && x.DeletedAt == null,
-                //        includeProperties: "ResponsiblePerson, ApplicationUsers")
-                //    .SingleOrDefault();
-                //if (client == null)
-                //{
-                //    return BadRequest();
-                //}
+                var address = UnitOfWork.Repository<Address>()
+                    .GetQ(x => x.AddressId == id && x.DeletedAt == null,
+                        includeProperties: @"Region, Region.LocationLevel, Region.LocationType, District, District.LocationLevel, District.LocationType, 
+                            City, City.LocationLevel, City.LocationType, Building, Building.LocationLevel, Building.LocationType")
+                    .SingleOrDefault();
+                if (address == null)
+                {
+                    return BadRequest();
+                }
 
-                //var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
-                //viewModel.Microdistricts = microdistrictViewModels;
+                var viewModel = Mapper.Map<Address, EditAddressViewModel>(address);
+                viewModel.Microdistricts = microdistrictViewModels;
 
-                //return Ok(viewModel);
+                return Ok(viewModel);
             }
 
             return Ok();
@@ -161,7 +161,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             if (addressExists)
             {
                 ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");
-                ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных2.");
+            }
+
+            // См. атрибут KoJsonValidate 
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -232,12 +236,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
             UnitOfWork.Repository<Address>().Insert(address);
             UnitOfWork.Save();
-
-            // См. атрибут KoJsonValidate 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             return Ok();
         }
