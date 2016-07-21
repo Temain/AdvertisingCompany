@@ -25,20 +25,20 @@
                 progress.hide();
             },
             success: function (response) {
-                //ko.mapping.fromJS(
-                //    response.addresses,
-                //    {
-                //        key: function (data) {
-                //            return ko.utils.unwrapObservable(data.addressId);
-                //        },
-                //        create: function (options) {
-                //            var addressViewModel = new AddressViewModel(options.data);
-                //            // ko.serverSideValidator.updateKoModel(clientViewModel);
-                //            return addressViewModel;
-                //        }
-                //    },
-                //    self.addresses
-                //);               
+                ko.mapping.fromJS(
+                    response.addresses,
+                    {
+                        key: function (data) {
+                            return ko.utils.unwrapObservable(data.addressId);
+                        },
+                        create: function (options) {
+                            var addressViewModel = new AddressViewModel(options.data);
+                            // ko.serverSideValidator.updateKoModel(clientViewModel);
+                            return addressViewModel;
+                        }
+                    },
+                    self.addresses
+                );               
 
                 self.page(response.page);
                 self.pagesCount(response.pagesCount);
@@ -79,7 +79,19 @@
 
 function AddressViewModel(dataModel) {
     var self = this;
+
+    self.addressId = ko.observable(dataModel.addressId || '');
+    self.managementCompanyName = ko.observable(dataModel.managementCompanyName || '');
+    self.microdistrictShortName = ko.observable(dataModel.microdistrictShortName || '');
+    self.streetName = ko.observable(dataModel.streetName || '');
+    self.buildingNumber = ko.observable(dataModel.buildingNumber || '');
+    self.numberOfEntrances = ko.observable(dataModel.numberOfEntrances || '');
+    self.numberOfSurfaces = ko.observable(dataModel.numberOfSurfaces || '');
+    self.numberOfFloors = ko.observable(dataModel.numberOfFloors || '');
+    self.contractDate = ko.observable(dataModel.contractDate || '');
 }
+
+
 
 app.addViewModel({
     name: "AddressesList",

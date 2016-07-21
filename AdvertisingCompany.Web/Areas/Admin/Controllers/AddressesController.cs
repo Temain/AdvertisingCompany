@@ -65,7 +65,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateAddressViewModel))]
-        // [ResponseType(typeof(EditClientViewModel))]
+        [ResponseType(typeof(EditClientViewModel))]
         public IHttpActionResult GetAddress(int id)
         {
             var microdistricts = UnitOfWork.Repository<Microdistrict>()

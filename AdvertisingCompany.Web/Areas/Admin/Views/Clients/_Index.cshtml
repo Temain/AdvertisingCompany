@@ -42,12 +42,12 @@
                     <th class="col-md-3">Компания</th>
                     <th class="col-md-2 hidden-xs">Деятельность</th>
                     <th class="col-md-1 hidden-xs">Ответственный</th>
-                    <th class="col-md-1 no-sort hidden-xs">Телефоны</th>
-                    <th class="col-md-1 no-sort hidden-xs">Email</th>
+                    <th class="col-md-1 hidden-xs">Телефоны</th>
+                    <th class="col-md-1 hidden-xs">Email</th>
                     <th class="col-md-1">Логин</th>
                     <th class="col-md-1">Статус</th>
                     <th class="col-md-1 hidden-xs">Добавлен</th>
-                    <th class="col-md-1 no-sort">Редактирование</th>
+                    <th class="col-md-1 text-center">Редактирование</th>
                 </tr>
                 </thead>
                 <tbody data-bind="foreach: clients">
@@ -69,7 +69,7 @@
                         <select data-bind="attr: { 'data-style' : 'btn-' + clientStatusLabelClass() }, selectPicker: clientStatusId, selectPickerOptions: { optionsArray : $parent.clientStatuses, initValue : clientStatusInitialId, initialized : clientStatusInitialized }, optionsValue: 'clientStatusId', optionsText: 'clientStatusName', event : { change : $parent.clientStatusChanged }"></select>
                     </td>
                     <td class="hidden-xs" data-bind="text: createdAt"></td>
-                    <td class="actions">
+                    <td class="actions text-center">
                         <a href="#" data-bind="tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'left', trigger: 'hover' }">
                             <span class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x text-usual"></i>

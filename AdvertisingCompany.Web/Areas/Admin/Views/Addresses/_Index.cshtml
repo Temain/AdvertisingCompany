@@ -35,68 +35,56 @@
                     </div>
                 </div>
             </div>
-            @*<table id="datatable-table" class="table table-striped table-hover">
+            <table id="datatable-table" class="table table-striped table-hover">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th class="col-md-3">Компания</th>
-                    <th class="col-md-2 hidden-xs">Деятельность</th>
-                    <th class="col-md-1 hidden-xs">Ответственный</th>
-                    <th class="col-md-1 no-sort hidden-xs">Телефоны</th>
-                    <th class="col-md-1 no-sort hidden-xs">Email</th>
-                    <th class="col-md-1">Логин</th>
-                    <th class="col-md-1">Статус</th>
-                    <th class="col-md-1 hidden-xs">Добавлен</th>
-                    <th class="col-md-1 no-sort">Редактирование</th>
+                    <th class="col-md-3">Управляющая компания/ТСЖ</th>
+                    <th class="col-md-1">Микрорайон</th>
+                    <th class="col-md-2">Улица</th>
+                    <th class="col-md-1 text-center">Номер дома</th>
+                    <th class="col-md-1 text-center">Подъездов</th>
+                    <th class="col-md-1 text-center">Поверхностей</th>
+                    <th class="col-md-1 text-center">Этажей</th>
+                    <th class="col-md-1 text-center">Дата договора</th>
+                    <th class="col-md-1 text-center">Редактирование</th>
                 </tr>
                 </thead>
-                <tbody data-bind="foreach: clients">
+                <tbody data-bind="foreach: addresses">
                 <tr>
                     <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
                     <td>
-                        <span class="fw-semi-bold" data-bind="text: companyName"></span></td>
-                    <td class="hidden-xs" data-bind="text: activityTypeName"></td>
-                    <td class="hidden-xs" data-bind="text: responsiblePersonShortName"></td>
-                    <td class="hidden-xs">
-                        <span data-bind="text: phoneNumber"></span><br/>
-                        <span data-bind="text: additionalPhoneNumber"></span>
+                        <span class="fw-semi-bold" data-bind="text: managementCompanyName"></span>
                     </td>
-                    <td class="hidden-xs" data-bind="text: email"></td>
-                    <td data-bind="foreach: userNames">
-                        <span data-bind="text: $data"></span>
-                    </td>
-                    <td>                      
-                        <select data-bind="attr: { 'data-style' : 'btn-' + clientStatusLabelClass() }, selectPicker: clientStatusId, selectPickerOptions: { optionsArray : $parent.clientStatuses, initValue : clientStatusInitialId, initialized : clientStatusInitialized }, optionsValue: 'clientStatusId', optionsText: 'clientStatusName', event : { change : $parent.clientStatusChanged }"></select>
-                    </td>
-                    <td class="hidden-xs" data-bind="text: createdAt"></td>
-                    <td class="actions">
-                        <a href="#" data-bind="tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'left', trigger: 'hover' }">
+                    <td data-bind="text: microdistrictShortName"></td>
+                    <td data-bind="text: streetName"></td>
+                    <td class="text-center" data-bind="text: buildingNumber"></td>
+                    <td class="text-center" data-bind="text: numberOfEntrances"></td>
+                    <td class="text-center" data-bind="text: numberOfSurfaces"></td>
+                    <td class="text-center" data-bind="text: numberOfFloors"></td>
+                    <td class="text-center" data-bind="text: contractDate"></td>
+                    <td class="actions text-center">
+                        <a href="#" data-bind="attr : { href : '/admin/#addresses/' + addressId() + '/edit' }, tooltip: { title: 'Перейти к редактированию адреса', placement: 'left', trigger: 'hover' }">
                             <span class="fa-stack">
-                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                        <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/edit' }, tooltip: { title: 'Перейти к редактированию информации о клиенте', placement: 'left', trigger: 'hover' }">
-                            <span class="fa-stack">
-                                <i class="fa fa-circle fa-stack-2x text-success"></i>
+                                <i class="fa fa-circle fa-stack-2x text-usual"></i>
                                 <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
-                        <a href="#" data-bind="tooltip: { title: 'Удалить клиента', placement: 'left', trigger: 'hover' }">
+                        <a href="#" data-bind="tooltip: { title: 'Удалить адрес', placement: 'left', trigger: 'hover' }">
                             <span class="fa-stack">
-                                <i class="fa fa-circle fa-stack-2x text-danger"></i>
+                                <i class="fa fa-circle fa-stack-2x text-usual"></i>
                                 <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
                     </td>
                 </tr>
                 </tbody>
-            </table>*@
+            </table>
 
             <!-- ko if: addresses().length > 0 -->
             <div class="row">
                 <div class="col-md-6">
-                    <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + addresses().length) + ' из ' + ((pagesCount() - 1) * pageSize() + clients().length) + ' записей'"></div>
+                    <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + addresses().length) + ' из ' + ((pagesCount() - 1) * pageSize() + addresses().length) + ' записей'"></div>
                 </div>
                 <div class="col-md-6">
                     <!-- ko if: pagesCount() > 1 -->

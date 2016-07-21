@@ -41,6 +41,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// </summary>
         public int NumberOfFloors { get; set; }
 
+        /// <summary>
+        /// Дата договора
+        /// </summary>
+        public string ContractDate { get; set; }
+
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<Domain.Models.Address, AddressViewModel>("Address")
@@ -51,7 +56,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
                 .ForMember(m => m.BuildingNumber, opt => opt.MapFrom(s => s.Building.LocationType.LocationTypeShortName + ". " + s.Building.LocationName))
                 .ForMember(m => m.NumberOfEntrances, opt => opt.MapFrom(s => s.NumberOfEntrances))
                 .ForMember(m => m.NumberOfSurfaces, opt => opt.MapFrom(s => s.NumberOfSurfaces))
-                .ForMember(m => m.NumberOfFloors, opt => opt.MapFrom(s => s.NumberOfFloors));
+                .ForMember(m => m.NumberOfFloors, opt => opt.MapFrom(s => s.NumberOfFloors))
+                .ForMember(m => m.ContractDate, opt => opt.MapFrom(s => s.ContractDate.HasValue ? s.ContractDate.Value.ToShortDateString() : ""));
         }
     }
 }
