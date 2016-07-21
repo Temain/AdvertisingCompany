@@ -13,12 +13,16 @@ namespace AdvertisingCompany.Domain.Context
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientStatus> ClientStatuses { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<LocationType> LocationTypes { get; set; }
+        public DbSet<LocationLevel> LocationLevels { get; set; }
+        public DbSet<LogEntry> LogEntries { get; set; }
         public DbSet<Microdistrict> Microdistricts { get; set; }
         public DbSet<PaymentOrder> PaymentOrders { get; set; }
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<PlacementFormat> PlacementFormats { get; set; }
-        public DbSet<LogEntry> LogEntries { get; set; }
+
 
         public ApplicationDbContext()
             : base("AdvertisingCompanyConnection", throwIfV1Schema: false)

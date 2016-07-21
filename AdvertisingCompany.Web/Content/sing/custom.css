@@ -98,6 +98,10 @@ input.required {
     color: #333333 !important;
 }
 
+.panel-map {
+    margin-top: 1.5em;
+}
+
 /* Tables
 ------------------------------------------*/
 td .bootstrap-select {

@@ -156,63 +156,73 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
 
-            var locationProperties = address
-                .GetType()
+            var locationProperties = typeof(Address)
                 .GetProperties()
                 .Where(p => p.PropertyType == typeof(Location))
-                .Select(x => x.GetValue(address))
-                .Where(x => x != null)
-                .Cast<Location>();
+                .Select(x => new { PropertyName = x.Name, PropertyObject = x.GetValue(address) as Location })
+                .Where(x => x.PropertyObject != null)
+                .ToList();
            
-            var locationTypes = locationProperties.Select(p => p.LocationType.LocationTypeName);
+            var locationTypes = locationProperties.Select(p => p.PropertyObject.LocationType.LocationTypeName);
             var locationTypesInDb = UnitOfWork.Repository<LocationType>()
-                .GetQ(x => locationTypes.Contains(x.LocationTypeName));
+                .GetQ(x => locationTypes.Contains(x.LocationTypeName))
+                .ToList();
             var locationTypesNotInDb = locationTypes.Except(locationTypesInDb.Select(x => x.LocationTypeName));
-            var locationTypesForInsert = locationProperties.Where(p => locationTypesNotInDb.Contains(p.LocationType.LocationTypeName))
-                .Select(p => p.LocationType);
+            var locationTypesForInsert = locationProperties.Where(p => locationTypesNotInDb.Contains(p.PropertyObject.LocationType.LocationTypeName))
+                .Select(p => p.PropertyObject.LocationType);
             foreach(var locationType in locationTypesForInsert)
             {
                 UnitOfWork.Repository<LocationType>().Insert(locationType);
                 UnitOfWork.Save();
             }
 
-            if (address.Region != null)
-            {
-                var region = UnitOfWork.Repository<Location>()
-                    .GetQ(r => r.Code == address.Region.Code)
-                    .SingleOrDefault();
-                if(region != null)
-                {
+            locationTypesInDb = UnitOfWork.Repository<LocationType>()
+                .GetQ(x => locationTypes.Contains(x.LocationTypeName))
+                .ToList();
 
+            var locationLevels = locationProperties.Select(p => p.PropertyObject.LocationLevel.LocationLevelName);
+            var locationLevelsInDb = UnitOfWork.Repository<LocationLevel>()
+                .GetQ(x => locationLevels.Contains(x.LocationLevelName))
+                .ToList();
+
+            Location parent = null;
+            for(int index = 0; index < locationProperties.Count(); index++)
+            {
+                var locationCode = locationProperties[index].PropertyObject.Code;
+                var location = UnitOfWork.Repository<Location>()
+                    .GetQ(x => x.Code == locationCode)
+                    .SingleOrDefault();
+                if (location == null)
+                {
+                    location = locationProperties[index].PropertyObject;
+                    var locationType = locationTypesInDb.FirstOrDefault(x => x.LocationTypeName == locationProperties[index].PropertyObject.LocationType.LocationTypeName);
+                    if (locationType != null)
+                    {
+                        location.LocationType = locationType;
+                    }
+
+                    var locationLevel = locationLevelsInDb.FirstOrDefault(x => x.LocationLevelName == locationProperties[index].PropertyObject.LocationLevel.LocationLevelName);
+                    if (locationLevel != null)
+                    {
+                        location.LocationLevel = locationLevel;
+                    }
+
+                    location.Parent = parent;
+
+                    UnitOfWork.Repository<Location>().Insert(location);
+                    UnitOfWork.Save();
                 }
                 else
                 {
-
+                    var addressProperty = typeof(Address).GetProperty(locationProperties[index].PropertyName);
+                    addressProperty.SetValue(address, location);
                 }
+
+                parent = location;
             }
 
-            if (address.District != null)
-            {
-
-            }
-
-            if (address.City != null)
-            {
-
-            }
-
-            if (address.Street != null)
-            {
-
-            }
-
-            if (address.Building != null)
-            {
-
-            }
-
-            // UnitOfWork.Repository<Address>().Insert(address);
-            // UnitOfWork.Save();
+            UnitOfWork.Repository<Address>().Insert(address);
+            UnitOfWork.Save();
 
             // См. атрибут KoJsonValidate 
             if (!ModelState.IsValid)
