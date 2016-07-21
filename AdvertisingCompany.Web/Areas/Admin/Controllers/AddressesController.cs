@@ -84,7 +84,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 var address = UnitOfWork.Repository<Address>()
                     .GetQ(x => x.AddressId == id && x.DeletedAt == null,
                         includeProperties: @"Region, Region.LocationLevel, Region.LocationType, District, District.LocationLevel, District.LocationType, 
-                            City, City.LocationLevel, City.LocationType, Building, Building.LocationLevel, Building.LocationType")
+                            City, City.LocationLevel, City.LocationType, Street, Street.LocationLevel, Street.LocationType,
+                            Building, Building.LocationLevel, Building.LocationType")
                     .SingleOrDefault();
                 if (address == null)
                 {

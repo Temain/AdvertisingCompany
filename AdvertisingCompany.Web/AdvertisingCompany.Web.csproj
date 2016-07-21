@@ -315,6 +315,7 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Scripts\app\activities\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\addresses\create.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\addresses\edit.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\addresses\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\campaigns\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\clients\edit.viewmodel.js" />
@@ -575,6 +576,7 @@
     <Content Include="Areas\Admin\Views\Campaigns\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Activities\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\_Edit.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

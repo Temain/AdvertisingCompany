@@ -67,7 +67,7 @@
 				break;
 			case type.building:
 				if (!query.zip) {
-					if (!~$.inArray(query.parentType, [type.street, type.city])) {
+					if (!~$.inArray(query.parentType, [type.street, type.city, type.building])) {
 						error('parentType must equal "street" or "city"');
 						return false;
 					}
@@ -174,6 +174,10 @@
 				name:        'query',
 				withParents: 'withParent'
 			};
+
+		if (query.type && query.Id) {
+		    params[query.type + 'Id'] = query.Id;
+		}
 
 		if (query.parentType && query.parentId) {
 			params[query.parentType + 'Id'] = query.parentId;

@@ -83,7 +83,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
-            configuration.CreateMap<Domain.Models.Address, EditAddressViewModel>("Address");
+            configuration.CreateMap<Domain.Models.Address, EditAddressViewModel>("Address")
+                .ForMember(m => m.Region, opt => opt.MapFrom(s => s.Region))
+                .ForMember(m => m.District, opt => opt.MapFrom(s => s.District))
+                .ForMember(m => m.City, opt => opt.MapFrom(s => s.City))
+                .ForMember(m => m.Street, opt => opt.MapFrom(s => s.Street))
+                .ForMember(m => m.Building, opt => opt.MapFrom(s => s.Building));
 
             configuration.CreateMap<EditAddressViewModel, Domain.Models.Address>("Address")
                 .ForMember(m => m.CreatedAt, opt => opt.Ignore())

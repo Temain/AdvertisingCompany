@@ -1042,12 +1042,13 @@
 					 * @param {number} id Идентификатор объекта КЛАДР
 					 * @returns {{}} Контроллер плагина
 					 */
-					setValueById: function (id) {
+					setValueById: function (id, name) {
 						var query = getQuery('');
 
 						query.parentType = query.type;
 						query.parentId = id;
-						query.limit = 1;
+                    
+						query.limit = query.type == $.kladr.type.building ? 100 : 1;
 
 						lock();
 
@@ -1058,6 +1059,35 @@
 						});
 
 						return controller;
+					},
+
+				    /**
+					 * Устанавливает значение в поле ввода по идентификатору и наименованию
+					 *
+					 * @param {number} id идентификатор объекта КЛАДР
+					 * @param {string} name наименование объекта КЛАДР
+					 * @param {number} parentId идентификатор родителя объекта КЛАДР
+					 * @param {string} name наименование родителя объекта КЛАДР
+					 * @returns {{}} Контроллер плагина
+					 */
+					setValueByIdAndName: function (id, name, parentId, parentType) {
+					    var query = getQuery('');
+
+					    query.name = name;
+					    query.Id = id;
+					    query.parentType = parentType || query.type;
+					    query.parentId = parentId || id;
+					    query.limit = 1;
+
+					    lock();
+
+					    $.kladr.api(query, function (objs) {
+					        objs.length
+								? changeValue(objs[0], query)
+								: changeValue(null, query);
+					    });
+
+					    return controller;
 					},
 
 					/**

@@ -1,12 +1,12 @@
 var kladrWithMap = {
     geocoordinates: {},
-    init : function() {
+    init : function(options) {
         var $region = $('[name="region"]'),
 		$district = $('[name="district"]'),
 		$city = $('[name="city"]'),
 		$street = $('[name="street"]'),
 		$building = $('[name="building"]');
-
+       
         var map = null,
             map_created = false;
 
@@ -67,21 +67,26 @@ var kladrWithMap = {
             }
         });
 
-        $region.kladr('type', $.kladr.type.region);
-        $district.kladr('type', $.kladr.type.district);
-        $city.kladr('type', $.kladr.type.city);
-        $street.kladr('type', $.kladr.type.street);
-        $building.kladr('type', $.kladr.type.building);
-
-        // Включаем получение родительских объектов для населённых пунктов
-        $region.kladr('withParents', true);
-        $district.kladr('withParents', true);
-        $city.kladr('withParents', true);
-        $street.kladr('withParents', true);
-        $building.kladr('withParents', true);
-        
-        // Отключаем проверку введённых данных для строений
-        $building.kladr('verify', false);
+        $region.kladr({
+            type: $.kladr.type.region
+        });
+        $district.kladr({
+            type: $.kladr.type.district
+        });
+        $city.kladr({
+            type: $.kladr.type.city
+        });
+        $street.kladr({
+            type: $.kladr.type.street,
+            parentType: $.kladr.type.city,
+            parentInput: $city
+        });
+        $building.kladr({
+            type: $.kladr.type.building,
+            parentType: $.kladr.type.street,
+            parentInput: $street,
+            verify: false
+        });
 
         ymaps.ready(function () {
             if (map_created) return;
@@ -100,9 +105,31 @@ var kladrWithMap = {
                 }
             });
 
-            // Значения по умолчанию [ Краснодарский край, город Краснодар ]
-            $region.kladr('controller').setValueById("2300000000000");
-            $city.kladr('controller').setValueById("2300000100000");
+            // Значения по умолчанию [ Краснодарский край, город Краснодар ]          
+            if (options && options.defaultValues) {
+                var values = options.defaultValues;
+                if (values.regionId && values.regionName) {
+                    $region.kladr('controller').setValueByIdAndName(values.regionId, values.regionName);
+                }
+
+                if (values.districtId && values.districtName) {
+                    $district.kladr('controller').setValueByIdAndName(values.districtId, values.districtName);
+                }
+
+                if (values.cityId && values.cityName) {
+                    $city.kladr('controller').setValueByIdAndName(values.cityId, values.cityName);
+                }
+
+                // Необходим идентификатор родителя [cityId] для kladr api
+                if (values.streetId && values.streetName && values.streetParentId && values.streetParentType) {
+                    $street.kladr('controller').setValueByIdAndName(values.streetId, values.streetName, values.streetParentId, values.streetParentType);
+                }
+
+                // Необходим идентификатор родителя [streetId или cityId] для kladr api
+                if (values.buildingId && values.buildingName && values.buildingParentId && values.buildingParentType) {
+                    $building.kladr('controller').setValueByIdAndName(values.buildingId, values.buildingName, values.buildingParentId, values.buildingParentType);
+                }
+            }
         });
 
         function setLabel($input, text) {

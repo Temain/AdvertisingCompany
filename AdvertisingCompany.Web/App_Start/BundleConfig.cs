@@ -143,6 +143,7 @@
                 .Include("~/Areas/Admin/Scripts/app/activities/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/addresses/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/addresses/create.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/addresses/edit.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/campaigns/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/reports/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/analytics/analytics.viewmodel.js")
@@ -219,7 +220,10 @@
             bundles.Add(notifyBundle);
 
             Bundle kladrBundle = new ScriptBundle("~/bundles/kladr")
-                .Include("~/Scripts/kladr/jquery.kladr.min.js")
+                .Include("~/Scripts/kladr/core.js")
+                .Include("~/Scripts/kladr/kladr.js")
+                .Include("~/Scripts/kladr/kladr_zip.js")
+                // .Include("~/Scripts/kladr/jquery.kladr.min.js")
                 .Include("~/Scripts/kladr/form_with_map.js");
             bundles.Add(kladrBundle);
 
