@@ -17,7 +17,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// <summary>
         /// Наименование управляющей компании или ТСЖ 
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Необходимо указать наименование управляющей компании или ТСЖ.")]
         public string ManagementCompanyName { get; set; }
 
         /// <summary>
@@ -38,7 +38,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// <summary>
         /// Микрорайон города
         /// </summary>
-        public int MicrodistrictId { get; set; }
+        [Required(ErrorMessage = "Необходимо выбрать микрорайон.")]
+        public int? MicrodistrictId { get; set; }
         public IEnumerable<MicrodistrictViewModel> Microdistricts { get; set; }
 
         /// <summary>
@@ -54,17 +55,20 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// <summary>
         /// Количество подъездов
         /// </summary>
-        public int NumberOfEntrances { get; set; }
+        [Required(ErrorMessage = "Необходимо указать количество подъездов.")]
+        public int? NumberOfEntrances { get; set; }
 
         /// <summary>
         /// Количество рекламных поверхностей
         /// </summary>
-        public int NumberOfSurfaces { get; set; }
+        [Required(ErrorMessage = "Необходимо указать количество поверхностей.")]
+        public int? NumberOfSurfaces { get; set; }
 
         /// <summary>
         /// Количество этажей
         /// </summary>
-        public int NumberOfFloors { get; set; }
+        [Required(ErrorMessage = "Необходимо указать количество этажей.")]
+        public int? NumberOfFloors { get; set; }
 
         /// <summary>
         /// Широта

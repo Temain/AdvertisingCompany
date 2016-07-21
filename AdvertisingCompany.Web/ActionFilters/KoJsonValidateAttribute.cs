@@ -33,23 +33,5 @@ namespace AdvertisingCompany.Web.ActionFilters
                      new { KoValid = modelState.IsValid, ModelState = modelState.ToKoJson() });
             }
         }
-
-        //public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-        //    if (IgnoreValidation || !filterContext.HttpContext.Request.IsAjaxRequest())
-        //    {
-        //        return;
-        //    }
-        //    var modelState = filterContext.Controller.ViewData.ModelState;
-        //    if (!modelState.IsValid)
-        //    {
-        //        filterContext.HttpContext.Response.Clear();
-        //        filterContext.HttpContext.Response.StatusDescription = "Validation error";
-        //        filterContext.Result = modelState.ToKoJsonResult();
-        //        filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
-        //        filterContext.HttpContext.ClearError();
-        //        filterContext.HttpContext.Response.End();
-        //    }
-        //}
     }
 }

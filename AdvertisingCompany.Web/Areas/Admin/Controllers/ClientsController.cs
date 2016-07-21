@@ -167,7 +167,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error);
+                    ModelState.AddModelError("Shared", error);
                 }
             }
 

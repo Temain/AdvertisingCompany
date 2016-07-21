@@ -1,4 +1,5 @@
 var kladrWithMap = {
+    geocoordinates: {},
     init : function() {
         var $region = $('[name="region"]'),
 		$district = $('[name="district"]'),
@@ -166,6 +167,7 @@ var kladrWithMap = {
                     var position = res.geoObjects.get(0).geometry.getCoordinates(),
                         placemark = new ymaps.Placemark(position, {}, {});
 
+                    geocoordinates = position;
                     map.geoObjects.add(placemark);
                     map.setCenter(position, zoom);
                 });

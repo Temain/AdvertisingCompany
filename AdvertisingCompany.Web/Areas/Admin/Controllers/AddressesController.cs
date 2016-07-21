@@ -156,6 +156,15 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
 
+            var addressExists = UnitOfWork.Repository<Address>()
+                .GetQ().Count(x => x.Building.Code == address.Building.Code && x.DeletedAt == null) > 0;
+            if (addressExists)
+            {
+                ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");
+                ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных2.");
+                return BadRequest(ModelState);
+            }
+
             var locationProperties = typeof(Address)
                 .GetProperties()
                 .Where(p => p.PropertyType == typeof(Location))
@@ -271,7 +280,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         private bool AddressExists(int id)
         {
-            return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id && e.DeletedAt == null) > 0;
+            return UnitOfWork.Repository<Address>().GetQ().Count(e => e.AddressId == id && e.DeletedAt == null) > 0;
         }
     }
 }
