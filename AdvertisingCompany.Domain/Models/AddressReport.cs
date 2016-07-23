@@ -30,6 +30,26 @@ namespace AdvertisingCompany.Domain.Models
         public string Comment { get; set; }
 
         /// <summary>
+        /// Имя файла
+        /// </summary>
+        public string ImageName { get; set; }
+
+        /// <summary>
+        /// Размер файла
+        /// </summary>
+        public long? ImageLength { get; set; }
+
+        /// <summary>
+        /// Фотография
+        /// </summary>
+        public byte[] ImageData { get; set; }
+
+        /// <summary>
+        /// Тип
+        /// </summary>
+        public string ImageMimeType { get; set; }
+
+        /// <summary>
         /// Дата создания записи
         /// </summary>
         [JsonIgnore]

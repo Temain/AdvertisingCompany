@@ -8,6 +8,14 @@
     self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
     self.pageSize = ko.observable(10);
     self.searchQuery = ko.observable('');
+    self.loadingFile = ko.observable(false);
+
+    // Для загрузки отчётов
+    self.currentAddressName = ko.observable('');
+    self.currentAddressId = ko.observable('');
+    self.reportDate = ko.observable('');
+    self.comment = ko.observable('');
+    // self.fileName = ko.observable('');
 
     self.loadAddresses = function () {
         self.isInitialized(false);
@@ -67,9 +75,69 @@
         self.loadAddresses();
     }, 300);
 
+    self.showUploadModal = function (data, event) {
+        Holder.run();
+        $(".fileinput").fileinput('clear');
+
+        self.currentAddressId(data.addressId());
+        self.currentAddressName(data.streetName() + ' ' + data.buildingNumber());
+        self.comment('');
+        self.reportDate('');
+
+        $('.upload-popup-link').magnificPopup({
+            type: 'inline',
+            closeOnBgClick: false
+        });
+    };
+
+    self.selectFile = function (data, event) {
+        var element = $(event.target)[0];
+        var fileUpload = element.closest('.file-upload');
+        var fileInput = $(fileUpload).find('.fileinput-hidden');
+        if (fileInput) {
+            fileInput.click();
+        }
+    };
+
+    self.uploadFile = function (data, event) {
+        var element = $(event.target)[0];
+        var fileUpload = element.closest('.file-upload');
+        var fileInput = $(fileUpload).find('.fileinput-hidden');
+        var file = fileInput[0].files[0];
+        if (file) {
+            var formData = new FormData();
+            formData.append("file", file);
+            formData.append("addressId", data.currentAddressId());
+            formData.append("comment", data.comment());
+
+            var reportDateStr = (new Date(data.reportDate())).toUTCString();
+            formData.append("reportDate", reportDateStr);
+
+            self.loadingFile(true);
+
+            $.ajax({
+                url: "/admin/api/reports/",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                processData: false,
+                error: function(response) {
+                    self.loadingFile(false);
+                },
+                success: function (response) {
+                    self.loadingFile(false);
+                }
+            });
+        }
+    };
+
     Sammy(function () {
         this.get('#addresses', function () {
             app.view(self);
+
             self.loadAddresses();
         });
     });
@@ -90,8 +158,6 @@ function AddressViewModel(dataModel) {
     self.numberOfFloors = ko.observable(dataModel.numberOfFloors || '');
     self.contractDate = ko.observable(dataModel.contractDate || '');
 }
-
-
 
 app.addViewModel({
     name: "AddressesList",

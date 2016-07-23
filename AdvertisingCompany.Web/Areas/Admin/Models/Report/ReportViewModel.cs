@@ -3,15 +3,17 @@ using AdvertisingCompany.Web.Models.Mapping;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
 {
-    public class ReportViewModel : IHaveCustomMappings
+    public class AddressReportViewModel : IHaveCustomMappings
     {
-        public int ReportId { get; set; }
+        public int? AddressReportId { get; set; }
 
-        [Display(Name = "Примечание")]
+        public int AddressId { get; set; }
+
         public string Comment { get; set; }
 
-        [Display(Name = "Дата отчета")]
         public string ReportDate { get; set; }
+
+        public string ImageName { get; set; }
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {

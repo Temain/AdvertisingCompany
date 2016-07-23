@@ -162,3 +162,18 @@ button.dropdown-toggle {
 .alert-minimalist {
 	border-radius: 3px;
 }
+
+/* Magnific popup
+ ----------------------------------------*/
+.white-popup {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width:auto;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.popup-wrap {
+    margin: 15px;  
+}

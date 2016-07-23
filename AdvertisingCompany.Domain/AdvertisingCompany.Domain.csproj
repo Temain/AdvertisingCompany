@@ -120,6 +120,14 @@
     <Compile Include="Migrations\201607201521512_AddCityIdFieldToMicrodistrictsTable.Designer.cs">
       <DependentUpon>201607201521512_AddCityIdFieldToMicrodistrictsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607220609137_AddImageFieldsToAddressReportTable.cs" />
+    <Compile Include="Migrations\201607220609137_AddImageFieldsToAddressReportTable.Designer.cs">
+      <DependentUpon>201607220609137_AddImageFieldsToAddressReportTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607221350596_ChangeTypeToLongImageLengthInAddressReport.cs" />
+    <Compile Include="Migrations\201607221350596_ChangeTypeToLongImageLengthInAddressReport.Designer.cs">
+      <DependentUpon>201607221350596_ChangeTypeToLongImageLengthInAddressReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -179,6 +187,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607201521512_AddCityIdFieldToMicrodistrictsTable.resx">
       <DependentUpon>201607201521512_AddCityIdFieldToMicrodistrictsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607220609137_AddImageFieldsToAddressReportTable.resx">
+      <DependentUpon>201607220609137_AddImageFieldsToAddressReportTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607221350596_ChangeTypeToLongImageLengthInAddressReport.resx">
+      <DependentUpon>201607221350596_ChangeTypeToLongImageLengthInAddressReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

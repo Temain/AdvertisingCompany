@@ -45,6 +45,7 @@
 
             bundles.Add(new StyleBundle("~/Content/sing")
                 .Include("~/Content/sing/application.css")
+                .Include("~/Content/magnific-popup/magnific-popup.css")
                 .Include("~/Content/sing/custom.css"));
 
             bundles.Add(new StyleBundle("~/Content/sing-ie9")
@@ -174,7 +175,10 @@
                 .Include("~/Scripts/sing/custom.js")
                 .Include("~/Scripts/shufflejs/dist/jquery.shuffle.modernizr.min.js")
                 .Include("~/Scripts/magnific-popup/dist/jquery.magnific-popup.min.js")
-                .Include("~/Scripts/sing/gallery.js"); 
+                .Include("~/Scripts/sing/gallery.js")
+                .Include("~/Scripts/jasny-bootstrap/js/fileinput.js")
+                .Include("~/Scripts/jasny-bootstrap/js/inputmask.js")
+                .Include("~/Scripts/holderjs/holder.js");
             bundles.Add(singBundle);
 
             Bundle singLoginBundle = new ScriptBundle("~/bundles/sing-login")

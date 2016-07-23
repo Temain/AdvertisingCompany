@@ -14,6 +14,12 @@ using AdvertisingCompany.Web.Areas.Admin.Models.Client;
 using AdvertisingCompany.Web.Controllers;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using System.Net.Http;
+using System.Web;
+using System.Diagnostics;
+using System.Text;
+using System.Threading.Tasks;
+using AdvertisingCompany.Web.Areas.Admin.Models.Report;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
@@ -147,37 +153,66 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // POST: admin/api/reports
         [HttpPost]
         [Route("")]
-        [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostReport(CreateClientViewModel viewModel)
+        public async Task<HttpResponseMessage> PostReport()
         {
-            var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
-
-            var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
-            var result = UserManager.Create(user, viewModel.Password);
-            if (result.Succeeded)
+            // Check if the request contains multipart/form-data.
+            if (!Request.Content.IsMimeMultipartContent())
             {
-                UnitOfWork.Repository<Client>().Insert(client);
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            var addressReport = new AddressReport { CreatedAt = DateTime.Now };
+
+            try
+            {
+                var filesReadToProvider = await Request.Content.ReadAsMultipartAsync();
+
+                foreach (var stream in filesReadToProvider.Contents)
+                {
+                    var bytes = await stream.ReadAsByteArrayAsync();
+                    var name = stream.Headers.ContentDisposition.Name.Trim('"');
+                    switch (name)
+                    {
+                        case "addressId":
+                        {
+                            var addressIdString = Encoding.UTF8.GetString(bytes);
+                            var addressId = Convert.ToInt32(addressIdString);
+                            addressReport.AddressId = addressId;
+                            break;  
+                        }
+                        case "comment":
+                        {
+                            addressReport.Comment = Encoding.UTF8.GetString(bytes);
+                            break;
+                        }
+                        case "reportDate":
+                        {
+                            var reportDateString = Encoding.UTF8.GetString(bytes);
+                            var reportDate = Convert.ToDateTime(reportDateString);
+                            addressReport.ReportDate = reportDate;
+                            break;
+                        }
+                        case "file":
+                        {
+                            addressReport.ImageData = bytes;
+                            addressReport.ImageName = stream.Headers.ContentDisposition.FileName.Trim('"');
+                            addressReport.ImageLength = stream.Headers.ContentLength;
+                            addressReport.ImageMimeType = stream.Headers.ContentType.MediaType;
+                            break;
+                        } 
+                    }                                    
+                }
+
+                UnitOfWork.Repository<AddressReport>().Insert(addressReport);
                 UnitOfWork.Save();
 
-                user.ClientId = client.ClientId;
-                UserManager.Update(user);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
-            else
+            catch (System.Exception e)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error);
-                }
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
-
-            // См. атрибут KoJsonValidate 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok();
         }
 
         // DELETE: admin/api/reports/5

@@ -71,6 +71,8 @@
         this.get('#reports', function () {
             app.view(self);
             self.loadReports();
+
+            initGallery();
         });
     });
 
