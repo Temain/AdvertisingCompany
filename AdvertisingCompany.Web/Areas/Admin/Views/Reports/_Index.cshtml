@@ -3,13 +3,13 @@
     <li>ВЫ ЗДЕСЬ</li>
     <li class="active">Отчёты</li>
 </ol>
-<h1 class="page-title">Отчёты</h1>
+<h1 class="page-title"><span data-bind="text : addressName"></span> <i class="fa fa-building-o" aria-hidden="true"></i></h1>
 <div class="clearfix mb-lg">
     <div class="btn-group m-b-20 js-filter-options">
-        <span class="btn btn-default filter active" data-group="all">All</span>
-        <span class="btn btn-default filter" data-group="nature">Nature</span>
-        <span class="btn btn-default filter" data-group="people">People</span>
-        <span class="btn btn-default filter" data-group="space">Space</span>
+        <span class="btn btn-default filter active" data-group="all">Июль</span>
+        <span class="btn btn-default filter" data-group="nature">Июнь</span>
+        <span class="btn btn-default filter" data-group="people">Май</span>
+        <span class="btn btn-default filter" data-group="space">Апрель</span>
     </div>
     <div class="pull-right m-b-20">
         <div class="btn-group js-sort-options">
@@ -18,159 +18,18 @@
         </div>
     </div>
 </div>
-<div class="row gallery shuffle" id="grid" style="position: relative; height: 834px; transition: height 250ms ease-out;">
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Mountains" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(291px, 278px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
+<div class="row gallery shuffle" id="grid" data-bind="foreach : addressReports">
+    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Mountains">
         <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/1.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/1.jpg")" alt="..."></a>
+            <a data-bind="attr: { href: 'data:image/jpeg;base64,' + imageData() }"><img data-bind="attr: { src: 'data:image/jpeg;base64,' + imageData() }" alt="..."></a>
             <div class="caption">
-                <h5 class="mt-0 mb-xs">Mountains</h5>
+                <h5 class="mt-0 mb-xs" data-bind="text: imageName"></h5>
                 <ul class="post-links">
-                    <li><a href="#">10 mins</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart-o"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
+                    <li><a href="#">Дата : <span data-bind="text: createdAt"></span></a></li>
+                    <li><a href="#">Размер : <span data-bind="text: imageLength() + 'b'"></span></a></li>
                 </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;people&quot;]" data-title="Empire State Pigeon" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(582px, 0px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/2.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/2.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Empire State Pigeon</h5>
                 <ul class="post-links">
-                    <li><a href="#">1 hour</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Big Lake" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(291px, 0px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/3.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/3.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Big Lake</h5>
-                <ul class="post-links">
-                    <li><a href="#">2 mins</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Forest" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(0px, 278px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/4.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/4.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Forest</h5>
-                <ul class="post-links">
-                    <li><a href="#">2 mins</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;people&quot;]" data-title="Smile" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(582px, 556px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/5.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/5.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Smile</h5>
-                <ul class="post-links">
-                    <li><a href="#">2 mins</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart-o"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;people&quot;]" data-title="Smile" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(291px, 556px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/6.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/6.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Smile</h5>
-                <ul class="post-links">
-                    <li><a href="#">1 hour</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Fog" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(872px, 0px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/8.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/8.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Fog</h5>
-                <ul class="post-links">
-                    <li><a href="#">2 mins</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;people&quot;]" data-title="Beach" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/9.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/9.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Beach</h5>
-                <ul class="post-links">
-                    <li><a href="#">2 mins</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;people&quot;]" data-title="Pause" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(582px, 278px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/10.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/10.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Pause</h5>
-                <ul class="post-links">
-                    <li><a href="#">3 hour</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;space&quot;]" data-title="Space" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(872px, 556px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/11.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/11.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Space</h5>
-                <ul class="post-links">
-                    <li><a href="#">3 hour</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart-o"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;space&quot;]" data-title="Shuttle" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(872px, 278px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/13.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/13.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Shuttle</h5>
-                <ul class="post-links">
-                    <li><a href="#">35 mins</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;space&quot;]" data-title="Sky" style="position: absolute; top: 0px; left: 0px; opacity: 1; transform: translate3d(0px, 556px, 0px) scale3d(1, 1, 1); visibility: visible; transition: transform 250ms ease-out, opacity 250ms ease-out;">
-        <div class="thumbnail">
-            <a href="@Url.Content("~/Content/images/sing/pictures/14.jpg")"><img src="@Url.Content("~/Content/images/sing/pictures/14.jpg")" alt="..."></a>
-            <div class="caption">
-                <h5 class="mt-0 mb-xs">Sky</h5>
-                <ul class="post-links">
-                    <li><a href="#">2 mins</a></li>
-                    <li><a href="#"><span class="text-danger"><i class="fa fa-heart-o"></i> Like</span></a></li>
-                    <li><a href="#">Details</a></li>
+                    <li><a href="#">Комментарий : </a><span data-bind="text : comment"></span></li>
                 </ul>
             </div>
         </div>

@@ -257,7 +257,8 @@
     <Compile Include="Areas\Admin\Models\Client\CreateClientViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\ListAddressesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Client\ListClientsViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\Report\ReportViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Report\AddressReportViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Report\ListAddressesReportsViewModel.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />

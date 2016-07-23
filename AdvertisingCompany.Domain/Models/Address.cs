@@ -113,5 +113,17 @@ namespace AdvertisingCompany.Domain.Models
         /// Отчёты о размещении рекламы
         /// </summary>
         public ICollection<AddressReport> Reports { get; set; }
+
+        /// <summary>
+        /// Сокращённое наименование. Пример : [ ул.Калинина д.13 ]
+        /// </summary>
+        public string ShortName
+        {
+            get
+            {
+                return Street.LocationType.LocationTypeShortName + "." + Street.LocationName + " " +
+                       Building.LocationType.LocationTypeShortName + "." + Building.LocationName;
+            }
+        }
     }
 }

@@ -1,86 +1,68 @@
 ﻿function ReportsListViewModel(app, dataModel) {
     var self = this;
     self.isInitialized = ko.observable(false);
+    self.addressName = ko.observable('');
+    self.addressReports = ko.observableArray([]);
 
-    self.reports = ko.observableArray([]);
-    self.page = ko.observable(1);
-    self.pagesCount = ko.observable(1);
-    self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
-    self.pageSize = ko.observable(10);
-    self.searchQuery = ko.observable('');
-
-    self.loadReports = function () {
+    self.loadAddressReports = function (addressId) {
         self.isInitialized(false);
-        progress.show();
 
         $.ajax({
             method: 'get',
             url: '/admin/api/reports',
-            data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
+            data: { addressId: addressId },
             contentType: "application/json; charset=utf-8",
             headers: {
                 'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
             },
-            error: function(response) {
-                progress.hide();
-            },
+            error: function(response) { },
             success: function (response) {
                 ko.mapping.fromJS(
-                    response.reports,
+                    response.addressReports,
                     {
                         key: function (data) {
-                            return ko.utils.unwrapObservable(data.campaignId);
+                            return ko.utils.unwrapObservable(data.addressReportId);
                         },
                         create: function (options) {
-                            var reportViewModel = new ReportViewModel(options.data);
+                            var reportViewModel = new AddressReportViewModel(options.data);
                             // ko.serverSideValidator.updateKoModel(clientViewModel);
                             return reportViewModel;
                         }
                     },
-                    self.reports
-                );               
+                    self.addressReports
+                );
+                self.addressName(response.addressName);
 
-                self.page(response.page);
-                self.pagesCount(response.pagesCount);
+                initGallery();
                 self.isInitialized(true);
-                progress.hide();
             }
         });
     };
 
-    self.pageChanged = function (page) {
-        self.page(page);
-        self.loadReports();
-
-        window.scrollTo(0, 0);
-    };
-
-    self.pageSizeChanged = function () {
-        self.page(1);
-        self.loadReports();
-
-        window.scrollTo(0, 0);
-    };
-
-    self.search = _.debounce(function () {
-        self.page(1);
-        self.loadReports();
-    }, 300);
-
     Sammy(function () {
-        this.get('#reports', function () {
-            app.view(self);
-            self.loadReports();
+        this.get('#addresses/:id/reports', function () {
+            var addressId = this.params['id'];
 
-            initGallery();
+            app.view(self);
+            self.loadAddressReports(addressId);
         });
     });
 
     return self;
 }
 
-function ReportViewModel(dataModel) {
+function AddressReportViewModel(dataModel) {
     var self = this;
+
+    self.addressReportId = ko.observable(dataModel.addressReportId || '');
+    self.reportDate = ko.observable(dataModel.reportDate || '');
+    self.addressId = ko.observable(dataModel.addressId || '');
+    self.comment = ko.observable(dataModel.comment || '');
+    self.imageName = ko.observable(dataModel.imageName || '');
+    self.imageLength = ko.observable(dataModel.imageLength || '');
+    self.imageData = ko.observable(dataModel.imageData || '');
+    self.imageMimeType = ko.observable(dataModel.imageMimeType || '');
+    self.createdAt = ko.observable(dataModel.createdAt || '');
 }
 
 app.addViewModel({

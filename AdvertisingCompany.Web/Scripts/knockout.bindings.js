@@ -427,3 +427,21 @@ ko.bindingHandlers.dataTablesForEach = {
         return { controlsDescendantBindings: true };
     }
 };
+
+/* Remove node if object empty
+ ----------------------------------------------------*/
+ko.bindingHandlers.IsEmptyOnLoad = {
+    init: function (element, valueAccessor) {
+        var observable = valueAccessor(); // get observable
+        var value = observable(); // get value of observable
+        var isEmpty = !value; // do whatever check you want
+        // and remove element from dom if empty
+        if (isEmpty) {
+            ko.virtualElements.emptyNode(element);
+        }
+    },
+    update: function (element, valueAccessor) {
+        // do nothing on update
+    }
+};
+ko.virtualElements.allowedBindings.IsEmptyOnLoad = true;

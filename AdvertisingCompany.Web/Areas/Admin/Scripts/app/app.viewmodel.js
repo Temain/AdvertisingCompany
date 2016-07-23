@@ -71,11 +71,6 @@
         self["navigateTo" + options.name] = navigator;
     };
 
-    //self.markLinkAsActive = function (liClass) {
-    //    $('.sidebar .list-group-item').removeClass('active');
-    //    $('.sidebar .list-group-item.' + liClass).addClass('active');
-    //};
-
     self.backlink = function () {
         window.location.hash = app.returnUrl;
     }
@@ -88,22 +83,22 @@
         });
 
         // Заглушка ошибки при скрытых элементах для holder.js
-        //Holder.invisible_error_fn = function (fn) {
-        //    return function (el) {              
-        //        setTimeout(function() {
-        //            fn.call(this, el);
-        //        }, 10);
-        //    }
-        //}
+        Holder.invisible_error_fn = function (fn) {
+            return function (el) {              
+                setTimeout(function() {
+                    fn.call(this, el);
+                }, 10);
+            }
+        }
 
-        /**
-         * Holder js hack. removing holder's data to prevent onresize callbacks execution
-         * so they don't fail when page loaded
-         * via ajax and there is no holder elements anymore
-         */
-        $('img[data-src]').each(function () {
-            delete this.holder_data;
-        });
+        ///**
+        // * Holder js hack. removing holder's data to prevent onresize callbacks execution
+        // * so they don't fail when page loaded
+        // * via ajax and there is no holder elements anymore
+        // */
+        //$('img[data-src]').each(function () {
+        //    delete this.holder_data;
+        //});
 
         // Пометка активных элементов сайдбара
         $('.sidebar-nav ul > li > a').click(function () {

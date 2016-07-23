@@ -35,36 +35,27 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // GET: admin/api/reports
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(ListClientsViewModel))]
-        public ListClientsViewModel GetReports(string query, int page = 1, int pageSize = 10)
+        [ResponseType(typeof(ListAddressesReportsViewModel))]
+        public ListAddressesReportsViewModel GetReports(int addressId)
         {
-            var clientsList = UnitOfWork.Repository<Client>()
-                .GetQ(x => x.DeletedAt == null,
-                    orderBy: o => o.OrderBy(c => c.CreatedAt),
-                    includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
-
-            if (query != null)
+            var address = UnitOfWork.Repository<Address>()
+                .GetQ(x => x.AddressId == addressId && x.DeletedAt == null,
+                    includeProperties: "Reports, Street, Street.LocationType, Building, Building.LocationType")
+                .SingleOrDefault();
+            if (address != null)
             {
-                clientsList = clientsList.Where(x => x.CompanyName.Contains(query));
+                var reports = address.Reports.Where(x => x.ReportDate.Month == DateTime.Now.Month).ToList();
+                var reportViewModels = Mapper.Map<List<AddressReport>, List<AddressReportViewModel>>(reports);
+
+                var viewModel = new ListAddressesReportsViewModel
+                {
+                    AddressName = address.ShortName,
+                    AddressReports = reportViewModels
+                };
+                return viewModel;
             }
 
-            var clients = clientsList
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            var clientViewModels = Mapper.Map<List<Client>, List<ClientViewModel>>(clients);
-            var clientStatuses = UnitOfWork.Repository<ClientStatus>().Get().ToList();
-            var clientStatusViewModels = Mapper.Map<List<ClientStatus>, List<ClientStatusViewModel>>(clientStatuses);
-
-            var viewModel = new ListClientsViewModel
-            {
-                Clients = clientViewModels,
-                ClientStatuses = clientStatusViewModels,
-                PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
-                Page = page
-            };
-            return viewModel;
+            return null;
         }
 
         // GET: admin/api/reports/0 (new) or admin/api/reports/5 (edit)

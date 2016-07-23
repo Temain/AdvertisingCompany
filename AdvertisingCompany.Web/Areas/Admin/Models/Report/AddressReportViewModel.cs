@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using AdvertisingCompany.Domain.Models;
+using AdvertisingCompany.Web.Models.Mapping;
 
-namespace AdvertisingCompany.Domain.Models
+namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
 {
-    [Table("AddressReport", Schema = "dbo")]
-    public class AddressReport
+    public class AddressReportViewModel : IHaveCustomMappings
     {
         public int AddressReportId { get; set; }
 
@@ -22,7 +18,6 @@ namespace AdvertisingCompany.Domain.Models
         /// Дом с рекламными поверхностями
         /// </summary>
         public int AddressId { get; set; }
-        public Address Address { get; set; }
 
         /// <summary>
         /// Комментарий
@@ -42,7 +37,7 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Фотография
         /// </summary>
-        public byte[] ImageData { get; set; }
+        public string ImageData { get; set; }
 
         /// <summary>
         /// Тип
@@ -54,14 +49,11 @@ namespace AdvertisingCompany.Domain.Models
         /// </summary>
         public DateTime? CreatedAt { get; set; }
 
-        /// <summary>
-        /// Дата обновления записи
-        /// </summary>
-        public DateTime? UpdatedAt { get; set; }
-
-        /// <summary>
-        /// Дата удаления записи
-        /// </summary>
-        public DateTime? DeletedAt { get; set; }
+        public void CreateMappings(AutoMapper.IConfiguration configuration)
+        {
+            configuration.CreateMap<AddressReport, AddressReportViewModel>("AddressReport")
+                .ForMember(m => m.ImageLength, opt => opt.MapFrom(s => s.ImageLength))
+                .ForMember(m => m.ImageData, opt => opt.MapFrom(s => Convert.ToBase64String(s.ImageData)));
+        }
     }
 }

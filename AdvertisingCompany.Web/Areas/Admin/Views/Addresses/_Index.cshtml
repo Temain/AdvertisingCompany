@@ -70,7 +70,7 @@
                                 <i class="fa fa-arrow-circle-o-up fa-stack-2x text-usual"></i>
                             </span>
                         </a>
-                        <a href="#" data-bind="attr : { href : '/admin/#reports' }, tooltip: { title: 'Просмотреть отчёты', placement: 'left', trigger: 'hover' }">
+                        <a href="#" data-bind="attr : { href : '/admin/#addresses/' + addressId() + '/reports' }, tooltip: { title: 'Просмотреть отчёты', placement: 'left', trigger: 'hover' }">
                             <span class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x white"></i>
                                 <i class="fa fa-question-circle fa-stack-2x text-usual"></i>
@@ -135,4 +135,3 @@
 
 @Html.Partial("~/Areas/Admin/Views/Addresses/_Upload.cshtml")
 <!-- /ko -->
-

@@ -126,9 +126,23 @@
                 processData: false,
                 error: function(response) {
                     self.loadingFile(false);
+                    $.magnificPopup.close();
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "Произошла ошибка при загрузке отчёта."
+                    }, {
+                        type: 'danger'
+                    });
                 },
                 success: function (response) {
                     self.loadingFile(false);
+                    $.magnificPopup.close();
+                    $.notify({
+                        icon: 'glyphicon glyphicon-ok',
+                        message: "Отчёт успешно загружен."
+                    }, {
+                        type: 'success'
+                    });
                 }
             });
         }
