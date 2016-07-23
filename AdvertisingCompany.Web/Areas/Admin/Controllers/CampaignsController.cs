@@ -32,17 +32,17 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [ResponseType(typeof(ListClientsViewModel))]
         public ListClientsViewModel GetCampaigns(string query, int page = 1, int pageSize = 10)
         {
-            var clientsList = UnitOfWork.Repository<Client>()
+            var campaignsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderBy(c => c.CreatedAt),
                     includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
             if (query != null)
             {
-                clientsList = clientsList.Where(x => x.CompanyName.Contains(query));
+                campaignsList = campaignsList.Where(x => x.CompanyName.Contains(query));
             }
 
-            var clients = clientsList
+            var clients = campaignsList
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -55,7 +55,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 Clients = clientViewModels,
                 ClientStatuses = clientStatusViewModels,
-                PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
+                PagesCount = (int)Math.Ceiling((double) campaignsList.Count() / pageSize),
                 Page = page
             };
             return viewModel;

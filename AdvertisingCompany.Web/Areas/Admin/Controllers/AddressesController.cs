@@ -40,10 +40,10 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                             City, City.LocationLevel, City.LocationType, Street, Street.LocationLevel, Street.LocationType,
                             Building, Building.LocationLevel, Building.LocationType, Microdistrict");
 
-            //if (query != null)
-            //{
-            //    addressesList = addressesList.Where(x => x.Contains(query));
-            //}
+            if (query != null)
+            {
+                addressesList = addressesList.Where(x => x.ManagementCompanyName.Contains(query));
+            }
 
             var addresses = addressesList
                 .Skip((page - 1) * pageSize)

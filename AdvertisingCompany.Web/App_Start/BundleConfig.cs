@@ -178,7 +178,8 @@
                 .Include("~/Scripts/sing/gallery.js")
                 .Include("~/Scripts/jasny-bootstrap/js/fileinput.js")
                 .Include("~/Scripts/jasny-bootstrap/js/inputmask.js")
-                .Include("~/Scripts/holderjs/holder.js");
+                .Include("~/Scripts/holderjs/holder.js")
+                .Include("~/Scripts/filesize.min.js");
             bundles.Add(singBundle);
 
             Bundle singLoginBundle = new ScriptBundle("~/bundles/sing-login")

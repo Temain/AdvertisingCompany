@@ -3,7 +3,7 @@
     <li>ВЫ ЗДЕСЬ</li>
     <li class="active">Отчёты</li>
 </ol>
-<h1 class="page-title"><span data-bind="text : addressName"></span> <i class="fa fa-building-o" aria-hidden="true"></i></h1>
+<h1 class="page-title"><span data-bind="text : 'Отчёты по адресу: ' + addressName()"></span> <i class="fa fa-building-o" aria-hidden="true"></i></h1>
 <div class="clearfix mb-lg">
     <div class="btn-group m-b-20 js-filter-options">
         <span class="btn btn-default filter active" data-group="all">Июль</span>
@@ -25,11 +25,11 @@
             <div class="caption">
                 <h5 class="mt-0 mb-xs" data-bind="text: imageName"></h5>
                 <ul class="post-links">
-                    <li><a href="#">Дата : <span data-bind="text: createdAt"></span></a></li>
-                    <li><a href="#">Размер : <span data-bind="text: imageLength() + 'b'"></span></a></li>
+                    <li><a>Дата : <span data-bind="text: reportDate"></span></a></li>
+                    <li><a>Размер : <span data-bind="text: filesize(imageLength(), {base: 10, round: 0})"></span></a></li>
                 </ul>
-                <ul class="post-links">
-                    <li><a href="#">Комментарий : </a><span data-bind="text : comment"></span></li>
+                <ul class="post-links" data-bind="visible: comment">
+                    <li><a>Комментарий : </a><span data-bind="text : comment"></span></li>
                 </ul>
             </div>
         </div>

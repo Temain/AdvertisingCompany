@@ -12,7 +12,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
         /// <summary>
         /// Дата отчёта
         /// </summary>
-        public DateTime ReportDate { get; set; }
+        public string ReportDate { get; set; }
 
         /// <summary>
         /// Дом с рекламными поверхностями
@@ -52,6 +52,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<AddressReport, AddressReportViewModel>("AddressReport")
+                .ForMember(m => m.ReportDate, opt => opt.MapFrom(s => s.ReportDate.ToShortDateString()))
                 .ForMember(m => m.ImageLength, opt => opt.MapFrom(s => s.ImageLength))
                 .ForMember(m => m.ImageData, opt => opt.MapFrom(s => Convert.ToBase64String(s.ImageData)));
         }

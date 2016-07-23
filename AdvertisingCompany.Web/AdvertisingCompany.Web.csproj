@@ -601,6 +601,7 @@
     </None>
     <Content Include="Content\sing\application.min.css.bak" />
     <Content Include="Content\images\datatables\Sorting icons.psd" />
+    <Content Include="Scripts\filesize.min.js" />
     <Content Include="Scripts\holderjs\.gitattributes" />
     <Content Include="Scripts\holderjs\.gitignore" />
     <Content Include="Scripts\holderjs\Gruntfile.js" />

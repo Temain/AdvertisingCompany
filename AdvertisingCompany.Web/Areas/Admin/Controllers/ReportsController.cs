@@ -58,89 +58,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return null;
         }
 
-        // GET: admin/api/reports/0 (new) or admin/api/reports/5 (edit)
-        [HttpGet]
-        [Route("{id:int}")]
-        [ResponseType(typeof(CreateClientViewModel))]
-        [ResponseType(typeof(EditClientViewModel))]
-        public IHttpActionResult GetReport(int id)
-        {
-            var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory))
-                .ToList();
-            var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
-
-            if (id == 0)
-            {
-                var viewModel = new CreateClientViewModel();
-                viewModel.ActivityTypes = activityTypeViewModels;
-                return Ok(viewModel);
-            }
-            else
-            {
-                var client = UnitOfWork.Repository<Client>()
-                    .Get(x => x.ClientId == id && x.DeletedAt == null,
-                        includeProperties: "ResponsiblePerson, ApplicationUsers")
-                    .SingleOrDefault();
-                if (client == null)
-                {
-                    return BadRequest();
-                }
-
-                var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
-                viewModel.ActivityTypes = activityTypeViewModels;
-
-                return Ok(viewModel);
-            }
-        }
-
-
-        // PUT: admin/api/reports/5
-        [HttpPut]
-        [Route("")]
-        [KoJsonValidate]
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutReport(EditClientViewModel viewModel)
-        {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
-                    includeProperties: "ResponsiblePerson, ApplicationUsers")
-                .SingleOrDefault();
-            if (client == null)
-            {
-                return BadRequest();
-            }
-
-            Mapper.Map<EditClientViewModel, Client>(viewModel, client);
-            client.UpdatedAt = DateTime.Now;
-
-            UnitOfWork.Repository<Client>().Update(client);
-
-            try
-            {
-                UnitOfWork.Save();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ReportExists(viewModel.ClientId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            // См. атрибут KoJsonValidate 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
         // POST: admin/api/reports
         [HttpPost]
         [Route("")]
@@ -209,19 +126,19 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // DELETE: admin/api/reports/5
         [HttpDelete]
         [Route("")]
-        [ResponseType(typeof(Client))]
+        [ResponseType(typeof(AddressReport))]
         public IHttpActionResult DeleteReport(int id)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == id && x.DeletedAt == null)
+            var addressReport = UnitOfWork.Repository<AddressReport>()
+                .Get(x => x.AddressReportId == id && x.DeletedAt == null)
                 .SingleOrDefault();
-            if (client == null)
+            if (addressReport == null)
             {
                 return NotFound();
             }
 
-            client.DeletedAt = DateTime.Now;
-            UnitOfWork.Repository<Client>().Update(client);
+            addressReport.DeletedAt = DateTime.Now;
+            UnitOfWork.Repository<AddressReport>().Update(addressReport);
 
             try
             {
@@ -239,12 +156,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
-            return Ok(client);
+            return Ok(addressReport);
         }
 
         private bool ReportExists(int id)
         {
-            return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id && e.DeletedAt == null) > 0;
+            return UnitOfWork.Repository<AddressReport>().GetQ().Count(e => e.AddressReportId == id && e.DeletedAt == null) > 0;
         }
     }
 }
