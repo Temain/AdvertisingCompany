@@ -14,11 +14,6 @@ namespace AdvertisingCompany.Domain.Models
         public int AddressReportId { get; set; }
 
         /// <summary>
-        /// Дата отчёта
-        /// </summary>
-        public DateTime ReportDate { get; set; }
-
-        /// <summary>
         /// Дом с рекламными поверхностями
         /// </summary>
         public int AddressId { get; set; }

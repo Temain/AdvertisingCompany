@@ -136,6 +136,10 @@
     <Compile Include="Migrations\201607242354449_AddPaymentStatusLabelClass.Designer.cs">
       <DependentUpon>201607242354449_AddPaymentStatusLabelClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607251419056_RemoveReportDateFromAddressReportTable.cs" />
+    <Compile Include="Migrations\201607251419056_RemoveReportDateFromAddressReportTable.Designer.cs">
+      <DependentUpon>201607251419056_RemoveReportDateFromAddressReportTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -207,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607242354449_AddPaymentStatusLabelClass.resx">
       <DependentUpon>201607242354449_AddPaymentStatusLabelClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607251419056_RemoveReportDateFromAddressReportTable.resx">
+      <DependentUpon>201607251419056_RemoveReportDateFromAddressReportTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

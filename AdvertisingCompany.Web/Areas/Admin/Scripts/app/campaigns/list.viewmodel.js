@@ -111,8 +111,8 @@
 
     Sammy(function () {
         this.get('#campaigns', function () {
-            app.view(self);
             self.loadCampaigns();
+            app.view(self);
         });
     });
 

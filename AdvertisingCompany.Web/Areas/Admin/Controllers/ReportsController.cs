@@ -63,7 +63,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             if (addresses != null)
             {
                 var reports = addresses.SelectMany(x => x.Reports)
-                    .Where(x => x.ReportDate.Month == DateTime.Now.Month)
+                    .Where(x => x.CreatedAt != null && x.CreatedAt.Value.Month == DateTime.Now.Month)
                     .ToList();
                 var reportViewModels = Mapper.Map<List<AddressReport>, List<AddressReportViewModel>>(reports);
 
@@ -132,13 +132,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                         case "comment":
                         {
                             addressReport.Comment = Encoding.UTF8.GetString(bytes);
-                            break;
-                        }
-                        case "reportDate":
-                        {
-                            var reportDateString = Encoding.UTF8.GetString(bytes);
-                            var reportDate = Convert.ToDateTime(reportDateString);
-                            addressReport.ReportDate = reportDate;
                             break;
                         }
                         case "file":

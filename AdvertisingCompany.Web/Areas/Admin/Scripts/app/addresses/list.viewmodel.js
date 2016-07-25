@@ -150,9 +150,8 @@
 
     Sammy(function () {
         this.get('#addresses', function () {
-            app.view(self);
-
             self.loadAddresses();
+            app.view(self);
         });
     });
 
