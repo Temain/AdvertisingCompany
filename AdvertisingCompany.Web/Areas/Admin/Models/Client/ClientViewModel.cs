@@ -9,6 +9,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         public int ClientId { get; set; }
 
         /// <summary>
+        /// Идентификатор кампании
+        /// </summary>
+        public int? CampaignId { get; set; }
+
+        /// <summary>
         /// Название компании
         /// </summary>
         public string CompanyName { get; set; }
@@ -62,6 +67,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         {
             configuration.CreateMap<Domain.Models.Client, ClientViewModel>("Client")
                 .ForMember(m => m.ClientId, opt => opt.MapFrom(s => s.ClientId))
+                .ForMember(m => m.CampaignId, opt => opt.MapFrom(s => s.Campaigns.FirstOrDefault().CampaignId))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.ActivityTypeId, opt => opt.MapFrom(s => s.ActivityTypeId))
                 .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory + "/" + s.ActivityType.ActivityTypeName))

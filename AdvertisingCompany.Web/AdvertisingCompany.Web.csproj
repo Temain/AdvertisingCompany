@@ -901,7 +901,6 @@
     <Content Include="Scripts\pace.js\LICENSE" />
     <Content Include="Scripts\pace.js\pace.coffee" />
     <Content Include="Scripts\pace.js\README.md" />
-    <Content Include="Views\Account\LoginOld.cshtml" />
     <Content Include="Scripts\shufflejs\.bower.json" />
     <Content Include="Scripts\shufflejs\bower.json" />
     <Content Include="Scripts\shufflejs\README.md" />

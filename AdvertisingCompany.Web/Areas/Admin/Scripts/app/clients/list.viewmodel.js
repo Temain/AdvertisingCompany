@@ -124,6 +124,7 @@ function ClientViewModel(dataModel) {
     var self = this;
 
     self.clientId = ko.observable(dataModel.clientId || '');
+    self.campaignId = ko.observable(dataModel.campaignId || '')
     self.companyName = ko.observable(dataModel.companyName || '');
     self.activityTypeId = ko.observable(dataModel.activityTypeId || '');
     self.activityTypeName = ko.observable(dataModel.activityTypeName || '');

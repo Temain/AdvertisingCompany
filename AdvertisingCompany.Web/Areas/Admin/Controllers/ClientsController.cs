@@ -35,7 +35,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var clientsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
+                    includeProperties: "Campaigns, ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
             if (query != null)
             {

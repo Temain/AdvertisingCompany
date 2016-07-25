@@ -70,12 +70,22 @@
                     </td>
                     <td class="hidden-xs" data-bind="text: createdAt"></td>
                     <td class="actions text-center">
+                        <!-- ko if: campaignId() -->
+                        <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() + '/edit' }, tooltip: { title: 'Перейти к редактированию рекламной кампании', placement: 'left', trigger: 'hover' }">
+                            <span class="fa-stack">
+                                <i class="fa fa-circle fa-stack-2x text-warning"></i>
+                                <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <!-- /ko -->
+                        <!-- ko ifnot: campaignId() -->
                         <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/create' }, tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'left', trigger: 'hover' }">
                             <span class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x text-usual"></i>
                                 <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
                             </span>
                         </a>
+                        <!-- /ko -->
                         <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/edit' }, tooltip: { title: 'Перейти к редактированию информации о клиенте', placement: 'left', trigger: 'hover' }">
                             <span class="fa-stack">
                                 <i class="fa fa-circle fa-stack-2x text-usual"></i>
