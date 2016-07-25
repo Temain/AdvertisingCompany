@@ -114,20 +114,23 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
             else
             {
-                //var client = UnitOfWork.Repository<Client>()
-                //    .Get(x => x.ClientId == id && x.DeletedAt == null,
-                //        includeProperties: "ResponsiblePerson, ApplicationUsers")
-                //    .SingleOrDefault();
-                //if (client == null)
-                //{
-                //    return BadRequest();
-                //}
+                var campaign = UnitOfWork.Repository<Campaign>()
+                    .Get(x => x.CampaignId == campaignId && x.DeletedAt == null,
+                        includeProperties: "Client, Client.ResponsiblePerson, Client.ActivityType, Microdistricts")
+                    .SingleOrDefault();
+                if (campaign == null)
+                {
+                    return BadRequest();
+                }
 
-                //var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
-                //viewModel.ActivityTypes = activityTypeViewModels;
+                var viewModel = Mapper.Map<Campaign, EditCampaignViewModel>(campaign);
+                viewModel.Microdistricts = microdistrictViewModels;
+                viewModel.PlacementFormats = placementFormatViewModels;
+                viewModel.PaymentOrders = paymentOrderViewModels;
+                viewModel.PaymentStatuses = paymentStatusViewModels;
+                viewModel.PlacementMonths = placementMonths;
 
-                //return Ok(viewModel);
-                return BadRequest();
+                return Ok(viewModel);
             }
         }
 
@@ -137,21 +140,21 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCampaign(EditClientViewModel viewModel)
+        public IHttpActionResult PutCampaign(EditCampaignViewModel viewModel)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
-                    includeProperties: "ResponsiblePerson, ApplicationUsers")
+            var campaign = UnitOfWork.Repository<Campaign>()
+                .Get(x => x.CampaignId == viewModel.CampaignId && x.DeletedAt == null,
+                    includeProperties: "Client, Client.ResponsiblePerson, Client.ActivityType")
                 .SingleOrDefault();
-            if (client == null)
+            if (campaign == null)
             {
                 return BadRequest();
             }
 
-            Mapper.Map<EditClientViewModel, Client>(viewModel, client);
-            client.UpdatedAt = DateTime.Now;
+            Mapper.Map<EditCampaignViewModel, Campaign>(viewModel, campaign);
+            campaign.UpdatedAt = DateTime.Now;
 
-            UnitOfWork.Repository<Client>().Update(client);
+            UnitOfWork.Repository<Campaign>().Update(campaign);
 
             try
             {
@@ -159,7 +162,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CampaignExists(viewModel.ClientId))
+                if (!CampaignExists(viewModel.CampaignId))
                 {
                     return NotFound();
                 }

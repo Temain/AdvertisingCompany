@@ -251,6 +251,7 @@
     <Compile Include="Areas\Admin\Models\Address\MicrodistrictViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\AddressViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\CampaignViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Campaign\EditCampaignViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\CreateCampaignViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\ListCampaignsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\PaymentStatusViewModel.cs" />
@@ -325,6 +326,7 @@
     <Content Include="Areas\Admin\Scripts\app\addresses\create.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\addresses\edit.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\addresses\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\campaigns\edit.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\campaigns\create.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\campaigns\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\clients\edit.viewmodel.js" />
@@ -604,6 +606,7 @@
     <Content Include="Areas\Admin\Views\Addresses\_Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\_Upload.cshtml" />
     <Content Include="Areas\Admin\Views\Campaigns\_Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Campaigns\_Edit.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -122,6 +122,7 @@
                 }
             },
             success: function (response) {
+                self.isValidationEnabled(false);
                 Sammy().setLocation('#clients');
                 $.notify({
                     icon: 'glyphicon glyphicon-ok',
