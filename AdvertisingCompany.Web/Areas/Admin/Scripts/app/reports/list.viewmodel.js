@@ -44,9 +44,10 @@
                 if (response.clientName) {
                     self.clientName(response.clientName);
                 }
-
-                initGallery();
+              
                 self.isInitialized(true);
+                app.view(self);
+                initGallery();
             }
         });
     };
@@ -56,9 +57,9 @@
             var addressId = this.params['id'];
             self.addressId(addressId);
             self.campaignId(null);
+            self.addressReports([]);
 
             self.loadAddressReports();
-            app.view(self);
         });
     });
 
@@ -67,9 +68,9 @@
             var campaignId = this.params['campaignId'];
             self.campaignId(campaignId);
             self.addressId(null);
+            self.addressReports([]);
 
             self.loadAddressReports();
-            app.view(self);
         });
     });
 

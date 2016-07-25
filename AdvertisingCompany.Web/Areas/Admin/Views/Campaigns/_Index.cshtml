@@ -39,9 +39,9 @@
                     <th class="col-md-3">Клиент</th>
                     <th class="col-md-2">Деятельность</th>
                     <th class="col-md-2">Микрорайоны</th>
-                    <th class="col-md-1">Формат</th>
-                    <th class="col-md-1">Стоимость</th>
-                    <th class="col-md-1">Форма оплаты</th>
+                    <th class="col-md-1 text-center">Формат</th>
+                    <th class="col-md-1 text-center">Стоимость</th>
+                    <th class="col-md-1 text-center">Форма оплаты</th>
                     <th class="col-md-1">Статус оплаты</th>
                     <th class="col-md-1 text-center">Редактирование</th>
                 </tr>
@@ -51,12 +51,14 @@
                     <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
                     <td><span class="fw-semi-bold" data-bind="text: clientName"></span></td>
                     <td data-bind="text: activityTypeName"></td>
-                    <td data-bind="foreach: microdistrictNames">
-                        <span data-bind="text: $data"></span><br/>
+                    <td>
+                        <ul data-bind="foreach: microdistrictNames">
+                            <li data-bind="text: $data"></li>
+                        </ul>
                     </td>
-                    <td data-bind="text: placementFormatName"></td>
-                    <td data-bind="text: placementCost"></td>
-                    <td data-bind="text: paymentOrderName"></td>   
+                    <td class="text-center" data-bind="text: placementFormatName"></td>
+                    <td class="text-center" data-bind="text: placementCost"></td>
+                    <td class="text-center" data-bind="text: paymentOrderName"></td>   
                     <td>                      
                         <select data-bind="attr: { 'data-style' : 'btn-' + paymentStatusLabelClass() }, selectPicker: paymentStatusId, selectPickerOptions: { optionsArray : $parent.paymentStatuses, initValue : paymentStatusInitialId, initialized : paymentStatusInitialized }, optionsValue: 'paymentStatusId', optionsText: 'paymentStatusName', event : { change : $parent.paymentStatusChanged }"></select>
                     </td>

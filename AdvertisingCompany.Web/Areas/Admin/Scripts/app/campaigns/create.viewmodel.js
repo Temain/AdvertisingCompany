@@ -15,13 +15,15 @@
         }
     });
     self.microdistricts = ko.observableArray(dataModel.microdistricts || []);
-    self.placementMonthId = ko.observable(dataModel.placementMonthId || '').extend({
+    self.placementMonthId = ko.observable(dataModel.placementMonthId || 0).extend({
         required: {
             params: true,
             message: "Выберите месяц размещения рекламы.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
     });
+    //self.placementMonthInitialId = ko.observable();
+    //self.placementMonthInitialized = ko.observable(false);
     self.placementMonths = ko.observableArray(dataModel.placementMonths || []);
 
     self.placementFormatId = ko.observable(dataModel.placementFormatId || '').extend({
@@ -69,7 +71,15 @@
                 },
                 error: function (response) {},
                 success: function (response) {
-                    ko.mapping.fromJS(response, {}, self);
+                    var mappings = {
+                        'placementMonths': {
+                            create: function (options) {
+                                return options.data;
+                            }
+                        }
+                    };
+
+                    ko.mapping.fromJS(response, mappings, self);
 
                     self.clientId(clientId);
                     self.isValidationEnabled(false);
