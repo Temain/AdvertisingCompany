@@ -24,9 +24,9 @@ namespace AdvertisingCompany.Domain.Models
         public Client Client { get; set; }
 
         /// <summary>
-        /// Месяц размещения
+        /// Месяц размещения (номер по порядку)
         /// </summary>
-        public int PlacementMonth { get; set; }
+        public int PlacementMonthId { get; set; }
 
         /// <summary>
         /// Формат размещения рекламы

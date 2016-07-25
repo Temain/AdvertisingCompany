@@ -81,5 +81,7 @@ namespace AdvertisingCompany.Domain.Models
         public ClientStatus ClientStatus { get; set; }
 
         public ICollection<ApplicationUser> ApplicationUsers { get; set; }
+
+        public ICollection<Campaign> Campaigns { get; set; }
     }
 }

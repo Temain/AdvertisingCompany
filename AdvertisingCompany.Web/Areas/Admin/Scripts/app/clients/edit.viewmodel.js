@@ -18,7 +18,6 @@
             onlyIf: function () { return self.isValidationEnabled(); }
         }
     });
-
     self.activityTypeInitialId = ko.observable();
     self.activityTypeInitialized = ko.observable(false);
     self.activityTypes = ko.observableArray(dataModel.activityTypes || []);

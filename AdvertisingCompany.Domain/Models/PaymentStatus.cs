@@ -19,6 +19,8 @@ namespace AdvertisingCompany.Domain.Models
         [Required]
         public string PaymentStatusName { get; set; }
 
+        public string PaymentStatusLabelClass { get; set; }
+
         /// <summary>
         /// Рекалмные кампании
         /// </summary>

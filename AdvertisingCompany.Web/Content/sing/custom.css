@@ -86,7 +86,7 @@ input.required {
     height: 7.5em;
 }
 
-.create-client > button {
+.btn-footer > button {
     width: 12em;
 }
 
@@ -127,7 +127,7 @@ span.ko-field-validation-error {
 }
 
 input.ko-field-validation-error,
-input.ko-input-validation-error,
+/*input.ko-input-validation-error,*/
 select.ko-field-validation-error,
 textarea.ko-field-validation-error {
     border: 1px solid #dd5826;

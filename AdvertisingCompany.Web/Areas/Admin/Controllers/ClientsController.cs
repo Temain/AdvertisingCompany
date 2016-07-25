@@ -34,7 +34,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var clientsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
-                    orderBy: o => o.OrderBy(c => c.CreatedAt),
+                    orderBy: o => o.OrderByDescending(c => c.CreatedAt),
                     includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
             if (query != null)
@@ -177,7 +177,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok();
+            return Ok(new { clientId = client.ClientId });
         }
 
         [HttpPut]

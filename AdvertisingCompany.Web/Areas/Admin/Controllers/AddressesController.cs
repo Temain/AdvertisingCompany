@@ -35,7 +35,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var addressesList = UnitOfWork.Repository<Address>()
                 .GetQ(x => x.DeletedAt == null,
-                    orderBy: o => o.OrderBy(c => c.CreatedAt),
+                    orderBy: o => o.OrderByDescending(c => c.CreatedAt),
                     includeProperties: @"Region, Region.LocationLevel, Region.LocationType, District, District.LocationLevel, District.LocationType, 
                             City, City.LocationLevel, City.LocationType, Street, Street.LocationLevel, Street.LocationType,
                             Building, Building.LocationLevel, Building.LocationType, Microdistrict");

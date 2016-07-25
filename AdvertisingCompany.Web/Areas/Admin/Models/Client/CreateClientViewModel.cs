@@ -17,7 +17,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
 
         [Required(ErrorMessage = "Необходимо указать вид деятельности клиента.")]
         [Display(Name = "Вид деятельности клиента")]
-        public int ActivityTypeId { get; set; }
+        public int? ActivityTypeId { get; set; }
         public IEnumerable<ActivityTypeViewModel> ActivityTypes { get; set; }
 
 

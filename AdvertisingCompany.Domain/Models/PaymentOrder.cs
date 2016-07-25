@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AdvertisingCompany.Domain.Models
 {
     /// <summary>
-    /// Порядок оплаты размещения рекламы
+    /// Форма оплаты размещения рекламы
     /// </summary>
     [Table("PaymentOrder", Schema = "dict")]
     public class PaymentOrder

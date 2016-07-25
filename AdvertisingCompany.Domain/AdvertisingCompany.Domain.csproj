@@ -128,6 +128,14 @@
     <Compile Include="Migrations\201607221350596_ChangeTypeToLongImageLengthInAddressReport.Designer.cs">
       <DependentUpon>201607221350596_ChangeTypeToLongImageLengthInAddressReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607231542093_RenamePlacementMonthToPlacementMonthIdInCampaign.cs" />
+    <Compile Include="Migrations\201607231542093_RenamePlacementMonthToPlacementMonthIdInCampaign.Designer.cs">
+      <DependentUpon>201607231542093_RenamePlacementMonthToPlacementMonthIdInCampaign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607242354449_AddPaymentStatusLabelClass.cs" />
+    <Compile Include="Migrations\201607242354449_AddPaymentStatusLabelClass.Designer.cs">
+      <DependentUpon>201607242354449_AddPaymentStatusLabelClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -193,6 +201,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607221350596_ChangeTypeToLongImageLengthInAddressReport.resx">
       <DependentUpon>201607221350596_ChangeTypeToLongImageLengthInAddressReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607231542093_RenamePlacementMonthToPlacementMonthIdInCampaign.resx">
+      <DependentUpon>201607231542093_RenamePlacementMonthToPlacementMonthIdInCampaign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607242354449_AddPaymentStatusLabelClass.resx">
+      <DependentUpon>201607242354449_AddPaymentStatusLabelClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -40,7 +40,7 @@
                     },
                     self.clients
                 );               
-                // ko.mapping.fromJS(response.clients, {}, self.clients);
+
                 ko.mapping.fromJS(response.clientStatuses, {}, self.clientStatuses);
                 self.page(response.page);
                 self.pagesCount(response.pagesCount);

@@ -1,4 +1,6 @@
-﻿<!-- ko with: createClient -->
+﻿<div data-bind="visible: createClient">hfgff</div>
+
+<!-- ko with: createClient -->
 <ol class="breadcrumb">
     <li>ВЫ ЗДЕСЬ</li>
     <li>Клиенты</li>
@@ -69,9 +71,9 @@
             <div class="form-actions">
                 <div class="row">
                     <div class="col-sm-offset-4 col-sm-7">
-                        <div class="btn-group create-client" role="group" aria-label="...">
+                        <div class="btn-group btn-footer" role="group" aria-label="...">
                             <button type="submit" class="btn btn-success" data-bind="click: submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
-                            <button type="button" class="btn btn-inverse"><i class="fa fa-flag" aria-hidden="true"></i>&nbsp;Сформировать РК</button>
+                            <button type="button" class="btn btn-inverse" data-bind="click: function() { submit(true); }"><i class="fa fa-flag" aria-hidden="true"></i>&nbsp;Сформировать РК</button>
                         </div>
                     </div>
                 </div>

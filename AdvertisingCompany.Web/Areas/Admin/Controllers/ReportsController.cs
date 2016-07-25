@@ -36,22 +36,62 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListAddressesReportsViewModel))]
-        public ListAddressesReportsViewModel GetReports(int addressId)
+        public ListAddressesReportsViewModel GetReports(int? addressId = null, int? campaignId = null)
         {
-            var address = UnitOfWork.Repository<Address>()
-                .GetQ(x => x.AddressId == addressId && x.DeletedAt == null,
-                    includeProperties: "Reports, Street, Street.LocationType, Building, Building.LocationType")
-                .SingleOrDefault();
-            if (address != null)
+            IQueryable<Address> addresses = null;
+            IQueryable<Campaign> campaigns = null;
+            if (addressId != null)
             {
-                var reports = address.Reports.Where(x => x.ReportDate.Month == DateTime.Now.Month).ToList();
+                addresses = UnitOfWork.Repository<Address>()
+                   .GetQ(x => x.AddressId == addressId && x.DeletedAt == null,
+                       includeProperties: "Reports, Street, Street.LocationType, Building, Building.LocationType");
+            }
+
+            if (campaignId != null)
+            {
+                campaigns = UnitOfWork.Repository<Campaign>()
+                    .GetQ(x => x.CampaignId == campaignId && x.DeletedAt == null,
+                        includeProperties: @"Client, Microdistricts, Microdistricts.Addresses, Microdistricts.Addresses.Reports,
+                            Microdistricts.Addresses.Street, Microdistricts.Addresses.Street.LocationType,
+                            Microdistricts.Addresses.Building, Microdistricts.Addresses.Building.LocationType");
+                if (campaigns != null && campaigns.Any())
+                {
+                    addresses = campaigns.SelectMany(x => x.Microdistricts).SelectMany(x => x.Addresses);
+                }
+            }
+
+            if (addresses != null)
+            {
+                var reports = addresses.SelectMany(x => x.Reports)
+                    .Where(x => x.ReportDate.Month == DateTime.Now.Month)
+                    .ToList();
                 var reportViewModels = Mapper.Map<List<AddressReport>, List<AddressReportViewModel>>(reports);
 
                 var viewModel = new ListAddressesReportsViewModel
                 {
-                    AddressName = address.ShortName,
                     AddressReports = reportViewModels
                 };
+
+                // Для одного адреса получаем сокращенное наименование
+                if (addressId != null)
+                {
+                    var address = addresses.FirstOrDefault();
+                    if (address != null)
+                    {
+                        viewModel.AddressName = address.ShortName;
+                    }
+                }
+
+                // Для клиента получаем сокращенное наименование компании
+                if (campaigns != null)
+                {
+                    var campaign = campaigns.SingleOrDefault();
+                    if (campaign != null)
+                    {
+                        viewModel.ClientName = campaign.Client.CompanyName;
+                    }
+                }
+
                 return viewModel;
             }
 

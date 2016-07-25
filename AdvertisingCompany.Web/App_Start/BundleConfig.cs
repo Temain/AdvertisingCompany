@@ -146,6 +146,7 @@
                 .Include("~/Areas/Admin/Scripts/app/addresses/create.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/addresses/edit.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/campaigns/list.viewmodel.js")
+                .Include("~/Areas/Admin/Scripts/app/campaigns/create.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/reports/list.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/analytics/analytics.viewmodel.js")
                 .Include("~/Areas/Admin/Scripts/app/_run.js")

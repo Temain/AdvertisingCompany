@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -8,12 +9,11 @@ using System.Web.Http.Description;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
 using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.ActionFilters;
-using AdvertisingCompany.Web.Areas.Admin.Models;
-using AdvertisingCompany.Web.Areas.Admin.Models.ActivityType;
+using AdvertisingCompany.Web.Areas.Admin.Models.Address;
+using AdvertisingCompany.Web.Areas.Admin.Models.Campaign;
 using AdvertisingCompany.Web.Areas.Admin.Models.Client;
 using AdvertisingCompany.Web.Controllers;
 using AutoMapper;
-using Microsoft.AspNet.Identity;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
@@ -29,71 +29,105 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // GET: admin/api/campaigns
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(ListClientsViewModel))]
-        public ListClientsViewModel GetCampaigns(string query, int page = 1, int pageSize = 10)
+        [ResponseType(typeof(ListCampaignsViewModel))]
+        public ListCampaignsViewModel GetCampaigns(string query, int page = 1, int pageSize = 10)
         {
-            var campaignsList = UnitOfWork.Repository<Client>()
+            var campaignsList = UnitOfWork.Repository<Campaign>()
                 .GetQ(x => x.DeletedAt == null,
-                    orderBy: o => o.OrderBy(c => c.CreatedAt),
-                    includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
+                    orderBy: o => o.OrderByDescending(c => c.CreatedAt),
+                    includeProperties: "Client, Client.ActivityType, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
 
             if (query != null)
             {
-                campaignsList = campaignsList.Where(x => x.CompanyName.Contains(query));
+                campaignsList = campaignsList.Where(x => x.Client.CompanyName.Contains(query));
             }
 
-            var clients = campaignsList
+            var campaigns = campaignsList
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            var clientViewModels = Mapper.Map<List<Client>, List<ClientViewModel>>(clients);
-            var clientStatuses = UnitOfWork.Repository<ClientStatus>().Get().ToList();
-            var clientStatusViewModels = Mapper.Map<List<ClientStatus>, List<ClientStatusViewModel>>(clientStatuses);
+            var campaignViewModels = Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);
+            var paymentStatuses = UnitOfWork.Repository<PaymentStatus>().Get().ToList();
+            var paymentStatusViewModels = Mapper.Map<List<PaymentStatus>, List<PaymentStatusViewModel>>(paymentStatuses);
 
-            var viewModel = new ListClientsViewModel
+            var viewModel = new ListCampaignsViewModel
             {
-                Clients = clientViewModels,
-                ClientStatuses = clientStatusViewModels,
+                Campaigns = campaignViewModels,
+                PaymentStatuses = paymentStatusViewModels,
                 PagesCount = (int)Math.Ceiling((double) campaignsList.Count() / pageSize),
                 Page = page
             };
             return viewModel;
         }
 
-        // GET: admin/api/campaigns/0 (new) or admin/api/campaigns/5 (edit)
+        // GET: admin/api/clients/5/campaigns/0 (new) or admin/api/clients/5/campaigns/8 (edit)
         [HttpGet]
-        [Route("{id:int}")]
-        [ResponseType(typeof(CreateClientViewModel))]
-        [ResponseType(typeof(EditClientViewModel))]
-        public IHttpActionResult GetCampaign(int id)
+        [Route("~/admin/api/clients/{clientId:int}/campaigns/{campaignId:int}")]
+        [ResponseType(typeof(CreateCampaignViewModel))]
+        // [ResponseType(typeof(EditCampaignViewModel))]
+        public IHttpActionResult GetCampaign(int clientId, int campaignId)
         {
-            var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory))
-                .ToList();
-            var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
+            var client = UnitOfWork.Repository<Client>()
+                .GetQ(x => x.ClientId == clientId && x.DeletedAt == null,
+                    includeProperties: "ResponsiblePerson, ActivityType")
+                .SingleOrDefault();
 
-            if (id == 0)
+            if (client == null)
             {
-                var viewModel = new CreateClientViewModel();
-                viewModel.ActivityTypes = activityTypeViewModels;
+                return BadRequest();
+            }
+
+            var microdistricts = UnitOfWork.Repository<Microdistrict>()
+                .Get(orderBy: o => o.OrderBy(p => p.MicrodistrictName))
+                .ToList();
+            var microdistrictViewModels = Mapper.Map<IEnumerable<Microdistrict>, IEnumerable<MicrodistrictViewModel>>(microdistricts);
+
+            var placementFormats = UnitOfWork.Repository<PlacementFormat>()
+                .Get(orderBy: o => o.OrderBy(p => p.PlacementFormatId))
+                .ToList();
+            var placementFormatViewModels = Mapper.Map<IEnumerable<PlacementFormat>, IEnumerable<PlacementFormatViewModel>>(placementFormats);
+
+            var paymentOrders = UnitOfWork.Repository<PaymentOrder>()
+                .Get(orderBy: o => o.OrderBy(p => p.PaymentOrderId))
+                .ToList();
+            var paymentOrderViewModels = Mapper.Map<IEnumerable<PaymentOrder>, IEnumerable<PaymentOrderViewModel>>(paymentOrders);
+
+            var paymentStatuses = UnitOfWork.Repository<PaymentStatus>()
+                .Get(orderBy: o => o.OrderBy(p => p.PaymentStatusId))
+                .ToList();
+            var paymentStatusViewModels = Mapper.Map<IEnumerable<PaymentStatus>, IEnumerable<PaymentStatusViewModel>>(paymentStatuses);
+
+            var placementMonths = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
+                .Select((month, index) => new PlacementMonthViewModel { PlacementMonthId = index, PlacementMonthName = month })
+                .Where(x => !String.IsNullOrEmpty(x.PlacementMonthName));
+
+            if (campaignId == 0)
+            {
+                var viewModel = Mapper.Map<Client, CreateCampaignViewModel>(client);
+                viewModel.Microdistricts = microdistrictViewModels;
+                viewModel.PlacementFormats = placementFormatViewModels;
+                viewModel.PaymentOrders = paymentOrderViewModels;
+                viewModel.PaymentStatuses = paymentStatusViewModels;
+                viewModel.PlacementMonths = placementMonths;
                 return Ok(viewModel);
             }
             else
             {
-                var client = UnitOfWork.Repository<Client>()
-                    .Get(x => x.ClientId == id && x.DeletedAt == null,
-                        includeProperties: "ResponsiblePerson, ApplicationUsers")
-                    .SingleOrDefault();
-                if (client == null)
-                {
-                    return BadRequest();
-                }
+                //var client = UnitOfWork.Repository<Client>()
+                //    .Get(x => x.ClientId == id && x.DeletedAt == null,
+                //        includeProperties: "ResponsiblePerson, ApplicationUsers")
+                //    .SingleOrDefault();
+                //if (client == null)
+                //{
+                //    return BadRequest();
+                //}
 
-                var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
-                viewModel.ActivityTypes = activityTypeViewModels;
+                //var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
+                //viewModel.ActivityTypes = activityTypeViewModels;
 
-                return Ok(viewModel);
+                //return Ok(viewModel);
+                return BadRequest();
             }
         }
 
@@ -144,40 +178,88 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/campaigns
+        // POST: admin/api/clients/5/campaigns
         [HttpPost]
-        [Route("")]
+        [Route("~/admin/api/clients/{clientId:int}/campaigns")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostCampaign(CreateClientViewModel viewModel)
+        public IHttpActionResult PostCampaign([FromUri] int clientId, [FromBody] CreateCampaignViewModel viewModel)
         {
-            var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
-
-            var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
-            var result = UserManager.Create(user, viewModel.Password);
-            if (result.Succeeded)
+            var client = UnitOfWork.Repository<Client>()
+                .GetQ(x => x.ClientId == clientId && x.DeletedAt == null,
+                    includeProperties: "Campaigns")
+                .SingleOrDefault();
+            if (client == null)
             {
-                UnitOfWork.Repository<Client>().Insert(client);
-                UnitOfWork.Save();
-
-                user.ClientId = client.ClientId;
-                UserManager.Update(user);
-            }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error);
-                }
+                return BadRequest();
             }
 
-            // См. атрибут KoJsonValidate 
+            if (client.Campaigns.Any())
+            {
+                ModelState.AddModelError("Shared", "Для клиента уже создана рекламная кампания.");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var campaign = Mapper.Map<CreateCampaignViewModel, Campaign>(viewModel);
+            campaign.Client = client;
+
+            var microdistricts = UnitOfWork.Repository<Microdistrict>()
+                .GetQ(x => viewModel.MicrodistrictIds.Contains(x.MicrodistrictId))
+                .ToList();
+            campaign.Microdistricts = microdistricts;
+
+            try
+            {
+                UnitOfWork.Repository<Campaign>().Insert(campaign);
+                UnitOfWork.Save();
+            }
+            catch (DataException)
+            {
+                return InternalServerError();
+            }
+
             return Ok();
+        }
+
+        [HttpPut]
+        [Route("{campaignId:int}/paymentstatus/{statusId:int}")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult ChangeStatus(int campaignId, int statusId)
+        {
+            var campaign = UnitOfWork.Repository<Campaign>()
+                .Get(x => x.CampaignId == campaignId && x.DeletedAt == null)
+                .SingleOrDefault();
+            if (campaign == null)
+            {
+                return BadRequest();
+            }
+
+            campaign.PaymentStatusId = statusId;
+            campaign.UpdatedAt = DateTime.Now;
+
+            UnitOfWork.Repository<Campaign>().Update(campaign);
+
+            try
+            {
+                UnitOfWork.Save();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CampaignExists(campaignId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // DELETE: admin/api/campaigns/5
@@ -186,16 +268,16 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [ResponseType(typeof(Client))]
         public IHttpActionResult DeleteCampaign(int id)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == id && x.DeletedAt == null)
+            var campaign = UnitOfWork.Repository<Campaign>()
+                .Get(x => x.CampaignId == id && x.DeletedAt == null)
                 .SingleOrDefault();
-            if (client == null)
+            if (campaign == null)
             {
                 return NotFound();
             }
 
-            client.DeletedAt = DateTime.Now;
-            UnitOfWork.Repository<Client>().Update(client);
+            campaign.DeletedAt = DateTime.Now;
+            UnitOfWork.Repository<Campaign>().Update(campaign);
 
             try
             {
@@ -213,12 +295,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
-            return Ok(client);
+            return Ok(campaign);
         }
 
         private bool CampaignExists(int id)
         {
-            return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id && e.DeletedAt == null) > 0;
+            return UnitOfWork.Repository<Campaign>().GetQ().Count(e => e.CampaignId == id && e.DeletedAt == null) > 0;
         }
     }
 }

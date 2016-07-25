@@ -93,7 +93,7 @@
         });
     });
 
-    self.submit = function () {
+    self.submit = function (toNextStage) {
         self.isValidationEnabled(true);
         var postData = ko.toJSON(self);
 
@@ -138,7 +138,12 @@
                 }
             },
             success: function (response) {
-                Sammy().setLocation('#clients');
+                if (toNextStage) {
+                    Sammy().setLocation('##clients/' + response.clientId + '/campaigns/create');
+                } else {
+                    Sammy().setLocation('#clients');
+                }
+
                 $.notify({
                     icon: 'glyphicon glyphicon-ok',
                     message: "Клиент успешно сохранён."

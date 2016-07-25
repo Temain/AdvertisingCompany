@@ -1,16 +1,21 @@
 ﻿function ReportsListViewModel(app, dataModel) {
     var self = this;
     self.isInitialized = ko.observable(false);
+
+    self.addressId = ko.observable('');
+    self.campaignId = ko.observable('');
+
     self.addressName = ko.observable('');
+    self.clientName = ko.observable('');
     self.addressReports = ko.observableArray([]);
 
-    self.loadAddressReports = function (addressId) {
+    self.loadAddressReports = function () {
         self.isInitialized(false);
 
         $.ajax({
             method: 'get',
             url: '/admin/api/reports',
-            data: { addressId: addressId },
+            data: { addressId: self.addressId(), campaignId: self.campaignId() },
             contentType: "application/json; charset=utf-8",
             headers: {
                 'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
@@ -31,7 +36,14 @@
                     },
                     self.addressReports
                 );
-                self.addressName(response.addressName);
+
+                if (response.addressName) {
+                    self.addressName(response.addressName);
+                }
+
+                if (response.clientName) {
+                    self.clientName(response.clientName);
+                }
 
                 initGallery();
                 self.isInitialized(true);
@@ -42,9 +54,22 @@
     Sammy(function () {
         this.get('#addresses/:id/reports', function () {
             var addressId = this.params['id'];
+            self.addressId(addressId);
+            self.campaignId(null);
 
+            self.loadAddressReports();
             app.view(self);
-            self.loadAddressReports(addressId);
+        });
+    });
+
+    Sammy(function () {
+        this.get('#clients/:clientId/campaigns/:campaignId/reports', function () {
+            var campaignId = this.params['campaignId'];
+            self.campaignId(campaignId);
+            self.addressId(null);
+
+            self.loadAddressReports();
+            app.view(self);
         });
     });
 
