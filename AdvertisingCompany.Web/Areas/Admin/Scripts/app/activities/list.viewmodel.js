@@ -25,20 +25,20 @@
                 progress.hide();
             },
             success: function (response) {
-                //ko.mapping.fromJS(
-                //    response.activities,
-                //    {
-                //        key: function (data) {
-                //            return ko.utils.unwrapObservable(data.activityTypeId);
-                //        },
-                //        create: function (options) {
-                //            var activityViewModel = new ActivityViewModel(options.data);
-                //            // ko.serverSideValidator.updateKoModel(clientViewModel);
-                //            return activityViewModel;
-                //        }
-                //    },
-                //    self.activities
-                //);               
+                ko.mapping.fromJS(
+                    response.activities,
+                    {
+                        key: function (data) {
+                            return ko.utils.unwrapObservable(data.activityTypeId);
+                        },
+                        create: function (options) {
+                            var activityViewModel = new ActivityTypeViewModel(options.data);
+                            // ko.serverSideValidator.updateKoModel(clientViewModel);
+                            return activityViewModel;
+                        }
+                    },
+                    self.activities
+                );               
 
                 self.page(response.page);
                 self.pagesCount(response.pagesCount);
@@ -77,8 +77,12 @@
     return self;
 }
 
-function ActivityViewModel(dataModel) {
+function ActivityTypeViewModel(activityTypeViewModel) {
     var self = this;
+
+    self.activityTypeId = ko.observable(activityTypeViewModel.activityTypeId || '');
+    self.activityTypeName = ko.observable(activityTypeViewModel.activityTypeName || '');
+    self.activityCategory = ko.observable(activityTypeViewModel.activityCategory || '');
 }
 
 app.addViewModel({

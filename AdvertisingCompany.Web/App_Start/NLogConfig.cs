@@ -23,7 +23,7 @@ namespace AdvertisingCompany.Web
                 @"INSERT INTO [serv].[LogEntry] ([Date], [Level], [Logger], [ClassMethod], [Message], [Username], [RequestUri], [RemoteAddress], [UserAgent], [Exception]) 
                     VALUES (@Date, @Level, @Logger, @ClassMethod, @Message, @Username, @RequestUri, @RemoteAddress, @UserAgent, @Exception);";
 
-            databaseTarget.Parameters.Add(new DatabaseParameterInfo("@Date", "${longdate}"));
+            databaseTarget.Parameters.Add(new DatabaseParameterInfo("@Date", "${date:format=yyyy-MM-ddTHH\\:mm\\:ss.fff}"));
             databaseTarget.Parameters.Add(new DatabaseParameterInfo("@Level", "${level}"));
             databaseTarget.Parameters.Add(new DatabaseParameterInfo("@Logger", "${logger}"));
             databaseTarget.Parameters.Add(new DatabaseParameterInfo("@ClassMethod", "${callsite:className=false:includeSourcePath=false:methodName=true}"));

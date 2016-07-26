@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AdvertisingCompany.Web.Models;
+using NLog;
 
 namespace AdvertisingCompany.Web.Controllers
 {
@@ -50,6 +51,9 @@ namespace AdvertisingCompany.Web.Controllers
             var claims = new ClaimsPrincipal(User).Claims.ToArray();
             var identity = new ClaimsIdentity(claims, "Bearer");
             AuthenticationManager.SignIn(identity);
+
+            Logger.Info("Успешный вход в систему.");
+
             return new EmptyResult();
         }
 
@@ -135,12 +139,16 @@ namespace AdvertisingCompany.Web.Controllers
                 return View(model);
             }
 
+            // Переменная для nlog'a
+            GlobalDiagnosticsContext.Set("UserName", model.UserName);
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
+                    Logger.Info("Успешный вход в систему.");
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -454,6 +462,7 @@ namespace AdvertisingCompany.Web.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Logger.Info("Успешный выход из системы.");
             return RedirectToAction("Index", "Home");
         }
 

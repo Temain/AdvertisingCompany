@@ -3,8 +3,17 @@
     <li>ВЫ ЗДЕСЬ</li>
     <li class="active">Отчёты</li>
 </ol>
-<h1 class="page-title" data-bind="visible: addressId"><span data-bind="text : 'Фотоотчёты по адресу: ' + addressName()"></span> <i class="fa fa-building-o" aria-hidden="true"></i></h1>
-<h1 class="page-title" data-bind="visible: campaignId"><span data-bind="text : 'Фотоотчёты для клиента ' + clientName()"></span></h1>
+<div>
+    <h1 class="page-title" data-bind="visible: addressId">
+        Фотоотчёты<br />
+        <small data-bind="text : 'Адрес: г.Краснодар ' + addressName()"></small>
+        @*<span data-bind="text : 'Фотоотчёты по адресу: ' + addressName()"></span> <i class="fa fa-building-o" aria-hidden="true"></i>*@
+    </h1>
+</div>
+
+<h1 class="page-title" data-bind="visible: campaignId">
+    <span data-bind="text : 'Фотоотчёты для клиента ' + clientName()"></span>
+</h1>
 <div class="clearfix mb-lg">
     <div class="btn-group m-b-20 js-filter-options" data-bind="visible: addressId">
         <span class="btn btn-default filter active" data-group="all">Июль</span>

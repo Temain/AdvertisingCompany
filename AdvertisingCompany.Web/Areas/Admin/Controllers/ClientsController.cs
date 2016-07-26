@@ -114,6 +114,14 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            // Здесь дополнительная валидация
+
+            // См. атрибут KoJsonValidate 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Mapper.Map<EditClientViewModel, Client>(viewModel, client);
             client.UpdatedAt = DateTime.Now;
 
@@ -135,11 +143,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
-            // См. атрибут KoJsonValidate 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            Logger.Info("Обновление информации о клиенте. ClientId={0}", viewModel.ClientId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -177,6 +181,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
+            Logger.Info("Добавление нового клиента. ClientId={0}", client.ClientId);
+
             return Ok(new { clientId = client.ClientId });
         }
 
@@ -193,6 +199,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            var oldStatusId = client.ClientStatusId;
             client.ClientStatusId = statusId;
             client.UpdatedAt = DateTime.Now;
 
@@ -213,6 +220,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     throw;
                 }
             }
+
+            Logger.Info("Изменение статуса клиента. ClientId={0}, OldStatusId={1}, NewStatusId={2}", oldStatusId, statusId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -249,6 +258,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     throw;
                 }
             }
+
+            Logger.Info("Удаление клиента. ClientId={0}", id);
 
             return Ok(client);
         }

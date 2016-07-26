@@ -14,6 +14,7 @@ using AdvertisingCompany.Web.Areas.Admin.Models.Client;
 using AdvertisingCompany.Web.Controllers;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using AdvertisingCompany.Web.Areas.Admin.Models.Campaign;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
@@ -29,33 +30,27 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // GET: admin/api/activities
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(ListClientsViewModel))]
-        public ListClientsViewModel GetActivities(string query, int page = 1, int pageSize = 10)
+        [ResponseType(typeof(ListActivityTypesViewModel))]
+        public ListActivityTypesViewModel GetActivities(string query, int page = 1, int pageSize = 10)
         {
-            var clientsList = UnitOfWork.Repository<Client>()
-                .GetQ(x => x.DeletedAt == null,
-                    orderBy: o => o.OrderBy(c => c.CreatedAt),
-                    includeProperties: "ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
+            var activitiesList = UnitOfWork.Repository<ActivityType>()
+                .GetQ(orderBy: o => o.OrderBy(c => c.ActivityCategory));
 
             if (query != null)
             {
-                clientsList = clientsList.Where(x => x.CompanyName.Contains(query));
+                activitiesList = activitiesList.Where(x => x.ActivityTypeName.Contains(query));
             }
 
-            var clients = clientsList
+            var activities = activitiesList
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            var clientViewModels = Mapper.Map<List<Client>, List<ClientViewModel>>(clients);
-            var clientStatuses = UnitOfWork.Repository<ClientStatus>().Get().ToList();
-            var clientStatusViewModels = Mapper.Map<List<ClientStatus>, List<ClientStatusViewModel>>(clientStatuses);
-
-            var viewModel = new ListClientsViewModel
+            var activityViewModels = Mapper.Map<List<ActivityType>, List<ActivityTypeViewModel>>(activities);
+            var viewModel = new ListActivityTypesViewModel
             {
-                Clients = clientViewModels,
-                ClientStatuses = clientStatusViewModels,
-                PagesCount = (int)Math.Ceiling((double)clientsList.Count() / pageSize),
+                Activities = activityViewModels,
+                PagesCount = (int) Math.Ceiling((double) activitiesList.Count() / pageSize),
                 Page = page
             };
             return viewModel;

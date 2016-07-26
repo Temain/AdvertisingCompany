@@ -118,6 +118,14 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            // Здесь дополнительная валидация
+
+            // См. атрибут KoJsonValidate 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Mapper.Map<EditClientViewModel, Client>(viewModel, client);
             client.UpdatedAt = DateTime.Now;
 
@@ -139,11 +147,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
-            // См. атрибут KoJsonValidate 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            Logger.Info("Обновление адреса. AddressId={0}", viewModel.ClientId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -240,6 +244,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             UnitOfWork.Repository<Address>().Insert(address);
             UnitOfWork.Save();
 
+            Logger.Info("Добавление нового адреса. AddressId={0}", address.AddressId);
+
             return Ok();
         }
 
@@ -275,6 +281,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     throw;
                 }
             }
+
+            Logger.Info("Удаление адреса. AddressId={0}", id);
 
             return Ok(client);
         }

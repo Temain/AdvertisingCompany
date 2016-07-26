@@ -151,6 +151,14 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            // Здесь дополнительная валидация
+
+            // См. атрибут KoJsonValidate 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Mapper.Map<EditCampaignViewModel, Campaign>(viewModel, campaign);
             campaign.UpdatedAt = DateTime.Now;
 
@@ -172,11 +180,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
-            // См. атрибут KoJsonValidate 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            Logger.Info("Обновление информации о рекламной кампании. ClientId={0}, CampaignId={1}", viewModel.ClientId, viewModel.CampaignId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -225,6 +229,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return InternalServerError();
             }
 
+            Logger.Info("Добавление новой рекламной кампании. CampaignId={0}, ClientId={0}", campaign.CampaignId, client.ClientId);
+
             return Ok();
         }
 
@@ -241,6 +247,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest();
             }
 
+            var oldStatusId = campaign.PaymentStatusId;
             campaign.PaymentStatusId = statusId;
             campaign.UpdatedAt = DateTime.Now;
 
@@ -261,6 +268,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     throw;
                 }
             }
+
+            Logger.Info("Изменение статуса оплаты рекламной кампании. CampaignId={0}, ClientId={1}, OldStatusId={2}, NewStatusId={3}", 
+                campaignId, campaign.ClientId, oldStatusId, statusId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -297,6 +307,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     throw;
                 }
             }
+
+            Logger.Info("Удаление рекламной кампании клиента. CampaignId={0}, ClientId={1}", id, campaign.ClientId);
 
             return Ok(campaign);
         }

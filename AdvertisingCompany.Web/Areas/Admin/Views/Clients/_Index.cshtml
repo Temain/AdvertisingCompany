@@ -59,7 +59,7 @@
                     <td class="hidden-xs" data-bind="text: responsiblePersonShortName"></td>
                     <td class="hidden-xs">
                         <span data-bind="text: phoneNumber"></span><br/>
-                        <span data-bind="text: additionalPhoneNumber"></span>
+                        <span data-bind="text: additionalPhoneNumber"></span><br data-bind="if: additionalPhoneNumber"/>
                     </td>
                     <td class="hidden-xs" data-bind="text: email"></td>
                     <td data-bind="foreach: userNames">
