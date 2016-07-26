@@ -84,24 +84,27 @@
         self.comment('');
         self.reportDate('');
 
-        $('.upload-popup-link').magnificPopup({
-            type: 'inline',
-            closeOnBgClick: false
-        });
+        $("#upload-popup").modal()
+
+        //$('.upload-popup-link').magnificPopup({
+        //    type: 'inline',
+        //    closeOnBgClick: false
+        //});
     };
 
-    self.selectFile = function (data, event) {
-        var element = $(event.target)[0];
-        var fileUpload = element.closest('.file-upload');
-        var fileInput = $(fileUpload).find('.fileinput-hidden');
-        if (fileInput) {
-            fileInput.click();
-        }
-    };
+    //self.selectFile = function (data, event) {
+    //    var element = $(event.target)[0];
+    //    var fileUpload = element.closest('.file-upload');
+    //    var fileInput = $(fileUpload).find('.fileinput-hidden');
+    //    if (fileInput) {
+    //        fileInput.click();
+    //    }
+    //};
 
     self.uploadFile = function (data, event) {
-        var element = $(event.target)[0];
-        var fileUpload = element.closest('.file-upload');
+        // var element = $(event.target)[0];
+        var element = $("#upload-popup");
+        var fileUpload = element.find('.file-upload');
         var fileInput = $(fileUpload).find('.fileinput-hidden');
         var file = fileInput[0].files[0];
         if (file) {
@@ -126,7 +129,8 @@
                 processData: false,
                 error: function(response) {
                     self.loadingFile(false);
-                    $.magnificPopup.close();
+                    // $.magnificPopup.close();
+                    $("#upload-popup").modal("hide")
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',
                         message: "Произошла ошибка при загрузке отчёта."
@@ -136,7 +140,8 @@
                 },
                 success: function (response) {
                     self.loadingFile(false);
-                    $.magnificPopup.close();
+                    // $.magnificPopup.close();
+                    $("#upload-popup").modal("hide")
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
                         message: "Отчёт успешно загружен."

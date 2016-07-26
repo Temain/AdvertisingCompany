@@ -91,6 +91,20 @@ var initGallery = function() {
 
     $('#grid').magnificPopup({
         delegate: '.thumbnail > a', // child items selector, by clicking on it popup will open
+        callbacks: {
+            elementParse: function(item) {
+                // Function will fire for each target element
+                // "item.el" is a target DOM element (if present)
+                // "item.src" is a source that you may modify
+
+                var images = $(item.el).find('img');
+                if (images.length) {
+                    item.src = images[0].src;
+                }
+
+                // console.log(item); // Do whatever you want with "item" object
+            }
+        },
         type: 'image',
         gallery: {
             enabled: true

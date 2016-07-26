@@ -10,7 +10,7 @@
 <section class="widget">
     <div class="widget-body">
         <div class="dataTables_wrapper form-inline no-footer">
-            <div class="row">
+            <div class="row mrgbtm12">
                 <div class="col-md-6 hidden-xs">
                     <div class="dataTables_length" id="datatable-table_length">
                         <label>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <table id="datatable-table" class="table table-striped table-hover">
+            <table class="table table-condensed table-hover">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -54,7 +54,7 @@
                 <tr>
                     <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
                     <td>
-                        <span class="fw-semi-bold" data-bind="text: companyName"></span></td>
+                        <span data-bind="text: companyName"></span></td>
                     <td class="hidden-xs" data-bind="text: activityTypeName"></td>
                     <td class="hidden-xs" data-bind="text: responsiblePersonShortName"></td>
                     <td class="hidden-xs">

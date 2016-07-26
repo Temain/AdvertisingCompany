@@ -607,6 +607,7 @@
     <Content Include="Areas\Admin\Views\Addresses\_Upload.cshtml" />
     <Content Include="Areas\Admin\Views\Campaigns\_Create.cshtml" />
     <Content Include="Areas\Admin\Views\Campaigns\_Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\_UploadOld.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
