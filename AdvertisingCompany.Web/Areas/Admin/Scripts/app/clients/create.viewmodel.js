@@ -145,6 +145,7 @@
                     Sammy().setLocation('#clients');
                 }
 
+                self.isValidationEnabled(false);
                 $.notify({
                     icon: 'glyphicon glyphicon-ok',
                     message: "Клиент успешно сохранён."

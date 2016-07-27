@@ -66,6 +66,7 @@
                         }
                     };
 
+                    self.isValidationEnabled(false);
                     ko.mapping.fromJS(response, mappings, self);
                     $('#microdistrictId').selectpicker('refresh');
 

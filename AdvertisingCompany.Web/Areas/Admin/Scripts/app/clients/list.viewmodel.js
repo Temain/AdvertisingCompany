@@ -6,9 +6,9 @@
     self.clientStatuses = ko.observableArray([]);
     self.page = ko.observable(1);
     self.pagesCount = ko.observable(1);
-    self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
     self.pageSize = ko.observable(10);
     self.searchQuery = ko.observable('');
+    self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
 
     self.loadClients = function () {
         self.isInitialized(false);
