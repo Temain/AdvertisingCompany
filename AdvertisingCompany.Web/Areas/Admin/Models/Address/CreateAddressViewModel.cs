@@ -45,11 +45,15 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// <summary>
         /// Улица 
         /// </summary>
+        [Required(ErrorMessage = "Необходимо указать наименование улицы.")]
+        public string StreetName { get; set; }
         public LocationViewModel Street { get; set; }
 
         /// <summary>
         /// Номер строения
         /// </summary>
+        [Required(ErrorMessage = "Необходимо указать номер дома.")]
+        public string BuildingName { get; set; }
         public LocationViewModel Building { get; set; }
 
         /// <summary>

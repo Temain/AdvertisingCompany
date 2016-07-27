@@ -111,8 +111,10 @@
                 var modelState = response.responseText;
                 if (modelState) {
                     modelState = JSON.parse(modelState);
+
                     ko.serverSideValidator.validateModel(self, modelState);
-                    
+                    $('.selectpicker').selectpicker('refresh');
+
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',
                         message: "Пожалуйста, исправьте ошибки."

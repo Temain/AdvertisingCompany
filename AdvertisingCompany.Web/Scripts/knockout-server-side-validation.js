@@ -335,7 +335,15 @@ if (typeof (ko) === undefined) { throw 'Knockout is required, please ensure it i
         //where each Key from this array item is string that needs to be equal to return from self.serverSideValidator.utils.getElementPath. If this is equal, then validation message is set,
         //or handler is called, if any. If handler is set, then logic that displays validation messages is ignored.
         self.serverSideValidator.utils.traverseJSObject(ko.mapping.toJS(viewModel), function (elementName) {
-            var viewModelElement = eval("viewModel" + "." + elementName.replace(/\[/g, "()["));
+            var viewModelElement;
+            try {
+                viewModelElement = eval("viewModel" + "." + elementName.replace(/\[/g, "()["));
+            } catch (e) {
+                if (e instanceof SyntaxError) {
+                    return;
+                }
+            }
+
             //If this element have serverMessage binding, clear message
             if (viewModelElement && viewModelElement.serverMessage) {
                 viewModelElement.serverMessage(null);

@@ -22,8 +22,25 @@
     self.microdistrictInitialId = ko.observable();
     self.microdistrictInitialized = ko.observable(false);
     self.microdistricts = ko.observableArray(dataModel.microdistricts || []);
+
+    self.streetName = ko.observable(dataModel.streetName || '').extend({
+        required: {
+            params: true,
+            message: "Необходимо указать наименование улицы.",
+            onlyIf: function () { return self.isValidationEnabled(); }
+        }
+    });
     self.street = ko.observable(dataModel.street || '');
+
     self.building = ko.observable(dataModel.building || '');
+    self.buildingName = ko.observable(dataModel.buildingName || '').extend({
+        required: {
+            params: true,
+            message: "Необходимо указать номер дома.",
+            onlyIf: function () { return self.isValidationEnabled(); }
+        }
+    });
+
     self.numberOfEntrances = ko.observable(dataModel.numberOfEntrances || '').extend({
         required: {
             params: true,
@@ -115,14 +132,16 @@
                 var modelState = response.responseText;
                 if (modelState) {
                     modelState = JSON.parse(modelState);
-                    ko.serverSideValidator.validateModel(self, modelState);
-                    
+
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',
                         message: "Пожалуйста, исправьте ошибки."
                     }, {
                         type: 'danger'
                     });
+
+                    $('.selectpicker').selectpicker('refresh');
+                    ko.serverSideValidator.validateModel(self, modelState);
                 }
             },
             success: function (response) {

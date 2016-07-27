@@ -54,6 +54,11 @@ ko.bindingHandlers.selectPicker = {
                 $(element).prop('disabled', isDisabled);
             }
             if (ko.isObservable(valueAccessor())) {
+                var value = valueAccessor()();
+                if (value) {
+                    $(element).closest('.bootstrap-select').removeClass('ko-field-validation-error');
+                }
+
                 if ($(element).prop('multiple') && $.isArray(ko.utils.unwrapObservable(valueAccessor()))) {
                     // in the case of a multiple select where the valueAccessor() is an observableArray, call the default Knockout selectedOptions binding
                     ko.bindingHandlers.selectedOptions.update(element, valueAccessor);

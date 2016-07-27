@@ -40,11 +40,15 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// <summary>
         /// Улица 
         /// </summary>
+        [Required(ErrorMessage = "Необходимо указать наименование улицы.")]
+        public string StreetName { get; set; }
         public LocationViewModel Street { get; set; }
 
         /// <summary>
         /// Номер строения
         /// </summary>
+        [Required(ErrorMessage = "Необходимо указать номер дома.")]
+        public string BuildingName { get; set; }
         public LocationViewModel Building { get; set; }
 
         /// <summary>
@@ -87,7 +91,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
                 .ForMember(m => m.Region, opt => opt.MapFrom(s => s.Region))
                 .ForMember(m => m.District, opt => opt.MapFrom(s => s.District))
                 .ForMember(m => m.City, opt => opt.MapFrom(s => s.City))
+                .ForMember(m => m.StreetName, opt => opt.MapFrom(s => s.Street.LocationName))
                 .ForMember(m => m.Street, opt => opt.MapFrom(s => s.Street))
+                .ForMember(m => m.BuildingName, opt => opt.MapFrom(s => s.Building.LocationName))
                 .ForMember(m => m.Building, opt => opt.MapFrom(s => s.Building));
 
             configuration.CreateMap<EditAddressViewModel, Domain.Models.Address>("Address")

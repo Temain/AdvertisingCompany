@@ -107,13 +107,15 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAddress(EditClientViewModel viewModel)
+        public IHttpActionResult PutAddress(EditAddressViewModel viewModel)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
-                    includeProperties: "ResponsiblePerson, ApplicationUsers")
+            var address = UnitOfWork.Repository<Address>()
+                .Get(x => x.AddressId == viewModel.AddressId && x.DeletedAt == null,
+                    includeProperties: @"Region, Region.LocationLevel, Region.LocationType, 
+                        District, Region.LocationLevel, Region.LocationType, City, Region.LocationLevel, Region.LocationType, 
+                        Microdistrict, Street, Region.LocationLevel, Region.LocationType, Building, Region.LocationLevel, Region.LocationType")
                 .SingleOrDefault();
-            if (client == null)
+            if (address == null)
             {
                 return BadRequest();
             }
@@ -126,18 +128,18 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest(ModelState);
             }
 
-            Mapper.Map<EditClientViewModel, Client>(viewModel, client);
-            client.UpdatedAt = DateTime.Now;
+            Mapper.Map<EditAddressViewModel, Address>(viewModel, address);
+            address.UpdatedAt = DateTime.Now;
 
-            UnitOfWork.Repository<Client>().Update(client);
+            // UnitOfWork.Repository<Address>().Update(address);
 
             try
             {
-                UnitOfWork.Save();
+                // UnitOfWork.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AddressExists(viewModel.ClientId))
+                if (!AddressExists(viewModel.AddressId))
                 {
                     return NotFound();
                 }
@@ -147,7 +149,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
-            Logger.Info("Обновление адреса. AddressId={0}", viewModel.ClientId);
+            Logger.Info("Обновление адреса. AddressId={0}", viewModel.AddressId);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -160,6 +162,16 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public IHttpActionResult PostAddress(CreateAddressViewModel viewModel)
         {
             var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
+
+            if (address.Street == null)
+            {
+                ModelState.AddModelError("Shared", "Необходимо указать улицу.");
+            }
+
+            if (address.Building == null)
+            {
+                ModelState.AddModelError("Shared", "Необходимо указать номер дома.");
+            }
 
             var addressExists = UnitOfWork.Repository<Address>()
                 .GetQ().Count(x => x.Building.Code == address.Building.Code 

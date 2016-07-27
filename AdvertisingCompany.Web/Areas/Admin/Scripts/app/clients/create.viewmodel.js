@@ -129,6 +129,7 @@
                     }
 
                     ko.serverSideValidator.validateModel(self, responseText);
+                    $('.selectpicker').selectpicker('refresh');
 
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',

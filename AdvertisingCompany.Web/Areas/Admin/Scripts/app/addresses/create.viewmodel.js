@@ -18,9 +18,23 @@
             message: "Необходимо выбрать микрорайон.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.microdistricts = ko.observableArray(dataModel.microdistricts || []);
+    self.streetName = ko.observable(dataModel.streetName || '').extend({
+        required: {
+            params: true,
+            message: "Необходимо указать наименование улицы.",
+            onlyIf: function () { return self.isValidationEnabled(); }
+        }
+    });
     self.street = ko.observable(dataModel.street || '');
+    self.buildingName = ko.observable(dataModel.buildingName || '').extend({
+        required: {
+            params: true,
+            message: "Необходимо указать номер дома.",
+            onlyIf: function () { return self.isValidationEnabled(); }
+        }
+    });
     self.building = ko.observable(dataModel.building || '');
     self.numberOfEntrances = ko.observable(dataModel.numberOfEntrances || '').extend({
         required: {
@@ -28,21 +42,21 @@
             message: "Необходимо указать количество подъездов.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.numberOfSurfaces = ko.observable(dataModel.numberOfSurfaces || '').extend({
         required: {
             params: true,
             message: "Необходимо указать количество поверхностей.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.numberOfFloors = ko.observable(dataModel.numberOfFloors || '').extend({
         required: {
             params: true,
             message: "Необходимо указать количество этажей.",
             onlyIf: function () { return self.isValidationEnabled(); }
         }
-    });;
+    });
     self.latitude = ko.observable(dataModel.latitude || '');
     self.longitude = ko.observable(dataModel.longitude || '');
     self.contractDate = ko.observable(dataModel.contractDate || '');
@@ -68,7 +82,7 @@
 
                     self.isValidationEnabled(false);
                     ko.mapping.fromJS(response, mappings, self);
-                    $('#microdistrictId').selectpicker('refresh');
+                    $('.selectpicker').selectpicker('refresh');
 
                     app.view(self);
                     kladrWithMap.init({
@@ -117,7 +131,7 @@
             });
         });
 
-        if (geocoordinates.length) {            
+        if (geocoordinates != null && geocoordinates.length) {
             self.longitude(geocoordinates[0]);
             self.latitude(geocoordinates[1]);
         }
@@ -154,7 +168,7 @@
                         return;
                     }
 
-                    ko.serverSideValidator.validateModel(self, responseText);
+                    $('.selectpicker').selectpicker('refresh');
 
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',

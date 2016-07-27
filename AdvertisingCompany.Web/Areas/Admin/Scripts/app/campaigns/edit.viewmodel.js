@@ -114,6 +114,7 @@
                     };
 
                     ko.mapping.fromJS(response, mappings, self);
+                    $('.selectpicker').selectpicker('refresh');
 
                     self.clientId(clientId);
                     self.isValidationEnabled(false);

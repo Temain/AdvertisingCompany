@@ -116,7 +116,7 @@ td .bootstrap-select {
     width: 8em !important;
 }
 td .bootstrap-select button {
-    padding: 0 1.5em 0 0.3em;
+    padding: 0.1em 2.5em 0.1em 0.5em;
 }
 td .bootstrap-select button > span {
     white-space: nowrap;
@@ -131,6 +131,7 @@ span.ko-field-validation-error {
 }
 
 input.ko-field-validation-error,
+div.ko-field-validation-error > button,
 /*input.ko-input-validation-error,*/
 select.ko-field-validation-error,
 textarea.ko-field-validation-error {
