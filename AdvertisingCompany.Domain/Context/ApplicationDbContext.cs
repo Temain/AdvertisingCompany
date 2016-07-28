@@ -36,6 +36,7 @@ namespace AdvertisingCompany.Domain.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            // this.Configuration.LazyLoadingEnabled = false;
 
             // Отключаем каскадное удаление данных в связанных таблицах
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

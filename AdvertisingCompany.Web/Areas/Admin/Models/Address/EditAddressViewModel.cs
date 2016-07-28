@@ -42,6 +42,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// </summary>
         [Required(ErrorMessage = "Необходимо указать наименование улицы.")]
         public string StreetName { get; set; }
+        [Required]
         public LocationViewModel Street { get; set; }
 
         /// <summary>
@@ -49,6 +50,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
         /// </summary>
         [Required(ErrorMessage = "Необходимо указать номер дома.")]
         public string BuildingName { get; set; }
+        [Required]
         public LocationViewModel Building { get; set; }
 
         /// <summary>

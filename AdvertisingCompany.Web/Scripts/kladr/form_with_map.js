@@ -68,24 +68,28 @@ var kladrWithMap = {
         });
 
         $region.kladr({
-            type: $.kladr.type.region
+            type: $.kladr.type.region,
+            withParent: true
         });
         $district.kladr({
-            type: $.kladr.type.district
+            type: $.kladr.type.district,
+            withParent: true
         });
         $city.kladr({
-            type: $.kladr.type.city
+            type: $.kladr.type.city,
+            withParent: true
         });
         $street.kladr({
             type: $.kladr.type.street,
             parentType: $.kladr.type.city,
-            parentInput: $city
+            parentInput: $city,
+            withParent: true
         });
         $building.kladr({
             type: $.kladr.type.building,
             parentType: $.kladr.type.street,
             parentInput: $street,
-            verify: false
+            withParent: true
         });
 
         ymaps.ready(function () {

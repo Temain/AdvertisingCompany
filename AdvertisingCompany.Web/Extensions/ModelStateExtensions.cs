@@ -16,9 +16,9 @@ namespace AdvertisingCompany.Web.Extensions
                 .Where(x => x.Value.Errors.Count > 0)
                 .Select(ms => new
                 {
-                    Key = ms.Key.ToLower(),
+                    key = ms.Key.ToLower(),
                     //Value = string.Join(",", ms.Value.Errors.Select(x => x.ErrorMessage)),
-                    Value = ms.Value.Errors.First().ErrorMessage
+                    value = ms.Value.Errors.First().ErrorMessage
                 })
                 .ToArray();
 

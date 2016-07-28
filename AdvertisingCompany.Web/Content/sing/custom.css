@@ -132,6 +132,7 @@ span.ko-field-validation-error {
 
 input.ko-field-validation-error,
 div.ko-field-validation-error > button,
+.kladr-error,
 /*input.ko-input-validation-error,*/
 select.ko-field-validation-error,
 textarea.ko-field-validation-error {

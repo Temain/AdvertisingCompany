@@ -20,19 +20,35 @@
         }
     });
     self.microdistricts = ko.observableArray(dataModel.microdistricts || []);
+
     self.streetName = ko.observable(dataModel.streetName || '').extend({
         required: {
             params: true,
             message: "Необходимо указать наименование улицы.",
             onlyIf: function () { return self.isValidationEnabled(); }
+        },
+        validation: {
+            validator: function (val) {
+                var hasError = $('[name="street"]').hasClass('kladr-error');
+                return !hasError;
+            },
+            message: "Выберите улицу из списка."
         }
     });
     self.street = ko.observable(dataModel.street || '');
+
     self.buildingName = ko.observable(dataModel.buildingName || '').extend({
         required: {
             params: true,
             message: "Необходимо указать номер дома.",
             onlyIf: function () { return self.isValidationEnabled(); }
+        },
+        validation: {
+            validator: function (val) {
+                var hasError = $('[name="building"]').hasClass('kladr-error');
+                return !hasError;
+            },
+            message: "Выберите номер дома из списка."
         }
     });
     self.building = ko.observable(dataModel.building || '');
@@ -168,7 +184,7 @@
                         return;
                     }
 
-                    ko.serverSideValidator.validateModel(self, modelState);
+                    ko.serverSideValidator.validateModel(self, responseText);
                     $('.selectpicker').selectpicker('refresh');
 
                     $.notify({

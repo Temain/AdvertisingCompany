@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
 using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.ActionFilters;
-using AdvertisingCompany.Web.Areas.Admin.Models;
-using AdvertisingCompany.Web.Areas.Admin.Models.ActivityType;
 using AdvertisingCompany.Web.Areas.Admin.Models.Address;
 using AdvertisingCompany.Web.Areas.Admin.Models.Client;
 using AdvertisingCompany.Web.Controllers;
+using AdvertisingCompany.Web.Extensions;
+using AdvertisingCompany.Web.Results;
 using AutoMapper;
-using Microsoft.AspNet.Identity;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
@@ -108,29 +108,44 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public IHttpActionResult PutAddress(EditAddressViewModel viewModel)
         {
             var address = UnitOfWork.Repository<Address>()
-                .Get(x => x.AddressId == viewModel.AddressId && x.DeletedAt == null,
-                    includeProperties: @"Region, Region.LocationLevel, Region.LocationType, 
-                        District, Region.LocationLevel, Region.LocationType, City, Region.LocationLevel, Region.LocationType, 
-                        Microdistrict, Street, Region.LocationLevel, Region.LocationType, Building, Region.LocationLevel, Region.LocationType")
+                .GetQ(x => x.AddressId == viewModel.AddressId && x.DeletedAt == null,
+                    includeProperties: @"Region, Region.LocationLevel, Region.LocationType, Region.Parent, District, District.LocationLevel, District.Locationtype, District.Parent, 
+                        City, City.LocationType, City.LocationLevel, City.Parent, Street, Street.LocationLevel, Street.LocationType, Street.Parent, 
+                        Building, Building.LocationLevel, Building.LocationType, Building.Parent, Microdistrict")
                 .SingleOrDefault();
             if (address == null)
             {
                 return BadRequest();
             }
 
-            var addressExists = UnitOfWork.Repository<Address>()
-                .GetQ()
-                .Count(x => x.Building.Code == viewModel.Building.Id
-                   && x.Building.LocationName == viewModel.Building.Name
-                   && x.DeletedAt == null) > 0;
-            if (addressExists)
+            if (viewModel.Street == null)
             {
-                ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");
+                ModelState.AddModelError("viewModel.StreetName", "Выберите улицу из списка.");
+            }
+
+            if (viewModel.Building == null)
+            {
+                ModelState.AddModelError("viewModel.BuildingName", "Выберите номер дома из списка.");
             }
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new KoValidationResult(ModelState);
+            }
+
+            bool addressChanged = address.Street.Code != viewModel.Street.Id || address.Building.Code != viewModel.Building.Id;
+            if (addressChanged)
+            {
+                var addressExists = UnitOfWork.Repository<Address>()
+                    .GetQ()
+                    .Count(x => x.Building.Code == viewModel.Building.Id
+                        && x.Building.LocationName == viewModel.Building.Name
+                        && x.DeletedAt == null) > 0;
+                if (addressExists)
+                {
+                    ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");
+                    return BadRequest(ModelState);
+                }
             }
 
             Mapper.Map<EditAddressViewModel, Address>(viewModel, address);
@@ -167,19 +182,32 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PostAddress(CreateAddressViewModel viewModel)
         {
-            var addressExists = UnitOfWork.Repository<Address>()
-                .GetQ()
-                .Count(x => x.Building.Code == viewModel.Building.Id
-                    && x.Building.LocationName == viewModel.Building.Name 
-                    && x.DeletedAt == null) > 0;
-            if (addressExists)
+            if (viewModel.Street == null)
             {
-                ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");
+                ModelState.AddModelError("viewModel.StreetName", "Выберите улицу из списка.");
+            }
+
+            if (viewModel.Building == null)
+            {
+                ModelState.AddModelError("viewModel.BuildingName", "Выберите номер дома из списка.");
+            }
+            else
+            {
+                var addressExists = UnitOfWork.Repository<Address>()
+                    .GetQ()
+                    .Count(x => x.Building.Code == viewModel.Building.Id
+                        && x.Building.LocationName == viewModel.Building.Name
+                        && x.DeletedAt == null) > 0;
+                if (addressExists)
+                {
+                    ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");
+                    return BadRequest(ModelState);
+                }
             }
 
             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+            {                
+                return new KoValidationResult(ModelState);
             }
 
             var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
@@ -231,7 +259,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 var locationOnForm = locationProperties[index].PropertyObject;
                 var locationInDb = UnitOfWork.Repository<Location>()
-                    .GetQ(x => x.Code == locationOnForm.Code && x.LocationName == locationOnForm.LocationName)
+                    .GetQ(x => x.Code == locationOnForm.Code && x.LocationName == locationOnForm.LocationName,
+                        includeProperties: "LocationType, LocationLevel, Parent")
                     .SingleOrDefault();
                 if (locationInDb == null)
                 {
@@ -255,6 +284,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
                 else
                 {
+                    locationInDb.Parent = parent;
+
                     var addressProperty = typeof(Address).GetProperty(locationProperties[index].PropertyName);
                     addressProperty.SetValue(address, locationInDb);
                 }

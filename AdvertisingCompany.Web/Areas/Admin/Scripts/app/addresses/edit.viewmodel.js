@@ -28,6 +28,13 @@
             params: true,
             message: "Необходимо указать наименование улицы.",
             onlyIf: function () { return self.isValidationEnabled(); }
+        },
+        validation: {
+            validator: function (val) {
+                var hasError = $('[name="street"]').hasClass('kladr-error');
+                return !hasError;
+            },
+            message: "Выберите улицу из списка."
         }
     });
     self.street = ko.observable(dataModel.street || '');
@@ -38,6 +45,13 @@
             params: true,
             message: "Необходимо указать номер дома.",
             onlyIf: function () { return self.isValidationEnabled(); }
+        },
+        validation: {
+            validator: function (val) {
+                var hasError = $('[name="building"]').hasClass('kladr-error');
+                return !hasError;
+            },
+            message: "Выберите номер дома из списка."
         }
     });
 
@@ -186,7 +200,7 @@
                         return;
                     }
 
-                    ko.serverSideValidator.validateModel(self, modelState);
+                    ko.serverSideValidator.validateModel(self, responseText);
                     $('.selectpicker').selectpicker('refresh');
 
                     $.notify({
