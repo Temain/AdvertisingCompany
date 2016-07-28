@@ -114,6 +114,25 @@
         });
     });
 
+    self.streetChanged = function () {
+        self.buildingName('');
+        self.street('');
+        self.building('');
+    };
+
+    self.buildingChanged = function () {
+        self.building('');
+    };
+
+    self.setMicrodistrictOptionContent = function (option, item) {
+        if (!item) return;
+
+        $(option).text(item.microdistrictName);
+        $(option).attr('data-subtext', "<br/><span class='description'>" + item.microdistrictShortName + "</span>");
+
+        ko.applyBindingsToNode(option, {}, item);
+    };
+
     self.submit = function () {
         self.isValidationEnabled(true);
 

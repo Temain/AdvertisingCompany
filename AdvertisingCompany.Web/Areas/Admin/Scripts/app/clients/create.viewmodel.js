@@ -111,7 +111,7 @@
                 if (responseText) {
                     responseText = JSON.parse(responseText);
                     var modelState = responseText.modelState;
-                    if (modelState.shared) {
+                    if (modelState && modelState.shared) {
                         var message = '<strong>&nbsp;Клиент не сохранён. Список ошибок:</strong><ul>';
                         $.each(modelState.shared, function (index, error) {
                             message += '<li>' + error + '</li>';

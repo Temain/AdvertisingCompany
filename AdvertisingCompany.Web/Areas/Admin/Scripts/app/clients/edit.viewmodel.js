@@ -108,16 +108,33 @@
                 'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
             },
             error: function (response) {
-                var modelState = response.responseText;
-                if (modelState) {
-                    modelState = JSON.parse(modelState);
+                var responseText = response.responseText;
+                if (responseText) {
+                    responseText = JSON.parse(responseText);
+                    var modelState = responseText.modelState;
+                    if (modelState && modelState.shared) {
+                        var message = '<strong>&nbsp;Клиент не сохранён. Список ошибок:</strong><ul>';
+                        $.each(modelState.shared, function (index, error) {
+                            message += '<li>' + error + '</li>';
+                        });
+                        message += '</ul>';
 
-                    ko.serverSideValidator.validateModel(self, modelState);
+                        $.notify({
+                            icon: 'fa fa-exclamation-triangle fa-2x',
+                            message: message
+                        }, {
+                            type: 'danger'
+                        });
+
+                        return;
+                    }
+
+                    ko.serverSideValidator.validateModel(self, responseText);
                     $('.selectpicker').selectpicker('refresh');
 
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',
-                        message: "Пожалуйста, исправьте ошибки."
+                        message: "&nbsp;Пожалуйста, исправьте ошибки."
                     }, {
                         type: 'danger'
                     });

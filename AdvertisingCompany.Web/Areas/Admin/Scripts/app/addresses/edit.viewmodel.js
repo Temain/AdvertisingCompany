@@ -130,6 +130,25 @@
         });
     });
 
+    self.streetChanged = function () {
+        self.buildingName('');
+        self.street('');
+        self.building('');
+    };
+
+    self.buildingChanged = function () {
+        self.building('');
+    };
+
+    self.setMicrodistrictOptionContent = function (option, item) {
+        if (!item) return;
+
+        $(option).text(item.microdistrictName);
+        $(option).attr('data-subtext', "<br/><span class='description'>" + item.microdistrictShortName + "</span>");
+
+        ko.applyBindingsToNode(option, {}, item);
+    };
+
     self.submit = function () {
         self.isValidationEnabled(true);
 
@@ -140,23 +159,23 @@
                 if ($.type(obj) === 'object') {
                     switch (obj.contentType) {
                         case $.kladr.type.region:
-                            self.region = location;
+                            self.region(location);
                             break;
 
                         case $.kladr.type.district:
-                            self.district = location;
+                            self.district(location);
                             break;
 
                         case $.kladr.type.city:
-                            self.city = location;
+                            self.city(location);
                             break;
 
                         case $.kladr.type.street:
-                            self.street = location;
+                            self.street(location);
                             break;
 
                         case $.kladr.type.building:
-                            self.building = location;
+                            self.building(location);
                             break;
                     }
                 }

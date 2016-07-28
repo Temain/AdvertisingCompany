@@ -39,19 +39,19 @@
                         <div class="form-group field required">
                             <label for="microdistrictId" class="col-sm-4 control-label">Микрорайон</label>
                             <div class="col-sm-8">
-                                <select id="microdistrictId" class="form-control" title="" data-size="12" data-bind="selectPicker: microdistrictId, selectPickerOptions: { optionsArray : microdistricts }, optionsValue: 'microdistrictId', optionsText: 'microdistrictName', optionsCaption : ''"></select>
+                                <select id="microdistrictId" class="form-control" title="" data-size="12" data-bind="selectPicker: microdistrictId, selectPickerOptions: { optionsArray : microdistricts }, optionsValue: 'microdistrictId', optionsText: 'microdistrictName', optionsCaption : '', optionsAfterRender: setMicrodistrictOptionContent"></select>
                             </div>
                         </div>
                         <div class="form-group field required">
                             <label for="street" class="col-sm-4 control-label">Улица</label>
                             <div class="col-sm-8">
-                                <input type="text" name="street" id="street" class="form-control" data-bind="value: streetName">
+                                <input type="text" name="street" id="street" class="form-control" data-bind="value: streetName, valueUpdate: 'afterkeydown', event : { keyup : streetChanged }">
                             </div>
                         </div>
                         <div class="form-group field required">
                             <label for="building" class="col-sm-4 control-label">Номер дома</label>
                             <div class="col-sm-8">
-                                <input type="text" name="building" id="building" class="form-control" data-bind="value: buildingName">
+                                <input type="text" name="building" id="building" class="form-control" data-bind="value: buildingName, valueUpdate: 'afterkeydown', event : { keyup : buildingChanged }">
                             </div>
                         </div>
                         <div class="form-group field">

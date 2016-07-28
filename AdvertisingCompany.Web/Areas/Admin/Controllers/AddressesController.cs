@@ -107,13 +107,13 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAddress(EditAddressViewModel viewModel)
         {
-            var address = UnitOfWork.Repository<Address>()
+            var addressInDb = UnitOfWork.Repository<Address>()
                 .GetQ(x => x.AddressId == viewModel.AddressId && x.DeletedAt == null,
                     includeProperties: @"Region, Region.LocationLevel, Region.LocationType, Region.Parent, District, District.LocationLevel, District.Locationtype, District.Parent, 
                         City, City.LocationType, City.LocationLevel, City.Parent, Street, Street.LocationLevel, Street.LocationType, Street.Parent, 
                         Building, Building.LocationLevel, Building.LocationType, Building.Parent, Microdistrict")
                 .SingleOrDefault();
-            if (address == null)
+            if (addressInDb == null)
             {
                 return BadRequest();
             }
@@ -133,7 +133,10 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return new KoValidationResult(ModelState);
             }
 
-            bool addressChanged = address.Street.Code != viewModel.Street.Id || address.Building.Code != viewModel.Building.Id;
+            bool addressChanged = addressInDb.Street.Code != viewModel.Street.Id 
+                || addressInDb.Street.LocationName != viewModel.Street.Name
+                || addressInDb.Building.Code != viewModel.Building.Id 
+                || addressInDb.Building.LocationName != viewModel.Building.Name;
             if (addressChanged)
             {
                 var addressExists = UnitOfWork.Repository<Address>()
@@ -148,11 +151,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
-            Mapper.Map<EditAddressViewModel, Address>(viewModel, address);
-            UpdateAddress(address);
-            address.UpdatedAt = DateTime.Now;
-
-            UnitOfWork.Repository<Address>().Update(address);
+            var addressOnForm = Mapper.Map<EditAddressViewModel, Address>(viewModel);
+            CreateOrUpdateAddress(addressOnForm, addressInDb);
+            UnitOfWork.Repository<Address>().Update(addressInDb);
 
             try
             {
@@ -211,7 +212,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
 
             var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
-            UpdateAddress(address);
+            CreateOrUpdateAddress(address);
             UnitOfWork.Repository<Address>().Insert(address);
             UnitOfWork.Save();
 
@@ -223,12 +224,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         /// <summary>
         /// Создание / обновление адреса
         /// </summary>
-        private void UpdateAddress(Address address)
+        private void CreateOrUpdateAddress(Address addressOnForm, Address addressInDb = null)
         {
             var locationProperties = typeof(Address)
                 .GetProperties()
                 .Where(p => p.PropertyType == typeof(Location))
-                .Select(x => new { PropertyName = x.Name, PropertyObject = x.GetValue(address) as Location })
+                .Select(x => new { PropertyName = x.Name, PropertyObject = x.GetValue(addressOnForm) as Location })
                 .Where(x => x.PropertyObject != null)
                 .ToList();
 
@@ -282,15 +283,35 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     UnitOfWork.Repository<Location>().Insert(locationInDb);
                     UnitOfWork.Save();
                 }
+
+                var addressIdProperty = typeof(Address).GetProperty(locationProperties[index].PropertyName + "Id");
+                var addressProperty = typeof(Address).GetProperty(locationProperties[index].PropertyName);
+
+                if (addressInDb != null)
+                {
+                    addressIdProperty.SetValue(addressInDb, locationInDb.LocationId);
+                    addressProperty.SetValue(addressInDb, locationInDb);
+                }
                 else
                 {
-                    locationInDb.Parent = parent;
-
-                    var addressProperty = typeof(Address).GetProperty(locationProperties[index].PropertyName);
-                    addressProperty.SetValue(address, locationInDb);
+                    addressIdProperty.SetValue(addressOnForm, locationInDb.LocationId);
+                    addressProperty.SetValue(addressOnForm, locationInDb);
                 }
 
                 parent = locationInDb;
+            }
+
+            if(addressInDb != null)
+            {
+                addressInDb.ManagementCompanyName = addressOnForm.ManagementCompanyName;
+                addressInDb.MicrodistrictId = addressOnForm.MicrodistrictId;
+                addressInDb.NumberOfEntrances = addressOnForm.NumberOfEntrances;
+                addressInDb.NumberOfFloors = addressOnForm.NumberOfFloors;
+                addressInDb.NumberOfSurfaces = addressOnForm.NumberOfSurfaces;
+                addressInDb.ContractDate = addressOnForm.ContractDate;
+                addressInDb.Latitude = addressOnForm.Latitude;
+                addressInDb.Longitude = addressOnForm.Longitude;
+                addressInDb.UpdatedAt = DateTime.Now;
             }
         }
 
