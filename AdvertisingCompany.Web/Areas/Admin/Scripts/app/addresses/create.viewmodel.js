@@ -151,7 +151,7 @@
                 if (responseText) {
                     responseText = JSON.parse(responseText);
                     var modelState = responseText.modelState;
-                    if (modelState.shared) {
+                    if (modelState && modelState.shared) {
                         var message = '<strong>&nbsp;Адрес не сохранён. Список ошибок:</strong><ul>';
                         $.each(modelState.shared, function (index, error) {
                             message += '<li>' + error + '</li>';
@@ -168,6 +168,7 @@
                         return;
                     }
 
+                    ko.serverSideValidator.validateModel(self, modelState);
                     $('.selectpicker').selectpicker('refresh');
 
                     $.notify({

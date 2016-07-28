@@ -97,8 +97,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
                 return Ok(viewModel);
             }
-
-            return Ok();
         }
 
 
@@ -120,22 +118,30 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest();
             }
 
-            // Здесь дополнительная валидация
+            var addressExists = UnitOfWork.Repository<Address>()
+                .GetQ()
+                .Count(x => x.Building.Code == viewModel.Building.Id
+                   && x.Building.LocationName == viewModel.Building.Name
+                   && x.DeletedAt == null) > 0;
+            if (addressExists)
+            {
+                ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");
+            }
 
-            // См. атрибут KoJsonValidate 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             Mapper.Map<EditAddressViewModel, Address>(viewModel, address);
+            UpdateAddress(address);
             address.UpdatedAt = DateTime.Now;
 
-            // UnitOfWork.Repository<Address>().Update(address);
+            UnitOfWork.Repository<Address>().Update(address);
 
             try
             {
-                // UnitOfWork.Save();
+                UnitOfWork.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -161,40 +167,43 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PostAddress(CreateAddressViewModel viewModel)
         {
-            var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
-
-            if (address.Street == null)
-            {
-                ModelState.AddModelError("Shared", "Необходимо указать улицу.");
-            }
-
-            if (address.Building == null)
-            {
-                ModelState.AddModelError("Shared", "Необходимо указать номер дома.");
-            }
-
             var addressExists = UnitOfWork.Repository<Address>()
-                .GetQ().Count(x => x.Building.Code == address.Building.Code 
-                    && x.Building.LocationName == address.Building.LocationName 
+                .GetQ()
+                .Count(x => x.Building.Code == viewModel.Building.Id
+                    && x.Building.LocationName == viewModel.Building.Name 
                     && x.DeletedAt == null) > 0;
             if (addressExists)
             {
                 ModelState.AddModelError("Shared", "Такой адрес уже присутствует в базе данных.");
             }
 
-            // См. атрибут KoJsonValidate 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var address = Mapper.Map<CreateAddressViewModel, Address>(viewModel);
+            UpdateAddress(address);
+            UnitOfWork.Repository<Address>().Insert(address);
+            UnitOfWork.Save();
+
+            Logger.Info("Добавление нового адреса. AddressId={0}", address.AddressId);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Создание / обновление адреса
+        /// </summary>
+        private void UpdateAddress(Address address)
+        {
             var locationProperties = typeof(Address)
                 .GetProperties()
                 .Where(p => p.PropertyType == typeof(Location))
                 .Select(x => new { PropertyName = x.Name, PropertyObject = x.GetValue(address) as Location })
                 .Where(x => x.PropertyObject != null)
                 .ToList();
-           
+
             var locationTypes = locationProperties.Select(p => p.PropertyObject.LocationType.LocationTypeName);
             var locationTypesInDb = UnitOfWork.Repository<LocationType>()
                 .GetQ(x => locationTypes.Contains(x.LocationTypeName))
@@ -202,7 +211,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var locationTypesNotInDb = locationTypes.Except(locationTypesInDb.Select(x => x.LocationTypeName));
             var locationTypesForInsert = locationProperties.Where(p => locationTypesNotInDb.Contains(p.PropertyObject.LocationType.LocationTypeName))
                 .Select(p => p.PropertyObject.LocationType);
-            foreach(var locationType in locationTypesForInsert)
+            foreach (var locationType in locationTypesForInsert)
             {
                 UnitOfWork.Repository<LocationType>().Insert(locationType);
                 UnitOfWork.Save();
@@ -218,47 +227,40 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 .ToList();
 
             Location parent = null;
-            for(int index = 0; index < locationProperties.Count(); index++)
+            for (int index = 0; index < locationProperties.Count(); index++)
             {
-                var locationCode = locationProperties[index].PropertyObject.Code;
-                var location = UnitOfWork.Repository<Location>()
-                    .GetQ(x => x.Code == locationCode)
+                var locationOnForm = locationProperties[index].PropertyObject;
+                var locationInDb = UnitOfWork.Repository<Location>()
+                    .GetQ(x => x.Code == locationOnForm.Code && x.LocationName == locationOnForm.LocationName)
                     .SingleOrDefault();
-                if (location == null)
+                if (locationInDb == null)
                 {
-                    location = locationProperties[index].PropertyObject;
-                    var locationType = locationTypesInDb.FirstOrDefault(x => x.LocationTypeName == locationProperties[index].PropertyObject.LocationType.LocationTypeName);
+                    locationInDb = locationOnForm;
+                    var locationType = locationTypesInDb.FirstOrDefault(x => x.LocationTypeName == locationOnForm.LocationType.LocationTypeName);
                     if (locationType != null)
                     {
-                        location.LocationType = locationType;
+                        locationInDb.LocationType = locationType;
                     }
 
-                    var locationLevel = locationLevelsInDb.FirstOrDefault(x => x.LocationLevelName == locationProperties[index].PropertyObject.LocationLevel.LocationLevelName);
+                    var locationLevel = locationLevelsInDb.FirstOrDefault(x => x.LocationLevelName == locationOnForm.LocationLevel.LocationLevelName);
                     if (locationLevel != null)
                     {
-                        location.LocationLevel = locationLevel;
+                        locationInDb.LocationLevel = locationLevel;
                     }
 
-                    location.Parent = parent;
+                    locationInDb.Parent = parent;
 
-                    UnitOfWork.Repository<Location>().Insert(location);
+                    UnitOfWork.Repository<Location>().Insert(locationInDb);
                     UnitOfWork.Save();
                 }
                 else
                 {
                     var addressProperty = typeof(Address).GetProperty(locationProperties[index].PropertyName);
-                    addressProperty.SetValue(address, location);
+                    addressProperty.SetValue(address, locationInDb);
                 }
 
-                parent = location;
+                parent = locationInDb;
             }
-
-            UnitOfWork.Repository<Address>().Insert(address);
-            UnitOfWork.Save();
-
-            Logger.Info("Добавление нового адреса. AddressId={0}", address.AddressId);
-
-            return Ok();
         }
 
         // DELETE: admin/api/addresses/5

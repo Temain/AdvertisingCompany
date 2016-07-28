@@ -118,6 +118,42 @@
 
     self.submit = function () {
         self.isValidationEnabled(true);
+
+        var addressObjs = $.kladr.getAddress('.js-form-address', function (objs) {
+            $.each(objs, function (i, obj) {
+                var location = new LocationViewModel(obj);
+
+                if ($.type(obj) === 'object') {
+                    switch (obj.contentType) {
+                        case $.kladr.type.region:
+                            self.region = location;
+                            break;
+
+                        case $.kladr.type.district:
+                            self.district = location;
+                            break;
+
+                        case $.kladr.type.city:
+                            self.city = location;
+                            break;
+
+                        case $.kladr.type.street:
+                            self.street = location;
+                            break;
+
+                        case $.kladr.type.building:
+                            self.building = location;
+                            break;
+                    }
+                }
+            });
+        });
+
+        if (geocoordinates != null && geocoordinates.length) {
+            self.longitude(geocoordinates[0]);
+            self.latitude(geocoordinates[1]);
+        }
+
         var postData = ko.toJSON(self);
 
         $.ajax({
@@ -129,23 +165,41 @@
                 'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
             },
             error: function (response) {
-                var modelState = response.responseText;
-                if (modelState) {
-                    modelState = JSON.parse(modelState);
+                var responseText = response.responseText;
+                if (responseText) {
+                    responseText = JSON.parse(responseText);
+                    var modelState = responseText.modelState;
+                    if (modelState && modelState.shared) {
+                        var message = '<strong>&nbsp;Адрес не сохранён. Список ошибок:</strong><ul>';
+                        $.each(modelState.shared, function (index, error) {
+                            message += '<li>' + error + '</li>';
+                        });
+                        message += '</ul>';
+
+                        $.notify({
+                            icon: 'fa fa-exclamation-triangle fa-2x',
+                            message: message
+                        }, {
+                            type: 'danger'
+                        });
+
+                        return;
+                    }
+
+                    ko.serverSideValidator.validateModel(self, modelState);
+                    $('.selectpicker').selectpicker('refresh');
 
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',
-                        message: "Пожалуйста, исправьте ошибки."
+                        message: "&nbsp;Пожалуйста, исправьте ошибки."
                     }, {
                         type: 'danger'
                     });
-
-                    $('.selectpicker').selectpicker('refresh');
-                    ko.serverSideValidator.validateModel(self, modelState);
                 }
             },
             success: function (response) {
-                Sammy().setLocation('#clients');
+                self.isValidationEnabled(false);
+                Sammy().setLocation('#addresses');
                 $.notify({
                     icon: 'glyphicon glyphicon-ok',
                     message: "Адрес успешно изменён."
