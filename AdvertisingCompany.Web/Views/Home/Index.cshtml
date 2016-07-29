@@ -1,6 +1,3 @@
-﻿@section SPAViews {
-    @Html.Partial("_Home")
-}
-@section Scripts{
-    @Scripts.Render("~/bundles/app")
-}
+﻿<button id="btnHello" data-bind="click: function() { app.changeView('greeter'); }">Say hello</button>
+
+<div data-bind="component: { name : app.view, params : { message : 'Hello .!..' }}"></div>
