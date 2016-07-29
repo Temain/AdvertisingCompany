@@ -3,10 +3,7 @@
 var app = {};
 define(['jquery', 'knockout', 'bootstrap'], function ($, ko)
 {
-    ko.components.register('greeter',
-    {
-        require: 'app/components/greeter/greeting'
-    });
+    ko.components.register('greeter', { require: 'scripts/app/components/greeter/greeting' });
 
     function AppViewModel() {
         var self = this;

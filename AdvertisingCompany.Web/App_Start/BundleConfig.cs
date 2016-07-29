@@ -33,38 +33,38 @@
             // Site - Your custom site CSS.
             // Note: No CDN support has been added here. Most likely you will want to customize your copy of bootstrap.
             bundles.Add(new StyleBundle(
-                "~/Content/css")
+                "~/styles/app")
                 .Include("~/Content/bootstrap.css")
                 .Include("~/Content/styles.css"));
 
             // Font Awesome - Icons using font (http://fortawesome.github.io/Font-Awesome/).
             bundles.Add(new StyleBundle(
-                "~/Content/fa",
+                "~/styles/fa",
                 ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl)
                 .Include("~/Content/font-awesome.css"));
 
-            bundles.Add(new StyleBundle("~/Content/sing")
-                .Include("~/Content/sing/application.css")
+            bundles.Add(new StyleBundle("~/styles/gins")
+                .Include("~/Content/gins/application.css")
                 .Include("~/Content/magnific-popup/magnific-popup.css")
-                .Include("~/Content/sing/custom.css"));
+                .Include("~/Content/gins/custom.css"));
 
-            bundles.Add(new StyleBundle("~/Content/sing-ie9")
-                .Include("~/Content/sing/application-ie9-part2.css"));
+            bundles.Add(new StyleBundle("~/styles/gins-ie9")
+                .Include("~/Content/gins/application-ie9-part2.css"));
 
-            bundles.Add(new StyleBundle("~/Content/datepicker")
+            bundles.Add(new StyleBundle("~/styles/datepicker")
                 .Include("~/Content/bootstrap-datetimepicker.css"));
 
-            bundles.Add(new StyleBundle("~/Content/select")
+            bundles.Add(new StyleBundle("~/styles/select")
                 .Include("~/Content/bootstrap-select.css"));
 
-            bundles.Add(new StyleBundle("~/Content/select2")
+            bundles.Add(new StyleBundle("~/styles/select2")
                 .Include("~/Content/select2/select2.css")
                 .Include("~/Content/select2/select2-bootstrap.css"));
 
-            bundles.Add(new StyleBundle("~/Content/datatables")
+            bundles.Add(new StyleBundle("~/styles/datatables")
                 .Include("~/Content/datatables/jquery.dataTables.css"));
 
-            bundles.Add(new StyleBundle("~/Content/kladr")
+            bundles.Add(new StyleBundle("~/styles/kladr")
                 .Include("~/Content/kladr/jquery.kladr.min.css"));
         }
 
@@ -86,14 +86,14 @@
         {
             // jQuery - The JavaScript helper API (http://jquery.com/).
             Bundle jqueryBundle = new ScriptBundle("~/bundles/jquery", ContentDeliveryNetwork.Google.JQueryUrl)
-                .Include("~/Scripts/jquery-{version}.js");
+                .Include("~/Scripts/jquery/jquery-{version}.js");
             bundles.Add(jqueryBundle);
 
             // jQuery Validate - Client side JavaScript form validation (http://jqueryvalidation.org/).
             Bundle jqueryValidateBundle = new ScriptBundle(
                 "~/bundles/jqueryval",
                 ContentDeliveryNetwork.Microsoft.JQueryValidateUrl)
-                .Include("~/Scripts/jquery.validate*");
+                .Include("~/Scripts/jquery/jquery.validate*");
             bundles.Add(jqueryValidateBundle);
 
             // Microsoft jQuery Validate Unobtrusive - Validation using HTML data- attributes
@@ -101,7 +101,7 @@
             Bundle jqueryValidateUnobtrusiveBundle = new ScriptBundle(
                 "~/bundles/jqueryvalunobtrusive",
                 ContentDeliveryNetwork.Microsoft.JQueryValidateUnobtrusiveUrl)
-                .Include("~/Scripts/jquery.validate*");
+                .Include("~/Scripts/jquery/jquery.validate*");
             bundles.Add(jqueryValidateUnobtrusiveBundle);
 
             // Modernizr - Allows you to check if a particular API is available in the browser (http://modernizr.com).
@@ -120,12 +120,12 @@
             Bundle bootstrapBundle = new ScriptBundle(
                 "~/bundles/bootstrap",
                 ContentDeliveryNetwork.Microsoft.BootstrapUrl)
-                .Include("~/Scripts/bootstrap.js")
-                .Include("~/Scripts/respond.js");
+                .Include("~/Scripts/bootstrap/bootstrap.js")
+                .Include("~/Scripts/respond/respond.js");
             bundles.Add(bootstrapBundle);
 
             Bundle appBundle = new ScriptBundle("~/bundles/app")
-                .Include("~/Scripts/sammy-{version}.js")
+                .Include("~/Scripts/sammy/sammy-{version}.js")
                 .Include("~/Scripts/app/common.js")
                 .Include("~/Scripts/app/app.datamodel.js")
                 .Include("~/Scripts/app/app.viewmodel.js")
@@ -133,8 +133,8 @@
             bundles.Add(appBundle);
 
             Bundle appAdminBundle = new ScriptBundle("~/bundles/app-admin")
-                .Include("~/Scripts/underscore.min.js")
-                .Include("~/Scripts/sammy-{version}.js")
+                .Include("~/Scripts/underscore/underscore.min.js")
+                .Include("~/Scripts/sammy/sammy-{version}.js")
                 .Include("~/Areas/Admin/Scripts/app/common.js")
                 .Include("~/Areas/Admin/Scripts/app/app.datamodel.js")
                 .Include("~/Areas/Admin/Scripts/app/app.viewmodel.js")
@@ -155,11 +155,11 @@
             bundles.Add(appAdminBundle);
 
             Bundle knockoutBundle = new ScriptBundle("~/bundles/knockout")
-                .Include("~/Scripts/knockout-{version}.js")
-                .Include("~/Scripts/knockout.mapping-latest.js")
-                .Include("~/Scripts/knockout.validation.js")
-                .Include("~/Scripts/knockout-server-side-validation.js")
-                .Include("~/Scripts/knockout.bindings.js");
+                .Include("~/Scripts/knockout/knockout-{version}.js")
+                .Include("~/Scripts/knockout/knockout.mapping-latest.js")
+                .Include("~/Scripts/knockout/knockout.validation.js")
+                .Include("~/Scripts/knockout/knockout-server-side-validation.js")
+                .Include("~/Scripts/knockout/knockout.bindings.js");
             bundles.Add(knockoutBundle);
 
             Bundle singBundle = new ScriptBundle("~/bundles/sing")
@@ -168,19 +168,19 @@
                 .Include("~/Scripts/bootstrap/button.js")
                 .Include("~/Scripts/bootstrap/tooltip.js")
                 .Include("~/Scripts/bootstrap/alert.js")
-                .Include("~/Scripts/jQuery-slimScroll/jquery.slimscroll.js")
+                .Include("~/Scripts/jquery-slimscroll/jquery.slimscroll.js")
                 .Include("~/Scripts/widgster/widgster.js")
-                .Include("~/Scripts/pace.js/pace.min.js")
-                .Include("~/Scripts/sing/settings.js")
-                .Include("~/Scripts/sing/app.js")
-                .Include("~/Scripts/sing/index.js")
-                .Include("~/Scripts/sing/custom.js")
-                .Include("~/Scripts/shufflejs/dist/jquery.shuffle.modernizr.min.js")
+                .Include("~/Scripts/pace/pace.min.js")
+                .Include("~/Scripts/gins/settings.js")
+                .Include("~/Scripts/gins/app.js")
+                .Include("~/Scripts/gins/index.js")
+                .Include("~/Scripts/gins/custom.js")
+                .Include("~/Scripts/shuffle/dist/jquery.shuffle.modernizr.min.js")
                 .Include("~/Scripts/magnific-popup/dist/jquery.magnific-popup.min.js")
-                .Include("~/Scripts/sing/gallery.js")
+                .Include("~/Scripts/gins/gallery.js")
                 .Include("~/Scripts/jasny-bootstrap/js/fileinput.js")
                 .Include("~/Scripts/jasny-bootstrap/js/inputmask.js")
-                .Include("~/Scripts/holderjs/holder.js")
+                .Include("~/Scripts/holder/holder.js")
                 .Include("~/Scripts/filesize.min.js");
             bundles.Add(singBundle);
 
@@ -191,26 +191,26 @@
                 .Include("~/Scripts/bootstrap/button.js")
                 .Include("~/Scripts/bootstrap/tooltip.js")
                 .Include("~/Scripts/bootstrap/alert.js")
-                .Include("~/Scripts/jQuery-slimScroll/jquery.slimscroll.js")
+                .Include("~/Scripts/jquery-slimscroll/jquery.slimscroll.js")
                 .Include("~/Scripts/widgster/widgster.js")
                 //.Include("~/Scripts/pace.js/pace.min.js")
-                .Include("~/Scripts/sing/settings.js")
-                .Include("~/Scripts/sing/app.js")
-                .Include("~/Scripts/sing/index.js")
-                .Include("~/Scripts/sing/custom.js");
+                .Include("~/Scripts/gins/settings.js")
+                .Include("~/Scripts/gins/app.js")
+                .Include("~/Scripts/gins/index.js")
+                .Include("~/Scripts/gins/custom.js");
             bundles.Add(singLoginBundle);
 
             Bundle datepickerBundle = new ScriptBundle("~/bundles/datepicker")
-                .Include("~/Scripts/moment-with-locales.min.js")
-                .Include("~/Scripts/bootstrap-datetimepicker.js");      
+                .Include("~/Scripts/moment/moment-with-locales.min.js")
+                .Include("~/Scripts/bootstrap-datetimepicker/bootstrap-datetimepicker.js");      
             bundles.Add(datepickerBundle);
 
             Bundle selectBundle = new ScriptBundle("~/bundles/select")
-                .Include("~/Scripts/bootstrap-select.min.js");
+                .Include("~/Scripts/bootstrap-select/bootstrap-select.min.js");
             bundles.Add(selectBundle);
 
             Bundle typeaheadBundle = new ScriptBundle("~/bundles/typeahead")
-                .Include("~/Scripts/bootstrap3-typeahead.min.js");
+                .Include("~/Scripts/typeahead/bootstrap3-typeahead.min.js");
             bundles.Add(typeaheadBundle);
 
             Bundle highchartsBundle = new ScriptBundle("~/bundles/highcharts")

@@ -325,24 +325,27 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\boot\startup.js" />
-    <Content Include="App\components\greeter\greeting.js" />
-    <Content Include="Areas\Admin\Scripts\app\activities\list.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\addresses\create.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\addresses\edit.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\addresses\list.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\campaigns\edit.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\campaigns\create.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\campaigns\list.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\clients\edit.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\clients\list.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\analytics\analytics.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\app.datamodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\app.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\clients\create.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\common.js" />
-    <Content Include="Areas\Admin\Scripts\app\reports\list.viewmodel.js" />
-    <Content Include="Areas\Admin\Scripts\app\_run.js" />
+    <Content Include="Areas\Admin\Scripts\app\boot\require.config.js" />
+    <Content Include="Areas\Admin\Scripts\app\boot\startup.js" />
+    <Content Include="Areas\Admin\Static\analytics\index.html" />
+    <Content Include="Scripts\app\boot\startup.js" />
+    <Content Include="Scripts\app\components\greeter\greeting.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\activities\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\addresses\create.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\addresses\edit.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\addresses\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\campaigns\edit.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\campaigns\create.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\campaigns\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\clients\edit.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\clients\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\analytics\analytics.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\boot\app.datamodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\boot\app.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\clients\create.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\boot\common.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\reports\list.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\boot\_run.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -439,11 +442,11 @@
     <Content Include="Content\images\spinner.png" />
     <Content Include="Content\kladr\jquery.kladr.min.css" />
     <Content Include="Content\kladr\style.css" />
-    <Content Include="Content\sing\application-ie9-part2.css" />
-    <Content Include="Content\sing\application.commented.css" />
-    <Content Include="Content\sing\application.css" />
-    <Content Include="Content\sing\application.min.css" />
-    <Content Include="Content\sing\custom.css" />
+    <Content Include="Content\gins\application-ie9-part2.css" />
+    <Content Include="Content\gins\application.commented.css" />
+    <Content Include="Content\gins\application.css" />
+    <Content Include="Content\gins\application.min.css" />
+    <Content Include="Content\gins\custom.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\styles.css">
       <DependentUpon>styles.less</DependentUpon>
@@ -458,7 +461,7 @@
     <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="App\boot\require.config.js" />
+    <Content Include="Scripts\app\boot\require.config.js" />
     <Content Include="Scripts\app\task.viewmodel.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -618,7 +621,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Content\sing\application.min.css.bak" />
+    <Content Include="Content\gins\application.min.css.bak" />
     <Content Include="Content\images\datatables\Sorting icons.psd" />
     <Content Include="Scripts\filesize.min.js" />
     <Content Include="Scripts\holder\.gitattributes" />
@@ -858,7 +861,7 @@
     <Content Include="Scripts\app\app.viewmodel.js" />
     <Content Include="Scripts\app\common.js" />
     <Content Include="Scripts\app\home.viewmodel.js" />
-    <Content Include="App\components\greeter\greeting.html" />
+    <Content Include="Static\greeter\greeting.html" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -929,6 +932,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\Analytics\" />
+    <Folder Include="Areas\Admin\Static\clients\" />
     <Folder Include="Scripts\pace\themes\black\" />
     <Folder Include="Scripts\pace\themes\blue\" />
     <Folder Include="Scripts\pace\themes\green\" />
