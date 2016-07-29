@@ -1,5 +1,5 @@
 ﻿define(['jquery', 'knockout'], function ($, ko) {
-    return function appDataModel() {
+    return function AppDataModel() {
         var self = this;
         // Routes
         self.userInfoUrl = "/api/Me";

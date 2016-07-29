@@ -36,7 +36,7 @@
 @Html.Partial("_Navbar")
 
 <div class="content-wrap">
-    <main id="content" class="content" role="main">
+    <main id="content" class="content" role="main" data-bind="component: { name: 'analytics' }">
         @RenderBody()
         @*@RenderSection("SPAViews", required: false)*@
     </main>

@@ -1,6 +1,6 @@
-﻿define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy)
+﻿define(['jquery', 'knockout', 'sammy', 'common'], function ($, ko, sammy, common)
 {
-    return function appViewModel(dataModel) {
+    return function AppViewModel(dataModel) {
         // Private state
         var self = this;
 
@@ -42,7 +42,7 @@
                 if (!dataModel.getAccessToken()) {
                     // The following code looks for a fragment in the URL to get the access token which will be
                     // used to call the protected Web API resource
-                    var fragment = common.getFragment();
+                    var fragment = window.common.getFragment();
 
                     if (fragment.access_token) {
                         // returning with access token, restore old hash, or at least hide token

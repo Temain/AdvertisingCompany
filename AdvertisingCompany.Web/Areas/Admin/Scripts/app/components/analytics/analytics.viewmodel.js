@@ -1,10 +1,10 @@
-﻿define(['knockout', 'sammy', 'text!areas/admin/static/analytics/index.html'], function (ko, template) {
-    function analyticsViewModel(params) {
+﻿define(['jquery', 'knockout', 'sammy', 'text!areas/admin/static/analytics/index.html'], function ($, ko, sammy, template) {
+    function AnalyticsViewModel(params) {
         var self = this;
 
         self.status = ko.observable("");
 
-        Sammy(function () {
+        sammy(function () {
             this.get('#analytics', function () {
                 // Make a call to the protected Web API by passing in a Bearer Authorization Header
                 $.ajax({
@@ -26,7 +26,13 @@
         return self;
     }
 
-    return { viewModel: analyticsViewModel, template: template };
+    app.addViewModel({
+        name: "Analytics",
+        bindingMemberName: "analytics",
+        factory: AnalyticsViewModel
+    });
+
+    return { viewModel: AnalyticsViewModel, template: template };
 });
 
 
@@ -77,8 +83,3 @@
 //    return self;
 //}
 
-//app.addViewModel({
-//    name: "Analytics",
-//    bindingMemberName: "analytics",
-//    factory: AnalyticsViewModel
-//});
