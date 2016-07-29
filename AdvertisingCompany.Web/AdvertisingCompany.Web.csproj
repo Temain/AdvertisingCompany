@@ -662,7 +662,6 @@
     <Content Include="Scripts\holderjs\composer.json" />
     <Content Include="Scripts\holderjs\package.json" />
     <Content Include="Scripts\holderjs\README.md" />
-    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
@@ -922,6 +921,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\Analytics\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Scripts\pace.js\themes\black\" />
     <Folder Include="Scripts\pace.js\themes\blue\" />
     <Folder Include="Scripts\pace.js\themes\green\" />
