@@ -662,6 +662,7 @@
     <Content Include="Scripts\holderjs\composer.json" />
     <Content Include="Scripts\holderjs\package.json" />
     <Content Include="Scripts\holderjs\README.md" />
+    <None Include="Properties\PublishProfiles\Default Settings.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
