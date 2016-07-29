@@ -33,38 +33,38 @@
             // Site - Your custom site CSS.
             // Note: No CDN support has been added here. Most likely you will want to customize your copy of bootstrap.
             bundles.Add(new StyleBundle(
-                "~/Content/css")
+                "~/styles/app")
                 .Include("~/Content/bootstrap.css")
                 .Include("~/Content/styles.css"));
 
             // Font Awesome - Icons using font (http://fortawesome.github.io/Font-Awesome/).
             bundles.Add(new StyleBundle(
-                "~/Content/fa",
+                "~/styles/fa",
                 ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl)
                 .Include("~/Content/font-awesome.css"));
 
-            bundles.Add(new StyleBundle("~/Content/sing")
+            bundles.Add(new StyleBundle("~/styles/sing")
                 .Include("~/Content/sing/application.css")
                 .Include("~/Content/magnific-popup/magnific-popup.css")
                 .Include("~/Content/sing/custom.css"));
 
-            bundles.Add(new StyleBundle("~/Content/sing-ie9")
+            bundles.Add(new StyleBundle("~/styles/sing-ie9")
                 .Include("~/Content/sing/application-ie9-part2.css"));
 
-            bundles.Add(new StyleBundle("~/Content/datepicker")
+            bundles.Add(new StyleBundle("~/styles/datepicker")
                 .Include("~/Content/bootstrap-datetimepicker.css"));
 
-            bundles.Add(new StyleBundle("~/Content/select")
+            bundles.Add(new StyleBundle("~/styles/select")
                 .Include("~/Content/bootstrap-select.css"));
 
-            bundles.Add(new StyleBundle("~/Content/select2")
+            bundles.Add(new StyleBundle("~/styles/select2")
                 .Include("~/Content/select2/select2.css")
                 .Include("~/Content/select2/select2-bootstrap.css"));
 
-            bundles.Add(new StyleBundle("~/Content/datatables")
+            bundles.Add(new StyleBundle("~/styles/datatables")
                 .Include("~/Content/datatables/jquery.dataTables.css"));
 
-            bundles.Add(new StyleBundle("~/Content/kladr")
+            bundles.Add(new StyleBundle("~/styles/kladr")
                 .Include("~/Content/kladr/jquery.kladr.min.css"));
         }
 
