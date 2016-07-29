@@ -665,6 +665,7 @@
     <Content Include="Scripts\holder\composer.json" />
     <Content Include="Scripts\holder\package.json" />
     <Content Include="Scripts\holder\README.md" />
+    <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Scripts\jquery\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-select\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select\bootstrap-select.min.js" />
