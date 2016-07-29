@@ -243,3 +243,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/AdvertisingCompany.Web/Properties/PublishProfiles/Default Settings.pubxml

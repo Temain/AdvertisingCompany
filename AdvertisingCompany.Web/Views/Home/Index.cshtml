@@ -1,3 +1,12 @@
-﻿<button id="btnHello" data-bind="click: function() { app.changeView('greeter'); }">Say hello</button>
+﻿<main id="content" class="content" role="main">
+    <div class="row">
+        <button id="btnHello" data-bind="click: function() { app.changeView('greeter'); }">Say hello</button>
+        <div class=""></div>
+        <div data-bind="if: app.view, component: { name : app.view, params : { message : 'Hello .!..' }}"></div>
+    </div>
+</main>
 
-<div data-bind="component: { name : app.view, params : { message : 'Hello .!..' }}"></div>
+
+
+
+
