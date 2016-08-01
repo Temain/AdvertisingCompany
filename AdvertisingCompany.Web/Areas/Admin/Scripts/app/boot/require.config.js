@@ -11,6 +11,7 @@
         'knockout': 'scripts/knockout/knockout-3.4.0.debug',
         'knockout.mapping': 'scripts/knockout/knockout.mapping-latest.debug',
         'knockout.validation': 'scripts/knockout/knockout.validation.min',
+        'knockout.validation.server-side': 'scripts/knockout/knockout-server-side-validation',
         'knockout.bindings.datetimepicker': 'scripts/knockout/knockout.bindings.datetimepicker',
         'knockout.bindings.numeric': 'scripts/knockout/knockout.bindings.numeric',
         'knockout.bindings.selectpicker': 'scripts/knockout/knockout.bindings.selectpicker',
@@ -34,7 +35,11 @@
         'bootstrap-datetimepicker': ['moment'],
         'knockout.mapping': {
             deps: ['knockout'],
-            exports: 'komapping'
+            exports: 'koMapping'
+        },
+        'knockout.validation.server-side' : {
+            deps: ['jquery', 'knockout'],
+            exports: 'koValidation'
         },
         'gins-settings': ['jquery'],
         'gins': {

@@ -1,5 +1,8 @@
-﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker', 'knockout.bindings.tooltip', 'sammy', 'underscore', 'progress', 'text!areas/admin/static/clients/index.html'], function ($, ko, komapping, bss, bst, sammy, _, progress, template) {
-    ko.mapping = komapping;
+﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker',
+    'knockout.bindings.tooltip', 'sammy', 'underscore', 'progress',
+    'text!areas/admin/static/clients/index.html'], function ($, ko, koMapping, bss, bst, sammy, _, progress, template) {
+
+    ko.mapping = koMapping;
 
     function ClientsListViewModel(params) {
         var self = this;

@@ -14,6 +14,7 @@ require(['jquery', 'knockout', 'knockout.validation', 'sammy', 'appdm', 'appvm',
       
         ko.components.register('analytics', { require: 'areas/admin/scripts/app/components/analytics/analytics.viewmodel' });
         ko.components.register('clientsList', { require: 'areas/admin/scripts/app/components/clients/list.viewmodel' });
+        ko.components.register('createClient', { require: 'areas/admin/scripts/app/components/clients/create.viewmodel' });
 
         app.componentName('analytics');
         app.initialize();

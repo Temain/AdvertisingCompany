@@ -326,8 +326,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Scripts\app\boot\require.config.js" />
+    <Content Include="Areas\Admin\Scripts\app\boot\routes.js" />
     <Content Include="Areas\Admin\Scripts\app\boot\startup.js" />
     <Content Include="Areas\Admin\Static\analytics\index.html" />
+    <Content Include="Areas\Admin\Static\clients\create.html" />
     <Content Include="Areas\Admin\Static\clients\index.html" />
     <Content Include="Scripts\app\boot\startup.js" />
     <Content Include="Scripts\app\components\greeter\greeting.js" />

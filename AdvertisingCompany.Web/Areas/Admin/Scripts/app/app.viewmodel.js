@@ -83,6 +83,12 @@
 
                 this.get('#clients', function () {
                     app.componentName('clientsList');
+                    app.views["clientsList"].init();
+                });
+
+                this.get('#clients/create', function () {
+                    app.componentName('createClient');
+                    app.views["createClient"].init();
                 });
 
                 this.get('#analytics', function () {
