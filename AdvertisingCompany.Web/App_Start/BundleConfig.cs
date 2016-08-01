@@ -162,7 +162,7 @@
                 .Include("~/Scripts/knockout/knockout.bindings.js");
             bundles.Add(knockoutBundle);
 
-            Bundle singBundle = new ScriptBundle("~/bundles/sing")
+            Bundle singBundle = new ScriptBundle("~/bundles/gins")
                 //.Include("~/Scripts/bootstrap/transition.js")
                 //.Include("~/Scripts/bootstrap/collapse.js")
                 .Include("~/Scripts/bootstrap/button.js")

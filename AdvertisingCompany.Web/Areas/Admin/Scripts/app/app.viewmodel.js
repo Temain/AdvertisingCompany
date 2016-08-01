@@ -1,4 +1,4 @@
-﻿define(['jquery', 'knockout', 'sammy', 'common'], function ($, ko, sammy, common)
+﻿define(['jquery', 'knockout', 'sammy', 'common', 'underscore'], function ($, ko, sammy, common, _)
 {
     return function AppViewModel(dataModel) {
         // Private state
@@ -13,16 +13,18 @@
             }
         }
         // Data
-        self.Views = {
+        self.views = {
             Loading: {} // Other views are added dynamically by app.addViewModel(...).
         };
         self.dataModel = dataModel;
 
         // UI state
-        self.view = ko.observable(self.Views.Loading);
+        self.view = ko.observable(self.views.Loading);
+
+        self.componentName = ko.observable();
 
         self.loading = ko.computed(function () {
-            return self.view() === self.Views.Loading;
+            return self.view() === self.views.Loading;
         });
 
         // UI operations
@@ -31,11 +33,8 @@
 
         // Other operations
         self.addViewModel = function (options) {
-            var viewItem = new options.factory(self, dataModel),
-                navigator;
-
             // Add view to AppViewModel.Views enum (for example, app.Views.Home).
-            self.Views[options.name] = viewItem;
+            self.views[options.name] = options.viewItem;
 
             // Add binding member to AppViewModel (for example, app.home);
             self[options.bindingMemberName] = ko.computed(function () {
@@ -54,11 +53,11 @@
                     }
                 }
 
-                if (self.view() !== viewItem) {
+                if (self.view() !== options.viewItem) {
                     return null;
                 }
 
-                return self.Views[options.name];
+                return self.views[options.name];
             });
 
             if (typeof (options.navigatorFactory) !== "undefined") {
@@ -79,10 +78,18 @@
 
         self.initialize = function () {
             // app.returnUrl = '#task';
-            sammy().run();
             sammy(function () {
                 this.post('/account/logoff/', function () { return true; });
-            });
+
+                this.get('#clients', function () {
+                    app.componentName('clientsList');
+                });
+
+                this.get('#analytics', function () {
+                    app.componentName('analytics');
+                });
+                this.get('/admin/', function () { this.app.runRoute('get', '#analytics') });
+            }).run();
 
             // Заглушка ошибки при скрытых элементах для holder.js
             //Holder.invisible_error_fn = function (fn) {
@@ -121,5 +128,4 @@
         }
     }
 
-    // var app = new AppViewModel(new AppDataModel());
 }, this);

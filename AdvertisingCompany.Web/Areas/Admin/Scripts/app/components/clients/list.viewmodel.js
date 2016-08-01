@@ -1,5 +1,7 @@
-﻿define(['jquery', 'knockout', 'sammy', 'text!areas/admin/static/clients/index.html'], function ($, ko, sammy, template) {
-    function ClientsListViewModel(app, dataModel) {
+﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker', 'knockout.bindings.tooltip', 'sammy', 'underscore', 'progress', 'text!areas/admin/static/clients/index.html'], function ($, ko, komapping, bss, bst, sammy, _, progress, template) {
+    ko.mapping = komapping;
+
+    function ClientsListViewModel(params) {
         var self = this;
         self.isInitialized = ko.observable(false);
 
@@ -111,12 +113,10 @@
             self.loadClients();
         }, 300);
 
-        sammy(function () {
-            this.get('#clients', function () {
-                self.loadClients();
-                app.view(self);
-            });
-        });
+        self.init = function () {
+            self.loadClients();
+            app.view(self);
+        };
 
         return self;
     }
@@ -150,15 +150,15 @@
         self.clientStatusLabelClass = ko.observable(dataModel.clientStatusLabelClass || '');
     }
 
+    var clientsListViewModel = new ClientsListViewModel();
+
     app.addViewModel({
-        name: "ClientsList",
+        name: "clientsList",
         bindingMemberName: "clientsList",
-        factory: clientsListViewModel
+        viewItem: clientsListViewModel
     });
 
-    return { viewModel: ClientsListViewModel, template: template };
+    clientsListViewModel.init();
+
+    return { viewModel: { instance: clientsListViewModel }, template: template };
 });
-
-
-
-

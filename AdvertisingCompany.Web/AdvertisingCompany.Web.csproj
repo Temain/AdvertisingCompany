@@ -672,6 +672,11 @@
     <Content Include="Scripts\bootstrap-select\bootstrap-select.min.js" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\knockout\knockout.bindings.typeahead.js" />
+    <Content Include="Scripts\knockout\knockout.bindings.datetimepicker.js" />
+    <Content Include="Scripts\knockout\knockout.bindings.numeric.js" />
+    <Content Include="Scripts\knockout\knockout.bindings.tooltip.js" />
+    <Content Include="Scripts\knockout\knockout.bindings.selectpicker.js" />
     <Content Include="Scripts\typeahead\bootstrap3-typeahead.js" />
     <Content Include="Scripts\typeahead\bootstrap3-typeahead.min.js" />
     <Content Include="Scripts\bootstrap\affix.js" />
@@ -735,7 +740,6 @@
     <Content Include="Scripts\knockout\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout\knockout-3.4.0.js" />
     <Content Include="Scripts\knockout\knockout-server-side-validation.js" />
-    <Content Include="Scripts\knockout\knockout.bindings.js" />
     <Content Include="Scripts\knockout\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout\knockout.mapping-latest.js" />
     <Content Include="Scripts\knockout\knockout.validation.js" />
