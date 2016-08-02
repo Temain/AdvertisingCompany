@@ -1,6 +1,6 @@
-﻿define(['jquery', 'knockout', 'sammy', 'common', 'underscore'], function ($, ko, sammy, common, _)
+﻿define(['jquery', 'knockout', 'sammy', 'routes', 'common', 'underscore', 'app-data'], function ($, ko, sammy, routes, common, _, dataModel)
 {
-    return function AppViewModel(dataModel) {
+    function AppViewModel(dataModel) {
         // Private state
         var self = this;
 
@@ -35,6 +35,8 @@
         self.addViewModel = function (options) {
             // Add view to AppViewModel.Views enum (for example, app.Views.Home).
             self.views[options.name] = options.viewItem;
+
+            var navigator;
 
             // Add binding member to AppViewModel (for example, app.home);
             self[options.bindingMemberName] = ko.computed(function () {
@@ -76,44 +78,33 @@
             window.location.hash = app.returnUrl;
         }
 
+        self.routes = routes;
+
+        self.registerComponents = function() {
+            ko.components.register('analytics', { require: 'areas/admin/scripts/app/components/analytics/analytics.viewmodel' });
+
+            ko.components.register('clientsList', { require: 'areas/admin/scripts/app/components/clients/list.viewmodel' });
+            ko.components.register('createClient', { require: 'areas/admin/scripts/app/components/clients/create.viewmodel' });
+            ko.components.register('editClient', { require: 'areas/admin/scripts/app/components/clients/edit.viewmodel' });
+
+            ko.components.register('campaignsList', { require: 'areas/admin/scripts/app/components/campaigns/list.viewmodel' });
+            ko.components.register('createCampaign', { require: 'areas/admin/scripts/app/components/campaigns/create.viewmodel' });
+            ko.components.register('editCampaign', { require: 'areas/admin/scripts/app/components/campaigns/edit.viewmodel' });
+
+            ko.components.register('addressesList', { require: 'areas/admin/scripts/app/components/addresses/list.viewmodel' });
+            ko.components.register('createAddress', { require: 'areas/admin/scripts/app/components/addresses/create.viewmodel' });
+            ko.components.register('editAddress', { require: 'areas/admin/scripts/app/components/addresses/edit.viewmodel' });
+
+            ko.components.register('activitiesList', { require: 'areas/admin/scripts/app/components/activities/list.viewmodel' });
+
+            ko.components.register('reportsList', { require: 'areas/admin/scripts/app/components/reports/list.viewmodel' });
+
+            self.componentName('analytics');
+        };
+
         self.initialize = function () {
-            // app.returnUrl = '#task';
-            sammy(function () {
-                this.post('/account/logoff/', function () { return true; });
-
-                this.get('#clients', function () {
-                    app.componentName('clientsList');
-                    app.views["clientsList"].init();
-                });
-
-                this.get('#clients/create', function () {
-                    app.componentName('createClient');
-                    app.views["createClient"].init();
-                });
-
-                this.get('#analytics', function () {
-                    app.componentName('analytics');
-                });
-                this.get('/admin/', function () { this.app.runRoute('get', '#analytics') });
-            }).run();
-
-            // Заглушка ошибки при скрытых элементах для holder.js
-            //Holder.invisible_error_fn = function (fn) {
-            //    return function (el) {              
-            //        setTimeout(function() {
-            //            fn.call(this, el);
-            //        }, 10);
-            //    }
-            //}
-
-            ///**
-            // * Holder js hack. removing holder's data to prevent onresize callbacks execution
-            // * so they don't fail when page loaded
-            // * via ajax and there is no holder elements anymore
-            // */
-            //$('img[data-src]').each(function () {
-            //    delete this.holder_data;
-            //});
+            self.registerComponents();
+            routes.initialize();
 
             // Пометка активных элементов сайдбара
             $('.sidebar-nav ul > li > a').click(function () {
@@ -134,4 +125,5 @@
         }
     }
 
-}, this);
+    return new AppViewModel(dataModel);
+});

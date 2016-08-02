@@ -1,5 +1,5 @@
 ﻿define(['jquery', 'knockout'], function ($, ko) {
-    return function AppDataModel() {
+    function AppDataModel() {
         var self = this;
         // Routes
         self.userInfoUrl = "/api/Me";
@@ -23,4 +23,6 @@
             return sessionStorage.getItem("accessToken");
         };
     }
-}, this);
+
+    return new AppDataModel();
+});

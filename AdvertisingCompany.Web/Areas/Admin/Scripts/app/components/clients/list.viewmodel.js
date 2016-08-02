@@ -146,12 +146,12 @@
         self.createdAt = ko.observable(dataModel.createdAt || '');
     }
 
-    function ClientStatusViewModel(dataModel) {
-        var self = this;
-        self.clientStatusId = ko.observable(dataModel.clientStatusId || '');
-        self.clientStatusName = ko.observable(dataModel.clientStatusName || '');
-        self.clientStatusLabelClass = ko.observable(dataModel.clientStatusLabelClass || '');
-    }
+    //function ClientStatusViewModel(dataModel) {
+    //    var self = this;
+    //    self.clientStatusId = ko.observable(dataModel.clientStatusId || '');
+    //    self.clientStatusName = ko.observable(dataModel.clientStatusName || '');
+    //    self.clientStatusLabelClass = ko.observable(dataModel.clientStatusLabelClass || '');
+    //}
 
     var clientsListViewModel = new ClientsListViewModel();
 

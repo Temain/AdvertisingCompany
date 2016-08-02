@@ -1,93 +1,104 @@
-﻿function ActivitiesListViewModel(app, dataModel) {
-    var self = this;
-    self.isInitialized = ko.observable(false);
+﻿define([
+    'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker', 'knockout.bindings.tooltip', 'progress',
+    'text!areas/admin/static/activities/index.html'
+], function($, ko, koMapping, bss, bst, progress, template) {
 
-    self.activities = ko.observableArray([]);
-    self.page = ko.observable(1);
-    self.pagesCount = ko.observable(1);
-    self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
-    self.pageSize = ko.observable(10);
-    self.searchQuery = ko.observable('');
+    ko.mapping = koMapping;
 
-    self.loadActivities = function () {
-        self.isInitialized(false);
-        progress.show();
+    function ActivitiesListViewModel(params) {
+        var self = this;
+        self.isInitialized = ko.observable(false);
 
-        $.ajax({
-            method: 'get',
-            url: '/admin/api/activities',
-            data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
-            contentType: "application/json; charset=utf-8",
-            headers: {
-                'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
-            },
-            error: function(response) {
-                progress.hide();
-            },
-            success: function (response) {
-                ko.mapping.fromJS(
-                    response.activities,
-                    {
-                        key: function (data) {
-                            return ko.utils.unwrapObservable(data.activityTypeId);
+        self.activities = ko.observableArray([]);
+        self.page = ko.observable(1);
+        self.pagesCount = ko.observable(1);
+        self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
+        self.pageSize = ko.observable(10);
+        self.searchQuery = ko.observable('');
+
+        self.loadActivities = function() {
+            self.isInitialized(false);
+            progress.show();
+
+            $.ajax({
+                method: 'get',
+                url: '/admin/api/activities',
+                data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                error: function(response) {
+                    progress.hide();
+                },
+                success: function(response) {
+                    ko.mapping.fromJS(
+                        response.activities,
+                        {
+                            key: function(data) {
+                                return ko.utils.unwrapObservable(data.activityTypeId);
+                            },
+                            create: function(options) {
+                                var activityViewModel = new ActivityTypeViewModel(options.data);
+                                // ko.serverSideValidator.updateKoModel(clientViewModel);
+                                return activityViewModel;
+                            }
                         },
-                        create: function (options) {
-                            var activityViewModel = new ActivityTypeViewModel(options.data);
-                            // ko.serverSideValidator.updateKoModel(clientViewModel);
-                            return activityViewModel;
-                        }
-                    },
-                    self.activities
-                );               
+                        self.activities
+                    );
 
-                self.page(response.page);
-                self.pagesCount(response.pagesCount);
-                self.isInitialized(true);
-                progress.hide();
-            }
-        });
-    };
+                    self.page(response.page);
+                    self.pagesCount(response.pagesCount);
+                    self.isInitialized(true);
+                    progress.hide();
+                }
+            });
+        };
 
-    self.pageChanged = function (page) {
-        self.page(page);
-        self.loadActivities();
+        self.pageChanged = function(page) {
+            self.page(page);
+            self.loadActivities();
 
-        window.scrollTo(0, 0);
-    };
+            window.scrollTo(0, 0);
+        };
 
-    self.pageSizeChanged = function () {
-        self.page(1);
-        self.loadActivities();
+        self.pageSizeChanged = function() {
+            self.page(1);
+            self.loadActivities();
 
-        window.scrollTo(0, 0);
-    };
+            window.scrollTo(0, 0);
+        };
 
-    self.search = _.debounce(function () {
-        self.page(1);
-        self.loadActivities();
-    }, 300);
+        self.search = _.debounce(function() {
+            self.page(1);
+            self.loadActivities();
+        }, 300);
 
-    Sammy(function () {
-        this.get('#activities', function () {
+        self.init = function() {
             app.view(self);
             self.loadActivities();
-        });
+        };
+
+        return self;
+    }
+
+    function ActivityTypeViewModel(activityTypeViewModel) {
+        var self = this;
+
+        self.activityTypeId = ko.observable(activityTypeViewModel.activityTypeId || '');
+        self.activityTypeName = ko.observable(activityTypeViewModel.activityTypeName || '');
+        self.activityCategory = ko.observable(activityTypeViewModel.activityCategory || '');
+    }
+
+    var activitiesListViewModel = new ActivitiesListViewModel();
+
+    app.addViewModel({
+        name: "activitiesList",
+        bindingMemberName: "activitiesList",
+        viewItem: activitiesListViewModel
     });
 
-    return self;
-}
+    activitiesListViewModel.init();
 
-function ActivityTypeViewModel(activityTypeViewModel) {
-    var self = this;
-
-    self.activityTypeId = ko.observable(activityTypeViewModel.activityTypeId || '');
-    self.activityTypeName = ko.observable(activityTypeViewModel.activityTypeName || '');
-    self.activityCategory = ko.observable(activityTypeViewModel.activityCategory || '');
-}
-
-app.addViewModel({
-    name: "ActivitiesList",
-    bindingMemberName: "activitiesList",
-    factory: ActivitiesListViewModel
+    return { viewModel: { instance: activitiesListViewModel }, template: template };
 });
-

@@ -1,14 +1,14 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side',
-    'knockout.bindings.selectpicker', 'sammy', 'underscore', 'progress',
-    'text!areas/admin/static/clients/create.html'
-], function($, ko, koMapping, koValidation, bss, sammy, _, progress, template) {
+    'knockout.bindings.selectpicker', 'text!areas/admin/static/clients/create.html'
+], function($, ko, koMapping, koValidation, bss, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
 
     var CreateClientViewModel = function(params) {
         var self = this;
+
         if (!params) {
             params = {};
         }

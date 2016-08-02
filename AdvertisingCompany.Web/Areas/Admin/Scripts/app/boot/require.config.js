@@ -1,8 +1,9 @@
 ﻿var requireConfig = {
     baseUrl: '/',
     paths: {
-        'appdm': 'areas/admin/scripts/app/app.datamodel',
-        'appvm': 'areas/admin/scripts/app/app.viewmodel',
+        'app': 'areas/admin/scripts/app/app.viewmodel',
+        'app-data': 'areas/admin/scripts/app/app.datamodel',
+        'routes': 'areas/admin/scripts/app/boot/routes',
         'bootstrap': 'scripts/bootstrap/bootstrap.min',
         'bootstrap-select': 'scripts/bootstrap-select/bootstrap-select.min',
         'bootstrap-datetimepicker': 'scripts/bootstrap-datetimepicker/bootstrap-datetimepicker',
@@ -25,12 +26,24 @@
         'progress': 'scripts/progress',
         'gins': 'scripts/gins/app',
         'gins-settings': 'scripts/gins/settings',
+        'gins-gallery': 'scripts/gins/gallery',
         'widgster': 'scripts/widgster/widgster',
         'jquery-slimscroll': 'scripts/jquery-slimscroll/jquery.slimscroll.min',
         'pace': 'scripts/pace/pace.min',
-        'bootstrap-notify': 'scripts/bootstrap-notify/bootstrap-notify.min'
+        'bootstrap-notify': 'scripts/bootstrap-notify/bootstrap-notify.min',
+        'kladr': 'scripts/kladr/kladr',
+        'kladr-core': 'scripts/kladr/core',
+        'kladr-with-map': 'scripts/kladr/form_with_map',
+        'ymaps': '//api-maps.yandex.ru/2.1/?lang=ru_RU',
+        'holder': 'scripts/holder/holder',
+        'file-input': 'scripts/jasny-bootstrap/js/fileinput',
+        'magnific-popup': 'scripts/magnific-popup/dist/jquery.magnific-popup.min',
+        'modernizr': 'scripts/shuffle/dist/modernizr.custom.min',
+        'shuffle': 'scripts/shuffle/dist/jquery.shuffle.modernizr.min',
+        'file-size': 'scripts/filesize.min'
     },
     shim: {
+        'app': ['gins'],
         'bootstrap': ['jquery'],
         'bootstrap-datetimepicker': ['moment'],
         'knockout.mapping': {
@@ -46,12 +59,33 @@
             deps: ['jquery', 'widgster', 'gins-settings', 'bootstrap', 'jquery-slimscroll', 'pace', 'bootstrap-notify'],
             exports: 'Sing'
         },
+        'gins-gallery': {
+            deps: ['jquery', 'magnific-popup', 'shuffle'],
+            exports: 'initGallery'
+        },
+        'magnific-popup' : {
+            deps: ['jquery']   
+        },
+        'modernizr': {
+            exports: 'Modernizr'
+        },
+        'file-size': {
+            exports: 'filesize'
+        },
+        'shuffle': ['jquery', 'modernizr'],
         'widgster': ['jquery'],
         'jquery-slimscroll': ['jquery'],
         'progress': {
             deps: ['jquery', 'bootstrap'],
             exports: 'progress'
         },
-        'appvm': ['knockout', 'appdm', 'sammy', 'common']
+        'kladr-core': ['jquery'],
+        'kladr': {
+            deps: ['kladr-core']
+        },
+        'kladr-with-map' : {
+            deps: ['kladr', 'ymaps'],
+            exports: 'kladrWithMap'
+        }
     }
 }

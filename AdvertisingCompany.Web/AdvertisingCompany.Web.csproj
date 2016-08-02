@@ -328,9 +328,18 @@
     <Content Include="Areas\Admin\Scripts\app\boot\require.config.js" />
     <Content Include="Areas\Admin\Scripts\app\boot\routes.js" />
     <Content Include="Areas\Admin\Scripts\app\boot\startup.js" />
+    <Content Include="Areas\Admin\Static\activities\index.html" />
+    <Content Include="Areas\Admin\Static\addresses\create.html" />
+    <Content Include="Areas\Admin\Static\addresses\edit.html" />
+    <Content Include="Areas\Admin\Static\addresses\index.html" />
     <Content Include="Areas\Admin\Static\analytics\index.html" />
+    <Content Include="Areas\Admin\Static\campaigns\create.html" />
+    <Content Include="Areas\Admin\Static\campaigns\edit.html" />
+    <Content Include="Areas\Admin\Static\campaigns\index.html" />
     <Content Include="Areas\Admin\Static\clients\create.html" />
+    <Content Include="Areas\Admin\Static\clients\edit.html" />
     <Content Include="Areas\Admin\Static\clients\index.html" />
+    <Content Include="Areas\Admin\Static\reports\index.html" />
     <Content Include="Scripts\app\boot\startup.js" />
     <Content Include="Scripts\app\components\greeter\greeting.js" />
     <Content Include="Areas\Admin\Scripts\app\components\activities\list.viewmodel.js" />
@@ -934,7 +943,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\Analytics\" />
-    <Folder Include="Areas\Admin\Static\campaigns\" />
     <Folder Include="Scripts\pace\themes\black\" />
     <Folder Include="Scripts\pace\themes\blue\" />
     <Folder Include="Scripts\pace\themes\green\" />

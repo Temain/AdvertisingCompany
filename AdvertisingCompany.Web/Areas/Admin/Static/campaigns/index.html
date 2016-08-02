@@ -1,12 +1,9 @@
 ﻿<div data-bind="visible: isInitialized">
     <ol class="breadcrumb">
         <li>ВЫ ЗДЕСЬ</li>
-        <li class="active">Клиенты</li>
+        <li class="active">Рекламные кампании</li>
     </ol>
-    <h1 class="page-title">Клиенты рекламной компании</h1>
-    <div class="mrgbtm24">
-        <a href="/admin/#clients/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить клиента</a>
-    </div>
+    <h1 class="page-title">Рекламные кампании</h1>
     <section class="widget">
         <div class="widget-body">
             <div class="dataTables_wrapper form-inline no-footer">
@@ -39,61 +36,46 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th class="col-md-3">Компания</th>
-                            <th class="col-md-2 hidden-xs">Деятельность</th>
-                            <th class="col-md-1 hidden-xs">Ответственный</th>
-                            <th class="col-md-1 hidden-xs">Телефоны</th>
-                            <th class="col-md-1 hidden-xs">Email</th>
-                            <th class="col-md-1">Логин</th>
-                            <th class="col-md-1">Статус</th>
-                            <th class="col-md-1 hidden-xs">Добавлен</th>
+                            <th class="col-md-3">Клиент</th>
+                            <th class="col-md-2">Деятельность</th>
+                            <th class="col-md-2">Микрорайоны</th>
+                            <th class="col-md-1 text-center">Формат</th>
+                            <th class="col-md-1 text-center">Стоимость</th>
+                            <th class="col-md-1 text-center">Форма оплаты</th>
+                            <th class="col-md-1">Статус оплаты</th>
                             <th class="col-md-1 text-center">Редактирование</th>
                         </tr>
                     </thead>
-                    <tbody data-bind="foreach: clients">
+                    <tbody data-bind="foreach: campaigns">
                         <tr>
                             <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
+                            <td><span data-bind="text: clientName"></span></td>
+                            <td data-bind="text: activityTypeName"></td>
                             <td>
-                                <span data-bind="text: companyName"></span>
+                                <ul data-bind="foreach: microdistrictNames" style="padding-left: 20px;">
+                                    <li data-bind="text: $data"></li>
+                                </ul>
                             </td>
-                            <td class="hidden-xs" data-bind="text: activityTypeName"></td>
-                            <td class="hidden-xs" data-bind="text: responsiblePersonShortName"></td>
-                            <td class="hidden-xs">
-                                <span data-bind="text: phoneNumber"></span><br />
-                                <span data-bind="text: additionalPhoneNumber"></span><br data-bind="if: additionalPhoneNumber" />
-                            </td>
-                            <td class="hidden-xs" data-bind="text: email"></td>
-                            <td data-bind="foreach: userNames">
-                                <span data-bind="text: $data"></span>
-                            </td>
+                            <td class="text-center" data-bind="text: placementFormatName"></td>
+                            <td class="text-center" data-bind="text: placementCost"></td>
+                            <td class="text-center" data-bind="text: paymentOrderName"></td>
                             <td>
-                                <select data-bind="attr: { 'data-style' : 'btn-' + clientStatusLabelClass() }, selectPicker: clientStatusId, selectPickerOptions: { optionsArray : $parent.clientStatuses, initValue : clientStatusInitialId, initialized : clientStatusInitialized }, optionsValue: 'clientStatusId', optionsText: 'clientStatusName', event : { change : $parent.clientStatusChanged }"></select>
+                                <select data-bind="attr: { 'data-style' : 'btn-' + paymentStatusLabelClass() }, selectPicker: paymentStatusId, selectPickerOptions: { optionsArray : $parent.paymentStatuses, initValue : paymentStatusInitialId, initialized : paymentStatusInitialized }, optionsValue: 'paymentStatusId', optionsText: 'paymentStatusName', event : { change : $parent.paymentStatusChanged }"></select>
                             </td>
-                            <td class="hidden-xs" data-bind="text: createdAt"></td>
                             <td class="actions text-center">
-                                <!-- ko if: campaignId() -->
-                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() + '/edit' }, tooltip: { title: 'Перейти к редактированию рекламной кампании', placement: 'left', trigger: 'hover' }">
+                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() + '/reports' }, tooltip: { title: 'Просмотреть фотоотчёты выбранных микрорайонов', placement: 'left', trigger: 'hover' }">
                                     <span class="fa-stack">
                                         <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-flag-checkered fa-stack-1x fa-inverse"></i>
+                                        <i class="fa fa-picture-o fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
-                                <!-- /ko -->
-                                <!-- ko ifnot: campaignId() -->
-                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/create' }, tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'left', trigger: 'hover' }">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                                <!-- /ko -->
-                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/edit' }, tooltip: { title: 'Перейти к редактированию информации о клиенте', placement: 'left', trigger: 'hover' }">
+                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() +'/edit' }, tooltip: { title: 'Перейти к редактированию информации о кампании', placement: 'left', trigger: 'hover' }">
                                     <span class="fa-stack">
                                         <i class="fa fa-circle fa-stack-2x text-usual"></i>
                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
-                                <a href="#" data-bind="tooltip: { title: 'Удалить клиента', placement: 'left', trigger: 'hover' }">
+                                <a href="#" data-bind="tooltip: { title: 'Удалить кампанию', placement: 'left', trigger: 'hover' }">
                                     <span class="fa-stack">
                                         <i class="fa fa-circle fa-stack-2x text-usual"></i>
                                         <i class="fa fa-times fa-stack-1x fa-inverse"></i>
@@ -104,10 +86,10 @@
                     </tbody>
                 </table>
 
-                <!-- ko if: clients().length > 0 -->
+                <!-- ko if: campaigns().length > 0 -->
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + clients().length) + ' из ' + ((pagesCount() - 1) * pageSize() + clients().length) + ' записей'"></div>
+                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + campaigns().length) + ' из ' + ((pagesCount() - 1) * pageSize() + campaigns().length) + ' записей'"></div>
                     </div>
                     <div class="col-md-6">
                         <!-- ko if: pagesCount() > 1 -->
