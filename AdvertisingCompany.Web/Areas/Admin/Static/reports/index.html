@@ -32,7 +32,7 @@
 
     <div class="row gallery shuffle" id="grid" data-bind="visible: addressReports().length > 0">
         <!-- ko foreach: addressReports -->
-        <div class="col-sm-4 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Mountains">
+        <div class="col-sm-4 col-md-2 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Mountains">
             <div class="thumbnail">
                 <a class="link"><img data-bind="attr: { src: 'data:image/jpeg;base64,' + imageData() }" alt="..."></a>
                 <div class="caption">
@@ -48,6 +48,6 @@
             </div>
         </div>
         <!-- /ko -->
-        <div class="col-sm-4 col-md-3 js-shuffle-sizer"></div>
+        <div class="col-sm-4 col-md-2 js-shuffle-sizer"></div>
     </div>
 </div>

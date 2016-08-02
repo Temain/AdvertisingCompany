@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using AdvertisingCompany.Domain.Models;
+using AdvertisingCompany.Web.Helpers;
 using AdvertisingCompany.Web.Models.Mapping;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
@@ -40,6 +41,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
         public string ImageData { get; set; }
 
         /// <summary>
+        /// Уменьшенная версия фотографии
+        /// </summary>
+        public string ImageThumbnail { get; set; }
+
+        /// <summary>
         /// Тип
         /// </summary>
         public string ImageMimeType { get; set; }
@@ -54,7 +60,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
             configuration.CreateMap<AddressReport, AddressReportViewModel>("AddressReport")
                 .ForMember(m => m.ReportDate, opt => opt.MapFrom(s => s.CreatedAt != null ? s.CreatedAt.Value.ToShortDateString() : ""))
                 .ForMember(m => m.ImageLength, opt => opt.MapFrom(s => s.ImageLength))
-                .ForMember(m => m.ImageData, opt => opt.MapFrom(s => Convert.ToBase64String(s.ImageData)));
+                .ForMember(m => m.ImageData, opt => opt.MapFrom(s => Convert.ToBase64String(s.ImageData)))
+                .ForMember(m => m.ImageThumbnail, opt => opt.MapFrom(s => Convert.ToBase64String(ImageHelpers.MakeThumbnail(s.ImageData, 200, 200))));
         }
     }
 }

@@ -311,6 +311,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ImageHelpers.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ListViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -523,7 +524,6 @@
     <Content Include="Fonts\google\roboto-light.woff" />
     <Content Include="Fonts\google\roboto-medium.woff" />
     <Content Include="Fonts\google\roboto-regular.woff" />
-    <Content Include="Areas\Admin\Views\Clients\_Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Navbar.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Sidebar.cshtml" />
@@ -613,19 +613,6 @@
     <Content Include="Scripts\bootstrap-select\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Analytics\_Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Clients\_Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Clients\_Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Addresses\_Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Reports\_Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Campaigns\_Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Activities\_Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Addresses\_Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Addresses\_Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Addresses\_Upload.cshtml" />
-    <Content Include="Areas\Admin\Views\Campaigns\_Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Campaigns\_Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Addresses\_UploadOld.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
