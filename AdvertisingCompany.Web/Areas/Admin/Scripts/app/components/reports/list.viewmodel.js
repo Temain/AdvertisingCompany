@@ -88,7 +88,8 @@
         self.comment = ko.observable(dataModel.comment || '');
         self.imageName = ko.observable(dataModel.imageName || '');
         self.imageLength = ko.observable(dataModel.imageLength || '');
-        self.imageData = ko.observable(dataModel.imageData || '');
+        self.imageData = ko.observable(dataModel.imageData || ''); 
+        self.imageThumbnail = ko.observable(dataModel.imageThumbnail || '');
         self.imageMimeType = ko.observable(dataModel.imageMimeType || '');
         self.createdAt = ko.observable(dataModel.createdAt || '');
     }

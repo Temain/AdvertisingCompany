@@ -32,7 +32,8 @@
 
     <div class="row gallery shuffle" id="grid" data-bind="visible: addressReports().length > 0">
         <!-- ko foreach: addressReports -->
-        <div class="col-sm-4 col-md-2 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Mountains">
+
+        <!--<div class="col-sm-4 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Mountains">
             <div class="thumbnail">
                 <a class="link"><img data-bind="attr: { src: 'data:image/jpeg;base64,' + imageData() }" alt="..."></a>
                 <div class="caption">
@@ -46,8 +47,25 @@
                     </ul>
                 </div>
             </div>
+        </div>-->
+
+        <div class="col-sm-4 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Mountains">
+            <div class="thumbnail">
+                <a data-bind="attr: { href: 'api/reports/' + addressReportId() }"><img data-bind="attr: { src: 'data:' + imageMimeType() + ';base64,' + imageThumbnail() }" alt="..."></a>
+                <div class="caption">
+                    <h5 class="mt-0 mb-xs" data-bind="text: imageName"></h5>
+                    <ul class="post-links">
+                        <li><a>Дата : <span data-bind="text: reportDate"></span></a></li>
+                        <li><a>Размер : <span data-bind="text: filesize(imageLength(), {base: 10, round: 0})"></span></a></li>
+                    </ul>
+                    <ul class="post-links" data-bind="visible: comment">
+                        <li><a>Комментарий : </a><span data-bind="text : comment"></span></li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
         <!-- /ko -->
-        <div class="col-sm-4 col-md-2 js-shuffle-sizer"></div>
+        <div class="col-sm-4 col-md-3 js-shuffle-sizer"></div>
     </div>
 </div>

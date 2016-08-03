@@ -17,9 +17,11 @@ using Microsoft.AspNet.Identity;
 using System.Net.Http;
 using System.Web;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using AdvertisingCompany.Web.Areas.Admin.Models.Report;
+using AdvertisingCompany.Web.Results;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
@@ -98,6 +100,24 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return null;
         }
 
+        // GET: admin/api/reports/5
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("{id:int}")]
+        [ResponseType(typeof(AddressReportViewModel))]
+        public IHttpActionResult GetReport(int id)
+        {
+            var report = UnitOfWork.Repository<AddressReport>()
+                .GetQ(x => x.AddressReportId == id && x.DeletedAt == null)
+                .SingleOrDefault();
+            if (report == null)
+            {
+                return BadRequest();
+            }
+
+            return new FileResult(report.ImageData, report.ImageMimeType);
+        }
+
         // POST: admin/api/reports
         [HttpPost]
         [Route("")]
@@ -150,7 +170,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }

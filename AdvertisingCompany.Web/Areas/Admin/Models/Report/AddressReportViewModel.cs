@@ -60,8 +60,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
             configuration.CreateMap<AddressReport, AddressReportViewModel>("AddressReport")
                 .ForMember(m => m.ReportDate, opt => opt.MapFrom(s => s.CreatedAt != null ? s.CreatedAt.Value.ToShortDateString() : ""))
                 .ForMember(m => m.ImageLength, opt => opt.MapFrom(s => s.ImageLength))
-                .ForMember(m => m.ImageData, opt => opt.MapFrom(s => Convert.ToBase64String(s.ImageData)))
-                .ForMember(m => m.ImageThumbnail, opt => opt.MapFrom(s => Convert.ToBase64String(ImageHelpers.MakeThumbnail(s.ImageData, 200, 200))));
+                // .ForMember(m => m.ImageData, opt => opt.MapFrom(s => Convert.ToBase64String(s.ImageData)))
+                .ForMember(m => m.ImageData, opt => opt.Ignore())
+                .ForMember(m => m.ImageThumbnail, opt => opt.MapFrom(s => Convert.ToBase64String(ImageHelpers.MakeThumbnail(s.ImageData, 600, 600))));
         }
     }
 }
