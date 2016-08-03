@@ -62,7 +62,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Report
                 .ForMember(m => m.ImageLength, opt => opt.MapFrom(s => s.ImageLength))
                 // .ForMember(m => m.ImageData, opt => opt.MapFrom(s => Convert.ToBase64String(s.ImageData)))
                 .ForMember(m => m.ImageData, opt => opt.Ignore())
-                .ForMember(m => m.ImageThumbnail, opt => opt.MapFrom(s => Convert.ToBase64String(ImageHelpers.MakeThumbnail(s.ImageData, 600, 600))));
+                .ForMember(m => m.ImageThumbnail, opt => opt.MapFrom(s => Convert.ToBase64String(ImageHelpers.CreateThumbnail(s.ImageData, 640))));
         }
     }
 }

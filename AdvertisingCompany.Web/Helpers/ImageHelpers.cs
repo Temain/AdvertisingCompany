@@ -10,40 +10,66 @@ namespace AdvertisingCompany.Web.Helpers
 {
     public static class ImageHelpers
     {
-        public static byte[] MakeThumbnail(byte[] myImage, int thumbWidth, int thumbHeight)
+        // Create a thumbnail in byte array format from the image encoded in the passed byte array.  
+        // (RESIZE an image in a byte[] variable.)  
+        public static byte[] CreateThumbnail(byte[] passedImage, int largestSide)
         {
-            using (MemoryStream ms = new MemoryStream())
-            using (Image image = Image.FromStream(new MemoryStream(myImage)))
+            byte[] returnedThumbnail;
+
+            using (MemoryStream StartMemoryStream = new MemoryStream(),
+                                NewMemoryStream = new MemoryStream())
             {
-                Size thumbnailSize = GetThumbnailSize(image);
-                var thumbnail = image.GetThumbnailImage(thumbnailSize.Width, thumbnailSize.Height, null, new IntPtr());
-                thumbnail.Save(ms, ImageFormat.Jpeg);
-                return ms.ToArray();
+                // write the string to the stream  
+                StartMemoryStream.Write(passedImage, 0, passedImage.Length);
+
+                // create the start Bitmap from the MemoryStream that contains the image  
+                Bitmap startBitmap = new Bitmap(StartMemoryStream);
+
+                // set thumbnail height and width proportional to the original image.  
+                int newHeight;
+                int newWidth;
+                double HW_ratio;
+                if (startBitmap.Height > startBitmap.Width)
+                {
+                    newHeight = largestSide;
+                    HW_ratio = (double)((double)largestSide / (double)startBitmap.Height);
+                    newWidth = (int)(HW_ratio * (double)startBitmap.Width);
+                }
+                else
+                {
+                    newWidth = largestSide;
+                    HW_ratio = (double)((double)largestSide / (double)startBitmap.Width);
+                    newHeight = (int)(HW_ratio * (double)startBitmap.Height);
+                }
+
+                // create a new Bitmap with dimensions for the thumbnail.  
+                Bitmap newBitmap = new Bitmap(newWidth, newHeight);
+
+                // Copy the image from the START Bitmap into the NEW Bitmap.  
+                // This will create a thumnail size of the same image.  
+                newBitmap = ResizeImage(startBitmap, newWidth, newHeight);
+
+                // Save this image to the specified stream in the specified format.  
+                newBitmap.Save(NewMemoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                // Fill the byte[] for the thumbnail from the new MemoryStream.  
+                returnedThumbnail = NewMemoryStream.ToArray();
             }
+
+            // return the resized image as a string of bytes.  
+            return returnedThumbnail;
         }
 
-        public static Size GetThumbnailSize(Image original)
+        // Resize a Bitmap  
+        private static Bitmap ResizeImage(Bitmap image, int width, int height)
         {
-            // Maximum size of any dimension.
-            const int maxPixels = 1000;
-
-            // Width and height.
-            int originalWidth = original.Width;
-            int originalHeight = original.Height;
-
-            // Compute best factor to scale entire image based on larger dimension.
-            double factor;
-            if (originalWidth > originalHeight)
+            Bitmap resizedImage = new Bitmap(width, height);
+            using (Graphics gfx = Graphics.FromImage(resizedImage))
             {
-                factor = (double)maxPixels / originalWidth;
+                gfx.DrawImage(image, new Rectangle(0, 0, width, height),
+                    new Rectangle(0, 0, image.Width, image.Height), GraphicsUnit.Pixel);
             }
-            else
-            {
-                factor = (double)maxPixels / originalHeight;
-            }
-
-            // Return thumbnail size.
-            return new Size((int)(originalWidth * factor), (int)(originalHeight * factor));
+            return resizedImage;
         }
     }
 }
