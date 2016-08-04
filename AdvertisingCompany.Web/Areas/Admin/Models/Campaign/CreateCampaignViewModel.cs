@@ -96,7 +96,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                 .ForMember(m => m.ResponsiblePersonName, opt => opt.MapFrom(s => s.ResponsiblePerson.FullName))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.PlacementMonthId, opt => opt.MapFrom(s => DateTime.Now.Month))
-                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory + " / " + s.ActivityType.ActivityTypeName));
+                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory + " / " + s.ActivityType.ActivityTypeName))
+                .ForMember(m => m.Comment, opt => opt.Ignore());
 
             configuration.CreateMap<CreateCampaignViewModel, Domain.Models.Campaign>("Campaign")
                 .ForMember(m => m.PlacementMonthId, opt => opt.MapFrom(s => s.PlacementMonthId))

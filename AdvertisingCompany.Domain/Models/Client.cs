@@ -60,6 +60,11 @@ namespace AdvertisingCompany.Domain.Models
         public string Email { get; set; }
 
         /// <summary>
+        /// Комментарий
+        /// </summary>
+        public string Comment { get; set; }
+
+        /// <summary>
         /// Дата создания записи
         /// </summary>
         public DateTime? CreatedAt { get; set; }

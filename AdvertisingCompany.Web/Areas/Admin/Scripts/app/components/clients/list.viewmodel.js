@@ -144,6 +144,7 @@
         self.clientStatusName = ko.observable(dataModel.clientStatusName || '');
         self.clientStatusLabelClass = ko.observable(dataModel.clientStatusLabelClass || '');
         self.createdAt = ko.observable(dataModel.createdAt || '');
+        self.comment = ko.observable(dataModel.comment || '');
     }
 
     //function ClientStatusViewModel(dataModel) {

@@ -62,6 +62,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         /// </summary>
         public string CreatedAt { get; set; }
 
+        /// <summary>
+        /// Комментарий
+        /// </summary>
+        public string Comment { get; set; }
+
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
@@ -80,6 +85,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.ClientStatusId, opt => opt.MapFrom(s => s.ClientStatusId))
                 .ForMember(m => m.ClientStatusName, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusName))
                 .ForMember(m => m.ClientStatusLabelClass, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusLabelClass))
+                .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
                 .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt.HasValue ? s.CreatedAt.Value.ToShortDateString() : ""));
         }
     }

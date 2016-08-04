@@ -75,6 +75,7 @@
                 message: "Введите подтверждение пароля."
             }
         });
+        self.comment = ko.observable(params.comment || '');
 
         self.init = function () {
             var clientId = app.routes.currentParams.clientId;

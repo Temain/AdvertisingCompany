@@ -66,6 +66,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Комментарий")]
+        public string Comment { get; set; }
+
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Domain.Models.Client, CreateClientViewModel>("Client");
@@ -78,6 +81,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
                 .ForMember(m => m.ResponsiblePerson, opt => opt.MapFrom(s => s))
                 .ForMember(m => m.ClientStatusId, opt => opt.MapFrom(s => ClientStatuses.Active))
+                .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
                 .ForMember(m => m.ApplicationUsers, opt => opt.Ignore())
                 .ForMember(m => m.CreatedAt, opt => opt.Ignore());
 

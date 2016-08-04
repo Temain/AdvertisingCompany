@@ -142,6 +142,7 @@
         self.paymentStatusName = ko.observable(dataModel.paymentStatusName || '');
         self.paymentStatusLabelClass = ko.observable(dataModel.paymentStatusLabelClass || '');
         self.paymentStatuses = ko.observableArray(dataModel.paymentStatuses || []);
+        self.comment = ko.observable(dataModel.comment || '');
     }
 
     var campaignsListViewModel = new CampaignsListViewModel();

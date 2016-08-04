@@ -77,6 +77,7 @@
                 onlyIf: function() { return self.isValidationEnabled(); }
             }
         });
+        self.comment = ko.observable(params.comment || '');
 
         self.init = function() {
             $.ajax({

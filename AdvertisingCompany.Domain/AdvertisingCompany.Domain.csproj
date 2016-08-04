@@ -148,6 +148,10 @@
     <Compile Include="Migrations\201607261518333_ChangeLogDateToDateTimeType.Designer.cs">
       <DependentUpon>201607261518333_ChangeLogDateToDateTimeType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608041326352_AddCommentFieldToClientTable.cs" />
+    <Compile Include="Migrations\201608041326352_AddCommentFieldToClientTable.Designer.cs">
+      <DependentUpon>201608041326352_AddCommentFieldToClientTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -228,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607261518333_ChangeLogDateToDateTimeType.resx">
       <DependentUpon>201607261518333_ChangeLogDateToDateTimeType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608041326352_AddCommentFieldToClientTable.resx">
+      <DependentUpon>201608041326352_AddCommentFieldToClientTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

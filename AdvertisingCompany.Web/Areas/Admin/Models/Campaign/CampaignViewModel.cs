@@ -57,6 +57,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
         public string PaymentStatusLabelClass { get; set; }
         public IEnumerable<PaymentStatusViewModel> PaymentStatuses { get; set; } 
 
+        /// <summary>
+        /// Комментарий
+        /// </summary>
+        public string Comment { get; set; }
+
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Domain.Models.Campaign, CampaignViewModel>("Campaign")
@@ -68,6 +73,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                .ForMember(m => m.PaymentOrderName, opt => opt.MapFrom(s => s.PaymentOrder.PaymentOrderName))
                .ForMember(m => m.PaymentStatusId, opt => opt.MapFrom(s => s.PaymentStatusId))
                .ForMember(m => m.PaymentStatusName, opt => opt.MapFrom(s => s.PaymentStatus.PaymentStatusName))
+               .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
                .ForMember(m => m.PaymentStatusLabelClass, opt => opt.MapFrom(s => s.PaymentStatus.PaymentStatusLabelClass));
         }
     }

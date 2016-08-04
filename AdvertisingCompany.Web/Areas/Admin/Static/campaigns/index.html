@@ -49,7 +49,10 @@
                     <tbody data-bind="foreach: campaigns">
                         <tr>
                             <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
-                            <td><span data-bind="text: clientName"></span></td>
+                            <td>
+                                <span data-bind="text: clientName"></span><br />
+                                <small data-bind="text: comment"></small>
+                            </td>
                             <td data-bind="text: activityTypeName"></td>
                             <td>
                                 <ul data-bind="foreach: microdistrictNames" style="padding-left: 20px;">
