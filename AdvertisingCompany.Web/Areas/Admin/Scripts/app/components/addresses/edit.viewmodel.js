@@ -1,7 +1,7 @@
 ﻿define([
-    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'knockout.bindings.datetimepicker',
+    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy', 'knockout.bindings.datetimepicker',
     'knockout.bindings.selectpicker', 'kladr-with-map', 'text!areas/admin/static/addresses/edit.html'
-], function ($, ko, koMapping, koValidation, bdtp, bss, kladrWithMap, template) {
+], function ($, ko, koMapping, koValidation, sammy, bdtp, bss, kladrWithMap, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
@@ -243,7 +243,7 @@
                 },
                 success: function(response) {
                     self.isValidationEnabled(false);
-                    Sammy().setLocation('#addresses');
+                    sammy().setLocation('#addresses');
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
                         message: "Адрес успешно изменён."

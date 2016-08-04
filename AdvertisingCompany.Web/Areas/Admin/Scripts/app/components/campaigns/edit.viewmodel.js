@@ -1,7 +1,7 @@
 ﻿define([
-    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side',
+    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy',
     'knockout.bindings.selectpicker', 'text!areas/admin/static/campaigns/edit.html'
-], function($, ko, koMapping, koValidation, bss, template) {
+], function($, ko, koMapping, koValidation, sammy, bss, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
@@ -133,14 +133,14 @@
                     app.view(self);
 
                     // TODO: Найти способ задать значение во время маппинга
-                    self.placementMonthId(response.placementMonthId);
                     self.placementMonthInitialId(response.placementMonthId);
-                    self.placementFormatId(response.placementFormatId);
+                    self.placementMonthId(response.placementMonthId);
                     self.placementFormatInitialId(response.placementFormatId);
-                    self.paymentOrderId(response.paymentOrderId);
+                    self.placementFormatId(response.placementFormatId);
                     self.paymentOrderInitialId(response.paymentOrderId);
-                    self.paymentStatusId(response.paymentStatusId);
+                    self.paymentOrderId(response.paymentOrderId);
                     self.paymentStatusInitialId(response.paymentStatusId);
+                    self.paymentStatusId(response.paymentStatusId);
                 }
             });
         };
@@ -191,7 +191,7 @@
                 },
                 success: function(response) {
                     self.isValidationEnabled(false);
-                    Sammy().setLocation('#campaigns');
+                    sammy().setLocation('#campaigns');
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
                         message: "Рекламная кампания успешно изменена."

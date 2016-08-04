@@ -149,7 +149,7 @@
                 },
                 success: function(response) {
                     self.isValidationEnabled(false);
-                    Sammy().setLocation('#campaigns');
+                    sammy().setLocation('#campaigns');
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
                         message: "Рекламная кампания успешно сохранена."

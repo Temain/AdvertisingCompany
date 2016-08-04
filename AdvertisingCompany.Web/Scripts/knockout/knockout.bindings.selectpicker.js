@@ -40,6 +40,7 @@
 
                     var value = valueAccessor()();
                     if (initValue !== undefined && initValue !== null && value) {
+                        var iValue = initValue();
                         if (initialized !== undefined && initialized !== null) {
                             if (!initialized()) {
                                 valueAccessor()(initValue());

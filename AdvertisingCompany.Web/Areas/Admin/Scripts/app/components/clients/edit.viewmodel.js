@@ -100,8 +100,8 @@
                     app.view(self);
 
                     // TODO: Найти способ задать значение во время маппинга
-                    self.activityTypeId(response.activityTypeId);
                     self.activityTypeInitialId(response.activityTypeId);
+                    self.activityTypeId(response.activityTypeId);
                 }
             });
         };

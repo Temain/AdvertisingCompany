@@ -56,13 +56,13 @@
         });
         self.additionalPhoneNumber = ko.observable(params.additionalPhoneNumber || '');
         self.email = ko.observable(params.email || '');
-        self.userName = ko.observable(params.userName || '')//.extend({
-        //    required: {
-        //        params: true,
-        //        message: "Введите имя пользователя.",
-        //        onlyIf: function() { return self.isValidationEnabled(); }
-        //    }
-        //});
+        self.userName = ko.observable(params.userName || '').extend({
+            required: {
+                params: true,
+                message: "Введите имя пользователя.",
+                onlyIf: function() { return self.isValidationEnabled(); }
+            }
+        });
         self.password = ko.observable(params.password || '').extend({
             required: {
                 params: true,
