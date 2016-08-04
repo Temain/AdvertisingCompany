@@ -178,7 +178,7 @@
     app.addViewModel({
         name: "addressesList",
         bindingMemberName: "addressesList",
-        viewItem: AddressesListViewModel
+        viewItem: addressesListViewModel
     });
 
     addressesListViewModel.init();

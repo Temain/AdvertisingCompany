@@ -60,11 +60,13 @@
                     // Фотоотчёты
                     this.get('#addresses/:id/reports', function () {
                         current.params['addressId'] = this.params['id'];
+                        current.params['campaignId'] = null;
                         app.componentName('reportsList');
                     });
 
                     this.get('#clients/:clientId/campaigns/:campaignId/reports', function () {
                         current.params['campaignId'] = this.params['campaignId'];
+                        current.params['addressId'] = null;
                         app.componentName('reportsList');
                     });
 

@@ -110,7 +110,6 @@
                         };
 
                         ko.mapping.fromJS(response, mappings, self);
-                        // $('.selectpicker').selectpicker('refresh');
                         app.applyComponent(self);
                         app.view(self);
                         kladrWithMap.init({
@@ -154,23 +153,23 @@
                     if ($.type(obj) === 'object') {
                         switch (obj.contentType) {
                         case $.kladr.type.region:
-                            self.region = location;
+                            self.region(location);
                             break;
 
                         case $.kladr.type.district:
-                            self.district = location;
+                            self.district(location);
                             break;
 
                         case $.kladr.type.city:
-                            self.city = location;
+                            self.city(location);
                             break;
 
                         case $.kladr.type.street:
-                            self.street = location;
+                            self.street(location);
                             break;
 
                         case $.kladr.type.building:
-                            self.building = location;
+                            self.building(location);
                             break;
                         }
                     }
