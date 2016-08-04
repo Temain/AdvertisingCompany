@@ -2,7 +2,7 @@
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side',
     'knockout.bindings.selectpicker', 'sammy', 'underscore',
     'text!areas/admin/static/campaigns/create.html'
-], function($, ko, koMapping, koValidation, bss, sammy, _, progress, template) {
+], function($, ko, koMapping, koValidation, bss, sammy, _, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
@@ -84,6 +84,7 @@
                 },
                 error: function (response) { },
                 success: function (response) {
+                    self.isValidationEnabled(false);
                     var mappings = {
                         'placementMonths': {
                             create: function (options) {
@@ -92,12 +93,10 @@
                         }
                     };
 
-                    self.isValidationEnabled(false);
                     ko.mapping.fromJS(response, mappings, self);
-
                     self.clientId(clientId);
-                    self.isValidationEnabled(false);
 
+                    app.applyComponent(self);
                     app.view(self);
                 }
             });

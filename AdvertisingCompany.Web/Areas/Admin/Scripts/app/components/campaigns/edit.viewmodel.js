@@ -102,6 +102,7 @@
                 },
                 error: function (response) { },
                 success: function (response) {
+                    self.isValidationEnabled(false);
                     var mappings = {
                         'placementMonths': {
                             create: function (options) {
@@ -126,11 +127,9 @@
                     };
 
                     ko.mapping.fromJS(response, mappings, self);
-                    $('.selectpicker').selectpicker('refresh');
-
+                    // $('.selectpicker').selectpicker('refresh');
                     self.clientId(clientId);
-                    self.isValidationEnabled(false);
-
+                    app.applyComponent(self);
                     app.view(self);
 
                     // TODO: Найти способ задать значение во время маппинга
@@ -227,7 +226,7 @@
     app.addViewModel({
         name: "editCampaign",
         bindingMemberName: "editCampaign",
-        viewItem: EditCampaignViewModel
+        viewItem: editCampaignViewModel
     });
 
     editCampaignViewModel.init();

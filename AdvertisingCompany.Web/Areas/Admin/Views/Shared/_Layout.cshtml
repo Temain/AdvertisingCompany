@@ -37,23 +37,10 @@
 
 <div class="content-wrap">
     <main id="content" class="content" role="main" data-bind="if: app.componentName() != null && app.componentName() != 'Loading'">
-        <div data-bind="component: { name: app.componentName() }">
-
-        </div>
+        <div id="component" data-bind="component: { name: app.componentName() }"></div>
         @RenderBody()
-        @*@RenderSection("SPAViews", required: false)*@
     </main>
 </div>
 
-@*@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/select")
-@Scripts.Render("~/bundles/knockout")
-@Scripts.Render("~/bundles/bootstrap")
-@Scripts.Render("~/bundles/bootstrap-notify")
-@Scripts.Render("~/bundles/datepicker")
-@Scripts.Render("~/bundles/sing")
-@Scripts.Render("~/bundles/kladr")
-<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-@RenderSection("Scripts", required: false)*@
 </body>
 </html>

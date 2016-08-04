@@ -111,8 +111,8 @@
                             }
                         }
                     };
-
                     ko.mapping.fromJS(response, mappings, self);
+                    self.isValidationEnabled(false);
                     app.view(self);
 
                     kladrWithMap.init({

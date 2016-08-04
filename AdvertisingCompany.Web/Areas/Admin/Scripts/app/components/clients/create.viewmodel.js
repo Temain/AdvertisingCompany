@@ -1,7 +1,7 @@
 ﻿define([
-    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side',
+    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy',
     'knockout.bindings.selectpicker', 'text!areas/admin/static/clients/create.html'
-], function($, ko, koMapping, koValidation, bss, template) {
+], function ($, ko, koMapping, koValidation, sammy, bss, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
@@ -56,13 +56,13 @@
         });
         self.additionalPhoneNumber = ko.observable(params.additionalPhoneNumber || '');
         self.email = ko.observable(params.email || '');
-        self.userName = ko.observable(params.userName || '').extend({
-            required: {
-                params: true,
-                message: "Введите имя пользователя.",
-                onlyIf: function() { return self.isValidationEnabled(); }
-            }
-        });
+        self.userName = ko.observable(params.userName || '')//.extend({
+        //    required: {
+        //        params: true,
+        //        message: "Введите имя пользователя.",
+        //        onlyIf: function() { return self.isValidationEnabled(); }
+        //    }
+        //});
         self.password = ko.observable(params.password || '').extend({
             required: {
                 params: true,
@@ -87,7 +87,8 @@
                     'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
                 },
                 error: function(response) {},
-                success: function(response) {
+                success: function (response) {
+                    self.isValidationEnabled(false);
                     var mappings = {
                         'activityTypes': {
                             create: function(options) {
@@ -95,11 +96,8 @@
                             }
                         }
                     };
-
-                    self.isValidationEnabled(false);
                     ko.mapping.fromJS(response, mappings, self);
-                    $('#activityTypeId').selectpicker('refresh');
-
+                    app.applyComponent(self);
                     app.view(self);
                 }
             });
@@ -152,9 +150,9 @@
                 },
                 success: function(response) {
                     if (toNextStage) {
-                        Sammy().setLocation('##clients/' + response.clientId + '/campaigns/create');
+                        sammy().setLocation('#clients/' + response.clientId + '/campaigns/create');
                     } else {
-                        Sammy().setLocation('#clients');
+                        sammy().setLocation('#clients');
                     }
 
                     self.isValidationEnabled(false);

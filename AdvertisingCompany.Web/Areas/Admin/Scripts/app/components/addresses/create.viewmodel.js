@@ -99,7 +99,8 @@
                         'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
                     },
                     error: function(response) {},
-                    success: function(response) {
+                    success: function (response) {
+                        self.isValidationEnabled(false);
                         var mappings = {
                             'microdistricts': {
                                 create: function(options) {
@@ -108,10 +109,9 @@
                             }
                         };
 
-                        self.isValidationEnabled(false);
                         ko.mapping.fromJS(response, mappings, self);
-                        $('.selectpicker').selectpicker('refresh');
-
+                        // $('.selectpicker').selectpicker('refresh');
+                        app.applyComponent(self);
                         app.view(self);
                         kladrWithMap.init({
                             defaultValues: {

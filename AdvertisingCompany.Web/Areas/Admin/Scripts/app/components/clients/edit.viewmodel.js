@@ -1,7 +1,7 @@
 ﻿define([
-    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side',
+    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy',
     'knockout.bindings.selectpicker', 'text!areas/admin/static/clients/edit.html'
-], function($, ko, koMapping, koValidation, bss, template) {
+], function($, ko, koMapping, koValidation, sammy, bss, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
@@ -96,7 +96,7 @@
                     };
 
                     ko.mapping.fromJS(response, mappings, self);
-
+                    app.applyComponent(self);
                     app.view(self);
 
                     // TODO: Найти способ задать значение во время маппинга
@@ -153,7 +153,7 @@
                 },
                 success: function(response) {
                     self.isValidationEnabled(false);
-                    Sammy().setLocation('#clients');
+                    sammy().setLocation('#clients');
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
                         message: "Клиент успешно изменён."

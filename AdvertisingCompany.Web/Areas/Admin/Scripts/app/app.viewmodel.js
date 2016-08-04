@@ -1,10 +1,8 @@
-﻿define(['jquery', 'knockout', 'sammy', 'routes', 'common', 'underscore', 'app-data'], function ($, ko, sammy, routes, common, _, dataModel)
+﻿define(['jquery', 'knockout', 'sammy', 'routes', 'knockout.validation.server-side', 'common', 'underscore', 'app-data'], function ($, ko, sammy, routes, koValidation, common, _, dataModel)
 {
     function AppViewModel(dataModel) {
-        // Private state
         var self = this;
 
-        // Private operations
         function cleanUpLocation() {
             window.location.hash = "";
 
@@ -12,45 +10,39 @@
                 history.pushState("", document.title, location.pathname);
             }
         }
-        // Data
+
         self.views = {
-            Loading: {} // Other views are added dynamically by app.addViewModel(...).
+            Loading: {} 
         };
         self.dataModel = dataModel;
 
-        // UI state
         self.view = ko.observable(self.views.Loading);
 
+        // Отображаемый компонент 
         self.componentName = ko.observable();
+        self.componentName.subscribe(function (newValue) {
+            var componentViewModel = self.views[newValue];
+            if (typeof componentViewModel !== "undefined" && typeof componentViewModel.init === 'function') {
+                componentViewModel.init();
+            }
+        });
 
         self.loading = ko.computed(function () {
             return self.view() === self.views.Loading;
         });
 
-        // UI operations
-
-        // Other navigateToX functions are added dynamically by app.addViewModel(...).
-
-        // Other operations
         self.addViewModel = function (options) {
-            // Add view to AppViewModel.Views enum (for example, app.Views.Home).
             self.views[options.name] = options.viewItem;
 
             var navigator;
 
-            // Add binding member to AppViewModel (for example, app.home);
             self[options.bindingMemberName] = ko.computed(function () {
                 if (!dataModel.getAccessToken()) {
-                    // The following code looks for a fragment in the URL to get the access token which will be
-                    // used to call the protected Web API resource
                     var fragment = window.common.getFragment();
-
                     if (fragment.access_token) {
-                        // returning with access token, restore old hash, or at least hide token
                         window.location.hash = fragment.state || '';
                         dataModel.setAccessToken(fragment.access_token);
                     } else {
-                        // no token - so bounce to Authorize endpoint in AccountController to sign in or register
                         window.location = "/account/authorize?client_id=web&response_type=token&state=" + encodeURIComponent(window.location.hash);
                     }
                 }
@@ -70,7 +62,6 @@
                 };
             }
 
-            // Add navigation member to AppViewModel (for example, app.NavigateToHome());
             self["navigateTo" + options.name] = navigator;
         };
 
@@ -80,26 +71,72 @@
 
         self.routes = routes;
 
-        self.registerComponents = function() {
-            ko.components.register('analytics', { require: 'areas/admin/scripts/app/components/analytics/analytics.viewmodel' });
+        // Инициализация компонентов
+        self.registerComponents = function () {
+            var rootPath = 'areas/admin/scripts/app/components/';
+            var register = ko.components.register;
 
-            ko.components.register('clientsList', { require: 'areas/admin/scripts/app/components/clients/list.viewmodel' });
-            ko.components.register('createClient', { require: 'areas/admin/scripts/app/components/clients/create.viewmodel' });
-            ko.components.register('editClient', { require: 'areas/admin/scripts/app/components/clients/edit.viewmodel' });
+            register('analytics', {
+                require: rootPath + 'analytics/analytics.viewmodel'
+            });
 
-            ko.components.register('campaignsList', { require: 'areas/admin/scripts/app/components/campaigns/list.viewmodel' });
-            ko.components.register('createCampaign', { require: 'areas/admin/scripts/app/components/campaigns/create.viewmodel' });
-            ko.components.register('editCampaign', { require: 'areas/admin/scripts/app/components/campaigns/edit.viewmodel' });
+            // Клиенты
+            register('clientsList', {
+                require: rootPath + 'clients/list.viewmodel'
+            });
+            register('createClient', {
+                require: rootPath + 'clients/create.viewmodel'
+            });
+            register('editClient', {
+                require: rootPath + 'clients/edit.viewmodel'
+            });
 
-            ko.components.register('addressesList', { require: 'areas/admin/scripts/app/components/addresses/list.viewmodel' });
-            ko.components.register('createAddress', { require: 'areas/admin/scripts/app/components/addresses/create.viewmodel' });
-            ko.components.register('editAddress', { require: 'areas/admin/scripts/app/components/addresses/edit.viewmodel' });
+            // Рекламные кампании
+            register('campaignsList', {
+                require: rootPath + 'campaigns/list.viewmodel'
+            });
+            register('createCampaign', {
+                require: rootPath + 'campaigns/create.viewmodel'
+            });
+            register('editCampaign', {
+                require: rootPath + 'campaigns/edit.viewmodel'
+            });
 
-            ko.components.register('activitiesList', { require: 'areas/admin/scripts/app/components/activities/list.viewmodel' });
+            // Рекламные полотна (адреса)
+            register('addressesList', {
+                require: rootPath + 'addresses/list.viewmodel'
+            });
+            register('createAddress', {
+                require: rootPath + 'addresses/create.viewmodel'
+            });
+            register('editAddress', {
+                require: rootPath + 'addresses/edit.viewmodel'
+            });
 
-            ko.components.register('reportsList', { require: 'areas/admin/scripts/app/components/reports/list.viewmodel' });
+            // Справочники:
+            // Виды деятельности
+            register('activitiesList', {
+                require: rootPath + 'activities/list.viewmodel'
+            });
+
+            // Фотоотчёты
+            register('reportsList', {
+                require: rootPath + 'reports/list.viewmodel'
+            });
 
             self.componentName('analytics');
+        };
+
+        self.applyComponent = function (viewModel) {
+            $('.selectpicker').html('');
+            $('.selectpicker').selectpicker('destroy');
+
+            var componentBody = $('#component .widget')[0];
+            ko.applyValidation(viewModel, componentBody);
+            ko.cleanNode(componentBody);
+            ko.applyBindingsToDescendants(viewModel, componentBody);
+
+            $('.selectpicker').selectpicker('refresh');
         };
 
         self.initialize = function () {
