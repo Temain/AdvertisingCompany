@@ -1,0 +1,196 @@
+﻿@{
+    Layout = null;
+}
+
+<div data-bind="visible: isInitialized">
+    <ol class="breadcrumb">
+        <li>ВЫ ЗДЕСЬ</li>
+        <li class="active">Рекламные поверхности</li>
+    </ol>
+    <h1 class="page-title">Рекламные поверхности</h1>
+    <div class="mrgbtm24">
+        <a href="/admin/#addresses/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить адрес</a>
+    </div>
+    <section class="widget">
+        <div class="widget-body">
+            <div class="dataTables_wrapper form-inline no-footer">
+                <div class="row mrgbtm12">
+                    <div class="col-md-6 hidden-xs">
+                        <div class="dataTables_length" id="datatable-table_length">
+                            <label>
+                                Показать
+                                <select id="pageSize" class="form-control" title="" data-size="10" data-bind="selectPicker: pageSize, selectPickerOptions : { optionsArray : pageSizes, width: '70px' }, event : { change: pageSizeChanged }"></select>
+                                записей
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="datatable-table_filter" class="pull-right">
+                            <label>Поиск:<input type="search" class="form-control input-rounded ml-sm" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', event:{keyup:search}"></label>
+                        </div>
+                    </div>
+                </div>
+                <div id="progress" class="row" style="display: none">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="progress progress-striped active mt">
+                            <div class="progress-bar progress-bar-info fw-semi-bold" style="width: 100%;">
+                                Загрузка...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="col-md-2">Управляющая компания / ТСЖ</th>
+                            <th class="col-md-1">Микрорайон</th>
+                            <th class="col-md-2">Улица</th>
+                            <th class="col-md-1 text-center">Номер дома</th>
+                            <th class="col-md-1 text-center">Подъездов</th>
+                            <th class="col-md-1 text-center">Поверхностей</th>
+                            <th class="col-md-1 text-center">Этажей</th>
+                            <th class="col-md-1 text-center">Дата договора</th>
+                            <th class="col-md-2 text-center">Редактирование</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: addresses">
+                        <tr>
+                            <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
+                            <td>
+                                <span data-bind="text: managementCompanyName"></span>
+                            </td>
+                            <td data-bind="text: microdistrictShortName"></td>
+                            <td data-bind="text: streetName"></td>
+                            <td class="text-center" data-bind="text: buildingNumber"></td>
+                            <td class="text-center" data-bind="text: numberOfEntrances"></td>
+                            <td class="text-center" data-bind="text: numberOfSurfaces"></td>
+                            <td class="text-center" data-bind="text: numberOfFloors"></td>
+                            <td class="text-center" data-bind="text: contractDate"></td>
+                            <td class="actions text-center">
+                                <a href="#" data-bind="tooltip: { title: 'Загрузить отчёт', placement: 'left', trigger: 'hover' }, click : $parent.showUploadModal">
+                                    <span class="fa-stack">
+                                        <i class="fa fa-circle fa-stack-2x white"></i>
+                                        <i class="fa fa-arrow-circle-o-up fa-stack-2x text-usual"></i>
+                                    </span>
+                                </a>
+                                <a href="#" data-bind="attr : { href : '/admin/#addresses/' + addressId() + '/reports' }, tooltip: { title: 'Просмотреть отчёты', placement: 'left', trigger: 'hover' }">
+                                    <span class="fa-stack">
+                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
+                                        <i class="fa fa-picture-o fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                                <a href="#" data-bind="attr : { href : '/admin/#addresses/' + addressId() + '/edit' }, tooltip: { title: 'Перейти к редактированию адреса', placement: 'left', trigger: 'hover' }">
+                                    <span class="fa-stack">
+                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
+                                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                                <a href="#" data-bind="tooltip: { title: 'Удалить адрес', placement: 'left', trigger: 'hover' }">
+                                    <span class="fa-stack">
+                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
+                                        <i class="fa fa-times fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ko if: addresses().length > 0 -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + addresses().length) + ' из ' + ((pagesCount() - 1) * pageSize() + addresses().length) + ' записей'"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- ko if: pagesCount() > 1 -->
+                        <div class="dataTables_paginate paging_bootstrap">
+                            <ul class="pagination no-margin">
+                                <li class="prev disabled">
+                                    <a href="#" aria-label="Previous">
+                                        Предыдущая
+                                    </a>
+                                </li>
+
+                                <!-- ko foreach: new Array(pagesCount()) -->
+                                <!-- ko if: $index() >= $parent.page() - 4 && $index() <= $parent.page() + 2 -->
+                                <li data-bind="attr: { 'class' : $parent.page() == ($index() + 1) ? 'active' : '' }">
+                                    <a href="#" data-bind="text: $index() + 1, click: function () { $parent.pageChanged($index() + 1); }"></a>
+                                </li>
+                                <!-- /ko -->
+                                <!-- /ko -->
+
+                                <li class="next">
+                                    <a href="#" aria-label="Next">
+                                        Следующая
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="upload-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2>Загрузка отчёта<br /><small data-bind="text : currentAddressName">Адрес</small> <i class="fa fa-building-o" aria-hidden="true"></i></h2>
+            </div>
+            <div class="modal-body">
+                <div class="popup-wrap">
+                    <div class="row">
+                        <form class="form-horizontal file-upload">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-4">
+                                        Изображение
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                <img data-src="holder.js/100%x100%">
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                            <div>
+                                                <span class="btn btn-default btn-file">
+                                                    <span class="fileinput-new"><i class="fa fa-check" aria-hidden="true"></i> Выбрать</span>
+                                                    <span class="fileinput-exists"><i class="fa fa-pencil" aria-hidden="true"></i> Изменить</span>
+
+                                                    <input type="file" class="fileinput-hidden">
+                                                </span>
+                                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times" aria-hidden="true"></i> Отмена</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group field">
+                                    <label for="comment" class="col-sm-4 control-label">Комментарий</label>
+                                    <div class="col-sm-8">
+                                        <textarea name="comment" id="comment" class="form-control" data-bind="value: comment"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row mrgtop12">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-success pull-right" data-bind="click: uploadFile"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+

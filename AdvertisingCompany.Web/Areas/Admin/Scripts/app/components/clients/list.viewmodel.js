@@ -1,6 +1,6 @@
 ﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker',
     'knockout.bindings.tooltip', 'sammy', 'underscore', 'progress',
-    'text!areas/admin/static/clients/index.html'], function ($, ko, koMapping, bss, bst, sammy, _, progress, template) {
+    'text!home/html/?path=~/areas/admin/views/clients/index.cshtml'], function ($, ko, koMapping, bss, bst, sammy, _, progress, template) {
 
     ko.mapping = koMapping;
 

@@ -21,5 +21,10 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Html(string path)
+        {
+            return View(path);
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy', 'knockout.bindings.datetimepicker',
-    'knockout.bindings.selectpicker', 'kladr-with-map', 'text!areas/admin/static/addresses/edit.html'
+    'knockout.bindings.selectpicker', 'kladr-with-map', 'text!home/html/?path=~/areas/admin/views/addresses/edit.cshtml'
 ], function ($, ko, koMapping, koValidation, sammy, bdtp, bss, kladrWithMap, template) {
 
     ko.mapping = koMapping;

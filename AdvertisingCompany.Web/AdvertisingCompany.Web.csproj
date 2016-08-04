@@ -620,6 +620,18 @@
     <Content Include="Scripts\bootstrap-select\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Campaigns\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Campaigns\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Campaigns\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Analytics\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Reports\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Activities\Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

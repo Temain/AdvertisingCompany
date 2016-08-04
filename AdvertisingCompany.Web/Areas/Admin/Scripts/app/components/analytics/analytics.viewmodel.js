@@ -1,4 +1,4 @@
-﻿define(['jquery', 'knockout', 'sammy', 'text!areas/admin/static/analytics/index.html'], function ($, ko, sammy, template) {
+﻿define(['jquery', 'knockout', 'sammy', 'text!home/html/?path=~/areas/admin/views/analytics/index.cshtml'], function ($, ko, sammy, template) {
     function AnalyticsViewModel(params) {
         var self = this;
 

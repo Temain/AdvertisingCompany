@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker', 'knockout.bindings.tooltip', 'holder', 'file-input', 'progress',
-    'text!areas/admin/static/addresses/index.html'
+    'text!home/html/?path=~/areas/admin/views/addresses/index.cshtml'
 ], function($, ko, koMapping, bss, bst, holder, fileInput, progress, template) {
 
     ko.mapping = koMapping;

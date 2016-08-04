@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy',
-    'knockout.bindings.selectpicker', 'text!areas/admin/static/campaigns/edit.html'
+    'knockout.bindings.selectpicker', 'text!home/html/?path=~/areas/admin/views/campaigns/edit.cshtml'
 ], function($, ko, koMapping, koValidation, sammy, bss, template) {
 
     ko.mapping = koMapping;

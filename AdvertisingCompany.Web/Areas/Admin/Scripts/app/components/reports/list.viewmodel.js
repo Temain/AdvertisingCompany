@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'gins-gallery', 'file-size',
-    'text!areas/admin/static/reports/index.html'
+    'text!home/html/?path=~/areas/admin/views/reports/index.cshtml'
 ], function($, ko, koMapping, initGallery, filesize, template) {
 
     ko.mapping = koMapping;
