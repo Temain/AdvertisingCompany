@@ -18,15 +18,6 @@
 
         self.view = ko.observable(self.views.Loading);
 
-        // Отображаемый компонент 
-        self.componentName = ko.observable();
-        self.componentName.subscribe(function (newValue) {
-            var componentViewModel = self.views[newValue];
-            if (typeof componentViewModel !== "undefined" && typeof componentViewModel.init === 'function') {
-                componentViewModel.init();
-            }
-        });
-
         self.loading = ko.computed(function () {
             return self.view() === self.views.Loading;
         });
@@ -70,6 +61,15 @@
         }
 
         self.routes = routes;
+
+        // Отображаемый компонент 
+        self.componentName = ko.observable();
+        self.componentName.subscribe(function (newValue) {
+            var componentViewModel = self.views[newValue];
+            if (typeof componentViewModel !== "undefined" && typeof componentViewModel.init === 'function') {
+                componentViewModel.init();
+            }
+        });
 
         // Инициализация компонентов
         self.registerComponents = function () {

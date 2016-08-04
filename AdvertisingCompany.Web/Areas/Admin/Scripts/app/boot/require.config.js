@@ -46,6 +46,7 @@
         'app': ['gins'],
         'bootstrap': ['jquery'],
         'bootstrap-datetimepicker': ['moment'],
+        'knockout.bindings.datetimepicker': ['bootstrap-datetimepicker'],
         'knockout.mapping': {
             deps: ['knockout'],
             exports: 'koMapping'

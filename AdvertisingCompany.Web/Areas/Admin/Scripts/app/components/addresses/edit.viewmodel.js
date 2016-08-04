@@ -1,7 +1,7 @@
 ﻿define([
-    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side',
+    'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'knockout.bindings.datetimepicker',
     'knockout.bindings.selectpicker', 'kladr-with-map', 'text!areas/admin/static/addresses/edit.html'
-], function ($, ko, koMapping, koValidation, bss, kladrWithMap, template) {
+], function ($, ko, koMapping, koValidation, bdtp, bss, kladrWithMap, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
