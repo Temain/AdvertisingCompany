@@ -21,7 +21,7 @@
             // Note: We are using Google's CDN where possible and then Microsoft if not available for better
             //       performance (Google is more likely to have been cached by the users browser).
             // Note: that protocol (http:) is omitted from the CDN URL on purpose to allow the browser to choose the protocol.
-            bundles.UseCdn = true;
+            bundles.UseCdn = false;
 
             AddCss(bundles);
             AddJavaScript(bundles);
@@ -39,8 +39,8 @@
 
             // Font Awesome - Icons using font (http://fortawesome.github.io/Font-Awesome/).
             bundles.Add(new StyleBundle(
-                "~/styles/fa",
-                ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl)
+                "~/styles/fa"/*,
+                ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl*/)
                 .Include("~/Content/font-awesome.css"));
 
             bundles.Add(new StyleBundle("~/styles/gins")
@@ -85,22 +85,22 @@
         private static void AddJavaScript(BundleCollection bundles)
         {
             // jQuery - The JavaScript helper API (http://jquery.com/).
-            Bundle jqueryBundle = new ScriptBundle("~/bundles/jquery", ContentDeliveryNetwork.Google.JQueryUrl)
+            Bundle jqueryBundle = new ScriptBundle("~/bundles/jquery"/*, ContentDeliveryNetwork.Google.JQueryUrl*/)
                 .Include("~/Scripts/jquery/jquery-{version}.js");
             bundles.Add(jqueryBundle);
 
             // jQuery Validate - Client side JavaScript form validation (http://jqueryvalidation.org/).
             Bundle jqueryValidateBundle = new ScriptBundle(
-                "~/bundles/jqueryval",
-                ContentDeliveryNetwork.Microsoft.JQueryValidateUrl)
+                "~/bundles/jqueryval"/*,
+                ContentDeliveryNetwork.Microsoft.JQueryValidateUrl*/)
                 .Include("~/Scripts/jquery/jquery.validate*");
             bundles.Add(jqueryValidateBundle);
 
             // Microsoft jQuery Validate Unobtrusive - Validation using HTML data- attributes
             // http://stackoverflow.com/questions/11534910/what-is-jquery-unobtrusive-validation
             Bundle jqueryValidateUnobtrusiveBundle = new ScriptBundle(
-                "~/bundles/jqueryvalunobtrusive",
-                ContentDeliveryNetwork.Microsoft.JQueryValidateUnobtrusiveUrl)
+                "~/bundles/jqueryvalunobtrusive"/*,
+                ContentDeliveryNetwork.Microsoft.JQueryValidateUnobtrusiveUrl*/)
                 .Include("~/Scripts/jquery/jquery.validate*");
             bundles.Add(jqueryValidateUnobtrusiveBundle);
 
@@ -111,15 +111,15 @@
             // See here for details: https://github.com/Modernizr/Modernizr/pull/1263 and
             // http://stackoverflow.com/questions/26532234/modernizr-causes-content-security-policy-csp-violation-errors
             Bundle modernizrBundle = new ScriptBundle(
-                "~/bundles/modernizr",
-                ContentDeliveryNetwork.Microsoft.ModernizrUrl)
+                "~/bundles/modernizr"/*,
+                ContentDeliveryNetwork.Microsoft.ModernizrUrl*/)
                 .Include("~/Scripts/modernizr-*");
             bundles.Add(modernizrBundle);
 
             // Bootstrap - Twitter Bootstrap JavaScript (http://getbootstrap.com/).
             Bundle bootstrapBundle = new ScriptBundle(
-                "~/bundles/bootstrap",
-                ContentDeliveryNetwork.Microsoft.BootstrapUrl)
+                "~/bundles/bootstrap"/*,
+                ContentDeliveryNetwork.Microsoft.BootstrapUrl*/)
                 .Include("~/Scripts/bootstrap/bootstrap.js")
                 .Include("~/Scripts/respond/respond.js");
             bundles.Add(bootstrapBundle);

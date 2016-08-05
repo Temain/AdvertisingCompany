@@ -1,5 +1,6 @@
 ﻿var requireConfig = {
     baseUrl: '/',
+    waitSeconds: 14, // default: 7
     paths: {
         'app': 'areas/admin/scripts/app/app.viewmodel',
         'app-data': 'areas/admin/scripts/app/app.datamodel',
