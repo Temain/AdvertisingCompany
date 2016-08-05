@@ -1,7 +1,7 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker',
     'knockout.bindings.tooltip', 'sammy', 'underscore', 'progress',
-    'text!/areas/admin/static/campaigns/index.html'
+    'text!home/html/?path=~/areas/admin/views/campaigns/index.cshtml'
 ], function($, ko, koMapping, bss, bst, sammy, _, progress, template) {
 
     ko.mapping = koMapping;

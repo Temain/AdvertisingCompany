@@ -364,6 +364,9 @@
     <Content Include="Areas\Admin\Static\clients\edit.html" />
     <Content Include="Areas\Admin\Static\clients\index.html" />
     <Content Include="Areas\Admin\Static\reports\index.html" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Scripts\app\boot\startup.js" />
     <Content Include="Scripts\app\components\greeter\greeting.js" />
     <Content Include="Areas\Admin\Scripts\app\components\activities\list.viewmodel.js" />
@@ -393,8 +396,6 @@
     <Content Include="Content\datatables\jquery.dataTables.css" />
     <Content Include="Content\datatables\jquery.dataTables.min.css" />
     <Content Include="Content\datatables\jquery.dataTables_themeroller.css" />
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\highcharts\adapters\standalone-framework.js" />
     <Content Include="Content\highcharts\adapters\standalone-framework.src.js" />
     <Content Include="Content\highcharts\highcharts-3d.js" />
@@ -492,7 +493,6 @@
     <Content Include="Fonts\blisspro-bolditalic-webfont.svg" />
     <Content Include="Fonts\blisspro-italic-webfont.svg" />
     <Content Include="Fonts\blisspro-regular-webfont.svg" />
-    <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\boot\require.config.js" />
@@ -528,10 +528,6 @@
     <Content Include="Fonts\blisspro-regular-webfont.eot" />
     <Content Include="Fonts\blisspro-regular-webfont.ttf" />
     <Content Include="Fonts\blisspro-regular-webfont.woff" />
-    <Content Include="Fonts\fontawesome-webfont.eot" />
-    <Content Include="Fonts\fontawesome-webfont.ttf" />
-    <Content Include="Fonts\fontawesome-webfont.woff" />
-    <Content Include="Fonts\FontAwesome.otf" />
     <Content Include="Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Fonts\google\open-sans-bold-italic.woff" />
     <Content Include="Fonts\google\open-sans-bold.woff" />
@@ -649,6 +645,7 @@
     <Content Include="Areas\Admin\Views\Addresses\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Activities\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\_Upload.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Delete.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -700,6 +697,11 @@
     <Content Include="Scripts\holder\composer.json" />
     <Content Include="Scripts\holder\package.json" />
     <Content Include="Scripts\holder\README.md" />
+    <Content Include="Fonts\fontawesome-webfont.eot" />
+    <Content Include="Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Fonts\fontawesome-webfont.woff" />
+    <Content Include="Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\file.pubxml" />
     <None Include="Scripts\jquery\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap-select\bootstrap-select.js" />

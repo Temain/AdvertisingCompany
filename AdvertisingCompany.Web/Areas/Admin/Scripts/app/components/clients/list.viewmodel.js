@@ -121,6 +121,10 @@
             app.view(self);
         };
 
+        self.showDeleteModal = function (data, event) {
+            $("#delete-popup").modal();
+        };
+
         return self;
     }
 
