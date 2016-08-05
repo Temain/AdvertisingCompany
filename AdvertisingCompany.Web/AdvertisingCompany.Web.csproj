@@ -632,6 +632,7 @@
     <Content Include="Areas\Admin\Views\Addresses\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Activities\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Addresses\_Upload.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

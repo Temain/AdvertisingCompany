@@ -26,6 +26,9 @@ namespace AdvertisingCompany.Web
             NLogConfig.Configure();
             AutoMapperConfig.Configure();
 
+            ViewEngines.Engines.Clear();
+            ViewEngines.Engines.Add(new RazorViewEngine());
+
             // All attribute routes
             var allDirectRoutes = WebApiConfig.GlobalObservableDirectRouteProvider.DirectRoutes;
         }

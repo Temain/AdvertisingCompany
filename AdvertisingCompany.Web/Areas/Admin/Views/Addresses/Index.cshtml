@@ -136,61 +136,6 @@
     </section>
 </div>
 
-<div id="upload-popup" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h2>Загрузка отчёта<br /><small data-bind="text : currentAddressName">Адрес</small> <i class="fa fa-building-o" aria-hidden="true"></i></h2>
-            </div>
-            <div class="modal-body">
-                <div class="popup-wrap">
-                    <div class="row">
-                        <form class="form-horizontal file-upload">
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="control-label col-sm-4">
-                                        Изображение
-                                    </label>
-                                    <div class="col-sm-8">
-                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                <img data-src="holder.js/100%x100%">
-                                            </div>
-                                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                                            <div>
-                                                <span class="btn btn-default btn-file">
-                                                    <span class="fileinput-new"><i class="fa fa-check" aria-hidden="true"></i> Выбрать</span>
-                                                    <span class="fileinput-exists"><i class="fa fa-pencil" aria-hidden="true"></i> Изменить</span>
-
-                                                    <input type="file" class="fileinput-hidden">
-                                                </span>
-                                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times" aria-hidden="true"></i> Отмена</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group field">
-                                    <label for="comment" class="col-sm-4 control-label">Комментарий</label>
-                                    <div class="col-sm-8">
-                                        <textarea name="comment" id="comment" class="form-control" data-bind="value: comment"></textarea>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="row mrgtop12">
-                    <div class="col-sm-offset-4 col-sm-8">
-                        <button type="submit" class="btn btn-success pull-right" data-bind="click: uploadFile"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+@Html.Partial("~/Areas/Admin/Views/Addresses/_Upload.cshtml");
 
 
