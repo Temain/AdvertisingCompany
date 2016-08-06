@@ -645,7 +645,7 @@
     <Content Include="Areas\Admin\Views\Addresses\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Activities\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\_Upload.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\_Delete.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

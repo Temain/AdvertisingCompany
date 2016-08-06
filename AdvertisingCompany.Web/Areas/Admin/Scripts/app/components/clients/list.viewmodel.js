@@ -8,6 +8,7 @@
         var self = this;
         self.isInitialized = ko.observable(false);
 
+        self.selectedClient = ko.observable();
         self.clients = ko.observableArray([]);
         self.clientStatuses = ko.observableArray([]);
         self.page = ko.observable(1);
@@ -122,7 +123,38 @@
         };
 
         self.showDeleteModal = function (data, event) {
+            self.selectedClient(data);
             $("#delete-popup").modal();
+        };
+
+        self.deleteClient = function () {
+            $.ajax({
+                method: 'delete',
+                url: '/admin/api/clients/' + self.selectedClient().clientId(),
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                error: function (response) {
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "Произошла ошибка при удалении клиента."
+                    }, {
+                        type: 'danger'
+                    });
+                },
+                success: function (response) {
+                    self.init();
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "&nbsp;Клиент успешно удалён."
+                    }, {
+                        type: 'success'
+                    });
+                }
+            });
         };
 
         return self;
