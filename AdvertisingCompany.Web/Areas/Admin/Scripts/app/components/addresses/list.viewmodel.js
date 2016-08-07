@@ -9,6 +9,7 @@
         var self = this;
         self.isInitialized = ko.observable(false);
 
+        self.selectedAddress = ko.observable();
         self.addresses = ko.observableArray([]);
         self.page = ko.observable(1);
         self.pagesCount = ko.observable(1);
@@ -154,6 +155,41 @@
 
             self.loadAddresses();
             app.view(self);
+        };
+
+        self.showDeleteModal = function (data, event) {
+            self.selectedAddress(data);
+            $("#delete-popup").modal();
+        };
+
+        self.deleteAddress = function () {
+            $.ajax({
+                method: 'delete',
+                url: '/admin/api/addresses/' + self.selectedAddress().addressId(),
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                error: function (response) {
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "Произошла ошибка при удалении адреса."
+                    }, {
+                        type: 'danger'
+                    });
+                },
+                success: function (response) {
+                    self.init();
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "&nbsp;Адрес успешно удалён."
+                    }, {
+                        type: 'success'
+                    });
+                }
+            });
         };
 
         return self;

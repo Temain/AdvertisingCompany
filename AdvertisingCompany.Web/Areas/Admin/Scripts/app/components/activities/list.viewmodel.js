@@ -9,6 +9,7 @@
         var self = this;
         self.isInitialized = ko.observable(false);
 
+        self.selectedActivity = ko.observable();
         self.activities = ko.observableArray([]);
         self.page = ko.observable(1);
         self.pagesCount = ko.observable(1);
@@ -77,6 +78,41 @@
         self.init = function() {
             app.view(self);
             self.loadActivities();
+        };
+
+        self.showDeleteModal = function (data, event) {
+            self.selectedActivity(data);
+            $("#delete-popup").modal();
+        };
+
+        self.deleteActivity = function () {
+            $.ajax({
+                method: 'delete',
+                url: '/admin/api/activities/' + self.selectedActivity().activityTypeId(),
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                error: function (response) {
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "Произошла ошибка при удалении вида деятельности."
+                    }, {
+                        type: 'danger'
+                    });
+                },
+                success: function (response) {
+                    self.init();
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "&nbsp;Вид деятельности успешно удалён."
+                    }, {
+                        type: 'success'
+                    });
+                }
+            });
         };
 
         return self;

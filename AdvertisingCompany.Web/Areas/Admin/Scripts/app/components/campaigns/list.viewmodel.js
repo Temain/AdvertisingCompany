@@ -10,6 +10,7 @@
         var self = this;
         self.isInitialized = ko.observable(false);
 
+        self.selectedCampaign = ko.observable();
         self.campaigns = ko.observableArray([]);
         self.paymentStatuses = ko.observableArray([]);
         self.page = ko.observable(1);
@@ -120,6 +121,41 @@
         self.init = function () {
             self.loadCampaigns();
             app.view(self);
+        };
+
+        self.showDeleteModal = function (data, event) {
+            self.selectedCampaign(data);
+            $("#delete-popup").modal();
+        };
+
+        self.deleteCampaign = function () {
+            $.ajax({
+                method: 'delete',
+                url: '/admin/api/campaigns/' + self.selectedCampaign().campaignId(),
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                error: function (response) {
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "Произошла ошибка при удалении рекламной кампании."
+                    }, {
+                        type: 'danger'
+                    });
+                },
+                success: function (response) {
+                    self.init();
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "&nbsp;Рекламная кампания успешно удалена."
+                    }, {
+                        type: 'success'
+                    });
+                }
+            });
         };
 
         return self;
