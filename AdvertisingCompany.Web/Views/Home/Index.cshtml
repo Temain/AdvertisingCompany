@@ -1,12 +1,50 @@
-﻿<main id="content" class="content" role="main">
-    <div class="row">
-        <button id="btnHello" data-bind="click: function() { app.changeView('greeter'); }">Say hello</button>
-        <div class=""></div>
-        <div data-bind="if: app.view, component: { name : app.view, params : { message : 'Hello .!..' }}"></div>
+﻿@using AdvertisingCompany.Web.Models;
+@model IEnumerable<AddressReportViewModel>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info" role="alert">
+        Не загружено ни одного фотоотчёта.
     </div>
-</main>
+}
 
+<div class="gallery" id="grid">
+    @{
+        var microdistrictsReports = Model.GroupBy(g => new { g.MicrodistrictId, g.MicrodistrictName, g.MicrodistrictShortName })
+            .Select(x => new { Microdistrict = x.Key, Reports = x.ToList() });
+        foreach (var microdistrictReports in microdistrictsReports)
+        {
+            <div class="row mrg0">
+                <div class="col-md-24">
+                    <h1 class="page-header">@microdistrictReports.Microdistrict.MicrodistrictShortName <small>@microdistrictReports.Microdistrict.MicrodistrictName</small></h1>
+                </div>
 
+                @foreach (AddressReportViewModel report in microdistrictReports.Reports)
+                {
+                    <div class="col-sm-8 col-md-6 gallery-item" data-title="@report.ImageName">
+                        <div class="thumbnail">
+                            <a href=@("api/reports/" + @report.AddressReportId)><img src=@("data:" + report.ImageMimeType + ";base64," + report.ImageThumbnail) alt="..."></a>
+                            <div class="caption">
+                                <h5 class="light">@report.AddressName</h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
 
-
-
+@section Scripts {
+    <script>
+        $(function () {
+            $('#grid').magnificPopup({
+                delegate: '.thumbnail > a',
+                type: 'image',
+                gallery: {
+                    enabled: true
+                }
+            });
+        });
+    </script>
+}

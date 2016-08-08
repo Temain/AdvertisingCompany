@@ -152,7 +152,20 @@
     <Compile Include="Migrations\201608041326352_AddCommentFieldToClientTable.Designer.cs">
       <DependentUpon>201608041326352_AddCommentFieldToClientTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608071737133_AddActivityCategoryTable.cs" />
+    <Compile Include="Migrations\201608071737133_AddActivityCategoryTable.Designer.cs">
+      <DependentUpon>201608071737133_AddActivityCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608071740119_AddActivityCategoryTable2.cs" />
+    <Compile Include="Migrations\201608071740119_AddActivityCategoryTable2.Designer.cs">
+      <DependentUpon>201608071740119_AddActivityCategoryTable2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608071746216_MakeCategoryRequiredInActivityType.cs" />
+    <Compile Include="Migrations\201608071746216_MakeCategoryRequiredInActivityType.Designer.cs">
+      <DependentUpon>201608071746216_MakeCategoryRequiredInActivityType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\Campaign.cs" />
@@ -235,6 +248,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608041326352_AddCommentFieldToClientTable.resx">
       <DependentUpon>201608041326352_AddCommentFieldToClientTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608071737133_AddActivityCategoryTable.resx">
+      <DependentUpon>201608071737133_AddActivityCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608071740119_AddActivityCategoryTable2.resx">
+      <DependentUpon>201608071740119_AddActivityCategoryTable2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608071746216_MakeCategoryRequiredInActivityType.resx">
+      <DependentUpon>201608071746216_MakeCategoryRequiredInActivityType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -7,14 +7,40 @@
     <link href="~/content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/styles/app")
+    @Styles.Render("~/styles/fa")
+    @Styles.Render("~/styles/magnific-popup")
+
     @Scripts.Render("~/bundles/modernizr")
-    <script src="~/scripts/app/boot/require.config.js"></script>
-    <script data-main="/scripts/app/boot/startup.js" src="~/scripts/require/require.js"></script>
 </head>
 <body>
-    <div class="container-fluid">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-white" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Логотип</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <div class="container">
         @RenderBody()
     </div>
     <footer></footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/magnific-popup")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

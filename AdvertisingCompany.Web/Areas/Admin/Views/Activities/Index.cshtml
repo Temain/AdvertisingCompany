@@ -48,7 +48,7 @@
                     <tbody data-bind="foreach: activities">
                         <tr>
                             <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
-                            <td data-bind="text: activityCategory"></td>
+                            <td data-bind="text: activityCategoryName"></td>
                             <td data-bind="text: activityTypeName"></td>
                             <td class="actions text-center">
                                 <a href="#" data-bind="attr : { href : '/admin/#activities/' + activityTypeId() + '/edit' }, tooltip: { title: 'Перейти к редактированию', placement: 'left', trigger: 'hover' }">

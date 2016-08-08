@@ -123,7 +123,7 @@
 
         self.activityTypeId = ko.observable(activityTypeViewModel.activityTypeId || '');
         self.activityTypeName = ko.observable(activityTypeViewModel.activityTypeName || '');
-        self.activityCategory = ko.observable(activityTypeViewModel.activityCategory || '');
+        self.activityCategoryName = ko.observable(activityTypeViewModel.activityCategoryName || '');
     }
 
     var activitiesListViewModel = new ActivitiesListViewModel();

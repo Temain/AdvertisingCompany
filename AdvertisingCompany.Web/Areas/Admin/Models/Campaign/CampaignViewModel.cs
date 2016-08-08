@@ -67,7 +67,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
             configuration.CreateMap<Domain.Models.Campaign, CampaignViewModel>("Campaign")
                .ForMember(m => m.ClientId, opt => opt.MapFrom(s => s.ClientId))
                .ForMember(m => m.ClientName, opt => opt.MapFrom(s => s.Client.CompanyName))
-               .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory + " / " + s.Client.ActivityType.ActivityTypeName))
+               .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory.ActivityCategoryName + " / " + s.Client.ActivityType.ActivityTypeName))
                .ForMember(m => m.MicrodistrictNames, opt => opt.MapFrom(s => s.Microdistricts.Select(x => x.MicrodistrictShortName)))
                .ForMember(m => m.PlacementFormatName, opt => opt.MapFrom(s => s.PlacementFormat.PlacementFormatName))
                .ForMember(m => m.PaymentOrderName, opt => opt.MapFrom(s => s.PaymentOrder.PaymentOrderName))

@@ -101,7 +101,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
         // GET: admin/api/reports/5
-        [AllowAnonymous]
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(AddressReportViewModel))]

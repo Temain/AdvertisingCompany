@@ -325,6 +325,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Extensions\AreaRegistrationContextExtensions.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
@@ -334,6 +335,7 @@
     </Compile>
     <Compile Include="Helpers\ImageHelpers.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddressReportViewModel.cs" />
     <Compile Include="Models\ListViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mapping\IHaveCustomMappings.cs" />
@@ -366,9 +368,8 @@
     <Content Include="Areas\Admin\Static\reports\index.html" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\shadow_header.png" />
     <Content Include="Fonts\fontawesome-webfont.svg" />
-    <Content Include="Scripts\app\boot\startup.js" />
-    <Content Include="Scripts\app\components\greeter\greeting.js" />
     <Content Include="Areas\Admin\Scripts\app\components\activities\list.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\components\addresses\create.viewmodel.js" />
     <Content Include="Areas\Admin\Scripts\app\components\addresses\edit.viewmodel.js" />
@@ -495,7 +496,6 @@
     <Content Include="Fonts\blisspro-regular-webfont.svg" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\app\boot\require.config.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
     <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
@@ -897,10 +897,6 @@
     <Content Include="Scripts\underscore\underscore.min.js" />
     <Content Include="Scripts\widgster\widgster.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Scripts\app\app.datamodel.js" />
-    <Content Include="Scripts\app\app.viewmodel.js" />
-    <Content Include="Scripts\app\common.js" />
-    <Content Include="Static\greeter\greeting.html" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -913,7 +909,6 @@
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Home\_Home.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />

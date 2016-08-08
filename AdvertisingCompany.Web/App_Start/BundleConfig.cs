@@ -34,14 +34,14 @@
             // Note: No CDN support has been added here. Most likely you will want to customize your copy of bootstrap.
             bundles.Add(new StyleBundle(
                 "~/styles/app")
-                .Include("~/Content/bootstrap.css")
+                .Include("~/Content/bootstrap.min.css")
                 .Include("~/Content/styles.css"));
 
             // Font Awesome - Icons using font (http://fortawesome.github.io/Font-Awesome/).
             bundles.Add(new StyleBundle(
                 "~/styles/fa"/*,
                 ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl*/)
-                .Include("~/Content/font-awesome.css"));
+                .Include("~/Content/font-awesome.min.css"));
 
             bundles.Add(new StyleBundle("~/styles/gins")
                 .Include("~/Content/gins/application.css")
@@ -66,6 +66,9 @@
 
             bundles.Add(new StyleBundle("~/styles/kladr")
                 .Include("~/Content/kladr/jquery.kladr.min.css"));
+
+            bundles.Add(new StyleBundle("~/styles/magnific-popup")
+                .Include("~/Content/magnific-popup/magnific-popup.css"));
         }
 
         /// <summary>
@@ -123,36 +126,6 @@
                 .Include("~/Scripts/bootstrap/bootstrap.js")
                 .Include("~/Scripts/respond/respond.js");
             bundles.Add(bootstrapBundle);
-
-            Bundle appBundle = new ScriptBundle("~/bundles/app")
-                .Include("~/Scripts/sammy/sammy-{version}.js")
-                .Include("~/Scripts/app/common.js")
-                .Include("~/Scripts/app/app.datamodel.js")
-                .Include("~/Scripts/app/app.viewmodel.js")
-                .Include("~/Scripts/app/_run.js");
-            bundles.Add(appBundle);
-
-            Bundle appAdminBundle = new ScriptBundle("~/bundles/app-admin")
-                .Include("~/Scripts/underscore/underscore.min.js")
-                .Include("~/Scripts/sammy/sammy-{version}.js")
-                .Include("~/Areas/Admin/Scripts/app/common.js")
-                .Include("~/Areas/Admin/Scripts/app/app.datamodel.js")
-                .Include("~/Areas/Admin/Scripts/app/app.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/clients/list.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/clients/create.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/clients/edit.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/activities/list.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/addresses/list.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/addresses/create.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/addresses/edit.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/campaigns/list.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/campaigns/create.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/campaigns/edit.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/reports/list.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/analytics/analytics.viewmodel.js")
-                .Include("~/Areas/Admin/Scripts/app/_run.js")
-                .Include("~/Scripts/progress.js");
-            bundles.Add(appAdminBundle);
 
             Bundle knockoutBundle = new ScriptBundle("~/bundles/knockout")
                 .Include("~/Scripts/knockout/knockout-{version}.js")
@@ -236,6 +209,10 @@
                 // .Include("~/Scripts/kladr/jquery.kladr.min.js")
                 .Include("~/Scripts/kladr/form_with_map.js");
             bundles.Add(kladrBundle);
+
+            Bundle magnificBundle = new ScriptBundle("~/bundles/magnific-popup")
+                .Include("~/Scripts/magnific-popup/dist/jquery.magnific-popup.min.js");
+            bundles.Add(magnificBundle);
 
             // Script bundle for the site. The fall-back scripts are for when a CDN fails, in this case we load a local
             // copy of the script instead.

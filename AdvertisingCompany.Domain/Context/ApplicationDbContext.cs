@@ -7,6 +7,7 @@ namespace AdvertisingCompany.Domain.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<ActivityCategory> ActivityCategories { get; set; }
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressReport> AddressReports { get; set; }

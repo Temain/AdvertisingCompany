@@ -121,8 +121,8 @@ namespace AdvertisingCompany.Domain.Models
         {
             get
             {
-                return Street.LocationType.LocationTypeShortName + "." + Street.LocationName + " " +
-                       Building.LocationType.LocationTypeShortName + "." + Building.LocationName;
+                return Street.LocationType.LocationTypeShortName + ". " + Street.LocationName + " " +
+                       Building.LocationType.LocationTypeShortName + ". " + Building.LocationName;
             }
         }
     }

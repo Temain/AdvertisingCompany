@@ -33,9 +33,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public ListCampaignsViewModel GetCampaigns(string query, int page = 1, int pageSize = 10)
         {
             var campaignsList = UnitOfWork.Repository<Campaign>()
-                .GetQ(x => x.DeletedAt == null,
+                .GetQ(x => x.DeletedAt == null && x.Client.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: "Client, Client.ActivityType, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
+                    includeProperties: "Client, Client.ActivityType, Client.ActivityType.ActivityCategory, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
 
             if (query != null)
             {

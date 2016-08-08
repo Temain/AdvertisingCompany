@@ -34,7 +34,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public ListActivityTypesViewModel GetActivities(string query, int page = 1, int pageSize = 10)
         {
             var activitiesList = UnitOfWork.Repository<ActivityType>()
-                .GetQ(orderBy: o => o.OrderBy(c => c.ActivityCategory));
+                .GetQ(includeProperties: "ActivityCategory",
+                    orderBy: o => o.OrderBy(c => c.ActivityCategory.ActivityCategoryName));
 
             if (query != null)
             {
