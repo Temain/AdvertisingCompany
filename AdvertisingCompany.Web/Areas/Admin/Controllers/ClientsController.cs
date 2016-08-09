@@ -35,7 +35,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var clientsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: "Campaigns, ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
+                    includeProperties: "Campaigns, ActivityType, ActivityType.ActivityCategory, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
             if (query != null)
             {
@@ -69,7 +69,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public IHttpActionResult GetClient(int id)
         {
             var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory.ActivityCategoryName))
+                .Get(includeProperties: "ActivityCategory", orderBy: o => o.OrderBy(p => p.ActivityCategory.ActivityCategoryName))
                 .ToList();
             var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
 
@@ -161,6 +161,13 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var result = UserManager.Create(user, viewModel.Password);
             if (result.Succeeded)
             {
+                if (!RoleManager.RoleExists("Client"))
+                {
+                    RoleManager.Create(new ApplicationRole { Name = "Client" });
+                }
+
+                UserManager.AddToRole(user.Id, "Client");
+
                 UnitOfWork.Repository<Client>().Insert(client);
                 UnitOfWork.Save();
 

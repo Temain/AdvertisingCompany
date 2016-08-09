@@ -168,6 +168,7 @@
         self.clientId = ko.observable(dataModel.clientId || '');
         self.clientName = ko.observable(dataModel.clientName || '');
         self.activityTypeName = ko.observable(dataModel.activityTypeName || '');
+        self.activityCategoryName = ko.observable(dataModel.activityCategoryName || '');
         self.microdistrictNames = ko.observableArray(dataModel.microdistrictNames || []);
         self.placementFormatName = ko.observable(dataModel.placementFormatName || '');
         self.placementCost = ko.observable(dataModel.placementCost || '');

@@ -168,6 +168,7 @@
         self.companyName = ko.observable(dataModel.companyName || '');
         self.activityTypeId = ko.observable(dataModel.activityTypeId || '');
         self.activityTypeName = ko.observable(dataModel.activityTypeName || '');
+        self.activityCategoryName = ko.observable(dataModel.activityCategoryName || '');
         self.responsiblePersonId = ko.observable(dataModel.responsiblePersonId || '');
         self.responsiblePersonShortName = ko.observable(dataModel.responsiblePersonShortName || '');
         self.phoneNumber = ko.observable(dataModel.phoneNumber || '');

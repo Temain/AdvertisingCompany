@@ -23,6 +23,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         /// </summary>
         public int ActivityTypeId { get; set; }
         public string ActivityTypeName { get; set; }
+        public string ActivityCategoryName { get; set; }
 
         /// <summary>
         /// Ответственное лицо
@@ -75,7 +76,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.CampaignId, opt => opt.MapFrom(s => s.Campaigns.FirstOrDefault().CampaignId))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.ActivityTypeId, opt => opt.MapFrom(s => s.ActivityTypeId))
-                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory + "/" + s.ActivityType.ActivityTypeName))
+                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityTypeName))
+                .ForMember(m => m.ActivityCategoryName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory.ActivityCategoryName))
                 .ForMember(m => m.ResponsiblePersonId, opt => opt.MapFrom(s => s.ResponsiblePersonId))
                 .ForMember(m => m.ResponsiblePersonShortName, opt => opt.MapFrom(s => s.ResponsiblePerson.ShortName))
                 .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))

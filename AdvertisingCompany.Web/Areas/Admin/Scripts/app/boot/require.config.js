@@ -21,7 +21,7 @@
         'knockout.bindings.typeahead': 'scripts/knockout/knockout.bindings.typeahead',
         'text': 'scripts/require/text',
         'sammy': 'scripts/sammy/sammy-0.7.5.min',
-        'common': 'scripts/app/common',
+        'common': 'scripts/common',
         'underscore': 'scripts/underscore/underscore.min',
         'moment': 'scripts/moment/moment-with-locales.min',
         'progress': 'scripts/progress',

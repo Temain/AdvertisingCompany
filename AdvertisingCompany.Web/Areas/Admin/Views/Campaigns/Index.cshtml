@@ -53,7 +53,10 @@
                                 <span data-bind="text: clientName"></span><br />
                                 <small data-bind="text: comment"></small>
                             </td>
-                            <td data-bind="text: activityTypeName"></td>
+                            <td>
+                                <span data-bind="text: activityTypeName"></span><br />
+                                <small data-bind="text: activityCategoryName"></small>
+                            </td>
                             <td>
                                 <ul data-bind="foreach: microdistrictNames" style="padding-left: 20px;">
                                     <li data-bind="text: $data"></li>

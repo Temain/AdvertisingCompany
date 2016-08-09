@@ -105,7 +105,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                 .ForMember(m => m.ResponsiblePersonId, opt => opt.MapFrom(s => s.Client.ResponsiblePersonId))
                 .ForMember(m => m.ResponsiblePersonName, opt => opt.MapFrom(s => s.Client.ResponsiblePerson.FullName))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.Client.CompanyName))
-                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory + " / " + s.Client.ActivityType.ActivityTypeName))
+                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory.ActivityCategoryName + " / " + s.Client.ActivityType.ActivityTypeName))
                 .ForMember(m => m.MicrodistrictIds, opt => opt.MapFrom(s => s.Microdistricts.Select(x => x.MicrodistrictId)))
                 .ForMember(m => m.PlacementMonthId, opt => opt.MapFrom(s => s.PlacementMonthId))
                 .ForMember(m => m.PlacementFormatId, opt => opt.MapFrom(s => s.PlacementFormatId))

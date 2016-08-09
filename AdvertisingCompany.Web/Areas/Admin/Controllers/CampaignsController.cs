@@ -35,7 +35,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var campaignsList = UnitOfWork.Repository<Campaign>()
                 .GetQ(x => x.DeletedAt == null && x.Client.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: "Client, Client.ActivityType, Client.ActivityType.ActivityCategory, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
+                    includeProperties: @"Client, Client.ActivityType, Client.ActivityType.ActivityCategory,
+                        Client.ActivityType.ActivityCategory, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
 
             if (query != null)
             {
@@ -70,7 +71,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var client = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.ClientId == clientId && x.DeletedAt == null,
-                    includeProperties: "ResponsiblePerson, ActivityType")
+                    includeProperties: "ResponsiblePerson, ActivityType, ActivityType.ActivityCategory")
                 .SingleOrDefault();
 
             if (client == null)
@@ -116,7 +117,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 var campaign = UnitOfWork.Repository<Campaign>()
                     .Get(x => x.CampaignId == campaignId && x.DeletedAt == null,
-                        includeProperties: "Client, Client.ResponsiblePerson, Client.ActivityType, Microdistricts")
+                        includeProperties: "Client, Client.ResponsiblePerson, Microdistricts")
                     .SingleOrDefault();
                 if (campaign == null)
                 {
@@ -144,7 +145,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var campaign = UnitOfWork.Repository<Campaign>()
                 .Get(x => x.CampaignId == viewModel.CampaignId && x.DeletedAt == null,
-                    includeProperties: "Client, Client.ResponsiblePerson, Client.ActivityType")
+                    includeProperties: "Client, Client.ResponsiblePerson")
                 .SingleOrDefault();
             if (campaign == null)
             {
