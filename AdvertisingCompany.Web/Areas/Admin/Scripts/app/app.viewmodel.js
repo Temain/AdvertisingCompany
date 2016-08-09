@@ -114,6 +114,17 @@
             });
 
             // Справочники:
+            // Категории видов деятельности
+            register('activityCategoriesList', {
+                require: rootPath + 'activityCategories/list.viewmodel'
+            });
+            register('createActivityCategory', {
+                require: rootPath + 'activityCategories/create.viewmodel'
+            });
+            register('editActivityCategory', {
+                require: rootPath + 'activityCategories/edit.viewmodel'
+            });
+
             // Виды деятельности
             register('activitiesList', {
                 require: rootPath + 'activities/list.viewmodel'
@@ -128,15 +139,20 @@
         };
 
         self.applyComponent = function (viewModel) {
-            $('.selectpicker').html('');
-            $('.selectpicker').selectpicker('destroy');
+            var selectpickers = $('.selectpicker');
+            if (selectpickers.length) {
+                $('.selectpicker').html('');
+                $('.selectpicker').selectpicker('destroy');
+            }
 
             var componentBody = $('#component .widget')[0];
             ko.applyValidation(viewModel, componentBody);
             ko.cleanNode(componentBody);
             ko.applyBindingsToDescendants(viewModel, componentBody);
 
-            $('.selectpicker').selectpicker('refresh');
+            if (selectpickers.length) {
+                $('.selectpicker').selectpicker('refresh');
+            }
         };
 
         self.initialize = function () {

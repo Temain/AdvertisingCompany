@@ -257,6 +257,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ActivityCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\AnalyticsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ActivitiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\AddressesController.cs" />
@@ -264,6 +265,10 @@
     <Compile Include="Areas\Admin\Controllers\CampaignsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\ActivityCategory\ActivityCategoryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ActivityCategory\CreateActivityCategoryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ActivityCategory\EditActivityCategoryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ActivityCategory\ListActivityTypesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ActivityType\ActivityTypeViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ActivityType\ListActivityTypesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\EditAddressViewModel.cs" />
@@ -353,6 +358,9 @@
     <Content Include="Areas\Admin\Scripts\app\boot\require.config.js" />
     <Content Include="Areas\Admin\Scripts\app\boot\routes.js" />
     <Content Include="Areas\Admin\Scripts\app\boot\startup.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\activityCategories\create.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\activityCategories\edit.viewmodel.js" />
+    <Content Include="Areas\Admin\Scripts\app\components\activityCategories\list.viewmodel.js" />
     <Content Include="Areas\Admin\Static\activities\index.html" />
     <Content Include="Areas\Admin\Static\addresses\create.html" />
     <Content Include="Areas\Admin\Static\addresses\edit.html" />
@@ -648,6 +656,10 @@
     <Content Include="Areas\Admin\Views\Campaigns\_Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\_Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Activities\_Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ActivityCategories\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ActivityCategories\_Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\ActivityCategories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ActivityCategories\Edit.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -214,6 +214,10 @@
                 .Include("~/Scripts/magnific-popup/dist/jquery.magnific-popup.min.js");
             bundles.Add(magnificBundle);
 
+            Bundle paceBundle = new ScriptBundle("~/bundles/pace")
+                .Include("~/Scripts/pace/pace.min.js");
+            bundles.Add(paceBundle);
+
             // Script bundle for the site. The fall-back scripts are for when a CDN fails, in this case we load a local
             // copy of the script instead.
             Bundle failoverCoreBundle = new ScriptBundle("~/bundles/site")

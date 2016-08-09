@@ -164,6 +164,10 @@
     <Compile Include="Migrations\201608071746216_MakeCategoryRequiredInActivityType.Designer.cs">
       <DependentUpon>201608071746216_MakeCategoryRequiredInActivityType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608091107511_AddUpdatedFieldsToActivity.cs" />
+    <Compile Include="Migrations\201608091107511_AddUpdatedFieldsToActivity.Designer.cs">
+      <DependentUpon>201608091107511_AddUpdatedFieldsToActivity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\ActivityType.cs" />
@@ -257,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608071746216_MakeCategoryRequiredInActivityType.resx">
       <DependentUpon>201608071746216_MakeCategoryRequiredInActivityType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608091107511_AddUpdatedFieldsToActivity.resx">
+      <DependentUpon>201608091107511_AddUpdatedFieldsToActivity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

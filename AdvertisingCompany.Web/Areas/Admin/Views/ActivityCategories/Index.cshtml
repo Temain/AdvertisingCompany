@@ -2,11 +2,11 @@
     <ol class="breadcrumb">
         <li>ВЫ ЗДЕСЬ</li>
         <li>Справочники</li>
-        <li class="active">Виды деятельности</li>
+        <li class="active">Категории видов деятельности</li>
     </ol>
-    <h1 class="page-title">Виды деятельности</h1>
+    <h1 class="page-title">Категории видов деятельности</h1>
     <div class="mrgbtm24">
-        <a href="/admin/#activities/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить</a>
+        <a href="/admin/#activity/categories/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить</a>
     </div>
     <section class="widget">
         <div class="widget-body">
@@ -40,18 +40,16 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th class="col-md-5">Вид</th>
-                            <th class="col-md-6">Категория</th>
-                            <th class="col-md-1 text-center">Редактирование</th>
+                            <th class="col-md-10">Категория</th>
+                            <th class="col-md-2 text-center">Редактирование</th>
                         </tr>
                     </thead>
-                    <tbody data-bind="foreach: activities">
+                    <tbody data-bind="foreach: categories">
                         <tr>
                             <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
-                            <td data-bind="text: activityTypeName"></td>
                             <td data-bind="text: activityCategoryName"></td>
                             <td class="actions text-center">
-                                <a href="#" data-bind="attr : { href : '/admin/#activities/' + activityTypeId() + '/edit' }, tooltip: { title: 'Перейти к редактированию', placement: 'left', trigger: 'hover' }">
+                                <a href="#" data-bind="attr : { href : '/admin/#activity/categories/' + activityCategoryId() + '/edit' }, tooltip: { title: 'Перейти к редактированию', placement: 'left', trigger: 'hover' }">
                                     <span class="fa-stack">
                                         <i class="fa fa-circle fa-stack-2x text-usual"></i>
                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -68,10 +66,10 @@
                     </tbody>
                 </table>
 
-                <!-- ko if: activities().length > 0 -->
+                <!-- ko if: categories().length > 0 -->
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + activities().length) + ' из ' + ((pagesCount() - 1) * pageSize() + activities().length) + ' записей'"></div>
+                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + categories().length) + ' из ' + ((pagesCount() - 1) * pageSize() + categories().length) + ' записей'"></div>
                     </div>
                     <div class="col-md-6">
                         <!-- ko if: pagesCount() > 1 -->
@@ -107,4 +105,4 @@
     </section>
 </div>
 
-@Html.Partial("~/Areas/Admin/Views/Activities/_Delete.cshtml")
+@Html.Partial("~/Areas/Admin/Views/ActivityCategories/_Delete.cshtml")

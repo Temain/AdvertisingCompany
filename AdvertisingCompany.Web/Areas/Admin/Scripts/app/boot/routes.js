@@ -70,6 +70,21 @@
                         app.componentName('reportsList');
                     });
 
+                    // Справочники
+                    // Категории деятельности
+                    this.get('#activity/categories', function () {
+                        app.componentName('activityCategoriesList');
+                    });
+
+                    this.get('#activity/categories/create', function () {
+                        app.componentName('createActivityCategory');
+                    });
+
+                    this.get('#activity/categories/:id/edit', function () {
+                        current.params['activityCategoryId'] = this.params['id'];
+                        app.componentName('editActivityCategory');
+                    });
+
                     // Виды деятельности
                     this.get('#activities', function () {
                         app.componentName('activitiesList');
