@@ -25,6 +25,12 @@ namespace AdvertisingCompany.Web.Areas.Admin
             );
 
             context.MapHttpRoute(
+               name: "Admin_Activity_Types",
+               routeTemplate: "admin/api/activity/types/{id}",
+               defaults: new { area = "admin", controller = "activityTypes", id = RouteParameter.Optional }
+           );
+
+            context.MapHttpRoute(
                 name: "Admin_Api",
                 routeTemplate: "admin/api/{controller}/{id}",
                 defaults: new { area = "admin", id = RouteParameter.Optional }

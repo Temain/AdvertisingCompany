@@ -31,7 +31,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                 .ForMember(m => m.ActivityCategoryName, opt => opt.MapFrom(s => s.ActivityCategoryName));
 
             configuration.CreateMap<EditActivityCategoryViewModel, Domain.Models.ActivityCategory>("EditActivityCategory")
-                .ForMember(m => m.ActivityCategoryId, opt => opt.MapFrom(s => s.ActivityCategoryId))
+                .ForMember(m => m.ActivityCategoryId, opt => opt.Ignore())
                 .ForMember(m => m.ActivityCategoryName, opt => opt.MapFrom(s => s.ActivityCategoryName));
         }
     }

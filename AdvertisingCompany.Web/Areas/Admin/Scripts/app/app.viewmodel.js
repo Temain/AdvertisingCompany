@@ -126,8 +126,14 @@
             });
 
             // Виды деятельности
-            register('activitiesList', {
-                require: rootPath + 'activities/list.viewmodel'
+            register('activityTypesList', {
+                require: rootPath + 'activityTypes/list.viewmodel'
+            });
+            register('createActivityType', {
+                require: rootPath + 'activityTypes/create.viewmodel'
+            });
+            register('editActivityType', {
+                require: rootPath + 'activityTypes/edit.viewmodel'
             });
 
             // Фотоотчёты

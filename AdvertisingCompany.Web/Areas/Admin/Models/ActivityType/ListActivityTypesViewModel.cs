@@ -6,7 +6,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
 {
     public class ListActivityTypesViewModel
     {
-        public List<ActivityTypeViewModel> Activities { get; set; }
+        public List<ActivityTypeViewModel> Types { get; set; }
         public int PagesCount { get; set; }
         public int Page { get; set; }
     }

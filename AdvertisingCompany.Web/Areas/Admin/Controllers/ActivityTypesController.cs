@@ -19,22 +19,22 @@ using AdvertisingCompany.Web.Areas.Admin.Models.Campaign;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/activities")]
-    public class ActivitiesController : BaseApiController
+    [RoutePrefix("admin/api/activity/types")]
+    public class ActivityTypesController : BaseApiController
     {
-        public ActivitiesController(IUnitOfWork unitOfWork)
+        public ActivityTypesController(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        // GET: admin/api/activities
+        // GET: admin/api/activity/types
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListActivityTypesViewModel))]
-        public ListActivityTypesViewModel GetActivities(string query, int page = 1, int pageSize = 10)
+        public ListActivityTypesViewModel GetActivityType(string query, int page = 1, int pageSize = 10)
         {
             var activitiesList = UnitOfWork.Repository<ActivityType>()
-                .GetQ(includeProperties: "ActivityCategory",
+                .GetQ(x => x.DeletedAt == null, includeProperties: "ActivityCategory",
                     orderBy: o => o.OrderBy(c => c.ActivityCategory.ActivityCategoryName));
 
             if (query != null)
@@ -50,70 +50,68 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var activityViewModels = Mapper.Map<List<ActivityType>, List<ActivityTypeViewModel>>(activities);
             var viewModel = new ListActivityTypesViewModel
             {
-                Activities = activityViewModels,
-                PagesCount = (int) Math.Ceiling((double) activitiesList.Count() / pageSize),
+                Types = activityViewModels,
+                PagesCount = (int)Math.Ceiling((double)activitiesList.Count() / pageSize),
                 Page = page
             };
             return viewModel;
         }
 
-        // GET: admin/api/activities/0 (new) or admin/api/activities/5 (edit)
+        // GET: admin/api/activity/types/0 (new) or admin/api/activity/types/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
-        [ResponseType(typeof(CreateClientViewModel))]
-        [ResponseType(typeof(EditClientViewModel))]
-        public IHttpActionResult GetActivity(int id)
+        [ResponseType(typeof(CreateActivityTypeViewModel))]
+        [ResponseType(typeof(EditActivityTypeViewModel))]
+        public IHttpActionResult GetActivityType(int id)
         {
-            var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory))
+            var activityCategories = UnitOfWork.Repository<ActivityCategory>()
+                .GetQ(orderBy: o => o.OrderBy(p => p.ActivityCategoryName))
                 .ToList();
-            var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
+            var activityCategoryViewModels = Mapper.Map<IEnumerable<ActivityCategory>, IEnumerable<ActivityCategoryViewModel>>(activityCategories);
 
             if (id == 0)
             {
-                var viewModel = new CreateClientViewModel();
-                viewModel.ActivityTypes = activityTypeViewModels;
+                var viewModel = new CreateActivityTypeViewModel();
+                viewModel.ActivityCategories = activityCategoryViewModels;
                 return Ok(viewModel);
             }
             else
             {
-                var client = UnitOfWork.Repository<Client>()
-                    .Get(x => x.ClientId == id && x.DeletedAt == null,
-                        includeProperties: "ResponsiblePerson, ApplicationUsers")
+                var type = UnitOfWork.Repository<ActivityType>()
+                    .Get(x => x.ActivityTypeId == id && x.DeletedAt == null)
                     .SingleOrDefault();
-                if (client == null)
+                if (type == null)
                 {
                     return BadRequest();
                 }
 
-                var viewModel = Mapper.Map<Client, EditClientViewModel>(client);
-                viewModel.ActivityTypes = activityTypeViewModels;
+                var viewModel = Mapper.Map<ActivityType, EditActivityTypeViewModel>(type);
+                viewModel.ActivityCategories = activityCategoryViewModels;
 
                 return Ok(viewModel);
             }
         }
 
 
-        // PUT: admin/api/activities/5
+        // PUT: admin/api/activity/types/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutActivity(EditClientViewModel viewModel)
+        public IHttpActionResult PutActivityType(EditActivityTypeViewModel viewModel)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
-                    includeProperties: "ResponsiblePerson, ApplicationUsers")
+            var type = UnitOfWork.Repository<ActivityType>()
+                .Get(x => x.ActivityTypeId == viewModel.ActivityTypeId && x.DeletedAt == null)
                 .SingleOrDefault();
-            if (client == null)
+            if (type == null)
             {
                 return BadRequest();
             }
 
-            Mapper.Map<EditClientViewModel, Client>(viewModel, client);
-            client.UpdatedAt = DateTime.Now;
+            Mapper.Map<EditActivityTypeViewModel, ActivityType>(viewModel, type);
+            type.UpdatedAt = DateTime.Now;
 
-            UnitOfWork.Repository<Client>().Update(client);
+            UnitOfWork.Repository<ActivityType>().Update(type);
 
             try
             {
@@ -121,7 +119,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ActivityExists(viewModel.ClientId))
+                if (!ActivityTypeExists(viewModel.ActivityCategoryId))
                 {
                     return NotFound();
                 }
@@ -140,32 +138,16 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/activities
+        // POST: admin/api/activity/categories/
         [HttpPost]
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostActivity(CreateClientViewModel viewModel)
+        public IHttpActionResult PostActivityType(CreateActivityTypeViewModel viewModel)
         {
-            var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
-
-            var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
-            var result = UserManager.Create(user, viewModel.Password);
-            if (result.Succeeded)
-            {
-                UnitOfWork.Repository<Client>().Insert(client);
-                UnitOfWork.Save();
-
-                user.ClientId = client.ClientId;
-                UserManager.Update(user);
-            }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error);
-                }
-            }
+            var type = Mapper.Map<CreateActivityTypeViewModel, ActivityType>(viewModel);
+            UnitOfWork.Repository<ActivityType>().Insert(type);
+            UnitOfWork.Save();
 
             // См. атрибут KoJsonValidate 
             if (!ModelState.IsValid)
@@ -176,22 +158,22 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok();
         }
 
-        // DELETE: admin/api/activities/5
+        // DELETE: admin/api/activity/categories/5
         [HttpDelete]
         [Route("")]
-        [ResponseType(typeof(Client))]
-        public IHttpActionResult DeleteActivity(int id)
+        [ResponseType(typeof(ActivityType))]
+        public IHttpActionResult DeleteActivityType(int id)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == id && x.DeletedAt == null)
+            var type = UnitOfWork.Repository<ActivityType>()
+                .Get(x => x.ActivityTypeId == id && x.DeletedAt == null)
                 .SingleOrDefault();
-            if (client == null)
+            if (type == null)
             {
                 return NotFound();
             }
 
-            client.DeletedAt = DateTime.Now;
-            UnitOfWork.Repository<Client>().Update(client);
+            type.DeletedAt = DateTime.Now;
+            UnitOfWork.Repository<ActivityType>().Update(type);
 
             try
             {
@@ -199,7 +181,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ActivityExists(id))
+                if (!ActivityTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -209,12 +191,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 }
             }
 
-            return Ok(client);
+            return Ok(type);
         }
 
-        private bool ActivityExists(int id)
+        private bool ActivityTypeExists(int id)
         {
-            return UnitOfWork.Repository<Client>().GetQ().Count(e => e.ClientId == id && e.DeletedAt == null) > 0;
+            return UnitOfWork.Repository<ActivityType>().GetQ().Count(e => e.ActivityTypeId == id && e.DeletedAt == null) > 0;
         }
     }
 }

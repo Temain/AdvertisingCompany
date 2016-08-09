@@ -86,8 +86,17 @@
                     });
 
                     // Виды деятельности
-                    this.get('#activities', function () {
-                        app.componentName('activitiesList');
+                    this.get('#activity/types', function () {
+                        app.componentName('activityTypesList');
+                    });
+
+                    this.get('#activity/types/create', function () {
+                        app.componentName('createActivityType');
+                    });
+
+                    this.get('#activity/types/:id/edit', function () {
+                        current.params['activityTypeId'] = this.params['id'];
+                        app.componentName('editActivityType');
                     });
 
                     // Аналитика

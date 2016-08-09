@@ -1,29 +1,29 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker', 'knockout.bindings.tooltip', 'progress',
-    'text!home/html/?path=~/areas/admin/views/activities/index.cshtml'
+    'text!home/html/?path=~/areas/admin/views/activityTypes/index.cshtml'
 ], function($, ko, koMapping, bss, bst, progress, template) {
 
     ko.mapping = koMapping;
 
-    function ActivitiesListViewModel(params) {
+    function ActivityTypesListViewModel(params) {
         var self = this;
         self.isInitialized = ko.observable(false);
 
-        self.selectedActivity = ko.observable();
-        self.activities = ko.observableArray([]);
+        self.selectedType = ko.observable();
+        self.types = ko.observableArray([]);
         self.page = ko.observable(1);
         self.pagesCount = ko.observable(1);
         self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
         self.pageSize = ko.observable(10);
         self.searchQuery = ko.observable('');
 
-        self.loadActivities = function() {
+        self.loadActivityTypes = function() {
             self.isInitialized(false);
             progress.show();
 
             $.ajax({
                 method: 'get',
-                url: '/admin/api/activities',
+                url: '/admin/api/activity/types',
                 data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
                 contentType: "application/json; charset=utf-8",
                 headers: {
@@ -34,7 +34,7 @@
                 },
                 success: function(response) {
                     ko.mapping.fromJS(
-                        response.activities,
+                        response.types,
                         {
                             key: function(data) {
                                 return ko.utils.unwrapObservable(data.activityTypeId);
@@ -45,7 +45,7 @@
                                 return activityViewModel;
                             }
                         },
-                        self.activities
+                        self.types
                     );
 
                     self.page(response.page);
@@ -58,37 +58,37 @@
 
         self.pageChanged = function(page) {
             self.page(page);
-            self.loadActivities();
+            self.loadActivityTypes();
 
             window.scrollTo(0, 0);
         };
 
         self.pageSizeChanged = function() {
             self.page(1);
-            self.loadActivities();
+            self.loadActivityTypes();
 
             window.scrollTo(0, 0);
         };
 
         self.search = _.debounce(function() {
             self.page(1);
-            self.loadActivities();
+            self.loadActivityTypes();
         }, 300);
 
         self.init = function() {
             app.view(self);
-            self.loadActivities();
+            self.loadActivityTypes();
         };
 
         self.showDeleteModal = function (data, event) {
-            self.selectedActivity(data);
+            self.selectedType(data);
             $("#delete-popup").modal();
         };
 
-        self.deleteActivity = function () {
+        self.deleteType = function () {
             $.ajax({
                 method: 'delete',
-                url: '/admin/api/activities/' + self.selectedActivity().activityTypeId(),
+                url: '/admin/api/activity/types/' + self.selectedType().activityTypeId(),
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
@@ -106,7 +106,7 @@
                     self.init();
                     $("#delete-popup").modal("hide");
                     $.notify({
-                        icon: 'fa fa-exclamation-triangle',
+                        icon: 'glyphicon glyphicon-ok',
                         message: "&nbsp;Вид деятельности успешно удалён."
                     }, {
                         type: 'success'
@@ -126,15 +126,15 @@
         self.activityCategoryName = ko.observable(activityTypeViewModel.activityCategoryName || '');
     }
 
-    var activitiesListViewModel = new ActivitiesListViewModel();
+    var activityTypesListViewModel = new ActivityTypesListViewModel();
 
     app.addViewModel({
-        name: "activitiesList",
-        bindingMemberName: "activitiesList",
-        viewItem: activitiesListViewModel
+        name: "activityTypesList",
+        bindingMemberName: "activityTypesList",
+        viewItem: activityTypesListViewModel
     });
 
-    activitiesListViewModel.init();
+    activityTypesListViewModel.init();
 
-    return { viewModel: { instance: activitiesListViewModel }, template: template };
+    return { viewModel: { instance: activityTypesListViewModel }, template: template };
 });
