@@ -326,7 +326,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
-    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Extensions\AreaRegistrationContextExtensions.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -977,6 +976,7 @@
     <Folder Include="Scripts\pace\themes\silver\" />
     <Folder Include="Scripts\pace\themes\white\" />
     <Folder Include="Scripts\pace\themes\yellow\" />
+    <Folder Include="Views\Reports2\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />

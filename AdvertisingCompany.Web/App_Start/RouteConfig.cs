@@ -15,7 +15,16 @@ namespace AdvertisingCompany.Web
 
             routes.LowercaseUrls = true;
 
-            // routes.AppendTrailingSlash = true;
+            /*
+             * Указание пространства имён обязательно 
+             */
+
+            routes.MapRoute(
+                name: "Reports",
+                url: "Reports/{id}",
+                defaults: new { controller = "Reports", action = "Index" },
+                namespaces: new[] { "AdvertisingCompany.Web.Controllers" }
+            );
 
             routes.MapRoute(
                 name: "Default",

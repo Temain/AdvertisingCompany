@@ -1,53 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Web.Http;
-using System.Web.Http.Description;
+using System.Web;
+using System.Web.Mvc;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
 using AdvertisingCompany.Domain.Models;
-using AdvertisingCompany.Web.ActionFilters;
-using AdvertisingCompany.Web.Controllers;
-using AutoMapper;
-using Microsoft.AspNet.Identity;
-using System.Net.Http;
-using System.Web;
-using System.Diagnostics;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using AdvertisingCompany.Web.Results;
-using AdvertisingCompany.Web.Models;
 
 namespace AdvertisingCompany.Web.Controllers
 {
-    [System.Web.Mvc.Authorize]
-    [RoutePrefix("api/reports")]
-    public class ReportsController : BaseApiController
+    [Authorize]
+    public class ReportsController : BaseController
     {
         public ReportsController(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        // GET: api/reports/5
-        [HttpGet]
-        [Route("{id:int}")]
-        [ResponseType(typeof(FileResult))]
-        public IHttpActionResult GetReport(int id)
+        public ActionResult Index(int id)
         {
-            var user = User.Identity.Name;
+            // Проверка может ли просматривать отчёт пользователь
+
 
             var report = UnitOfWork.Repository<AddressReport>()
-                .GetQ(x => x.AddressReportId == id && x.DeletedAt == null)
-                .SingleOrDefault();
+               .GetQ(x => x.AddressReportId == id && x.DeletedAt == null)
+               .FirstOrDefault();
             if (report == null)
             {
-                return BadRequest();
+                return HttpNotFound();
             }
 
-            return new FileResult(report.ImageData, report.ImageMimeType);
+            return File(report.ImageData, report.ImageMimeType);
         }
     }
 }

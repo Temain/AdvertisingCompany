@@ -23,7 +23,7 @@
                 {
                     <div class="col-sm-8 col-md-6 gallery-item" data-title="@report.ImageName">
                         <div class="thumbnail">
-                            <a href=@("api/reports/" + @report.AddressReportId)><img src=@("data:" + report.ImageMimeType + ";base64," + report.ImageThumbnail) alt="..."></a>
+                            <a href=@("/reports/" + report.AddressReportId)><img src=@("data:" + report.ImageMimeType + ";base64," + report.ImageThumbnail) alt="..."></a>
                             <div class="caption">
                                 <h5 class="light">@report.AddressName</h5>
                             </div>
@@ -42,7 +42,7 @@
                 delegate: '.thumbnail > a',
                 type: 'image',
                 gallery: {
-                    enabled: true
+                    enabled: false
                 }
             });
         });
