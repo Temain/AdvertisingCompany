@@ -13,6 +13,8 @@
             }
         }
 
+        self.isInitialized = ko.observable(false);
+
         self.views = {
             Loading: {} 
         };
@@ -36,9 +38,13 @@
                     if (fragment.access_token) {
                         window.location.hash = fragment.state || '';
                         dataModel.setAccessToken(fragment.access_token);
+
+                        self.isInitialized(true);
                     } else {
                         window.location = "/account/authorize?client_id=web&response_type=token&state=" + encodeURIComponent(window.location.hash);
                     }
+                } else {
+                    self.isInitialized(true);
                 }
 
                 if (self.view() !== options.viewItem) {
@@ -111,7 +117,6 @@
 
         self.initialize = function () {
             components.initialize();
-            self.componentName('analytics');
 
             routes.initialize();
 
@@ -119,5 +124,22 @@
         }
     }
 
-    return new AppViewModel(dataModel);
+    var appViewModel = new AppViewModel(dataModel);
+
+    // Добавляем модель представления чтобы получить access_token
+    // При отсутствии access_token'a происходит перенаправление на метод authorize 
+    appViewModel.addViewModel({
+        name: "loading",
+        bindingMemberName: "loading",
+        viewItem: {}
+    });
+
+    // После перенаправления получаем access_token
+    appViewModel.addViewModel({
+        name: "loaded",
+        bindingMemberName: "loaded",
+        viewItem: {}
+    });
+
+    return appViewModel;
 });

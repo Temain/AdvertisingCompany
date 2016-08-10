@@ -30,7 +30,7 @@
          */
     </script>
 </head>
-<body style="display: none" data-bind="visible: true">
+<body style="display: none" data-bind="visible: app.isInitialized()">
 
 @Html.Partial("_Sidebar")
 @Html.Partial("_Navbar")
