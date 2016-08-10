@@ -5,6 +5,7 @@
         'app': 'areas/admin/scripts/app/app.viewmodel',
         'app-data': 'areas/admin/scripts/app/app.datamodel',
         'routes': 'areas/admin/scripts/app/boot/routes',
+        'components': 'areas/admin/scripts/app/boot/components',
         'bootstrap': 'scripts/bootstrap/bootstrap.min',
         'bootstrap-select': 'scripts/bootstrap-select/bootstrap-select.min',
         'bootstrap-datetimepicker': 'scripts/bootstrap-datetimepicker/bootstrap-datetimepicker',

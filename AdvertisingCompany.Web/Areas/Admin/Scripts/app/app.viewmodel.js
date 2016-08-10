@@ -1,4 +1,6 @@
-﻿define(['jquery', 'knockout', 'sammy', 'routes', 'knockout.validation.server-side', 'common', 'underscore', 'app-data'], function ($, ko, sammy, routes, koValidation, common, _, dataModel)
+﻿define(['jquery', 'knockout', 'sammy', 'routes', 'components',
+    'knockout.validation.server-side', 'common', 'underscore',
+    'app-data'], function ($, ko, sammy, routes, components, koValidation, common, _, dataModel)
 {
     function AppViewModel(dataModel) {
         var self = this;
@@ -14,6 +16,7 @@
         self.views = {
             Loading: {} 
         };
+
         self.dataModel = dataModel;
 
         self.view = ko.observable(self.views.Loading);
@@ -56,9 +59,9 @@
             self["navigateTo" + options.name] = navigator;
         };
 
-        self.backlink = function () {
-            window.location.hash = app.returnUrl;
-        }
+        //self.backlink = function () {
+        //    window.location.hash = app.returnUrl;
+        //}
 
         self.routes = routes;
 
@@ -70,79 +73,6 @@
                 componentViewModel.init();
             }
         });
-
-        // Инициализация компонентов
-        self.registerComponents = function () {
-            var rootPath = 'areas/admin/scripts/app/components/';
-            var register = ko.components.register;
-
-            register('analytics', {
-                require: rootPath + 'analytics/analytics.viewmodel'
-            });
-
-            // Клиенты
-            register('clientsList', {
-                require: rootPath + 'clients/list.viewmodel'
-            });
-            register('createClient', {
-                require: rootPath + 'clients/create.viewmodel'
-            });
-            register('editClient', {
-                require: rootPath + 'clients/edit.viewmodel'
-            });
-
-            // Рекламные кампании
-            register('campaignsList', {
-                require: rootPath + 'campaigns/list.viewmodel'
-            });
-            register('createCampaign', {
-                require: rootPath + 'campaigns/create.viewmodel'
-            });
-            register('editCampaign', {
-                require: rootPath + 'campaigns/edit.viewmodel'
-            });
-
-            // Рекламные полотна (адреса)
-            register('addressesList', {
-                require: rootPath + 'addresses/list.viewmodel'
-            });
-            register('createAddress', {
-                require: rootPath + 'addresses/create.viewmodel'
-            });
-            register('editAddress', {
-                require: rootPath + 'addresses/edit.viewmodel'
-            });
-
-            // Справочники:
-            // Категории видов деятельности
-            register('activityCategoriesList', {
-                require: rootPath + 'activityCategories/list.viewmodel'
-            });
-            register('createActivityCategory', {
-                require: rootPath + 'activityCategories/create.viewmodel'
-            });
-            register('editActivityCategory', {
-                require: rootPath + 'activityCategories/edit.viewmodel'
-            });
-
-            // Виды деятельности
-            register('activityTypesList', {
-                require: rootPath + 'activityTypes/list.viewmodel'
-            });
-            register('createActivityType', {
-                require: rootPath + 'activityTypes/create.viewmodel'
-            });
-            register('editActivityType', {
-                require: rootPath + 'activityTypes/edit.viewmodel'
-            });
-
-            // Фотоотчёты
-            register('reportsList', {
-                require: rootPath + 'reports/list.viewmodel'
-            });
-
-            self.componentName('analytics');
-        };
 
         self.applyComponent = function (viewModel) {
             var selectpickers = $('.selectpicker');
@@ -161,11 +91,7 @@
             }
         };
 
-        self.initialize = function () {
-            self.registerComponents();
-            routes.initialize();
-
-            // Пометка активных элементов сайдбара
+        self.initSidebar = function () {
             $('.sidebar-nav ul > li > a').click(function () {
                 $('.sidebar-nav ul > li').removeClass('active');
                 $(this).parent().addClass('active');
@@ -181,6 +107,15 @@
                     $('.sidebar-nav ul > li').removeClass('active');
                 }
             });
+        };
+
+        self.initialize = function () {
+            components.initialize();
+            self.componentName('analytics');
+
+            routes.initialize();
+
+            self.initSidebar();
         }
     }
 

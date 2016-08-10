@@ -65,7 +65,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public IHttpActionResult GetActivityType(int id)
         {
             var activityCategories = UnitOfWork.Repository<ActivityCategory>()
-                .GetQ(orderBy: o => o.OrderBy(p => p.ActivityCategoryName))
+                .GetQ(x => x.DeletedAt == null, orderBy: o => o.OrderBy(p => p.ActivityCategoryName))
                 .ToList();
             var activityCategoryViewModels = Mapper.Map<IEnumerable<ActivityCategory>, IEnumerable<ActivityCategoryViewModel>>(activityCategories);
 

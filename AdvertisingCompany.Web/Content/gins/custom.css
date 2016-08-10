@@ -9,7 +9,11 @@
     font-weight: normal;
 }
 
-body, h1, h2, h3, h4, h5, h6 { font-family: 'Segoe UI', 'BlissPro', Arial, sans-serif; }
+body, h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Segoe UI', 'BlissPro', Arial, sans-serif;
+    font-weight: 400;
+}
 
 .wrap { margin-bottom: 36px; }
 
@@ -110,8 +114,18 @@ input.required {
     margin-top: 1.5em;
 }
 
+@media (min-height: 670px) and (min-width: 992px), (max-width: 767px) {
+    .sidebar-nav > li ul {
+        font-size: 13px;
+    }
+}
+
 /* Tables
 ------------------------------------------*/
+tr.selected {
+    background-color: #eeeeee;
+}
+
 td .bootstrap-select {
     width: 8em !important;
 }
@@ -122,6 +136,15 @@ td .bootstrap-select button > span {
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+}
+
+.table-actions .action {
+    width: 5em;
+    margin-left: -1px;
+}
+
+.table-actions .action > i {
+    font-size: 1.1em;
 }
 
 /* Knockout validation

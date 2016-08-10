@@ -19,9 +19,9 @@
         self.loadingFile = ko.observable(false);
 
         // Для загрузки отчётов
-        self.currentAddressName = ko.observable('');
-        self.currentAddressId = ko.observable('');
-        self.reportDate = ko.observable('');
+        //self.currentAddressName = ko.observable('');
+        //self.currentAddressId = ko.observable('');
+        //self.reportDate = ko.observable('');
         self.comment = ko.observable('');
 
         self.loadAddresses = function() {
@@ -82,14 +82,28 @@
             self.loadAddresses();
         }, 300);
 
+        self.selectAddress = function (data) {
+            if (self.selectedAddress() != null && self.selectedAddress().addressId() == data.addressId()) {
+                self.selectedAddress(null);
+            } else {
+                self.selectedAddress(data);
+            }
+
+            return true;
+        };
+
+        self.isSelected = function (data) {
+            return self.selectedAddress() != null && self.selectedAddress() == data;
+        };
+
         self.showUploadModal = function(data, event) {
             Holder.run();
             $(".fileinput").fileinput('clear');
 
-            self.currentAddressId(data.addressId());
-            self.currentAddressName(data.streetName() + ' ' + data.buildingNumber());
+            //self.currentAddressId(data.addressId());
+            //self.currentAddressName(data.streetName() + ' ' + data.buildingNumber());
             self.comment('');
-            self.reportDate('');
+            // self.reportDate('');
 
             $("#upload-popup").modal();
         };
@@ -102,11 +116,11 @@
             if (file) {
                 var formData = new FormData();
                 formData.append("file", file);
-                formData.append("addressId", data.currentAddressId());
+                formData.append("addressId", data.selectedAddress().addressId());
                 formData.append("comment", data.comment());
 
-                var reportDateStr = (new Date(data.reportDate())).toUTCString();
-                formData.append("reportDate", reportDateStr);
+                //var reportDateStr = (new Date(data.reportDate())).toUTCString();
+                //formData.append("reportDate", reportDateStr);
 
                 self.loadingFile(true);
 
@@ -158,7 +172,7 @@
         };
 
         self.showDeleteModal = function (data, event) {
-            self.selectedAddress(data);
+            // self.selectedAddress(data);
             $("#delete-popup").modal();
         };
 

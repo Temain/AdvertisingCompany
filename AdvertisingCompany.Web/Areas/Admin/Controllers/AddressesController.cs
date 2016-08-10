@@ -318,19 +318,19 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // DELETE: admin/api/addresses/5
         [HttpDelete]
         [Route("")]
-        [ResponseType(typeof(Client))]
+        [ResponseType(typeof(void))]
         public IHttpActionResult DeleteAddress(int id)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == id && x.DeletedAt == null)
+            var address = UnitOfWork.Repository<Address>()
+                .GetQ(x => x.AddressId == id && x.DeletedAt == null)
                 .SingleOrDefault();
-            if (client == null)
+            if (address == null)
             {
                 return NotFound();
             }
 
-            client.DeletedAt = DateTime.Now;
-            UnitOfWork.Repository<Client>().Update(client);
+            address.DeletedAt = DateTime.Now;
+            UnitOfWork.Repository<Address>().Update(address);
 
             try
             {
@@ -350,7 +350,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
             Logger.Info("Удаление адреса. AddressId={0}", id);
 
-            return Ok(client);
+            return Ok();
         }
 
         private bool AddressExists(int id)

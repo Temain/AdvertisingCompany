@@ -69,7 +69,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public IHttpActionResult GetClient(int id)
         {
             var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(includeProperties: "ActivityCategory", orderBy: o => o.OrderBy(p => p.ActivityCategory.ActivityCategoryName))
+                .Get(x => x.DeletedAt == null, 
+                    includeProperties: "ActivityCategory", 
+                    orderBy: o => o.OrderBy(p => p.ActivityCategory.ActivityCategoryName))
                 .ToList();
             var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
 
