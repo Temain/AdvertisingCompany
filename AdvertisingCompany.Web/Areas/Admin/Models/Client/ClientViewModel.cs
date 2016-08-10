@@ -88,7 +88,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.ClientStatusName, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusName))
                 .ForMember(m => m.ClientStatusLabelClass, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusLabelClass))
                 .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
-                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt.HasValue ? s.CreatedAt.Value.ToShortDateString() : ""));
+                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt.HasValue ? s.CreatedAt.Value.ToString("dd.MM.yyyy") : ""));
         }
     }
 }

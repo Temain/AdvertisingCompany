@@ -205,7 +205,8 @@
         self.setMicrodistrictsContent = function(option, item) {
             if (!item) return;
 
-            $(option).attr('title', item.microdistrictShortName());
+            $(option).text(item.microdistrictShortName());
+            $(option).attr('data-subtext', "<br/><span class='description'>" + item.microdistrictName() + "</span>");
 
             ko.applyBindingsToNode(option, {}, item);
         };

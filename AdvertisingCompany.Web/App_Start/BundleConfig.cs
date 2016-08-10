@@ -34,14 +34,14 @@
             // Note: No CDN support has been added here. Most likely you will want to customize your copy of bootstrap.
             bundles.Add(new StyleBundle(
                 "~/styles/app")
-                .Include("~/Content/bootstrap.min.css")
-                .Include("~/Content/styles.css"));
+                .Include("~/Content/bootstrap.css")
+                .Include("~/Content/styles.css", new CssRewriteUrlTransform()));
 
             // Font Awesome - Icons using font (http://fortawesome.github.io/Font-Awesome/).
             bundles.Add(new StyleBundle(
                 "~/styles/fa"/*,
                 ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl*/)
-                .Include("~/Content/font-awesome.min.css"));
+                .Include("~/Content/font-awesome.css"));
 
             bundles.Add(new StyleBundle("~/styles/gins")
                 .Include("~/Content/gins/application.css")
@@ -65,7 +65,8 @@
                 .Include("~/Content/datatables/jquery.dataTables.css"));
 
             bundles.Add(new StyleBundle("~/styles/kladr")
-                .Include("~/Content/kladr/jquery.kladr.min.css"));
+                .Include("~/Content/kladr/jquery.kladr.min.css")
+                .Include("~/Content/kladr/style.css"));
 
             bundles.Add(new StyleBundle("~/styles/magnific-popup")
                 .Include("~/Content/magnific-popup/magnific-popup.css"));
@@ -157,7 +158,7 @@
                 .Include("~/Scripts/filesize.min.js");
             bundles.Add(singBundle);
 
-            Bundle singLoginBundle = new ScriptBundle("~/bundles/sing-login")
+            Bundle singLoginBundle = new ScriptBundle("~/bundles/gins-login")
                 .Include("~/Scripts/bootstrap/transition.js")
                 .Include("~/Scripts/bootstrap/collapse.js")
                 .Include("~/Scripts/bootstrap/dropdown.js")

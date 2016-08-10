@@ -493,9 +493,7 @@
     <Content Include="Content\gins\application-ie9-part2.css" />
     <Content Include="Content\gins\application.commented.css" />
     <Content Include="Content\gins\application.css" />
-    <Content Include="Content\gins\application.min.css" />
     <Content Include="Content\gins\custom.css" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\styles.css">
       <DependentUpon>styles.less</DependentUpon>
     </Content>
@@ -672,7 +670,6 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Content\gins\application.min.css.bak" />
     <Content Include="Content\images\datatables\Sorting icons.psd" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\filesize.min.js" />
