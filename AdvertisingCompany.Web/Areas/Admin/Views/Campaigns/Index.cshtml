@@ -9,7 +9,13 @@
             <div class="dataTables_wrapper form-inline no-footer">
                 <div class="row mrgbtm12">
                     <div class="col-md-6 hidden-xs">
-                        <div class="dataTables_length" id="datatable-table_length">
+                        <div class="table-actions dataTables_length" id="datatable-table_length">
+                            <div class="btn-group" role="group" style="margin-right: 1em;" data-bind="if: selectedCampaign() != null" aria-label="...">
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedCampaign().clientId() + '/campaigns/' + selectedCampaign().campaignId() +'/edit' }, tooltip: { title: 'Перейти к редактированию информации о кампании', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedCampaign().clientId() + '/campaigns/' + selectedCampaign().campaignId() + '/reports' }, tooltip: { title: 'Просмотреть фотоотчёты выбранных микрорайонов', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-picture-o"></i></a>                               
+                                <a class="btn btn-default action" data-bind="tooltip: { title: 'Удалить рекламную кампанию', placement: 'bottom', trigger: 'hover' }, click : showDeleteModal"><i class="fa fa-trash-o" style="font-size: 1.2em;"></i></a>
+                            </div>
+
                             <label>
                                 Показать
                                 <select id="pageSize" class="form-control" title="" data-size="10" data-bind="selectPicker: pageSize, selectPickerOptions : { optionsArray : pageSizes, width: '70px' }, event : { change: pageSizeChanged }"></select>
@@ -35,20 +41,26 @@
                 <table class="table table-condensed table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th class="col-md-3">Клиент</th>
+                            <th style="width: 3%">&nbsp;#</th>
+                            <th class="col-md-4">Клиент</th>
                             <th class="col-md-2">Деятельность</th>
                             <th class="col-md-2">Микрорайоны</th>
                             <th class="col-md-1 text-center">Формат</th>
                             <th class="col-md-1 text-center">Стоимость</th>
                             <th class="col-md-1 text-center">Форма оплаты</th>
                             <th class="col-md-1">Статус оплаты</th>
-                            <th class="col-md-1 text-center">Редактирование</th>
+                            @*<th class="col-md-1 text-center">Редактирование</th>*@
                         </tr>
                     </thead>
                     <tbody data-bind="foreach: campaigns">
-                        <tr>
-                            <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
+                        <tr data-bind="css: { 'selected': $parent.isSelected($data) }">
+                            @*<td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>*@
+                            <td>
+                                <div class="checkbox">
+                                    <input type="checkbox" data-bind="attr: { id: 'checkbox' + campaignId() }, checked: $parent.isSelected($data), click: $parent.selectCampaign">
+                                    <label data-bind="attr: { for: 'checkbox' + campaignId() }"></label>
+                                </div>
+                            </td>
                             <td>
                                 <span data-bind="text: clientName"></span><br />
                                 <small data-bind="text: comment"></small>
@@ -68,26 +80,26 @@
                             <td>
                                 <select data-bind="attr: { 'data-style' : 'btn-' + paymentStatusLabelClass() }, selectPicker: paymentStatusId, selectPickerOptions: { optionsArray : $parent.paymentStatuses, initValue : paymentStatusInitialId, initialized : paymentStatusInitialized }, optionsValue: 'paymentStatusId', optionsText: 'paymentStatusName', event : { change : $parent.paymentStatusChanged }"></select>
                             </td>
-                            <td class="actions text-center">
-                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() + '/reports' }, tooltip: { title: 'Просмотреть фотоотчёты выбранных микрорайонов', placement: 'left', trigger: 'hover' }">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-picture-o fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() +'/edit' }, tooltip: { title: 'Перейти к редактированию информации о кампании', placement: 'left', trigger: 'hover' }">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                                <a href="#" data-bind="tooltip: { title: 'Удалить кампанию', placement: 'left', trigger: 'hover' }, click : $parent.showDeleteModal">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </td>
+                            @*<td class="actions text-center">
+                                    <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() + '/reports' }, tooltip: { title: 'Просмотреть фотоотчёты выбранных микрорайонов', placement: 'left', trigger: 'hover' }">
+                                        <span class="fa-stack">
+                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
+                                            <i class="fa fa-picture-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                    <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() +'/edit' }, tooltip: { title: 'Перейти к редактированию информации о кампании', placement: 'left', trigger: 'hover' }">
+                                        <span class="fa-stack">
+                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
+                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                    <a href="#" data-bind="tooltip: { title: 'Удалить кампанию', placement: 'left', trigger: 'hover' }, click : $parent.showDeleteModal">
+                                        <span class="fa-stack">
+                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
+                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
+                                </td>*@
                         </tr>
                     </tbody>
                 </table>

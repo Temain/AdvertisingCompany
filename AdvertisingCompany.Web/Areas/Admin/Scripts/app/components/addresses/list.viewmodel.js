@@ -194,10 +194,11 @@
                     });
                 },
                 success: function (response) {
+                    self.selectedAddress(null);
                     self.init();
                     $("#delete-popup").modal("hide");
                     $.notify({
-                        icon: 'fa fa-exclamation-triangle',
+                        icon: 'glyphicon glyphicon-ok',
                         message: "&nbsp;Адрес успешно удалён."
                     }, {
                         type: 'success'

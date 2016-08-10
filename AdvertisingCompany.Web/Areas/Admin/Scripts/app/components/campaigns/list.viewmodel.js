@@ -118,13 +118,27 @@
             self.loadCampaigns();
         }, 300);
 
+        self.selectCampaign = function (data) {
+            if (self.selectedCampaign() != null && self.selectedCampaign().campaignId() == data.campaignId()) {
+                self.selectedCampaign(null);
+            } else {
+                self.selectedCampaign(data);
+            }
+
+            return true;
+        };
+
+        self.isSelected = function (data) {
+            return self.selectedCampaign() != null && self.selectedCampaign() == data;
+        };
+
         self.init = function () {
             self.loadCampaigns();
             app.view(self);
         };
 
         self.showDeleteModal = function (data, event) {
-            self.selectedCampaign(data);
+            // self.selectedCampaign(data);
             $("#delete-popup").modal();
         };
 
@@ -146,10 +160,11 @@
                     });
                 },
                 success: function (response) {
+                    self.selectedCampaign(null);
                     self.init();
                     $("#delete-popup").modal("hide");
                     $.notify({
-                        icon: 'fa fa-exclamation-triangle',
+                        icon: 'glyphicon glyphicon-ok',
                         message: "&nbsp;Рекламная кампания успешно удалена."
                     }, {
                         type: 'success'

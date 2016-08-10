@@ -117,13 +117,27 @@
             self.loadClients();
         }, 300);
 
+        self.selectClient = function (data) {
+            if (self.selectedClient() != null && self.selectedClient().clientId() == data.clientId()) {
+                self.selectedClient(null);
+            } else {
+                self.selectedClient(data);
+            }
+
+            return true;
+        };
+
+        self.isSelected = function (data) {
+            return self.selectedClient() != null && self.selectedClient() == data;
+        };
+
         self.init = function () {
             self.loadClients();
             app.view(self);
         };
 
         self.showDeleteModal = function (data, event) {
-            self.selectedClient(data);
+            // self.selectedClient(data);
             $("#delete-popup").modal();
         };
 
@@ -145,6 +159,7 @@
                     });
                 },
                 success: function (response) {
+                    self.selectedClient(null);
                     self.init();
                     $("#delete-popup").modal("hide");
                     $.notify({
