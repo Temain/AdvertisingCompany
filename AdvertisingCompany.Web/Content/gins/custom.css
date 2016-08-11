@@ -218,3 +218,11 @@ button.dropdown-toggle {
 .popup-wrap {
     margin: 15px;  
 }
+
+/* Gallery
+ ----------------------------------------*/
+.gallery .remove {
+    display: inline-block;
+    float: right;
+    font-size: 1.4em;
+}

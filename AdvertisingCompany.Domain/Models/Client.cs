@@ -57,6 +57,7 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Электронная почта
         /// </summary>
+        [Required]
         public string Email { get; set; }
 
         /// <summary>

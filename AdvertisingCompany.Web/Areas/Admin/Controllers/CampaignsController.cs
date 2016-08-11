@@ -99,7 +99,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 .ToList();
             var paymentStatusViewModels = Mapper.Map<IEnumerable<PaymentStatus>, IEnumerable<PaymentStatusViewModel>>(paymentStatuses);
 
-            var placementMonths = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
+            var placementMonths = System.Globalization.CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.MonthNames
                 .Select((month, index) => new PlacementMonthViewModel { PlacementMonthId = index, PlacementMonthName = month })
                 .Where(x => !String.IsNullOrEmpty(x.PlacementMonthName));
 

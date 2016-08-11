@@ -1,6 +1,6 @@
 ﻿<div data-bind="visible: isInitialized">
     <ol class="breadcrumb">
-        <li>ВЫ ЗДЕСЬ</li>
+        <li>CRM</li>
         <li class="active">Отчёты</li>
     </ol>
     <div>
@@ -37,7 +37,8 @@
             <div class="thumbnail">
                 <a data-bind="attr: { href: 'api/reports/' + addressReportId() }"><img data-bind="attr: { src: 'data:' + imageMimeType() + ';base64,' + imageThumbnail() }" alt="..."></a>
                 <div class="caption">
-                    <h5 class="mt-0 mb-xs" data-bind="text: imageName"></h5>
+                    <h5 class="mt-0 mb-xs display-inline-block" data-bind="text: imageName"></h5>
+                    <div class="remove" style="display: inline-block;"><a href="#" data-bind="tooltip: { title: 'Удалить', placement: 'bottom', trigger: 'hover' }, click : $parent.showDeleteModal"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div>
                     <ul class="post-links">
                         <li><a>Дата : <span data-bind="text: reportDate"></span></a></li>
                         <li><a>Размер : <span data-bind="text: filesize(imageLength(), {base: 10, round: 0})"></span></a></li>
@@ -53,3 +54,5 @@
         <div class="col-sm-4 col-md-3 js-shuffle-sizer"></div>
     </div>
 </div>
+
+@Html.Partial("~/Areas/Admin/Views/Reports/_Delete.cshtml")

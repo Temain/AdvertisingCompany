@@ -628,7 +628,6 @@
     <Content Include="Areas\Admin\Views\Campaigns\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Analytics\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Reports\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Addresses\IndexOld.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ActivityTypes\Index.cshtml" />
@@ -644,6 +643,7 @@
     <Content Include="Areas\Admin\Views\ActivityTypes\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ActivityTypes\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Reports\_Delete.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

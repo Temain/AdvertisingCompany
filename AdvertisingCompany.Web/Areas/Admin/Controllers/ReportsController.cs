@@ -65,7 +65,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             if (addresses != null)
             {
                 var reports = addresses.SelectMany(x => x.Reports)
-                    .Where(x => x.CreatedAt != null && x.CreatedAt.Value.Month == DateTime.Now.Month)
+                    .Where(x => x.CreatedAt != null && x.DeletedAt == null && x.CreatedAt.Value.Month == DateTime.Now.Month)
                     .ToList();
                 var reportViewModels = Mapper.Map<List<AddressReport>, List<AddressReportViewModel>>(reports);
 

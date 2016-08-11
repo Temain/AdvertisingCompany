@@ -48,6 +48,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         [Display(Name = "Дополнительный номер телефона")]
         public string AdditionalPhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "Введите адрес электронной почты.")]
         [Display(Name = "Адрес электронной почты")]
         [EmailAddress]
         public string Email { get; set; }

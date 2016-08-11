@@ -1,7 +1,7 @@
 ﻿define([
-    'jquery', 'knockout', 'knockout.mapping', 'gins-gallery', 'file-size',
+    'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.tooltip', 'gins-gallery', 'file-size',
     'text!home/html/?path=~/areas/admin/views/reports/index.cshtml'
-], function($, ko, koMapping, initGallery, filesize, template) {
+], function($, ko, koMapping, bst, initGallery, filesize, template) {
 
     ko.mapping = koMapping;
     window.filesize = filesize;
@@ -10,6 +10,7 @@
         var self = this;
         self.isInitialized = ko.observable(false);
 
+        self.selectedReport = ko.observable();
         self.addressId = ko.observable('');
         self.campaignId = ko.observable('');
 
@@ -58,6 +59,43 @@
                     initGallery();
                 }
             });
+        };
+
+        self.showDeleteModal = function (data, event) {
+            self.selectedReport(data);
+            $("#delete-popup").modal();
+        };
+
+        self.deleteReport = function () {
+            $.ajax({
+                method: 'delete',
+                url: '/admin/api/reports/' + self.selectedReport().addressReportId(),
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                error: function (response) {
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'fa fa-exclamation-triangle',
+                        message: "Произошла ошибка при удалении файла."
+                    }, {
+                        type: 'danger'
+                    });
+                },
+                success: function (response) {                 
+                    self.init();
+                    $("#delete-popup").modal("hide");
+                    $.notify({
+                        icon: 'glyphicon glyphicon-ok',
+                        message: "&nbsp;Файл успешно удалён."
+                    }, {
+                        type: 'success'
+                    });
+                }
+            });
+
+            self.selectedReport(null);
         };
 
         self.init = function() {

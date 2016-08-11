@@ -168,6 +168,10 @@
     <Compile Include="Migrations\201608091107511_AddUpdatedFieldsToActivity.Designer.cs">
       <DependentUpon>201608091107511_AddUpdatedFieldsToActivity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608111558228_MakeEmailRequiredInClientTable.cs" />
+    <Compile Include="Migrations\201608111558228_MakeEmailRequiredInClientTable.Designer.cs">
+      <DependentUpon>201608111558228_MakeEmailRequiredInClientTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\ActivityType.cs" />
@@ -264,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608091107511_AddUpdatedFieldsToActivity.resx">
       <DependentUpon>201608091107511_AddUpdatedFieldsToActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608111558228_MakeEmailRequiredInClientTable.resx">
+      <DependentUpon>201608111558228_MakeEmailRequiredInClientTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

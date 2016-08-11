@@ -46,6 +46,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         [Display(Name = "Дополнительный номер телефона")]
         public string AdditionalPhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "Введите адрес электронной почты.")]
         [Display(Name = "Адрес электронной почты")]
         [EmailAddress]
         public string Email { get; set; }
@@ -55,7 +56,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Введите пароль.")]
-        [StringLength(100, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
