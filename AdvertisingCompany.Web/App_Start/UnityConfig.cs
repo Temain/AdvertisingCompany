@@ -52,7 +52,7 @@ namespace AdvertisingCompany.Web
                 new HierarchicalLifetimeManager());
 
             container.RegisterType<AccountController>(new InjectionConstructor());
-            container.RegisterType<ManageController>(new InjectionConstructor());
+            //container.RegisterType<ManageController>(new InjectionConstructor());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
         }
     }

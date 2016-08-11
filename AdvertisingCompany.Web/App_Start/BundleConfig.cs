@@ -43,6 +43,14 @@
                 ContentDeliveryNetwork.MaxCdn.FontAwesomeUrl*/)
                 .Include("~/Content/font-awesome.css"));
 
+            bundles.Add(new StyleBundle("~/styles/login")
+                .Include("~/Content/gins/application.css")
+                .Include("~/Content/gins/custom.css"));
+
+            bundles.Add(new StyleBundle("~/styles/login-ie9")
+                .Include("~/Content/gins/application-ie9-part2.css")
+                .Include("~/Content/gins/custom.css"));
+
             bundles.Add(new StyleBundle("~/styles/gins")
                 .Include("~/Content/gins/application.css")
                 .Include("~/Content/magnific-popup/magnific-popup.css")

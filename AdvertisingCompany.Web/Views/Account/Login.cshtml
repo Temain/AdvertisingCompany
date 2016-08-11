@@ -8,11 +8,11 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/styles/gins")
+    @Styles.Render("~/styles/login")
 
     <!-- as of IE9 cannot parse css files with more that 4K classes separating in two files -->
     <!--[if IE 9]>
-        @Styles.Render("~/styles/gins-ie9")
+        @Styles.Render("~/styles/login-ie9")
     <![endif]-->
 
     <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -38,24 +38,26 @@
                 <div class="col-lg-4 col-sm-6 col-xs-10 col-lg-offset-4 col-sm-offset-3 col-xs-offset-1">
                     @*<h4 class="widget-login-logo animated fadeInUp">
                         <i class="fa fa-circle text-gray"></i>
-                        рекламная компания                     
+                        Вход
                         <i class="fa fa-circle text-warning"></i>
                     </h4>*@
                     <section class="widget widget-login animated fadeInUp">
                         <header>
-                            <h3>Выполнить вход</h3>
+                            <h3>ООО "ИТ Альянс"</h3>
                         </header>
                         <div class="widget-body">
                             <p class="widget-login-info">
                                 Для входа введите имя пользователя и пароль.
                             </p>
-                            <p class="widget-login-info">
-                                @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
-                                {
+                            
+                            @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                            {
+                                <p class="widget-login-info">
                                     @Html.ValidationSummary(true)
                                     @*<div class="alert alert-danger" role="alert">@Html.ValidationSummary(true)</div>*@
-                                }
-                            </p>
+                                </p>
+                            }
+                                   
                             @using (Html.BeginForm("Login", "Account", new { returnurl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "login-form mt-lg", role = "form" }))
                             {
                                 @Html.AntiForgeryToken()
@@ -63,18 +65,14 @@
                                 <div class="form-group">
                                     @Html.TextBoxFor(m => m.UserName, "Логин", new { @class = "form-control", placeholder = "Имя пользователя" })
                                     @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
-                                    @*<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Имя пользователя">*@
                                 </div>
                                 <div class="form-group">
                                     @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Пароль" })
                                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                    @*<input class="form-control" id="pswd" type="text" placeholder="Пароль">*@
                                 </div>
                                 <div class="clearfix">
                                     <div class="btn-toolbar pull-right">
-                                        @*<button type="button" class="btn btn-default btn-sm">Create an Account</button>*@
                                         <button type="submit" value="Выполнить вход" class="btn btn-inverse btn-sm full-width"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Войти</button>
-                                        @*<a class="btn btn-inverse btn-sm" href="index.html">Войти</a>*@
                                     </div>
                                 </div>
                             }

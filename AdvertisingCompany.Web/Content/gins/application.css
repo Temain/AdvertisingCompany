@@ -26241,7 +26241,7 @@ a {
 
 input[type=search], input.search {
   background-color: white;
-  background: url(../images/sing/search.png) 5px 60% no-repeat white;
+  background: url(/Content/images/sing/search.png) 5px 60% no-repeat white;
 }
 input[type=search], .input-group-lg > input[type=search], .input-group-sm > input[type=search], input.search, .input-group-lg > input.search, .input-group-sm > input.search {
   padding-left: 26px;

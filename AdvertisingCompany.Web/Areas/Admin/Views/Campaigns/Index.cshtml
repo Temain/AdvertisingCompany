@@ -10,16 +10,16 @@
                 <div class="row mrgbtm12">
                     <div class="col-md-6 hidden-xs">
                         <div class="table-actions dataTables_length" id="datatable-table_length">
-                            <div class="btn-group" role="group" style="margin-right: 1em;" data-bind="if: selectedCampaign() != null" aria-label="...">
+                            <div class="btn-group" role="group" data-bind="if: selectedCampaign() != null, style: { marginRight: selectedCampaign() != null ? '1em' : '0' }" aria-label="...">
                                 <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedCampaign().clientId() + '/campaigns/' + selectedCampaign().campaignId() +'/edit' }, tooltip: { title: 'Перейти к редактированию информации о кампании', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-pencil"></i></a>
                                 <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedCampaign().clientId() + '/campaigns/' + selectedCampaign().campaignId() + '/reports' }, tooltip: { title: 'Просмотреть фотоотчёты выбранных микрорайонов', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-picture-o"></i></a>                               
                                 <a class="btn btn-default action" data-bind="tooltip: { title: 'Удалить рекламную кампанию', placement: 'bottom', trigger: 'hover' }, click : showDeleteModal"><i class="fa fa-trash-o" style="font-size: 1.2em;"></i></a>
                             </div>
 
                             <label>
-                                Показать
+                                @*Показать*@
                                 <select id="pageSize" class="form-control" title="" data-size="10" data-bind="selectPicker: pageSize, selectPickerOptions : { optionsArray : pageSizes, width: '70px' }, event : { change: pageSizeChanged }"></select>
-                                записей
+                                @*записей*@
                             </label>
                         </div>
                     </div>

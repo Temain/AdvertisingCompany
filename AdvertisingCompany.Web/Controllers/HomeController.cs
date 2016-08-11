@@ -30,7 +30,8 @@ namespace AdvertisingCompany.Web.Controllers
                 .Select(x => x.MicrodistrictId);
 
             var reports = UnitOfWork.Repository<AddressReport>()
-                .GetQ(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId) && x.DeletedAt == null
+                .GetQ(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId) 
+                    && x.Address.DeletedAt == null && x.DeletedAt == null
                     && x.CreatedAt.Value.Month == DateTime.Now.Month,
                     includeProperties: "Address, Address.Microdistrict, Address.Street.LocationType, Address.Building.LocationType")
                 .ToList();

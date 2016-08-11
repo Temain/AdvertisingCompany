@@ -451,12 +451,6 @@
     <Content Include="Content\highcharts\themes\skies.js" />
     <Content Include="Content\images\avatar.jpg" />
     <Content Include="Content\images\required.svg" />
-    <Content Include="Content\images\sing\a1.jpg" />
-    <Content Include="Content\images\sing\a2.jpg" />
-    <Content Include="Content\images\sing\a3.jpg" />
-    <Content Include="Content\images\sing\a4.jpg" />
-    <Content Include="Content\images\sing\a5.jpg" />
-    <Content Include="Content\images\sing\a6.jpg" />
     <Content Include="Content\images\datatables\back_disabled.png" />
     <Content Include="Content\images\datatables\back_enabled.png" />
     <Content Include="Content\images\datatables\back_enabled_hover.png" />
@@ -470,22 +464,6 @@
     <Content Include="Content\images\datatables\sort_desc.png" />
     <Content Include="Content\images\datatables\sort_desc_disabled.png" />
     <Content Include="Content\images\favicon.ico" />
-    <Content Include="Content\images\sing\pictures\1.jpg" />
-    <Content Include="Content\images\sing\pictures\10.jpg" />
-    <Content Include="Content\images\sing\pictures\11.jpg" />
-    <Content Include="Content\images\sing\pictures\13.jpg" />
-    <Content Include="Content\images\sing\pictures\14.jpg" />
-    <Content Include="Content\images\sing\pictures\15.jpg" />
-    <Content Include="Content\images\sing\pictures\16.jpg" />
-    <Content Include="Content\images\sing\pictures\17.jpg" />
-    <Content Include="Content\images\sing\pictures\18.jpg" />
-    <Content Include="Content\images\sing\pictures\2.jpg" />
-    <Content Include="Content\images\sing\pictures\3.jpg" />
-    <Content Include="Content\images\sing\pictures\4.jpg" />
-    <Content Include="Content\images\sing\pictures\5.jpg" />
-    <Content Include="Content\images\sing\pictures\6.jpg" />
-    <Content Include="Content\images\sing\pictures\8.jpg" />
-    <Content Include="Content\images\sing\pictures\9.jpg" />
     <Content Include="Content\images\sing\search.png" />
     <Content Include="Content\images\spinner.png" />
     <Content Include="Content\kladr\jquery.kladr.min.css" />
@@ -994,7 +972,6 @@
     <Folder Include="Scripts\pace\themes\silver\" />
     <Folder Include="Scripts\pace\themes\white\" />
     <Folder Include="Scripts\pace\themes\yellow\" />
-    <Folder Include="Views\Reports2\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Fonts\glyphicons-halflings-regular.woff" />

@@ -186,6 +186,9 @@ textarea.ko-field-validation-error {
     -o-transition: none;
     transition: none;
 }
+.dropdown-menu.open li.selected > a .text-muted {
+    color: #fff;
+}
 
 .dropdown-menu.open li > a:hover span {
     color: #fff;
