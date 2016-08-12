@@ -25,6 +25,8 @@
                                 <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedClient().clientId() + '/campaigns/create' }, tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-flag"></i></a>
                                 <!-- /ko -->
 
+                                <a class="btn btn-default action" data-bind="tooltip: { title: 'Изменить пароль клиента', placement: 'bottom', trigger: 'hover' }, click : showChangePasswordModal"><i class="glyphicon glyphicon-lock"></i></a>
+
                                 <a class="btn btn-default action" data-bind="tooltip: { title: 'Удалить клиента', placement: 'bottom', trigger: 'hover' }, click : showDeleteModal"><i class="fa fa-trash-o" style="font-size: 1.2em;"></i></a>
                             </div>
 
@@ -169,3 +171,4 @@
 </div>
 
 @Html.Partial("~/Areas/Admin/Views/Clients/_Delete.cshtml")
+@Html.Partial("~/Areas/Admin/Views/Clients/_ChangePassword.cshtml")

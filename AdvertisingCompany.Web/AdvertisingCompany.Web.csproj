@@ -286,6 +286,7 @@
     <Compile Include="Areas\Admin\Models\Campaign\PaymentOrderViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\PlacementMonthViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\PlacementFormatViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Client\ChangePasswordViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Client\ClientStatusViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Client\ClientViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\CreateAddressViewModel.cs" />
@@ -644,6 +645,7 @@
     <Content Include="Areas\Admin\Views\ActivityTypes\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Addresses\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Reports\_Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Clients\_ChangePassword.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

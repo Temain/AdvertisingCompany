@@ -88,12 +88,22 @@
             }
 
             var componentBody = $('#component .widget')[0];
-            ko.applyValidation(viewModel, componentBody);
-            ko.cleanNode(componentBody);
-            ko.applyBindingsToDescendants(viewModel, componentBody);
+            if (componentBody) {
+                ko.applyValidation(viewModel, componentBody);
+                ko.cleanNode(componentBody);
+                ko.applyBindingsToDescendants(viewModel, componentBody);
+            }
 
             if (selectpickers.length) {
                 $('.selectpicker').selectpicker('refresh');
+            }
+        };
+
+        self.applyElement = function (viewModel, elementBody) {
+            if (elementBody) {
+                ko.applyValidation(viewModel, elementBody);
+                ko.cleanNode(elementBody);
+                ko.applyBindingsToDescendants(viewModel, elementBody);
             }
         };
 

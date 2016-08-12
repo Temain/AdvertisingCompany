@@ -318,6 +318,12 @@ define(['jquery', 'knockout'], function ($, ko) {
 
         self.serverSideValidator.updateKoModel = startTraverseKoModel;
 
+        self.serverSideValidator.clearErrors = function (selector) {
+            $(selector + " *[" + self.serverSideValidator.getConfigOptions().uniqueAttributeName + "]").removeClass(self.serverSideValidator.getConfigOptions().inputValidationErrorClass);
+            $(selector + " *[data-bind^=" + self.serverSideValidator.getConfigOptions().serverValidationBinding + "]").html("").removeClass(self.serverSideValidator.getConfigOptions().fieldValidationErrorClass);
+            $(selector + " *[data-validate-uniqueid]").remove();
+        };
+
         /*
         Validate model and generate span bellow item with class ko-validate-error. 
         If self.serverSideValidator.showValidationMessageHandler(elem, message) is set, then this handler is used to put appropriate messages.

@@ -1,8 +1,9 @@
-﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker',
+﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'knockout.bindings.selectpicker',
     'knockout.bindings.tooltip', 'sammy', 'underscore', 'progress',
-    'text!home/html/?path=~/areas/admin/views/clients/index.cshtml'], function ($, ko, koMapping, bss, bst, sammy, _, progress, template) {
+    'text!home/html/?path=~/areas/admin/views/clients/index.cshtml'], function ($, ko, koMapping, koValidation, bss, bst, sammy, _, progress, template) {
 
     ko.mapping = koMapping;
+    ko.serverSideValidator = koValidation;
 
     function ClientsListViewModel(params) {
         var self = this;
@@ -16,6 +17,8 @@
         self.pageSize = ko.observable(10);
         self.searchQuery = ko.observable('');
         self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
+
+        self.changePasswordViewModel = new ChangePasswordViewModel();
 
         self.loadClients = function () {
             self.isInitialized(false);
@@ -128,7 +131,7 @@
         };
 
         self.isSelected = function (data) {
-            return self.selectedClient() != null && self.selectedClient() == data;
+            return self.selectedClient() != null && self.selectedClient().clientId() == data.clientId();
         };
 
         self.init = function () {
@@ -136,8 +139,80 @@
             app.view(self);
         };
 
+        self.showChangePasswordModal = function (data, event) {
+            var clientId = self.selectedClient().clientId();
+            self.changePasswordViewModel = new ChangePasswordViewModel();
+            self.changePasswordViewModel.clientId(clientId);
+
+            ko.serverSideValidator.clearErrors('#change-password-popup');
+
+            var modalBody = $('#change-password-form')[0];
+            app.applyElement(self.changePasswordViewModel, modalBody);
+
+            $('#change-password-popup').modal();
+        };
+
+        self.changePassword = function () {
+            var viewModel = self.changePasswordViewModel;
+            viewModel.isValidationEnabled(true);
+            var postData = ko.toJSON(viewModel);
+
+            $.ajax({
+                method: 'put',
+                url: '/admin/api/clients/' + self.selectedClient().clientId() + '/change_password',
+                data: postData,
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                error: function (response) {
+                    var responseText = response.responseText;
+                    if (responseText) {
+                        responseText = JSON.parse(responseText);
+                        var modelState = responseText.modelState;
+                        if (modelState && modelState.shared) {
+                            var message = '<strong>&nbsp;Пароль не изменён. Список ошибок:</strong><ul>';
+                            $.each(modelState.shared, function (index, error) {
+                                message += '<li>' + error + '</li>';
+                            });
+                            message += '</ul>';
+
+                            $.notify({
+                                icon: 'fa fa-exclamation-triangle fa-2x',
+                                message: message
+                            }, {
+                                type: 'danger'
+                            });
+
+                            return;
+                        }
+
+                        ko.serverSideValidator.validateModel(self.changePasswordViewModel, responseText);
+
+                        $.notify({
+                            icon: 'fa fa-exclamation-triangle',
+                            message: "&nbsp;Пожалуйста, исправьте ошибки."
+                        }, {
+                            type: 'danger',
+                            z_index: 9999
+                        });
+                    }
+                },
+                success: function (response) {
+                    viewModel.isValidationEnabled(false);
+                    $("#change-password-popup").modal("hide");
+                    $.notify({
+                        icon: 'glyphicon glyphicon-ok',
+                        message: "Пароль клиента успешно изменён."
+                    }, {
+                        type: 'success',
+                        z_index: 9999
+                    });
+                }
+            });
+        };
+
         self.showDeleteModal = function (data, event) {
-            // self.selectedClient(data);
             $("#delete-popup").modal();
         };
 
@@ -199,12 +274,34 @@
         self.comment = ko.observable(dataModel.comment || '');
     }
 
-    //function ClientStatusViewModel(dataModel) {
-    //    var self = this;
-    //    self.clientStatusId = ko.observable(dataModel.clientStatusId || '');
-    //    self.clientStatusName = ko.observable(dataModel.clientStatusName || '');
-    //    self.clientStatusLabelClass = ko.observable(dataModel.clientStatusLabelClass || '');
-    //}
+    function ChangePasswordViewModel(dataModel) {
+        var self = this;
+        if (!dataModel) {
+            dataModel = {};
+        }
+
+        self.isValidationEnabled = ko.observable(false);
+
+        self.clientId = ko.observable(dataModel.clientId || '').extend({
+            required: {
+                params: true
+            }
+        });;
+        self.password = ko.observable(dataModel.password || '').extend({
+            required: {
+                params: true,
+                message: "Введите пароль.",
+                onlyIf: function () { return self.isValidationEnabled(); }
+            }
+        });
+        self.confirmPassword = ko.observable(dataModel.confirmPassword || '').extend({
+            required: {
+                params: true,
+                message: "Введите подтверждение пароля.",
+                onlyIf: function () { return self.isValidationEnabled(); }
+            }
+        });
+    }
 
     var clientsListViewModel = new ClientsListViewModel();
 

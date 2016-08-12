@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
@@ -233,6 +234,38 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             Logger.Info("Изменение статуса клиента. ClientId={0}, OldStatusId={1}, NewStatusId={2}", oldStatusId, statusId);
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPut]
+        [Route("{clientId:int}/change_password")]
+        [KoJsonValidate]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult ChangePassword(ChangePasswordViewModel viewModel)
+        {
+            var client = UnitOfWork.Repository<Client>()
+                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
+                    includeProperties: "ApplicationUsers")
+                .SingleOrDefault();
+            if (client == null)
+            {
+                return BadRequest();
+            }
+
+            var account = client.ApplicationUsers.FirstOrDefault();
+            if (account != null)
+            {
+                UserManager.RemovePassword(account.Id);
+
+                var result = UserManager.AddPassword(account.Id, viewModel.Password);
+                if (result == IdentityResult.Success)
+                {
+                    Logger.Info("Изменение пароля клиента. ClientId={0}, ApplicationuserId = {1}", viewModel.ClientId, account.Id);
+
+                    return StatusCode(HttpStatusCode.OK);
+                }
+            }
+
+            return BadRequest(ModelState);
         }
 
         // DELETE: admin/api/clients/5
