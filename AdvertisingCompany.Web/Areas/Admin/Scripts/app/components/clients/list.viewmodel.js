@@ -1,9 +1,10 @@
 ﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'knockout.bindings.selectpicker',
-    'knockout.bindings.tooltip', 'sammy', 'underscore', 'progress',
-    'text!home/html/?path=~/areas/admin/views/clients/index.cshtml'], function ($, ko, koMapping, koValidation, bss, bst, sammy, _, progress, template) {
+    'knockout.bindings.tooltip', 'sammy', 'underscore', 'moment', 'progress',
+    'text!home/html/?path=~/areas/admin/views/clients/index.cshtml'], function ($, ko, koMapping, koValidation, bss, bst, sammy, _, moment, progress, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
+    window.moment = moment;
 
     function ClientsListViewModel(params) {
         var self = this;
@@ -132,6 +133,22 @@
 
         self.isSelected = function (data) {
             return self.selectedClient() != null && self.selectedClient().clientId() == data.clientId();
+        };
+
+        self.isMonthChanged = function (index, data) {
+            if (index) {
+                var prevRecordMonth = moment(self.clients()[index - 1].createdAt()).month();
+                var currentRecordMonth = moment(data.createdAt()).month();
+
+                return prevRecordMonth != currentRecordMonth;
+            }
+
+            return false;
+        };
+
+        self.monthNameAndYear = function (date) {
+            var result = moment(date).locale('ru').format('MMMM YYYY');
+            return result.charAt(0).toUpperCase() + result.slice(1);
         };
 
         self.init = function () {

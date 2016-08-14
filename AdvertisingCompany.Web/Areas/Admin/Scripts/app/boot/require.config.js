@@ -42,7 +42,8 @@
         'magnific-popup': 'scripts/magnific-popup/dist/jquery.magnific-popup.min',
         'modernizr': 'scripts/shuffle/dist/modernizr.custom.min',
         'shuffle': 'scripts/shuffle/dist/jquery.shuffle.modernizr.min',
-        'file-size': 'scripts/filesize.min'
+        'file-size': 'scripts/filesize.min',
+        'dropzone': 'scripts/dropzone/dropzone-amd-module'
     },
     shim: {
         'app': ['gins'],

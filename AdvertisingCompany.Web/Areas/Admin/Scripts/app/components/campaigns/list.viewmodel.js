@@ -1,10 +1,11 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker',
-    'knockout.bindings.tooltip', 'sammy', 'underscore', 'progress',
+    'knockout.bindings.tooltip', 'sammy', 'underscore', 'moment', 'progress',
     'text!home/html/?path=~/areas/admin/views/campaigns/index.cshtml'
-], function($, ko, koMapping, bss, bst, sammy, _, progress, template) {
+], function ($, ko, koMapping, bss, bst, sammy, _, moment, progress, template) {
 
     ko.mapping = koMapping;
+    window.moment = moment;
 
     function CampaignsListViewModel(params) {
         var self = this;
@@ -132,13 +133,28 @@
             return self.selectedCampaign() != null && self.selectedCampaign() == data;
         };
 
+        self.isMonthChanged = function (index, data) {
+            if (index) {
+                var prevRecordMonth = moment(self.campaigns()[index - 1].createdAt()).month();
+                var currentRecordMonth = moment(data.createdAt()).month();
+
+                return prevRecordMonth != currentRecordMonth;
+            }
+
+            return false;
+        };
+
+        self.monthNameAndYear = function (date) {
+            var result = moment(date).locale('ru').format('MMMM YYYY');
+            return result.charAt(0).toUpperCase() + result.slice(1);
+        };
+
         self.init = function () {
             self.loadCampaigns();
             app.view(self);
         };
 
         self.showDeleteModal = function (data, event) {
-            // self.selectedCampaign(data);
             $("#delete-popup").modal();
         };
 
@@ -195,6 +211,7 @@
         self.paymentStatusLabelClass = ko.observable(dataModel.paymentStatusLabelClass || '');
         self.paymentStatuses = ko.observableArray(dataModel.paymentStatuses || []);
         self.comment = ko.observable(dataModel.comment || '');
+        self.createdAt = ko.observable(dataModel.createdAt || '');
     }
 
     var campaignsListViewModel = new CampaignsListViewModel();

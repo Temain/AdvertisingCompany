@@ -49,12 +49,14 @@
                             <th class="col-md-1 text-center">Стоимость</th>
                             <th class="col-md-1 text-center">Форма оплаты</th>
                             <th class="col-md-1">Статус оплаты</th>
-                            @*<th class="col-md-1 text-center">Редактирование</th>*@
                         </tr>
                     </thead>
                     <tbody data-bind="foreach: campaigns">
+                        <!-- ko if: $parent.isMonthChanged($index(), $data) -->
+                        <tr class="delimiter"><td colspan="8" data-bind="text: $parent.monthNameAndYear($data.createdAt())">Месяц</td></tr>
+                        <!-- /ko -->
+
                         <tr data-bind="css: { 'selected': $parent.isSelected($data) }">
-                            @*<td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>*@
                             <td>
                                 <div class="checkbox">
                                     <input type="checkbox" data-bind="attr: { id: 'checkbox' + campaignId() }, checked: $parent.isSelected($data), click: $parent.selectCampaign">
@@ -80,26 +82,6 @@
                             <td>
                                 <select data-bind="attr: { 'data-style' : 'btn-' + paymentStatusLabelClass() }, selectPicker: paymentStatusId, selectPickerOptions: { optionsArray : $parent.paymentStatuses, initValue : paymentStatusInitialId, initialized : paymentStatusInitialized }, optionsValue: 'paymentStatusId', optionsText: 'paymentStatusName', event : { change : $parent.paymentStatusChanged }"></select>
                             </td>
-                            @*<td class="actions text-center">
-                                    <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() + '/reports' }, tooltip: { title: 'Просмотреть фотоотчёты выбранных микрорайонов', placement: 'left', trigger: 'hover' }">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                            <i class="fa fa-picture-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                    <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() +'/edit' }, tooltip: { title: 'Перейти к редактированию информации о кампании', placement: 'left', trigger: 'hover' }">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                    <a href="#" data-bind="tooltip: { title: 'Удалить кампанию', placement: 'left', trigger: 'hover' }, click : $parent.showDeleteModal">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </td>*@
                         </tr>
                     </tbody>
                 </table>

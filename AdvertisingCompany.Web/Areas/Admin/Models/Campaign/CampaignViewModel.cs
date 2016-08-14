@@ -63,6 +63,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
         /// </summary>
         public string Comment { get; set; }
 
+        /// <summary>
+        /// Дата создания
+        /// </summary>
+        public DateTime? CreatedAt { get; set; }
+
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Domain.Models.Campaign, CampaignViewModel>("Campaign")
@@ -76,6 +81,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                .ForMember(m => m.PaymentStatusId, opt => opt.MapFrom(s => s.PaymentStatusId))
                .ForMember(m => m.PaymentStatusName, opt => opt.MapFrom(s => s.PaymentStatus.PaymentStatusName))
                .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
+               .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt))
                .ForMember(m => m.PaymentStatusLabelClass, opt => opt.MapFrom(s => s.PaymentStatus.PaymentStatusLabelClass));
         }
     }

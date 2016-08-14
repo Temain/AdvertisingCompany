@@ -120,10 +120,21 @@ input.required {
     }
 }
 
-/* Tables
-------------------------------------------*/
+/***********************************/
+/**            TABLES             **/
+/***********************************/
 tr.selected {
     background-color: #eeeeee;
+}
+
+tr.delimiter {
+    text-align: center;
+    font-weight: 500;
+}
+
+tr.delimiter:hover,
+tr.delimiter > td:hover {
+    background: transparent !important;
 }
 
 td .bootstrap-select {
@@ -147,8 +158,9 @@ td .bootstrap-select button > span {
     font-size: 1.1em;
 }
 
-/* Knockout validation
-------------------------------------------*/
+/***********************************/
+/**      KNOCKOUT VALIDATION      **/
+/***********************************/
 span.ko-field-validation-error {
     color: #dd5826;
 }
@@ -162,8 +174,9 @@ textarea.ko-field-validation-error {
     border: 1px solid #dd5826;
 }
 
-/* Selectpicker
-------------------------------------------*/
+/***********************************/
+/**       BOOTSTRAP SELECT        **/
+/***********************************/
 .dropdown-menu.open {
     border: 1px solid #5897fb;
     /*border-top: none;*/
@@ -198,14 +211,16 @@ button.dropdown-toggle {
     border-radius: 2px;
 }
 
-/* Bootstrap notify
------------------------------------------*/
+/***********************************/
+/**       BOOTSTRAP NOTIFY        **/
+/***********************************/
 .alert-minimalist {
 	border-radius: 3px;
 }
 
-/* Magnific popup
- ----------------------------------------*/
+/***********************************/
+/**        MAGNIFIC POPUP         **/
+/***********************************/
 .white-popup {
   position: relative;
   background: #FFF;
@@ -219,8 +234,9 @@ button.dropdown-toggle {
     margin: 15px;  
 }
 
-/* Gallery
- ----------------------------------------*/
+/***********************************/
+/**            GALLERY            **/
+/***********************************/
 .gallery .remove {
     display: inline-block;
     float: right;

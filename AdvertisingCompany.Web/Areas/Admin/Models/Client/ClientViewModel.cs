@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AdvertisingCompany.Web.Models.Mapping;
 
@@ -61,7 +62,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         /// <summary>
         /// Дата создания записи
         /// </summary>
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         /// <summary>
         /// Комментарий
@@ -88,7 +89,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.ClientStatusName, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusName))
                 .ForMember(m => m.ClientStatusLabelClass, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusLabelClass))
                 .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
-                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt.HasValue ? s.CreatedAt.Value.ToString("dd.MM.yyyy") : ""));
+                // .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt.HasValue ? s.CreatedAt.Value.ToString("dd.MM.yyyy") : ""))
+                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt));
         }
     }
 }

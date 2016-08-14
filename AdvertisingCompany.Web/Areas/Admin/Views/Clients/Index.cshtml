@@ -64,12 +64,14 @@
                             <th class="col-md-1">Логин</th>
                             <th class="col-md-1">Статус</th>
                             <th class="col-md-1 hidden-xs">Добавлен</th>
-                            @*<th class="col-md-1 text-center">Редактирование</th>*@
                         </tr>
                     </thead>
                     <tbody data-bind="foreach: clients">
+                        <!-- ko if: $parent.isMonthChanged($index(), $data) -->
+                            <tr class="delimiter"><td colspan="9" data-bind="text: $parent.monthNameAndYear($data.createdAt())">Месяц</td></tr>
+                        <!-- /ko -->
+
                         <tr data-bind="css: { 'selected': $parent.isSelected($data) }">
-                            @*<td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>*@
                             <td>
                                 <div class="checkbox">
                                     <input type="checkbox" data-bind="attr: { id: 'checkbox' + clientId() }, checked: $parent.isSelected($data), click: $parent.selectClient">
@@ -96,37 +98,7 @@
                             <td>
                                 <select data-bind="attr: { 'data-style' : 'btn-' + clientStatusLabelClass() }, selectPicker: clientStatusId, selectPickerOptions: { optionsArray : $parent.clientStatuses, initValue : clientStatusInitialId, initialized : clientStatusInitialized }, optionsValue: 'clientStatusId', optionsText: 'clientStatusName', event : { change : $parent.clientStatusChanged }"></select>
                             </td>
-                            <td class="hidden-xs" data-bind="text: createdAt"></td>
-                            @*<td class="actions text-center">
-                                    <!-- ko if: campaignId() -->
-                                    <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() + '/edit' }, tooltip: { title: 'Перейти к редактированию рекламной кампании', placement: 'left', trigger: 'hover' }">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                            <i class="fa fa-flag-checkered fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                    <!-- /ko -->
-                                    <!-- ko ifnot: campaignId() -->
-                                    <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/create' }, tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'left', trigger: 'hover' }">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                            <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                    <!-- /ko -->
-                                    <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/edit' }, tooltip: { title: 'Перейти к редактированию информации о клиенте', placement: 'left', trigger: 'hover' }">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                    <a href="#" data-bind="tooltip: { title: 'Удалить клиента', placement: 'left', trigger: 'hover' }, click : $parent.showDeleteModal">
-                                        <span class="fa-stack">
-                                            <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </td>*@
+                            <td class="hidden-xs" data-bind="text: moment(createdAt()).locale('ru').format('L')"></td>
                         </tr>
                     </tbody>
                 </table>
