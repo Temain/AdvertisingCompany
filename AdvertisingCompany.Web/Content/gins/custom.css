@@ -242,3 +242,21 @@ button.dropdown-toggle {
     float: right;
     font-size: 1.4em;
 }
+
+/***********************************/
+/**            DROPZONE           **/
+/***********************************/
+.dropzone {
+    border-radius: 2px;
+}
+
+.dropzone .dz-preview:hover .dz-progress{
+    display: none;
+}
+
+/***********************************/
+/**    DELETE AND UPLOAD MODALS   **/
+/***********************************/
+#upload-popup .modal-dialog {
+    width: 682px;
+}

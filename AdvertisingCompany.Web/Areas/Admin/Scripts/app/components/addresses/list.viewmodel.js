@@ -1,7 +1,8 @@
 ﻿define([
-    'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker', 'knockout.bindings.tooltip', 'holder', 'file-input', 'progress',
+    'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker',
+    'knockout.bindings.tooltip', 'holder', 'dropzone', 'progress',
     'text!home/html/?path=~/areas/admin/views/addresses/index.cshtml'
-], function($, ko, koMapping, bss, bst, holder, fileInput, progress, template) {
+], function($, ko, koMapping, bss, bst, holder, Dropzone, progress, template) {
 
     ko.mapping = koMapping;
 
@@ -16,12 +17,10 @@
         self.pageSizes = ko.observableArray([10, 25, 50, 100, 200]);
         self.pageSize = ko.observable(10);
         self.searchQuery = ko.observable('');
-        self.loadingFile = ko.observable(false);
+        self.loadingFiles = ko.observable(false);
 
         // Для загрузки отчётов
-        //self.currentAddressName = ko.observable('');
-        //self.currentAddressId = ko.observable('');
-        //self.reportDate = ko.observable('');
+        self.imageDropzone;
         self.comment = ko.observable('');
 
         self.loadAddresses = function() {
@@ -96,83 +95,67 @@
             return self.selectedAddress() != null && self.selectedAddress() == data;
         };
 
-        self.showUploadModal = function(data, event) {
-            Holder.run();
-            $(".fileinput").fileinput('clear');
+        self.showUploadModal = function (data, event) {
+            if (self.imageDropzone != null) {
+                self.imageDropzone.destroy();
+            }
 
-            //self.currentAddressId(data.addressId());
-            //self.currentAddressName(data.streetName() + ' ' + data.buildingNumber());
+            self.imageDropzone = new Dropzone("div#imageDropzone", { url: "/admin/api/reports/" });
             self.comment('');
-            // self.reportDate('');
-
             $("#upload-popup").modal();
         };
 
-        self.uploadFile = function(data, event) {
-            var element = $("#upload-popup");
-            var fileUpload = element.find('.file-upload');
-            var fileInput = $(fileUpload).find('.fileinput-hidden');
-            var file = fileInput[0].files[0];
-            if (file) {
-                var formData = new FormData();
-                formData.append("file", file);
+        self.uploadFiles = function (data, event) {
+
+            self.imageDropzone.on('sending', function (file, xhr, formData) {
                 formData.append("addressId", data.selectedAddress().addressId());
                 formData.append("comment", data.comment());
+            });
 
-                //var reportDateStr = (new Date(data.reportDate())).toUTCString();
-                //formData.append("reportDate", reportDateStr);
+            self.imageDropzone.on("success", function (file, response) {
+                self.imageDropzone.options.autoProcessQueue = true;
+            });
 
-                self.loadingFile(true);
-
-                $.ajax({
-                    url: "/admin/api/reports/",
-                    type: "POST",
-                    data: formData,
-                    contentType: false,
-                    headers: {
-                        'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
-                    },
-                    processData: false,
-                    error: function(response) {
-                        self.loadingFile(false);
-                        $("#upload-popup").modal("hide");
-                        $.notify({
-                            icon: 'fa fa-exclamation-triangle',
-                            message: "Произошла ошибка при загрузке отчёта."
-                        }, {
-                            type: 'danger'
-                        });
-                    },
-                    success: function(response) {
-                        self.loadingFile(false);
-                        $("#upload-popup").modal("hide");
-                        $.notify({
-                            icon: 'glyphicon glyphicon-ok',
-                            message: "Отчёт успешно загружен."
-                        }, {
-                            type: 'success'
-                        });
-                    }
+            self.imageDropzone.on("error", function (file, response) {
+                self.loadingFiles(false);
+                $.notify({
+                    icon: 'fa fa-exclamation-triangle',
+                    message: "Произошла ошибка при загрузке файла."
+                }, {
+                    type: 'danger',
+                    z_index: 99999
                 });
+            });
+
+            self.imageDropzone.on("complete", function (file) {
+                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                    self.imageDropzone.destroy();
+                    self.loadingFiles(false);
+                    $("#upload-popup").modal("hide");
+
+                    $.notify({
+                        icon: 'glyphicon glyphicon-ok',
+                        message: "Файлы успешно загружены."
+                    }, {
+                        type: 'success'
+                    });
+                }
+            });
+
+            if (self.imageDropzone.getQueuedFiles().length > 0) {
+                self.loadingFiles(true);
+                self.imageDropzone.processQueue();
+            } else {
+                self.imageDropzone.uploadFiles([]);
             }
         };
 
         self.init = function () {
-            // Заглушка ошибки при скрытых элементах для holder.js
-            Holder.invisible_error_fn = function (fn) {
-                return function (el) {
-                    setTimeout(function () {
-                        fn.call(this, el);
-                    }, 10);
-                }
-            }
-
             self.loadAddresses();
             app.view(self);
         };
 
         self.showDeleteModal = function (data, event) {
-            // self.selectedAddress(data);
             $("#delete-popup").modal();
         };
 
@@ -209,6 +192,20 @@
 
         return self;
     }
+
+    Dropzone.options.imageDropzone = {
+        url: '/admin/api/reports/',
+        autoProcessQueue: false,
+        paramName: "file", 
+        acceptedFiles: ".jpg, .png, .jpeg",
+        headers: {
+            'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+        },
+        addRemoveLinks: true,
+        dictRemoveFile: 'Удалить',
+        dictCancelUpload: 'Отмена',
+        dictCancelUploadConfirmation: 'Вы действительно хотите отмениь загрузку файлов?'
+    };
 
     function AddressViewModel(dataModel) {
         var self = this;

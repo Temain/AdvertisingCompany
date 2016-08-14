@@ -379,6 +379,7 @@
     <Content Include="Areas\Admin\Static\clients\edit.html" />
     <Content Include="Areas\Admin\Static\clients\index.html" />
     <Content Include="Areas\Admin\Static\reports\index.html" />
+    <Content Include="Content\dropzone\dropzone.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\shadow_header.png" />
