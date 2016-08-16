@@ -164,7 +164,7 @@
                     self.isValidationEnabled(false);
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
-                        message: "Клиент успешно сохранён."
+                        message: "Клиент успешно сохранён.<br/>На email клиента отправлено письмо с учётными данными."
                     }, {
                         type: 'success'
                     });

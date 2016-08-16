@@ -156,7 +156,7 @@ namespace AdvertisingCompany.Web.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
+                    ModelState.AddModelError("", "Неверный логин или пароль.");
                     return View(model);
             }
         }

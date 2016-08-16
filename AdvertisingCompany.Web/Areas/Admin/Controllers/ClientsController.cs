@@ -156,12 +156,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public IHttpActionResult PostClient(CreateClientViewModel viewModel)
+        public async Task<IHttpActionResult> PostClient(CreateClientViewModel viewModel)
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
 
             var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
-            var result = UserManager.Create(user, viewModel.Password);
+            var result = await UserManager.CreateAsync(user, viewModel.Password);
             if (result.Succeeded)
             {
                 if (!RoleManager.RoleExists("Client"))
@@ -176,6 +176,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
                 user.ClientId = client.ClientId;
                 UserManager.Update(user);
+
+                await UserManager.SendEmailAsync(user.Id, "ООО \"ИТ Альянс\"",
+                    String.Format("Ваши учётные данные для доступа к просмотру фотоотчётов: <br/> Логин:{0} <br/>Пароль: {1}", viewModel.UserName, viewModel.Password));
             }
             else
             {
