@@ -27,7 +27,7 @@
                 data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     progress.hide();
@@ -90,7 +90,7 @@
                 url: '/api/admin/activity/categories/' + self.selectedCategory().activityCategoryId(),
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) {
                     $("#delete-popup").modal("hide");
@@ -124,15 +124,15 @@
         self.activityCategoryName = ko.observable(activityCategoryViewModel.activityCategoryName || '');
     }
 
-    var activityCategoriesListViewModel = new ActivityCategoriesListViewModel();
+    var activityCategoriesList = new ActivityCategoriesListViewModel();
 
     app.addViewModel({
         name: "activity-categories",
         bindingMemberName: "activityCategoriesList",
-        viewItem: activityCategoriesListViewModel
+        instance: activityCategoriesList
     });
 
-    activityCategoriesListViewModel.init();
+    activityCategoriesList.init();
 
-    return { viewModel: { instance: activityCategoriesListViewModel }, template: template };
+    return { viewModel: { instance: activityCategoriesList }, template: template };
 });

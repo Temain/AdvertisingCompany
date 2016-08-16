@@ -382,8 +382,7 @@
     <Content Include="Areas\Admin\App\Components\Clients\edit.js" />
     <Content Include="Areas\Admin\App\Components\Clients\index.js" />
     <Content Include="Areas\Admin\App\Components\Analytics\index.js" />
-    <Content Include="Areas\Admin\App\app.datamodel.js" />
-    <Content Include="Areas\Admin\App\app.viewmodel.js" />
+    <Content Include="Areas\Admin\App\app.js" />
     <Content Include="Areas\Admin\App\Components\Clients\create.js" />
     <Content Include="Areas\Admin\App\Components\Reports\index.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />

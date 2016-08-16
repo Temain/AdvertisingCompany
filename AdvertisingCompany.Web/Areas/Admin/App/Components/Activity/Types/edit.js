@@ -41,7 +41,7 @@
                 url: '/api/admin/activity/types/' + activityTypeId,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) { },
                 success: function (response) {
@@ -64,7 +64,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -113,15 +113,15 @@
         }
     }
 
-    var editActivityTypeViewModel = new EditActivityTypeViewModel();
+    var editActivityType = new EditActivityTypeViewModel();
 
     app.addViewModel({
         name: "activity-type-edit",
         bindingMemberName: "editActivityType",
-        viewItem: editActivityTypeViewModel
+        instance: editActivityType
     });
 
-    editActivityTypeViewModel.init();
+    editActivityType.init();
 
-    return { viewModel: { instance: editActivityTypeViewModel }, template: template };
+    return { viewModel: { instance: editActivityType }, template: template };
 });

@@ -178,7 +178,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         // DELETE: admin/api/reports/5
         [HttpDelete]
-        [Route("")]
+        [Route("{id:int}")]
         [ResponseType(typeof(AddressReport))]
         public IHttpActionResult DeleteReport(int id)
         {

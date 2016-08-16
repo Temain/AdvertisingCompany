@@ -33,7 +33,7 @@
                 data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     progress.hide();
@@ -164,7 +164,7 @@
                 url: '/api/admin/addresses/' + self.selectedAddress().addressId(),
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) {
                     $("#delete-popup").modal("hide");
@@ -198,7 +198,7 @@
         paramName: "file", 
         acceptedFiles: ".jpg, .png, .jpeg",
         headers: {
-            'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+            'Authorization': 'Bearer ' + app.getAccessToken()
         },
         addRemoveLinks: true,
         dictRemoveFile: 'Удалить',
@@ -206,29 +206,29 @@
         dictCancelUploadConfirmation: 'Вы действительно хотите отмениь загрузку файлов?'
     };
 
-    function AddressViewModel(dataModel) {
+    function AddressViewModel(address) {
         var self = this;
 
-        self.addressId = ko.observable(dataModel.addressId || '');
-        self.managementCompanyName = ko.observable(dataModel.managementCompanyName || '');
-        self.microdistrictShortName = ko.observable(dataModel.microdistrictShortName || '');
-        self.streetName = ko.observable(dataModel.streetName || '');
-        self.buildingNumber = ko.observable(dataModel.buildingNumber || '');
-        self.numberOfEntrances = ko.observable(dataModel.numberOfEntrances || '');
-        self.numberOfSurfaces = ko.observable(dataModel.numberOfSurfaces || '');
-        self.numberOfFloors = ko.observable(dataModel.numberOfFloors || '');
-        self.contractDate = ko.observable(dataModel.contractDate || '');
+        self.addressId = ko.observable(address.addressId || '');
+        self.managementCompanyName = ko.observable(address.managementCompanyName || '');
+        self.microdistrictShortName = ko.observable(address.microdistrictShortName || '');
+        self.streetName = ko.observable(address.streetName || '');
+        self.buildingNumber = ko.observable(address.buildingNumber || '');
+        self.numberOfEntrances = ko.observable(address.numberOfEntrances || '');
+        self.numberOfSurfaces = ko.observable(address.numberOfSurfaces || '');
+        self.numberOfFloors = ko.observable(address.numberOfFloors || '');
+        self.contractDate = ko.observable(address.contractDate || '');
     }
 
-    var addressesListViewModel = new AddressesListViewModel();
+    var addressesList = new AddressesListViewModel();
 
     app.addViewModel({
         name: "addresses",
         bindingMemberName: "addressesList",
-        viewItem: addressesListViewModel
+        instance: addressesList
     });
 
-    addressesListViewModel.init();
+    addressesList.init();
 
-    return { viewModel: { instance: addressesListViewModel }, template: template };
+    return { viewModel: { instance: addressesList }, template: template };
 });

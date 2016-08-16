@@ -1,12 +1,13 @@
-﻿define(['jquery', 'knockout', 'sammy', 'routes', 'components',
-    'knockout.validation.server-side', 'common', 'underscore',
-    'app-data'], function ($, ko, sammy, routes, components, koValidation, common, _, dataModel)
+﻿define(['jquery', 'knockout', 'sammy', 'routes', 'components', 'knockout.validation.server-side',
+    'common', 'underscore'], function ($, ko, sammy, routes, components, koValidation, common, _)
 {
-    function AppViewModel(dataModel) {
+    function AppViewModel() {
         var self = this;
 
-        self.dataModel = dataModel;
-        // self.view = ko.observable();
+        self.userInfoUrl = "/api/Me";
+        self.siteUrl = "/admin/";
+        self.returnUrl = self.siteUrl;
+
         self.views = {};
         self.routes = routes;
         self.isInitialized = ko.observable(false);
@@ -20,6 +21,14 @@
             }
         });
 
+        self.setAccessToken = function (accessToken) {
+            sessionStorage.setItem("accessToken", accessToken);
+        };
+
+        self.getAccessToken = function () {
+            return sessionStorage.getItem("accessToken");
+        };
+
         function cleanUpLocation() {
             window.location.hash = "";
 
@@ -29,16 +38,14 @@
         }
 
         self.addViewModel = function (options) {
-            self.views[options.name] = options.viewItem;
-
-            var navigator;
+            self.views[options.name] = options.instance;
 
             self[options.bindingMemberName] = ko.computed(function () {
-                if (!dataModel.getAccessToken()) {
+                if (!self.getAccessToken()) {
                     var fragment = window.common.getFragment();
                     if (fragment.access_token) {
                         window.location.hash = fragment.state || '';
-                        dataModel.setAccessToken(fragment.access_token);
+                        self.setAccessToken(fragment.access_token);
 
                         self.isInitialized(true);
                     } else {
@@ -50,16 +57,6 @@
 
                 return self.views[options.name];
             });
-
-            if (typeof (options.navigatorFactory) !== "undefined") {
-                navigator = options.navigatorFactory(self, dataModel);
-            } else {
-                navigator = function () {
-                    window.location.hash = options.bindingMemberName;
-                };
-            }
-
-            self["navigateTo" + options.name] = navigator;
         };
 
         self.applyComponent = function (viewModel) {
@@ -114,21 +111,21 @@
         }
     }
 
-    var appViewModel = new AppViewModel(dataModel);
+    var appViewModel = new AppViewModel();
 
     // Добавляем модель представления чтобы получить access_token
     // При отсутствии access_token'a происходит перенаправление на метод authorize 
     appViewModel.addViewModel({
         name: "loading",
         bindingMemberName: "loading",
-        viewItem: {}
+        instance: {}
     });
 
     // После перенаправления получаем access_token
     appViewModel.addViewModel({
         name: "loaded",
         bindingMemberName: "loaded",
-        viewItem: {}
+        instance: {}
     });
 
     return appViewModel;

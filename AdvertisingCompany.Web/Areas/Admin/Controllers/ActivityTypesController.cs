@@ -160,7 +160,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         // DELETE: admin/api/activity/categories/5
         [HttpDelete]
-        [Route("")]
+        [Route("{id:int}")]
         [ResponseType(typeof(ActivityType))]
         public IHttpActionResult DeleteActivityType(int id)
         {

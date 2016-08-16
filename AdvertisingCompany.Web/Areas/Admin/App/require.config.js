@@ -2,8 +2,7 @@
     baseUrl: '/',
     waitSeconds: 14, // default: 7
     paths: {
-        'app': 'areas/admin/app/app.viewmodel',
-        'app-data': 'areas/admin/app/app.datamodel',
+        'app': 'areas/admin/app/app',
         'routes': 'areas/admin/app/routes.config',
         'components': 'areas/admin/app/components.config',
         'bootstrap': 'scripts/bootstrap/bootstrap.min',

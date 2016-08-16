@@ -91,7 +91,7 @@
                 url: '/api/admin/clients/0',
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {},
                 success: function (response) {
@@ -119,7 +119,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -189,15 +189,15 @@
         return copy;
     }
 
-    var createClientViewModel = new CreateClientViewModel();
+    var createClient = new CreateClientViewModel();
 
     app.addViewModel({
         name: "client-create",
         bindingMemberName: "createClient",
-        viewItem: createClientViewModel
+        instance: createClient
     });
 
-    createClientViewModel.init();
+    createClient.init();
 
-    return { viewModel: { instance: createClientViewModel }, template: template };
+    return { viewModel: { instance: createClient }, template: template };
 });

@@ -38,7 +38,7 @@
                 url: '/api/admin/activity/types/0',
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {},
                 success: function (response) {
@@ -59,7 +59,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -108,15 +108,15 @@
         }
     }
 
-    var createActivityTypeViewModel = new CreateActivityTypeViewModel();
+    var createActivityType = new CreateActivityTypeViewModel();
 
     app.addViewModel({
         name: "activity-type-create",
         bindingMemberName: "createActivityType",
-        viewItem: createActivityTypeViewModel
+        instance: createActivityType
     });
 
-   createActivityTypeViewModel.init();
+    createActivityType.init();
 
-   return { viewModel: { instance: createActivityTypeViewModel }, template: template };
+    return { viewModel: { instance: createActivityType }, template: template };
 });

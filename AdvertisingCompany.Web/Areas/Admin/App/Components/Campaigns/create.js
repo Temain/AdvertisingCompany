@@ -80,7 +80,7 @@
                 url: '/api/admin/clients/' + clientId + '/campaigns/0',
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) { },
                 success: function (response) {
@@ -111,7 +111,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -179,15 +179,15 @@
         return copy;
     }
 
-    var createCampaignViewModel = new CreateCampaignViewModel();
+    var createCampaign = new CreateCampaignViewModel();
 
     app.addViewModel({
         name: "campaign-create",
         bindingMemberName: "createCampaign",
-        viewItem: createCampaignViewModel
+        instance: createCampaign
     });
 
-    createCampaignViewModel.init();
+    createCampaign.init();
 
-    return { viewModel: { instance: createCampaignViewModel }, template: template };
+    return { viewModel: { instance: createCampaign }, template: template };
 });

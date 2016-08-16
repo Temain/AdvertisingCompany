@@ -10,7 +10,7 @@
                 url: '/api/admin/analytics',
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 success: function (data) {
                     self.status('Состояние: ' + data);
@@ -21,15 +21,15 @@
         return self;
     }
 
-    var analyticsViewModel = new AnalyticsViewModel();
+    var analytics = new AnalyticsViewModel();
 
     app.addViewModel({
         name: "analytics",
         bindingMemberName: "analytics",
-        viewItem: analyticsViewModel
+        instance: analytics
     });
 
-    analyticsViewModel.init();
+    analytics.init();
 
-    return { viewModel: { instance: analyticsViewModel }, template: template };
+    return { viewModel: { instance: analytics }, template: template };
 });

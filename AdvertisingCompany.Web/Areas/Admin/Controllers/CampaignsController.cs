@@ -63,7 +63,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         // GET: admin/api/clients/5/campaigns/0 (new) or admin/api/clients/5/campaigns/8 (edit)
         [HttpGet]
-        [Route("~/admin/api/clients/{clientId:int}/campaigns/{campaignId:int}")]
+        [Route("~/api/admin/clients/{clientId:int}/campaigns/{campaignId:int}")]
         [ResponseType(typeof(CreateCampaignViewModel))]
         // [ResponseType(typeof(EditCampaignViewModel))]
         public IHttpActionResult GetCampaign(int clientId, int campaignId)
@@ -187,7 +187,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         // POST: admin/api/clients/5/campaigns
         [HttpPost]
-        [Route("~/admin/api/clients/{clientId:int}/campaigns")]
+        [Route("~/api/admin/clients/{clientId:int}/campaigns")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
         public IHttpActionResult PostCampaign([FromUri] int clientId, [FromBody] CreateCampaignViewModel viewModel)
@@ -277,7 +277,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         // DELETE: admin/api/campaigns/5
         [HttpDelete]
-        [Route("")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Client))]
         public IHttpActionResult DeleteCampaign(int id)
         {

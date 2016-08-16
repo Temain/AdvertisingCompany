@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -160,32 +161,43 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
 
-            var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
-            var result = UserManager.Create(user, viewModel.Password);
-            if (result.Succeeded)
+            try
             {
-                if (!RoleManager.RoleExists("Client"))
+                var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
+                var result = UserManager.Create(user, viewModel.Password);
+                if (result.Succeeded)
                 {
-                    RoleManager.Create(new ApplicationRole { Name = "Client" });
+                    if (!RoleManager.RoleExists("Client"))
+                    {
+                        RoleManager.Create(new ApplicationRole { Name = "Client" });
+                    }
+
+                    UserManager.AddToRole(user.Id, "Client");
+
+                    UnitOfWork.Repository<Client>().Insert(client);
+                    UnitOfWork.Save();
+
+                    user.ClientId = client.ClientId;
+                    UserManager.Update(user);
+
+                    UserManager.SendEmail(user.Id, "ООО \"ИТ Альянс\"",
+                        String.Format("Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1}", viewModel.UserName, viewModel.Password));
                 }
-
-                UserManager.AddToRole(user.Id, "Client");
-
-                UnitOfWork.Repository<Client>().Insert(client);
-                UnitOfWork.Save();
-
-                user.ClientId = client.ClientId;
-                UserManager.Update(user);
-
-                UserManager.SendEmail(user.Id, "ООО \"ИТ Альянс\"",
-                    String.Format("Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1}", viewModel.UserName, viewModel.Password));
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("Shared", error);
+                    }
+                }
             }
-            else
+            catch (SmtpException smtp)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("Shared", error);
-                }
+                ModelState.AddModelError("Shared", "Произошла ошибка при отправке письма с учётными данными. " + smtp.Message);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Shared", ex.Message);
             }
 
             // См. атрибут KoJsonValidate 
@@ -273,7 +285,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         // DELETE: admin/api/clients/5
         [HttpDelete]
-        [Route("")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Client))]
         public IHttpActionResult DeleteClient(int id)
         {

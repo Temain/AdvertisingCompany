@@ -31,7 +31,7 @@
                 data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) {
                     progress.hide();
@@ -83,7 +83,7 @@
                     // data: JSON.stringify({ clientId: client.clientId(), statusId: client.clientStatusId() }),
                     contentType: "application/json; charset=utf-8",
                     headers: {
-                        'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                        'Authorization': 'Bearer ' + app.getAccessToken()
                     },
                     error: function (response) {
                         $.notify({
@@ -179,7 +179,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) {
                     var responseText = response.responseText;
@@ -238,7 +238,7 @@
                 url: '/api/admin/clients/' + self.selectedClient().clientId(),
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) {
                     $("#delete-popup").modal("hide");
@@ -266,51 +266,51 @@
         return self;
     }
 
-    function ClientViewModel(dataModel) {
+    function ClientViewModel(client) {
         var self = this;
 
-        self.clientId = ko.observable(dataModel.clientId || '');
-        self.campaignId = ko.observable(dataModel.campaignId || '')
-        self.companyName = ko.observable(dataModel.companyName || '');
-        self.activityTypeId = ko.observable(dataModel.activityTypeId || '');
-        self.activityTypeName = ko.observable(dataModel.activityTypeName || '');
-        self.activityCategoryName = ko.observable(dataModel.activityCategoryName || '');
-        self.responsiblePersonId = ko.observable(dataModel.responsiblePersonId || '');
-        self.responsiblePersonShortName = ko.observable(dataModel.responsiblePersonShortName || '');
-        self.phoneNumber = ko.observable(dataModel.phoneNumber || '');
-        self.additionalPhoneNumber = ko.observable(dataModel.additionalPhoneNumber || '');
-        self.email = ko.observable(dataModel.email || '');
-        self.userNames = ko.observableArray(dataModel.userNames || []);
-        self.clientStatusId = ko.observable(dataModel.clientStatusId || '');
-        self.clientStatusInitialId = ko.observable(dataModel.clientStatusId || '');
+        self.clientId = ko.observable(client.clientId || '');
+        self.campaignId = ko.observable(client.campaignId || '')
+        self.companyName = ko.observable(client.companyName || '');
+        self.activityTypeId = ko.observable(client.activityTypeId || '');
+        self.activityTypeName = ko.observable(client.activityTypeName || '');
+        self.activityCategoryName = ko.observable(client.activityCategoryName || '');
+        self.responsiblePersonId = ko.observable(client.responsiblePersonId || '');
+        self.responsiblePersonShortName = ko.observable(client.responsiblePersonShortName || '');
+        self.phoneNumber = ko.observable(client.phoneNumber || '');
+        self.additionalPhoneNumber = ko.observable(client.additionalPhoneNumber || '');
+        self.email = ko.observable(client.email || '');
+        self.userNames = ko.observableArray(client.userNames || []);
+        self.clientStatusId = ko.observable(client.clientStatusId || '');
+        self.clientStatusInitialId = ko.observable(client.clientStatusId || '');
         self.clientStatusInitialized = ko.observable(false);
-        self.clientStatusName = ko.observable(dataModel.clientStatusName || '');
-        self.clientStatusLabelClass = ko.observable(dataModel.clientStatusLabelClass || '');
-        self.createdAt = ko.observable(dataModel.createdAt || '');
-        self.comment = ko.observable(dataModel.comment || '');
+        self.clientStatusName = ko.observable(client.clientStatusName || '');
+        self.clientStatusLabelClass = ko.observable(client.clientStatusLabelClass || '');
+        self.createdAt = ko.observable(client.createdAt || '');
+        self.comment = ko.observable(client.comment || '');
     }
 
-    function ChangePasswordViewModel(dataModel) {
+    function ChangePasswordViewModel(changePassword) {
         var self = this;
-        if (!dataModel) {
-            dataModel = {};
+        if (!changePassword) {
+            changePassword = {};
         }
 
         self.isValidationEnabled = ko.observable(false);
 
-        self.clientId = ko.observable(dataModel.clientId || '').extend({
+        self.clientId = ko.observable(changePassword.clientId || '').extend({
             required: {
                 params: true
             }
         });;
-        self.password = ko.observable(dataModel.password || '').extend({
+        self.password = ko.observable(changePassword.password || '').extend({
             required: {
                 params: true,
                 message: "Введите пароль.",
                 onlyIf: function () { return self.isValidationEnabled(); }
             }
         });
-        self.confirmPassword = ko.observable(dataModel.confirmPassword || '').extend({
+        self.confirmPassword = ko.observable(changePassword.confirmPassword || '').extend({
             required: {
                 params: true,
                 message: "Введите подтверждение пароля.",
@@ -319,15 +319,15 @@
         });
     }
 
-    var clientsListViewModel = new ClientsListViewModel();
+    var clientsList = new ClientsListViewModel();
 
     app.addViewModel({
         name: "clients",
         bindingMemberName: "clientsList",
-        viewItem: clientsListViewModel
+        instance: clientsList
     });
 
-    clientsListViewModel.init();
+    clientsList.init();
 
-    return { viewModel: { instance: clientsListViewModel }, template: template };
+    return { viewModel: { instance: clientsList }, template: template };
 });

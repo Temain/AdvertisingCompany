@@ -27,7 +27,7 @@
                 data: { addressId: self.addressId(), campaignId: self.campaignId() },
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {},
                 success: function(response) {
@@ -71,7 +71,7 @@
                 url: '/api/admin/reports/' + self.selectedReport().addressReportId(),
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) {
                     $("#delete-popup").modal("hide");
@@ -116,30 +116,30 @@
         return self;
     }
 
-    function AddressReportViewModel(dataModel) {
+    function AddressReportViewModel(addressReport) {
         var self = this;
 
-        self.addressReportId = ko.observable(dataModel.addressReportId || '');
-        self.reportDate = ko.observable(dataModel.reportDate || '');
-        self.addressId = ko.observable(dataModel.addressId || '');
-        self.comment = ko.observable(dataModel.comment || '');
-        self.imageName = ko.observable(dataModel.imageName || '');
-        self.imageLength = ko.observable(dataModel.imageLength || '');
-        self.imageData = ko.observable(dataModel.imageData || ''); 
-        self.imageThumbnail = ko.observable(dataModel.imageThumbnail || '');
-        self.imageMimeType = ko.observable(dataModel.imageMimeType || '');
-        self.createdAt = ko.observable(dataModel.createdAt || '');
+        self.addressReportId = ko.observable(addressReport.addressReportId || '');
+        self.reportDate = ko.observable(addressReport.reportDate || '');
+        self.addressId = ko.observable(addressReport.addressId || '');
+        self.comment = ko.observable(addressReport.comment || '');
+        self.imageName = ko.observable(addressReport.imageName || '');
+        self.imageLength = ko.observable(addressReport.imageLength || '');
+        self.imageData = ko.observable(addressReport.imageData || '');
+        self.imageThumbnail = ko.observable(addressReport.imageThumbnail || '');
+        self.imageMimeType = ko.observable(addressReport.imageMimeType || '');
+        self.createdAt = ko.observable(addressReport.createdAt || '');
     }
 
-    var reportsListViewModel = new ReportsListViewModel();
+    var reportsList = new ReportsListViewModel();
 
     app.addViewModel({
         name: "reports",
         bindingMemberName: "reportsList",
-        viewItem: reportsListViewModel
+        instance: reportsList
     });
 
-    reportsListViewModel.init();
+    reportsList.init();
 
-    return { viewModel: { instance: reportsListViewModel }, template: template };
+    return { viewModel: { instance: reportsList }, template: template };
 });

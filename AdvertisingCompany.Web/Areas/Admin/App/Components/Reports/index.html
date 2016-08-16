@@ -35,7 +35,7 @@
 
         <div class="col-sm-4 col-md-3 gallery-item shuffle-item filtered" data-groups="[&quot;nature&quot;]" data-title="Mountains">
             <div class="thumbnail">
-                <a data-bind="attr: { href: 'api/reports/' + addressReportId() }"><img data-bind="attr: { src: 'data:' + imageMimeType() + ';base64,' + imageThumbnail() }" alt="..."></a>
+                <a data-bind="attr: { href: '/api/admin/reports/' + addressReportId() }"><img data-bind="attr: { src: 'data:' + imageMimeType() + ';base64,' + imageThumbnail() }" alt="..."></a>
                 <div class="caption">
                     <h5 class="mt-0 mb-xs display-inline-block" data-bind="text: imageName"></h5>
                     <div class="remove" style="display: inline-block;"><a href="#" data-bind="tooltip: { title: 'Удалить', placement: 'bottom', trigger: 'hover' }, click : $parent.showDeleteModal"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div>

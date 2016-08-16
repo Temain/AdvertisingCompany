@@ -30,7 +30,7 @@
                 data: { query: self.searchQuery() || '', page: self.page(), pageSize: self.pageSize() },
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     progress.hide();
@@ -81,7 +81,7 @@
                     url: '/api/admin/campaigns/' + campaign.campaignId() + '/paymentstatus/' + campaign.paymentStatusId(),
                     contentType: "application/json; charset=utf-8",
                     headers: {
-                        'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                        'Authorization': 'Bearer ' + app.getAccessToken()
                     },
                     error: function(response) {
                         $.notify({
@@ -163,7 +163,7 @@
                 url: '/api/admin/campaigns/' + self.selectedCampaign().campaignId(),
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) {
                     $("#delete-popup").modal("hide");
@@ -191,37 +191,37 @@
         return self;
     }
 
-    function CampaignViewModel(dataModel) {
+    function CampaignViewModel(campaign) {
         var self = this;
 
-        self.campaignId = ko.observable(dataModel.campaignId || '');
-        self.clientId = ko.observable(dataModel.clientId || '');
-        self.clientName = ko.observable(dataModel.clientName || '');
-        self.activityTypeName = ko.observable(dataModel.activityTypeName || '');
-        self.activityCategoryName = ko.observable(dataModel.activityCategoryName || '');
-        self.microdistrictNames = ko.observableArray(dataModel.microdistrictNames || []);
-        self.placementFormatName = ko.observable(dataModel.placementFormatName || '');
-        self.placementCost = ko.observable(dataModel.placementCost || '');
-        self.paymentOrderName = ko.observable(dataModel.paymentOrderName || '');
-        self.paymentStatusId = ko.observable(dataModel.paymentStatusId || '');
-        self.paymentStatusInitialId = ko.observable(dataModel.paymentStatusId || '');
+        self.campaignId = ko.observable(campaign.campaignId || '');
+        self.clientId = ko.observable(campaign.clientId || '');
+        self.clientName = ko.observable(campaign.clientName || '');
+        self.activityTypeName = ko.observable(campaign.activityTypeName || '');
+        self.activityCategoryName = ko.observable(campaign.activityCategoryName || '');
+        self.microdistrictNames = ko.observableArray(campaign.microdistrictNames || []);
+        self.placementFormatName = ko.observable(campaign.placementFormatName || '');
+        self.placementCost = ko.observable(campaign.placementCost || '');
+        self.paymentOrderName = ko.observable(campaign.paymentOrderName || '');
+        self.paymentStatusId = ko.observable(campaign.paymentStatusId || '');
+        self.paymentStatusInitialId = ko.observable(campaign.paymentStatusId || '');
         self.paymentStatusInitialized = ko.observable(false);
-        self.paymentStatusName = ko.observable(dataModel.paymentStatusName || '');
-        self.paymentStatusLabelClass = ko.observable(dataModel.paymentStatusLabelClass || '');
-        self.paymentStatuses = ko.observableArray(dataModel.paymentStatuses || []);
-        self.comment = ko.observable(dataModel.comment || '');
-        self.createdAt = ko.observable(dataModel.createdAt || '');
+        self.paymentStatusName = ko.observable(campaign.paymentStatusName || '');
+        self.paymentStatusLabelClass = ko.observable(campaign.paymentStatusLabelClass || '');
+        self.paymentStatuses = ko.observableArray(campaign.paymentStatuses || []);
+        self.comment = ko.observable(campaign.comment || '');
+        self.createdAt = ko.observable(campaign.createdAt || '');
     }
 
-    var campaignsListViewModel = new CampaignsListViewModel();
+    var campaignsList = new CampaignsListViewModel();
 
     app.addViewModel({
         name: "campaigns",
         bindingMemberName: "campaignsList",
-        viewItem: campaignsListViewModel
+        instance: campaignsList
     });
 
-    campaignsListViewModel.init();
+    campaignsList.init();
 
-    return { viewModel: { instance: campaignsListViewModel }, template: template };
+    return { viewModel: { instance: campaignsList }, template: template };
 });

@@ -317,7 +317,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         // DELETE: admin/api/addresses/5
         [HttpDelete]
-        [Route("")]
+        [Route("{id:int}")]
         [ResponseType(typeof(void))]
         public IHttpActionResult DeleteAddress(int id)
         {

@@ -32,7 +32,7 @@
                 url: '/api/admin/activity/categories/' + activityCategoryId,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) { },
                 success: function (response) {
@@ -52,7 +52,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -100,15 +100,15 @@
         }
     }
 
-    var editActivityCategoryViewModel = new EditActivityCategoryViewModel();
+    var editActivityCategory = new EditActivityCategoryViewModel();
 
     app.addViewModel({
         name: "activity-category-edit",
         bindingMemberName: "editActivityCategory",
-        viewItem: editActivityCategoryViewModel
+        instance: editActivityCategory
     });
 
-    editActivityCategoryViewModel.init();
+    editActivityCategory.init();
 
-    return { viewModel: { instance: editActivityCategoryViewModel }, template: template };
+    return { viewModel: { instance: editActivityCategory }, template: template };
 });

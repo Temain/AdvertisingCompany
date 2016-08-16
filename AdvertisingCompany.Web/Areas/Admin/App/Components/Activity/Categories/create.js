@@ -29,7 +29,7 @@
                 url: '/api/admin/activity/categories/0',
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {},
                 success: function (response) {
@@ -50,7 +50,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -98,15 +98,15 @@
         }
     }
 
-    var createActivityCategoryViewModel = new CreateActivityCategoryViewModel();
+    var createActivityCategory = new CreateActivityCategoryViewModel();
 
     app.addViewModel({
         name: "activity-category-create",
         bindingMemberName: "createActivityCategory",
-        viewItem: createActivityCategoryViewModel
+        instance: createActivityCategory
     });
 
-    createActivityCategoryViewModel.init();
+    createActivityCategory.init();
 
-    return { viewModel: { instance: createActivityCategoryViewModel }, template: template };
+    return { viewModel: { instance: createActivityCategory }, template: template };
 });

@@ -100,7 +100,7 @@
                 url: '/api/admin/addresses/' + addressId,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) { },
                 success: function (response) {
@@ -153,8 +153,8 @@
         self.setMicrodistrictOptionContent = function(option, item) {
             if (!item) return;
 
-            $(option).text(item.microdistrictName);
-            $(option).attr('data-subtext', "<br/><span class='description'>" + item.microdistrictShortName + "</span>");
+            $(option).text(item.microdistrictShortName);
+            $(option).attr('data-subtext', "<br/><span class='description'>" + item.microdistrictName + "</span>");
 
             ko.applyBindingsToNode(option, {}, item);
         };
@@ -205,7 +205,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -254,16 +254,16 @@
         }
     }
 
-    function LocationViewModel(dataModel) {
+    function LocationViewModel(location) {
         var self = this;
-        self.id = ko.observable(dataModel.id || '');
-        self.contentType = ko.observable(dataModel.contentType || '');
-        self.name = ko.observable(dataModel.name || '');
-        self.type = ko.observable(dataModel.type || '');
-        self.typeShort = ko.observable(dataModel.typeShort || '');
-        self.zip = ko.observable(dataModel.zip || '');
-        self.okato = ko.observable(dataModel.okato || '');
-        self.parent = dataModel.parents != null && dataModel.parents.length ? $(dataModel.parents).last()[0] : '';
+        self.id = ko.observable(location.id || '');
+        self.contentType = ko.observable(location.contentType || '');
+        self.name = ko.observable(location.name || '');
+        self.type = ko.observable(location.type || '');
+        self.typeShort = ko.observable(location.typeShort || '');
+        self.zip = ko.observable(location.zip || '');
+        self.okato = ko.observable(location.okato || '');
+        self.parent = location.parents != null && location.parents.length ? $(location.parents).last()[0] : '';
     }
 
     EditAddressViewModel.prototype.toJSON = function() {
@@ -272,15 +272,15 @@
         return copy;
     }
 
-    var editAddressViewModel = new EditAddressViewModel();
+    var editAddress = new EditAddressViewModel();
 
     app.addViewModel({
         name: "address-edit",
         bindingMemberName: "editAddress",
-        viewItem: editAddressViewModel
+        instance: editAddress
     });
 
-    editAddressViewModel.init();
+    editAddress.init();
 
-    return { viewModel: { instance: editAddressViewModel }, template: template };
+    return { viewModel: { instance: editAddress }, template: template };
 });

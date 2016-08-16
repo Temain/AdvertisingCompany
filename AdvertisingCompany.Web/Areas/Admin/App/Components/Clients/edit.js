@@ -90,7 +90,7 @@
                 url: '/api/admin/clients/' + clientId,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function (response) { },
                 success: function (response) {
@@ -122,7 +122,7 @@
                 data: postData,
                 contentType: "application/json; charset=utf-8",
                 headers: {
-                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                    'Authorization': 'Bearer ' + app.getAccessToken()
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -187,15 +187,15 @@
         return copy;
     }
 
-    var editClientViewModel = new EditClientViewModel();
+    var editClient = new EditClientViewModel();
 
     app.addViewModel({
         name: "client-edit",
         bindingMemberName: "editClient",
-        viewItem: editClientViewModel
+        instance: editClient
     });
 
-    editClientViewModel.init();
+    editClient.init();
 
-    return { viewModel: { instance: editClientViewModel }, template: template };
+    return { viewModel: { instance: editClient }, template: template };
 });
