@@ -1,12 +1,12 @@
 ﻿<div data-bind="visible: isInitialized">
     <ol class="breadcrumb">
-        <li>ВЫ ЗДЕСЬ</li>
+        <li>CRM</li>
         <li>Справочники</li>
         <li class="active">Виды деятельности</li>
     </ol>
     <h1 class="page-title">Виды деятельности</h1>
     <div class="mrgbtm24">
-        <a href="/admin/#activities/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить</a>
+        <a href="/admin/#activity/types/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить</a>
     </div>
     <section class="widget">
         <div class="widget-body">
@@ -40,27 +40,27 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th class="col-md-6">Категория</th>
                             <th class="col-md-5">Вид</th>
+                            <th class="col-md-6">Категория</th>
                             <th class="col-md-1 text-center">Редактирование</th>
                         </tr>
                     </thead>
-                    <tbody data-bind="foreach: activities">
+                    <tbody data-bind="foreach: types">
                         <tr>
                             <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
-                            <td data-bind="text: activityCategory"></td>
                             <td data-bind="text: activityTypeName"></td>
+                            <td data-bind="text: activityCategoryName"></td>
                             <td class="actions text-center">
-                                <a href="#" data-bind="attr : { href : '/admin/#activities/' + activityTypeId() + '/edit' }, tooltip: { title: 'Перейти к редактированию', placement: 'left', trigger: 'hover' }">
+                                <a href="#" data-bind="attr : { href : '/admin/#activity/types/' + activityTypeId() + '/edit' }, tooltip: { title: 'Перейти к редактированию', placement: 'left', trigger: 'hover' }">
                                     <span class="fa-stack">
                                         <i class="fa fa-circle fa-stack-2x text-usual"></i>
                                         <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
-                                <a href="#" data-bind="tooltip: { title: 'Удалить', placement: 'left', trigger: 'hover' }">
+                                <a href="#" data-bind="tooltip: { title: 'Удалить', placement: 'left', trigger: 'hover' }, click : $parent.showDeleteModal">
                                     <span class="fa-stack">
                                         <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-times fa-stack-1x fa-inverse"></i>
+                                        <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
                             </td>
@@ -68,10 +68,10 @@
                     </tbody>
                 </table>
 
-                <!-- ko if: activities().length > 0 -->
+                <!-- ko if: types().length > 0 -->
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + activities().length) + ' из ' + ((pagesCount() - 1) * pageSize() + activities().length) + ' записей'"></div>
+                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + types().length) + ' из ' + ((pagesCount() - 1) * pageSize() + types().length) + ' записей'"></div>
                     </div>
                     <div class="col-md-6">
                         <!-- ko if: pagesCount() > 1 -->
@@ -105,4 +105,30 @@
             </div>
         </div>
     </section>
+</div>
+
+<!-- Delete modal -->
+<div id="delete-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2>Удаление</h2>
+            </div>
+            <div class="modal-body">
+                <div data-bind="if: selectedType() != null">
+                    Вы действительно хотите удалить вид деятельности
+                    <span data-bind="text: selectedType().activityTypeName()"></span>?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row mrgtop12">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Отмена</button>
+                        <button type="submit" class="btn btn-danger" data-bind="click: deleteType"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

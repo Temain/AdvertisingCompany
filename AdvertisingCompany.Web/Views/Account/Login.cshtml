@@ -52,10 +52,10 @@
                             
                             @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
                             {
-                                <p class="widget-login-info">
+                                <div class="login-errors mrgtop12">
                                     @Html.ValidationSummary(true)
                                     @*<div class="alert alert-danger" role="alert">@Html.ValidationSummary(true)</div>*@
-                                </p>
+                                </div>
                             }
                                    
                             @using (Html.BeginForm("Login", "Account", new { returnurl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "login-form mt-lg", role = "form" }))

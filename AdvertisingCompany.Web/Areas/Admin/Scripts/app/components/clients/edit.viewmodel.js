@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy',
-    'knockout.bindings.selectpicker', 'text!home/html/?path=~/areas/admin/views/clients/edit.cshtml'
+    'knockout.bindings.selectpicker', 'text!/areas/admin/static/clients/edit.html'
 ], function($, ko, koMapping, koValidation, sammy, bss, template) {
 
     ko.mapping = koMapping;
@@ -104,7 +104,6 @@
 
                     ko.mapping.fromJS(response, mappings, self);
                     app.applyComponent(self);
-                    app.view(self);
 
                     // TODO: Найти способ задать значение во время маппинга
                     self.activityTypeInitialId(response.activityTypeId);

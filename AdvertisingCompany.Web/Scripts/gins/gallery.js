@@ -15,9 +15,9 @@ var initGallery = function() {
                 setupSorting();
                 setupSearching();
 
-                SingApp.onResize(function() {
-                    $grid.shuffle('update');
-                });
+                //SingApp.onResize(function() {
+                //    $grid.shuffle('update');
+                //});
 
                 // instantiate the plugin
                 $grid.shuffle({
@@ -25,7 +25,7 @@ var initGallery = function() {
                     sizer: $sizer
                 });
 
-
+                $grid.shuffle('update');
             },
 
             // Set up button clicks

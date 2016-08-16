@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy', 'knockout.bindings.selectpicker',
-     'text!home/html/?path=~/areas/admin/views/activityTypes/edit.cshtml'
+     'text!/areas/admin/static/activityTypes/edit.html'
 ], function($, ko, koMapping, koValidation, sammy, bss, template) {
 
     ko.mapping = koMapping;
@@ -47,7 +47,6 @@
                 success: function (response) {
                     ko.mapping.fromJS(response, {}, self);
                     app.applyComponent(self);
-                    app.view(self);
 
                     self.activityCategoryInitialId(response.activityCategoryId);
                     self.activityCategoryId(response.activityCategoryId);

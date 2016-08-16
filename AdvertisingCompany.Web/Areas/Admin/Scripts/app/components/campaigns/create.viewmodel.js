@@ -1,7 +1,7 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side',
     'knockout.bindings.selectpicker', 'sammy', 'underscore',
-    'text!home/html/?path=~/areas/admin/views/campaigns/create.cshtml'
+    'text!/areas/admin/static/campaigns/create.html'
 ], function($, ko, koMapping, koValidation, bss, sammy, _, template) {
 
     ko.mapping = koMapping;
@@ -97,7 +97,6 @@
                     self.clientId(clientId);
 
                     app.applyComponent(self);
-                    app.view(self);
                 }
             });
         };

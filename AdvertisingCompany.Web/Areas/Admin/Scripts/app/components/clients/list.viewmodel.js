@@ -1,6 +1,6 @@
 ﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'knockout.bindings.selectpicker',
     'knockout.bindings.tooltip', 'sammy', 'underscore', 'moment', 'progress',
-    'text!home/html/?path=~/areas/admin/views/clients/index.cshtml'], function ($, ko, koMapping, koValidation, bss, bst, sammy, _, moment, progress, template) {
+    'text!/areas/admin/static/clients/index.html'], function ($, ko, koMapping, koValidation, bss, bst, sammy, _, moment, progress, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
@@ -153,7 +153,6 @@
 
         self.init = function () {
             self.loadClients();
-            app.view(self);
         };
 
         self.showChangePasswordModal = function (data, event) {

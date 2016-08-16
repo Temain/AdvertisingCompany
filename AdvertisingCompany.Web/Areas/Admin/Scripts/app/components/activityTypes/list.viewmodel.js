@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker', 'knockout.bindings.tooltip', 'progress',
-    'text!home/html/?path=~/areas/admin/views/activityTypes/index.cshtml'
+    'text!/areas/admin/static/activityTypes/index.html'
 ], function($, ko, koMapping, bss, bst, progress, template) {
 
     ko.mapping = koMapping;
@@ -76,7 +76,6 @@
         }, 300);
 
         self.init = function() {
-            app.view(self);
             self.loadActivityTypes();
         };
 

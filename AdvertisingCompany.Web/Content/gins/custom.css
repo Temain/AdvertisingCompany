@@ -260,3 +260,18 @@ button.dropdown-toggle {
 #upload-popup .modal-dialog {
     width: 682px;
 }
+
+/***********************************/
+/**            LOGIN              **/
+/***********************************/
+.login-errors .validation-summary-errors {
+    color: #dd5826;
+    border: 1px solid #dd5826;
+    border-radius: 3px;
+}
+
+.login-errors .validation-summary-errors ul {
+    list-style: none;
+    padding-left: 15px;
+    margin-bottom: 0;
+}

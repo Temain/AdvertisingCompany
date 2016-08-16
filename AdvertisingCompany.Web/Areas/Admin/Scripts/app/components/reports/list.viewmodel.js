@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.tooltip', 'gins-gallery', 'file-size',
-    'text!home/html/?path=~/areas/admin/views/reports/index.cshtml'
+    'text!/areas/admin/static/reports/index.html'
 ], function($, ko, koMapping, bst, initGallery, filesize, template) {
 
     ko.mapping = koMapping;
@@ -55,8 +55,7 @@
                     }
 
                     self.isInitialized(true);
-                    app.view(self);
-                    initGallery();
+                    initGallery();                   
                 }
             });
         };

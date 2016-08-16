@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy',
-    'knockout.bindings.selectpicker', 'text!home/html/?path=~/areas/admin/views/clients/create.cshtml'
+    'knockout.bindings.selectpicker', 'text!/areas/admin/static/clients/create.html'
 ], function ($, ko, koMapping, koValidation, sammy, bss, template) {
 
     ko.mapping = koMapping;
@@ -105,7 +105,6 @@
                     };
                     ko.mapping.fromJS(response, mappings, self);
                     app.applyComponent(self);
-                    app.view(self);
                 }
             });
         };

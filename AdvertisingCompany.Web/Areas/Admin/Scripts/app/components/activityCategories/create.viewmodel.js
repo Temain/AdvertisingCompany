@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy',
-    'text!home/html/?path=~/areas/admin/views/activityCategories/create.cshtml'
+    'text!/areas/admin/static/activityCategories/create.html'
 ], function ($, ko, koMapping, koValidation, sammy, template) {
 
     ko.mapping = koMapping;
@@ -36,7 +36,6 @@
                     self.isValidationEnabled(false);
                     ko.mapping.fromJS(response, {}, self);
                     app.applyComponent(self);
-                    app.view(self);
                 }
             });
         };

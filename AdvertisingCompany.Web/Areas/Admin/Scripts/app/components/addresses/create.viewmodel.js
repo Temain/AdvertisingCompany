@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy', 'knockout.bindings.datetimepicker',
-    'knockout.bindings.selectpicker', 'kladr-with-map', 'text!home/html/?path=~/areas/admin/views/addresses/create.cshtml'
+    'knockout.bindings.selectpicker', 'kladr-with-map', 'text!/areas/admin/static/addresses/create.html'
 ], function($, ko, koMapping, koValidation, sammy, bdtp, bss, kladrWithMap, template) {
 
     ko.mapping = koMapping;
@@ -92,36 +92,35 @@
 
         self.init = function() {
             $.ajax({
-                    method: 'get',
-                    url: '/admin/api/addresses/0',
-                    contentType: "application/json; charset=utf-8",
-                    headers: {
-                        'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
-                    },
-                    error: function(response) {},
-                    success: function (response) {
-                        self.isValidationEnabled(false);
-                        var mappings = {
-                            'microdistricts': {
-                                create: function(options) {
-                                    return options.data;
-                                }
+                method: 'get',
+                url: '/admin/api/addresses/0',
+                contentType: "application/json; charset=utf-8",
+                headers: {
+                    'Authorization': 'Bearer ' + app.dataModel.getAccessToken()
+                },
+                error: function(response) {},
+                success: function (response) {
+                    self.isValidationEnabled(false);
+                    var mappings = {
+                        'microdistricts': {
+                            create: function(options) {
+                                return options.data;
                             }
-                        };
+                        }
+                    };
 
-                        ko.mapping.fromJS(response, mappings, self);
-                        app.applyComponent(self);
-                        app.view(self);
-                        kladrWithMap.init({
-                            defaultValues: {
-                                regionId: "2300000000000",
-                                regionName: "Краснодарский",
-                                cityId: "2300000100000",
-                                cityName: "Краснодар",
-                            }
-                        });
-                    }
-                });
+                    ko.mapping.fromJS(response, mappings, self);
+                    app.applyComponent(self);
+                    kladrWithMap.init({
+                        defaultValues: {
+                            regionId: "2300000000000",
+                            regionName: "Краснодарский",
+                            cityId: "2300000100000",
+                            cityName: "Краснодар",
+                        }
+                    });
+                }
+            });
         };
 
         self.streetChanged = function() {

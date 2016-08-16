@@ -1,6 +1,6 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'sammy', 'knockout.bindings.datetimepicker',
-    'knockout.bindings.selectpicker', 'kladr-with-map', 'text!home/html/?path=~/areas/admin/views/addresses/edit.cshtml'
+    'knockout.bindings.selectpicker', 'kladr-with-map', 'text!/areas/admin/static/addresses/edit.html'
 ], function ($, ko, koMapping, koValidation, sammy, bdtp, bss, kladrWithMap, template) {
 
     ko.mapping = koMapping;
@@ -113,7 +113,6 @@
                     };
                     ko.mapping.fromJS(response, mappings, self);
                     self.isValidationEnabled(false);
-                    app.view(self);
 
                     kladrWithMap.init({
                         defaultValues: {

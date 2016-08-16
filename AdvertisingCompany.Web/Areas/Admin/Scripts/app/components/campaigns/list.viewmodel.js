@@ -1,7 +1,7 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker',
     'knockout.bindings.tooltip', 'sammy', 'underscore', 'moment', 'progress',
-    'text!home/html/?path=~/areas/admin/views/campaigns/index.cshtml'
+    'text!/areas/admin/static/campaigns/index.html'
 ], function ($, ko, koMapping, bss, bst, sammy, _, moment, progress, template) {
 
     ko.mapping = koMapping;
@@ -151,7 +151,6 @@
 
         self.init = function () {
             self.loadCampaigns();
-            app.view(self);
         };
 
         self.showDeleteModal = function (data, event) {

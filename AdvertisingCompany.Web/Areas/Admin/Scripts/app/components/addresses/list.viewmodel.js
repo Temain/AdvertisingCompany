@@ -1,7 +1,7 @@
 ﻿define([
     'jquery', 'knockout', 'knockout.mapping', 'knockout.bindings.selectpicker',
     'knockout.bindings.tooltip', 'holder', 'dropzone', 'progress',
-    'text!home/html/?path=~/areas/admin/views/addresses/index.cshtml'
+    'text!/areas/admin/static/addresses/index.html'
 ], function($, ko, koMapping, bss, bst, holder, Dropzone, progress, template) {
 
     ko.mapping = koMapping;
@@ -152,7 +152,6 @@
 
         self.init = function () {
             self.loadAddresses();
-            app.view(self);
         };
 
         self.showDeleteModal = function (data, event) {

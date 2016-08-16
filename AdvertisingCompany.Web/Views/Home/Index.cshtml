@@ -17,11 +17,10 @@
             .Select(x => new { Microdistrict = x.Key, Reports = x.ToList() });
         foreach (var microdistrictReports in microdistrictsReports)
         {
-            <div class="row mrg0">
-                <div class="col-md-24">
-                    <h1 class="page-header">@microdistrictReports.Microdistrict.MicrodistrictShortName <small>@microdistrictReports.Microdistrict.MicrodistrictName</small></h1>
-                </div>
-
+            <div class="row">
+                <h1 class="page-header">@microdistrictReports.Microdistrict.MicrodistrictShortName <small>@microdistrictReports.Microdistrict.MicrodistrictName</small></h1>
+            </div>
+            <div class="row">
                 @foreach (AddressReportViewModel report in microdistrictReports.Reports)
                 {
                     <div class="col-sm-8 col-md-6 gallery-item" data-title="@report.ImageName">

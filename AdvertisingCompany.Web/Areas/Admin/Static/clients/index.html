@@ -1,22 +1,39 @@
 ﻿<div data-bind="visible: isInitialized">
     <ol class="breadcrumb">
-        <li>ВЫ ЗДЕСЬ</li>
+        <li>CRM</li>
         <li class="active">Клиенты</li>
     </ol>
     <h1 class="page-title">Клиенты рекламной компании</h1>
-    <div class="mrgbtm24">
+    <!--<div class="mrgbtm24">
         <a href="/admin/#clients/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить клиента</a>
-    </div>
+    </div>-->
     <section class="widget">
         <div class="widget-body">
             <div class="dataTables_wrapper form-inline no-footer">
                 <div class="row mrgbtm12">
                     <div class="col-md-6 hidden-xs">
-                        <div class="dataTables_length" id="datatable-table_length">
+                        <div class="table-actions dataTables_length" id="datatable-table_length">
+                            <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/create' }, style: { marginRight : selectedClient() != null ? '1em' : '0' }, tooltip: { title: 'Добавить клиента', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-plus"></i></a>
+
+                            <div class="btn-group" role="group" style="margin-right: 1em;" data-bind="if: selectedClient() != null" aria-label="...">
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedClient().clientId() + '/edit' }, tooltip: { title: 'Перейти к редактированию информации о клиенте', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-pencil"></i></a>
+
+                                <!-- ko if: selectedClient().campaignId() -->
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedClient().clientId() + '/campaigns/' + selectedClient().campaignId() + '/edit' }, tooltip: { title: 'Перейти к редактированию рекламной кампании', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-flag-checkered"></i></a>
+                                <!-- /ko -->
+                                <!-- ko ifnot: selectedClient().campaignId() -->
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedClient().clientId() + '/campaigns/create' }, tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-flag"></i></a>
+                                <!-- /ko -->
+
+                                <a class="btn btn-default action" data-bind="tooltip: { title: 'Изменить пароль клиента', placement: 'bottom', trigger: 'hover' }, click : showChangePasswordModal"><i class="glyphicon glyphicon-lock"></i></a>
+
+                                <a class="btn btn-default action" data-bind="tooltip: { title: 'Удалить клиента', placement: 'bottom', trigger: 'hover' }, click : showDeleteModal"><i class="fa fa-trash-o" style="font-size: 1.2em;"></i></a>
+                            </div>
+
                             <label>
-                                Показать
+                                <!--Показать-->
                                 <select id="pageSize" class="form-control" title="" data-size="10" data-bind="selectPicker: pageSize, selectPickerOptions : { optionsArray : pageSizes, width: '70px' }, event : { change: pageSizeChanged }"></select>
-                                записей
+                                <!--записей-->
                             </label>
                         </div>
                     </div>
@@ -38,26 +55,37 @@
                 <table class="table table-condensed table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th style="width: 3%">&nbsp;#</th>
                             <th class="col-md-3">Компания</th>
                             <th class="col-md-2 hidden-xs">Деятельность</th>
-                            <th class="col-md-1 hidden-xs">Ответственный</th>
+                            <th class="col-md-2 hidden-xs">Ответственный</th>
                             <th class="col-md-1 hidden-xs">Телефоны</th>
                             <th class="col-md-1 hidden-xs">Email</th>
                             <th class="col-md-1">Логин</th>
                             <th class="col-md-1">Статус</th>
                             <th class="col-md-1 hidden-xs">Добавлен</th>
-                            <th class="col-md-1 text-center">Редактирование</th>
                         </tr>
                     </thead>
                     <tbody data-bind="foreach: clients">
-                        <tr>
-                            <td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>
+                        <!-- ko if: $parent.isMonthChanged($index(), $data) -->
+                            <tr class="delimiter"><td colspan="9" data-bind="text: $parent.monthNameAndYear($data.createdAt())">Месяц</td></tr>
+                        <!-- /ko -->
+
+                        <tr data-bind="css: { 'selected': $parent.isSelected($data) }">
+                            <td>
+                                <div class="checkbox">
+                                    <input type="checkbox" data-bind="attr: { id: 'checkbox' + clientId() }, checked: $parent.isSelected($data), click: $parent.selectClient">
+                                    <label data-bind="attr: { for: 'checkbox' + clientId() }"></label>
+                                </div>
+                            </td>
                             <td>
                                 <span data-bind="text: companyName"></span><br />
                                 <small data-bind="text: comment"></small>
                             </td>
-                            <td class="hidden-xs" data-bind="text: activityTypeName"></td>
+                            <td class="hidden-xs">
+                                <span data-bind="text: activityTypeName"></span><br />
+                                <small data-bind="text: activityCategoryName"></small>
+                            </td>
                             <td class="hidden-xs" data-bind="text: responsiblePersonShortName"></td>
                             <td class="hidden-xs">
                                 <span data-bind="text: phoneNumber"></span><br />
@@ -70,37 +98,7 @@
                             <td>
                                 <select data-bind="attr: { 'data-style' : 'btn-' + clientStatusLabelClass() }, selectPicker: clientStatusId, selectPickerOptions: { optionsArray : $parent.clientStatuses, initValue : clientStatusInitialId, initialized : clientStatusInitialized }, optionsValue: 'clientStatusId', optionsText: 'clientStatusName', event : { change : $parent.clientStatusChanged }"></select>
                             </td>
-                            <td class="hidden-xs" data-bind="text: createdAt"></td>
-                            <td class="actions text-center">
-                                <!-- ko if: campaignId() -->
-                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/' + campaignId() + '/edit' }, tooltip: { title: 'Перейти к редактированию рекламной кампании', placement: 'left', trigger: 'hover' }">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-flag-checkered fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                                <!-- /ko -->
-                                <!-- ko ifnot: campaignId() -->
-                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/campaigns/create' }, tooltip: { title: 'Перейти к формированию рекламной кампании', placement: 'left', trigger: 'hover' }">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                                <!-- /ko -->
-                                <a href="#" data-bind="attr : { href : '/admin/#clients/' + clientId() + '/edit' }, tooltip: { title: 'Перейти к редактированию информации о клиенте', placement: 'left', trigger: 'hover' }">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                                <a href="#" data-bind="tooltip: { title: 'Удалить клиента', placement: 'left', trigger: 'hover' }">
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle fa-stack-2x text-usual"></i>
-                                        <i class="fa fa-times fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </td>
+                            <td class="hidden-xs" data-bind="text: moment(createdAt()).locale('ru').format('L')"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -142,4 +140,70 @@
             </div>
         </div>
     </section>
+</div>
+
+<!-- Change password modal -->
+<div id="change-password-popup" class="modal fade" tabindex="-1" role="dialog" data-bind="if: selectedClient() != null">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2>Изменение пароля клиента <br /><small data-bind="text : selectedClient().companyName()">Клиент</small></h2>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <form id="change-password-form" class="form-horizontal mrgtop12" role="form" data-bind="with: changePasswordViewModel">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-4 control-label">Новый пароль</label>
+                                <div class="col-sm-8">
+                                    <input type="password" id="password" class="form-control required" data-bind="value: password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment" class="col-sm-4 control-label">Подтверждение пароля</label>
+                                <div class="col-sm-8">
+                                    <input type="password" id="confirmPassword" class="form-control required" data-bind="value: confirmPassword">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row mrgtop12">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Отмена</button>
+                        <button type="submit" class="btn btn-success" data-bind="click: changePassword"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div id="delete-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2>Удаление</h2>
+            </div>
+            <div class="modal-body">
+                <div data-bind="if: selectedClient() != null">
+                    Вы действительно хотите удалить клиента
+                    <span data-bind="text: selectedClient().companyName()"></span>?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row mrgtop12">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Отмена</button>
+                        <button type="submit" class="btn btn-danger" data-bind="click: deleteClient"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

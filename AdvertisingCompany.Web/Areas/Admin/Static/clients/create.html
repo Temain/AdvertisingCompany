@@ -1,5 +1,5 @@
 ﻿<ol class="breadcrumb">
-    <li>ВЫ ЗДЕСЬ</li>
+    <li>CRM</li>
     <li>Клиенты</li>
     <li class="active">Добавление нового клиента</li>
 </ol>
@@ -42,7 +42,7 @@
                         <input type="text" id="additionalPhoneNumber" class="form-control" data-bind="value: additionalPhoneNumber" placeholder="Дополнительный">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group required">
                     <label for="email" class="col-sm-4 control-label">Адрес электронной почты</label>
                     <div class="col-sm-6">
                         <input type="email" id="email" class="form-control" data-bind="value: email">
@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="col-sm-offset-4 col-sm-7">
                         <div class="btn-group btn-footer" role="group" aria-label="...">
-                            <button type="submit" class="btn btn-success" data-bind="click: submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                            <button type="submit" class="btn btn-success" data-bind="click: function() { submit(false); }"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
                             <button type="button" class="btn btn-inverse" data-bind="click: function() { submit(true); }"><i class="fa fa-flag" aria-hidden="true"></i>&nbsp;Сформировать РК</button>
                         </div>
                     </div>
