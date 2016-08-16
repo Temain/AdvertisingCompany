@@ -18,7 +18,7 @@ using AutoMapper;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/campaigns")]
+    [RoutePrefix("api/admin/campaigns")]
     public class CampaignsController : BaseApiController
     {
         public CampaignsController(IUnitOfWork unitOfWork)
@@ -30,13 +30,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListCampaignsViewModel))]
-        public ListCampaignsViewModel GetCampaigns(string query, int page = 1, int pageSize = 10)
+        public ListCampaignsViewModel GetCampaigns(string query = null, int page = 1, int pageSize = 10)
         {
             var campaignsList = UnitOfWork.Repository<Campaign>()
                 .GetQ(x => x.DeletedAt == null && x.Client.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: @"Client, Client.ActivityType, Client.ActivityType.ActivityCategory,
-                        Client.ActivityType.ActivityCategory, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
+                    includeProperties: @"Client.ActivityType.ActivityCategory, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
 
             if (query != null)
             {
@@ -71,7 +70,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var client = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.ClientId == clientId && x.DeletedAt == null,
-                    includeProperties: "ResponsiblePerson, ActivityType, ActivityType.ActivityCategory")
+                    includeProperties: "ResponsiblePerson, ActivityType.ActivityCategory")
                 .SingleOrDefault();
 
             if (client == null)
@@ -117,7 +116,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 var campaign = UnitOfWork.Repository<Campaign>()
                     .Get(x => x.CampaignId == campaignId && x.DeletedAt == null,
-                        includeProperties: "Client, Client.ResponsiblePerson, Microdistricts")
+                        includeProperties: "Client.ResponsiblePerson, Microdistricts")
                     .SingleOrDefault();
                 if (campaign == null)
                 {
@@ -145,7 +144,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var campaign = UnitOfWork.Repository<Campaign>()
                 .Get(x => x.CampaignId == viewModel.CampaignId && x.DeletedAt == null,
-                    includeProperties: "Client, Client.ResponsiblePerson")
+                    includeProperties: "Client.ResponsiblePerson")
                 .SingleOrDefault();
             if (campaign == null)
             {

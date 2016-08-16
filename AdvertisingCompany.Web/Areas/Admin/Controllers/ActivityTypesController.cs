@@ -19,7 +19,7 @@ using AdvertisingCompany.Web.Areas.Admin.Models.Campaign;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/activity/types")]
+    [RoutePrefix("api/admin/activity/types")]
     public class ActivityTypesController : BaseApiController
     {
         public ActivityTypesController(IUnitOfWork unitOfWork)
@@ -31,7 +31,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListActivityTypesViewModel))]
-        public ListActivityTypesViewModel GetActivityType(string query, int page = 1, int pageSize = 10)
+        public ListActivityTypesViewModel GetActivityType(string query = null, int page = 1, int pageSize = 10)
         {
             var activitiesList = UnitOfWork.Repository<ActivityType>()
                 .GetQ(x => x.DeletedAt == null, includeProperties: "ActivityCategory",

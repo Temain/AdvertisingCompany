@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.Areas.Admin.Models.ActivityType;
@@ -84,7 +85,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.ClientStatusId, opt => opt.MapFrom(s => ClientStatuses.Active))
                 .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
                 .ForMember(m => m.ApplicationUsers, opt => opt.Ignore())
-                .ForMember(m => m.CreatedAt, opt => opt.Ignore());
+                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => DateTime.Now));
 
             configuration.CreateMap<CreateClientViewModel, Person>("ClientPerson")
                 .ForMember(m => m.LastName, opt => opt.MapFrom(s => s.ResponsiblePersonLastName))

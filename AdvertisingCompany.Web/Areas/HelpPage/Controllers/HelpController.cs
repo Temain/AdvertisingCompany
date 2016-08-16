@@ -3,13 +3,15 @@ using System.Web.Http;
 using System.Web.Mvc;
 using AdvertisingCompany.Web.Areas.HelpPage.ModelDescriptions;
 using AdvertisingCompany.Web.Areas.HelpPage.Models;
+using AdvertisingCompany.Web.Controllers;
 
 namespace AdvertisingCompany.Web.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.
     /// </summary>
-    public class HelpController : Controller
+    [System.Web.Mvc.Authorize(Roles = "Administrator")]
+    public class HelpController : BaseController
     {
         private const string ErrorViewName = "Error";
 

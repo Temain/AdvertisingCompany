@@ -19,7 +19,7 @@ using AdvertisingCompany.Web.Areas.Admin.Models.Campaign;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/activity/categories")]
+    [RoutePrefix("api/admin/activity/categories")]
     public class ActivityCategoriesController : BaseApiController
     {
         public ActivityCategoriesController(IUnitOfWork unitOfWork)
@@ -31,7 +31,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListActivityCategoriesViewModel))]
-        public ListActivityCategoriesViewModel GetActivityCategories(string query, int page = 1, int pageSize = 10)
+        public ListActivityCategoriesViewModel GetActivityCategories(string query = null, int page = 1, int pageSize = 10)
         {
             var categoriesList = UnitOfWork.Repository<ActivityCategory>()
                 .GetQ(x => x.DeletedAt == null, orderBy: o => o.OrderBy(c => c.ActivityCategoryName));

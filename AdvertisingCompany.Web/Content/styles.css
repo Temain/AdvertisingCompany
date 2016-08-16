@@ -7466,6 +7466,9 @@ body {
     font-size: 180px;
   }
 }
+.error-title {
+  font-size: 80px !important;
+}
 .error-info {
   font-size: 20px;
   color: #343434;

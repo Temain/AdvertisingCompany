@@ -19,7 +19,7 @@ using AutoMapper;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/addresses")]
+    [RoutePrefix("api/admin/addresses")]
     public class AddressesController : BaseApiController
     {
         public AddressesController(IUnitOfWork unitOfWork)
@@ -31,14 +31,14 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListAddressesViewModel))]
-        public ListAddressesViewModel GetAddresses(string query, int page = 1, int pageSize = 10)
+        public ListAddressesViewModel GetAddresses(string query = null, int page = 1, int pageSize = 10)
         {
             var addressesList = UnitOfWork.Repository<Address>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: @"Region, Region.LocationLevel, Region.LocationType, District, District.LocationLevel, District.LocationType, 
-                            City, City.LocationLevel, City.LocationType, Street, Street.LocationLevel, Street.LocationType,
-                            Building, Building.LocationLevel, Building.LocationType, Microdistrict");
+                    includeProperties: @"Region.LocationLevel, Region.LocationType, District.LocationLevel, District.LocationType, 
+                            City.LocationLevel, City.LocationType, Street.LocationLevel, Street.LocationType,
+                            Building.LocationLevel, Building.LocationType, Microdistrict");
 
             if (query != null)
             {
@@ -83,9 +83,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 var address = UnitOfWork.Repository<Address>()
                     .GetQ(x => x.AddressId == id && x.DeletedAt == null,
-                        includeProperties: @"Region, Region.LocationLevel, Region.LocationType, District, District.LocationLevel, District.LocationType, 
-                            City, City.LocationLevel, City.LocationType, Street, Street.LocationLevel, Street.LocationType,
-                            Building, Building.LocationLevel, Building.LocationType")
+                        includeProperties: @"Region.LocationLevel, Region.LocationType, District.LocationLevel, District.LocationType, 
+                            City.LocationLevel, City.LocationType, Street.LocationLevel, Street.LocationType,
+                            Building.LocationLevel, Building.LocationType")
                     .SingleOrDefault();
                 if (address == null)
                 {
@@ -109,9 +109,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var addressInDb = UnitOfWork.Repository<Address>()
                 .GetQ(x => x.AddressId == viewModel.AddressId && x.DeletedAt == null,
-                    includeProperties: @"Region, Region.LocationLevel, Region.LocationType, Region.Parent, District, District.LocationLevel, District.Locationtype, District.Parent, 
-                        City, City.LocationType, City.LocationLevel, City.Parent, Street, Street.LocationLevel, Street.LocationType, Street.Parent, 
-                        Building, Building.LocationLevel, Building.LocationType, Building.Parent, Microdistrict")
+                    includeProperties: @"Region.LocationLevel, Region.LocationType, Region.Parent, District.LocationLevel, District.Locationtype, District.Parent, 
+                        City.LocationType, City.LocationLevel, City.Parent, Street.LocationLevel, Street.LocationType, Street.Parent, 
+                        Building.LocationLevel, Building.LocationType, Building.Parent, Microdistrict")
                 .SingleOrDefault();
             if (addressInDb == null)
             {

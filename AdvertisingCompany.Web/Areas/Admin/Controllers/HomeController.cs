@@ -24,17 +24,17 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult Html(string path)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+        //public ActionResult Html(string path)
+        //{
+        //    var stopwatch = new Stopwatch();
+        //    stopwatch.Start();
 
-            var result = PartialView(path);
+        //    var result = PartialView(path);
 
-            stopwatch.Stop();
-            var time = stopwatch.ElapsedMilliseconds;
+        //    stopwatch.Stop();
+        //    var time = stopwatch.ElapsedMilliseconds;
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }

@@ -19,7 +19,7 @@ using Microsoft.AspNet.Identity;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/clients")]
+    [RoutePrefix("api/admin/clients")]
     public class ClientsController : BaseApiController
     {
         public ClientsController(IUnitOfWork unitOfWork)
@@ -31,12 +31,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListClientsViewModel))]
-        public ListClientsViewModel GetClients(string query, int page = 1, int pageSize = 10)
+        public ListClientsViewModel GetClients(string query = null, int page = 1, int pageSize = 10)
         {
             var clientsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: "Campaigns, ActivityType, ActivityType.ActivityCategory, ResponsiblePerson, ApplicationUsers, ClientStatus");
+                    includeProperties: "Campaigns, ActivityType.ActivityCategory, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
             if (query != null)
             {
@@ -156,12 +156,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PostClient(CreateClientViewModel viewModel)
+        public IHttpActionResult PostClient(CreateClientViewModel viewModel)
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
 
             var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
-            var result = await UserManager.CreateAsync(user, viewModel.Password);
+            var result = UserManager.Create(user, viewModel.Password);
             if (result.Succeeded)
             {
                 if (!RoleManager.RoleExists("Client"))
@@ -177,8 +177,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 user.ClientId = client.ClientId;
                 UserManager.Update(user);
 
-                await UserManager.SendEmailAsync(user.Id, "ООО \"ИТ Альянс\"",
-                    String.Format("Ваши учётные данные для доступа к просмотру фотоотчётов: <br/> Логин:{0} <br/>Пароль: {1}", viewModel.UserName, viewModel.Password));
+                UserManager.SendEmail(user.Id, "ООО \"ИТ Альянс\"",
+                    String.Format("Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1}", viewModel.UserName, viewModel.Password));
             }
             else
             {

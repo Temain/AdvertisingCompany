@@ -26,7 +26,7 @@ using AdvertisingCompany.Web.Results;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/reports")]
+    [RoutePrefix("api/admin/reports")]
     public class ReportsController : BaseApiController
     {
         public ReportsController(IUnitOfWork unitOfWork)
@@ -46,14 +46,14 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 addresses = UnitOfWork.Repository<Address>()
                    .GetQ(x => x.AddressId == addressId && x.DeletedAt == null,
-                       includeProperties: "Reports, Street, Street.LocationType, Building, Building.LocationType");
+                       includeProperties: "Reports, Street.LocationType, Building.LocationType");
             }
 
             if (campaignId != null)
             {
                 campaigns = UnitOfWork.Repository<Campaign>()
                     .GetQ(x => x.CampaignId == campaignId && x.DeletedAt == null,
-                        includeProperties: @"Client, Microdistricts, Microdistricts.Addresses, Microdistricts.Addresses.Reports,
+                        includeProperties: @"Client, Microdistricts, Microdistricts.Addresses.Reports,
                             Microdistricts.Addresses.Street, Microdistricts.Addresses.Street.LocationType,
                             Microdistricts.Addresses.Building, Microdistricts.Addresses.Building.LocationType");
                 if (campaigns != null && campaigns.Any())

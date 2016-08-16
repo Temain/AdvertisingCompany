@@ -1,5 +1,6 @@
 using System;
 using System.Data.Entity;
+using System.Web.Http;
 using AdvertisingCompany.Domain.Context;
 using AdvertisingCompany.Domain.DataAccess;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
@@ -54,6 +55,8 @@ namespace AdvertisingCompany.Web
             container.RegisterType<AccountController>(new InjectionConstructor());
             //container.RegisterType<ManageController>(new InjectionConstructor());
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager());
+
+            container.RegisterInstance(typeof(HttpConfiguration), GlobalConfiguration.Configuration);
         }
     }
 }
