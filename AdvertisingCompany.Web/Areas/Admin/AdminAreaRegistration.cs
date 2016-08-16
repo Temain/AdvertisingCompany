@@ -18,53 +18,53 @@ namespace AdvertisingCompany.Web.Areas.Admin
         {
             context.Routes.AppendTrailingSlash = true;
 
-            context.MapHttpRoute(
-                name: "Admin_Activity_Categories",
-                routeTemplate: "admin/api/activity/categories/{id}",
-                defaults: new { area = "admin", controller = "activityCategories", id = RouteParameter.Optional }
-            );
+            //context.MapHttpRoute(
+            //    name: "Admin_Activity_Categories",
+            //    routeTemplate: "admin/api/activity/categories/{id}",
+            //    defaults: new { area = "admin", controller = "activityCategories", id = RouteParameter.Optional }
+            //);
 
-            context.MapHttpRoute(
-               name: "Admin_Activity_Types",
-               routeTemplate: "admin/api/activity/types/{id}",
-               defaults: new { area = "admin", controller = "activityTypes", id = RouteParameter.Optional }
-            );
+            //context.MapHttpRoute(
+            //   name: "Admin_Activity_Types",
+            //   routeTemplate: "admin/api/activity/types/{id}",
+            //   defaults: new { area = "admin", controller = "activityTypes", id = RouteParameter.Optional }
+            //);
 
-            context.MapHttpRoute(
-                name: "Admin_Client_ChangePassword",
-                routeTemplate: "admin/api/clients/{clientId}/change_password",
-                defaults: new { area = "admin", controller = "clients", action = "ChangePassword" }
-            );
+            //context.MapHttpRoute(
+            //    name: "Admin_Client_ChangePassword",
+            //    routeTemplate: "admin/api/clients/{clientId}/change_password",
+            //    defaults: new { area = "admin", controller = "clients", action = "ChangePassword" }
+            //);
 
-            context.MapHttpRoute(
-                name: "Admin_Api",
-                routeTemplate: "admin/api/{controller}/{id}",
-                defaults: new { area = "admin", id = RouteParameter.Optional }
-            );
+            //context.MapHttpRoute(
+            //    name: "Admin_Api",
+            //    routeTemplate: "admin/api/{controller}/{id}",
+            //    defaults: new { area = "admin", id = RouteParameter.Optional }
+            //);
 
-            context.MapHttpRoute(
-                name: "Admin_Client_ChangeStatus",
-                routeTemplate: "admin/api/{controller}/{clientId}/status/{statusId}",
-                defaults: new { area = "admin", controller = "clients" }
-            );
+            //context.MapHttpRoute(
+            //    name: "Admin_Client_ChangeStatus",
+            //    routeTemplate: "admin/api/{controller}/{clientId}/status/{statusId}",
+            //    defaults: new { area = "admin", controller = "clients" }
+            //);
 
-            context.MapHttpRoute(
-                name: "Admin_Campaign_ChangePaymentStatus",
-                routeTemplate: "admin/api/{controller}/{campaignId}/paymentstatus/{statusId}",
-                defaults: new { area = "admin", controller = "campaigns" }
-            );
+            //context.MapHttpRoute(
+            //    name: "Admin_Campaign_ChangePaymentStatus",
+            //    routeTemplate: "admin/api/{controller}/{campaignId}/paymentstatus/{statusId}",
+            //    defaults: new { area = "admin", controller = "campaigns" }
+            //);
 
-            context.MapHttpRoute(
-                name: "Admin_Campaign_GetCampaign",
-                routeTemplate: "admin/api/clients/{clientId}/{controller}/{campaignId}",
-                defaults: new { area = "admin", controller = "campaigns" }
-            );
+            //context.MapHttpRoute(
+            //    name: "Admin_Campaign_GetCampaign",
+            //    routeTemplate: "admin/api/clients/{clientId}/{controller}/{campaignId}",
+            //    defaults: new { area = "admin", controller = "campaigns" }
+            //);
 
-            context.MapHttpRoute(
-                name: "Admin_Campaign_PostCampaign",
-                routeTemplate: "admin/api/clients/{clientId}/{controller}",
-                defaults: new { area = "admin", controller = "campaigns" }
-            );
+            //context.MapHttpRoute(
+            //    name: "Admin_Campaign_PostCampaign",
+            //    routeTemplate: "admin/api/clients/{clientId}/{controller}",
+            //    defaults: new { area = "admin", controller = "campaigns" }
+            //);
 
             context.MapRoute(
                 "Admin_Default",
