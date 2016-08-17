@@ -1,6 +1,6 @@
 ﻿define(['jquery', 'knockout', 'knockout.mapping', 'knockout.validation.server-side', 'knockout.bindings.selectpicker',
-    'knockout.bindings.tooltip', 'sammy', 'underscore', 'moment', 'progress',
-    'text!/areas/admin/app/components/clients/index.html'], function ($, ko, koMapping, koValidation, bss, bst, sammy, _, moment, progress, template) {
+    'knockout.bindings.tooltip', 'sammy', 'underscore', 'moment', 
+    'text!/areas/admin/app/components/clients/index.html'], function ($, ko, koMapping, koValidation, bss, bst, sammy, _, moment, template) {
 
     ko.mapping = koMapping;
     ko.serverSideValidator = koValidation;
@@ -23,7 +23,6 @@
 
         self.loadClients = function () {
             self.isInitialized(false);
-            progress.show();
 
             $.ajax({
                 method: 'get',
@@ -33,9 +32,7 @@
                 headers: {
                     'Authorization': 'Bearer ' + app.getAccessToken()
                 },
-                error: function (response) {
-                    progress.hide();
-                },
+                error: function (response) { },
                 success: function (response) {
                     ko.mapping.fromJS(
                         response.clients,
@@ -55,8 +52,7 @@
                     ko.mapping.fromJS(response.clientStatuses, {}, self.clientStatuses);
                     self.page(response.page);
                     self.pagesCount(response.pagesCount);
-                    self.isInitialized(true);
-                    progress.hide();
+                    self.isInitialized(true);               
                 }
             });
         };
