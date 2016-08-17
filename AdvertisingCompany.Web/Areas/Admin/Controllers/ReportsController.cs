@@ -100,7 +100,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return null;
         }
 
-        // GET: admin/api/reports/5
+        // GET: api/admin/reports/5
         [AllowAnonymous]
         [HttpGet]
         [Route("{id:int}")]
@@ -176,7 +176,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
         }
 
-        // DELETE: admin/api/reports/5
+        // DELETE: api/admin/reports/5
         [HttpDelete]
         [Route("{id:int}")]
         [ResponseType(typeof(AddressReport))]

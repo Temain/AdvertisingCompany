@@ -26,7 +26,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        // GET: admin/api/campaigns
+        // GET: api/admin/campaigns
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListCampaignsViewModel))]
@@ -61,7 +61,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return viewModel;
         }
 
-        // GET: admin/api/clients/5/campaigns/0 (new) or admin/api/clients/5/campaigns/8 (edit)
+        // GET: api/admin/clients/5/campaigns/0 (new) or api/admin/clients/5/campaigns/8 (edit)
         [HttpGet]
         [Route("~/api/admin/clients/{clientId:int}/campaigns/{campaignId:int}")]
         [ResponseType(typeof(CreateCampaignViewModel))]
@@ -135,7 +135,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
 
-        // PUT: admin/api/campaigns/5
+        // PUT: api/admin/campaigns/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
@@ -185,7 +185,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/clients/5/campaigns
+        // POST: api/admin/clients/5/campaigns
         [HttpPost]
         [Route("~/api/admin/clients/{clientId:int}/campaigns")]
         [KoJsonValidate]
@@ -275,7 +275,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // DELETE: admin/api/campaigns/5
+        // DELETE: api/admin/campaigns/5
         [HttpDelete]
         [Route("{id:int}")]
         [ResponseType(typeof(Client))]

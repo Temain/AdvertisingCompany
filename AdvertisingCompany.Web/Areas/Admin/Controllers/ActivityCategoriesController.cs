@@ -27,7 +27,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        // GET: admin/api/activity/categories
+        // GET: api/admin/activity/categories
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListActivityCategoriesViewModel))]
@@ -56,7 +56,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return viewModel;
         }
 
-        // GET: admin/api/activity/categories/0 (new) or admin/api/activity/categories/5 (edit)
+        // GET: api/admin/activity/categories/0 (new) or api/admin/activity/categories/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateActivityCategoryViewModel))]
@@ -85,7 +85,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
 
-        // PUT: admin/api/activity/categories/5
+        // PUT: api/admin/activity/categories/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
@@ -130,7 +130,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/activity/categories/
+        // POST: api/admin/activity/categories/
         [HttpPost]
         [Route("")]
         [KoJsonValidate]
@@ -150,7 +150,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok();
         }
 
-        // DELETE: admin/api/activity/categories/5
+        // DELETE: api/admin/activity/categories/5
         [HttpDelete]
         [Route("{id:int}")]
         [ResponseType(typeof(ActivityCategory))]

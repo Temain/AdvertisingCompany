@@ -28,7 +28,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        // GET: admin/api/clients
+        // GET: api/admin/clients
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListClientsViewModel))]
@@ -63,7 +63,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return viewModel;
         }
 
-        // GET: admin/api/clients/0 (new) or admin/api/clients/5 (edit)
+        // GET: api/admin/clients/0 (new) or api/admin/clients/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateClientViewModel))]
@@ -102,7 +102,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
 
-        // PUT: admin/api/clients/5
+        // PUT: api/admin/clients/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
@@ -152,7 +152,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/clients
+        // POST: api/admin/clients
         [HttpPost]
         [Route("")]
         [KoJsonValidate]
@@ -211,6 +211,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok(new { clientId = client.ClientId });
         }
 
+        // PUT: api/admin/clients/5/status/2
         [HttpPut]
         [Route("{clientId:int}/status/{statusId:int}")]
         [ResponseType(typeof(void))]
@@ -251,6 +252,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        // PUT: api/admin/clients/5/change_password
         [HttpPut]
         [Route("{clientId:int}/change_password")]
         [KoJsonValidate]
@@ -283,7 +285,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return BadRequest(ModelState);
         }
 
-        // DELETE: admin/api/clients/5
+        // DELETE: api/admin/clients/5
         [HttpDelete]
         [Route("{id:int}")]
         [ResponseType(typeof(Client))]

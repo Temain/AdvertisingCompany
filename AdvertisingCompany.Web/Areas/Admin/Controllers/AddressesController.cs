@@ -27,7 +27,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        // GET: admin/api/addresses
+        // GET: api/admin/addresses
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListAddressesViewModel))]
@@ -61,7 +61,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return viewModel;
         }
 
-        // GET: admin/api/addresses/0 (new) or admin/api/addresses/5 (edit)
+        // GET: api/admin/addresses/0 (new) or api/admin/addresses/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateAddressViewModel))]
@@ -100,7 +100,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
 
-        // PUT: admin/api/addresses/5
+        // PUT: api/admin/addresses/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
@@ -176,7 +176,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/addresses
+        // POST: api/admin/addresses
         [HttpPost]
         [Route("")]
         [KoJsonValidate]
@@ -315,7 +315,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
         }
 
-        // DELETE: admin/api/addresses/5
+        // DELETE: api/admin/addresses/5
         [HttpDelete]
         [Route("{id:int}")]
         [ResponseType(typeof(void))]
