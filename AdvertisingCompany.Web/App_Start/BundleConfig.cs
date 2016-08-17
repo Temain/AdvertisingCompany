@@ -55,6 +55,8 @@
                 .Include("~/Content/gins/application.css")
                 .Include("~/Content/magnific-popup/magnific-popup.css")
                 .Include("~/Content/dropzone/dropzone.css")
+                .Include("~/Content/shuffle/style.css")
+                .Include("~/Content/shuffle/shuffle-style.css")
                 .Include("~/Content/gins/custom.css"));
 
             bundles.Add(new StyleBundle("~/styles/gins-ie9")

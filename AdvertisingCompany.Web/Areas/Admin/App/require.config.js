@@ -40,7 +40,8 @@
         'file-input': 'scripts/jasny-bootstrap/js/fileinput',
         'magnific-popup': 'scripts/magnific-popup/dist/jquery.magnific-popup.min',
         'modernizr': 'scripts/shuffle/dist/modernizr.custom.min',
-        'shuffle': 'scripts/shuffle/dist/jquery.shuffle.modernizr.min',
+        'shuffle': 'scripts/shuffle/dist/shuffle.min',
+        'evenheights': 'scripts/shuffle/dist/evenheights',
         'file-size': 'scripts/filesize.min',
         'dropzone': 'scripts/dropzone/dropzone-amd-module'
     },
@@ -75,7 +76,6 @@
         'file-size': {
             exports: 'filesize'
         },
-        'shuffle': ['jquery', 'modernizr'],
         'widgster': ['jquery'],
         'jquery-slimscroll': ['jquery'],
         'progress': {

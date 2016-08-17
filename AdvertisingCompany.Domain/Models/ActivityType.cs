@@ -31,7 +31,7 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Дата создания записи
         /// </summary>
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Дата обновления записи

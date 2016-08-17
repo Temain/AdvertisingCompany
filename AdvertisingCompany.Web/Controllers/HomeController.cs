@@ -25,14 +25,14 @@ namespace AdvertisingCompany.Web.Controllers
             }
 
             var clientMicrodistrictIds = UnitOfWork.Repository<Campaign>()
-                .GetQ(x => x.ClientId == UserProfile.ClientId && x.DeletedAt == null)
+                .GetQ(x => x.ClientId == UserProfile.ClientId && x.Client.DeletedAt == null && x.DeletedAt == null)
                 .SelectMany(x => x.Microdistricts)
                 .Select(x => x.MicrodistrictId);
 
             var reports = UnitOfWork.Repository<AddressReport>()
                 .GetQ(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId) 
                     && x.Address.DeletedAt == null && x.DeletedAt == null
-                    && x.CreatedAt.Value.Month == DateTime.Now.Month,
+                    && x.CreatedAt.Month == DateTime.Now.Month,
                     includeProperties: "Address, Address.Microdistrict, Address.Street.LocationType, Address.Building.LocationType")
                 .ToList();
 

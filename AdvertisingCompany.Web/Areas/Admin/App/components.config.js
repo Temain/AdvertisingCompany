@@ -42,7 +42,8 @@
                 register('activity-type-edit', { require: rootPath + 'activity/types/edit' });
 
                 // Фотоотчёты
-                register('reports', { require: rootPath + 'reports/index' });
+                register('address-reports', { require: rootPath + 'reports/address-reports' });
+                register('client-reports', { require: rootPath + 'reports/client-reports' });
             }
         }
     }());

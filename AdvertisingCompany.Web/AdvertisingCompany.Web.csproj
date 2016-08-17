@@ -294,8 +294,10 @@
     <Compile Include="Areas\Admin\Models\Client\CreateClientViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\ListAddressesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Client\ListClientsViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\Report\AddressReportViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Report\ListAddressesReportsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Report\MicrodistrictReportsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Report\AddressReportViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Report\ListClientReportsViewModel.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -359,6 +361,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\App\components.config.js" />
+    <Content Include="Areas\Admin\App\Components\Reports\client-reports.js" />
+    <Content Include="Areas\Admin\App\Components\Reports\address-reports.html" />
+    <Content Include="Areas\Admin\App\Components\Reports\client-reports.html" />
     <Content Include="Areas\Admin\App\require.config.js" />
     <Content Include="Areas\Admin\App\routes.config.js" />
     <Content Include="Areas\Admin\App\startup.js" />
@@ -371,6 +376,9 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\shadow_header.png" />
+    <Content Include="Content\shuffle\prism.css" />
+    <Content Include="Content\shuffle\shuffle-styles.css" />
+    <Content Include="Content\shuffle\style.css" />
     <Content Include="Fonts\fontawesome-webfont.svg" />
     <Content Include="Areas\Admin\App\Components\Activity\Types\index.js" />
     <Content Include="Areas\Admin\App\Components\Addresses\create.js" />
@@ -384,7 +392,7 @@
     <Content Include="Areas\Admin\App\Components\Analytics\index.js" />
     <Content Include="Areas\Admin\App\app.js" />
     <Content Include="Areas\Admin\App\Components\Clients\create.js" />
-    <Content Include="Areas\Admin\App\Components\Reports\index.js" />
+    <Content Include="Areas\Admin\App\Components\Reports\address-reports.js" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -625,7 +633,7 @@
     <Content Include="Areas\Admin\App\Components\Clients\index.html" />
     <Content Include="Areas\Admin\App\Components\Clients\create.html" />
     <Content Include="Areas\Admin\App\Components\Clients\edit.html" />
-    <Content Include="Areas\Admin\App\Components\Reports\index.html" />
+    <Content Include="Areas\Admin\App\Components\Reports\index-old.html" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -694,6 +702,9 @@
     <Content Include="Scripts\knockout\knockout.bindings.numeric.js" />
     <Content Include="Scripts\knockout\knockout.bindings.tooltip.js" />
     <Content Include="Scripts\knockout\knockout.bindings.selectpicker.js" />
+    <Content Include="Scripts\shuffle\dist\evenheights.js" />
+    <Content Include="Scripts\shuffle\dist\shuffle.js" />
+    <Content Include="Scripts\shuffle\dist\shuffle.min.js" />
     <Content Include="Scripts\typeahead\bootstrap3-typeahead.js" />
     <Content Include="Scripts\typeahead\bootstrap3-typeahead.min.js" />
     <Content Include="Scripts\bootstrap\affix.js" />
@@ -941,6 +952,8 @@
     <Content Include="Scripts\magnific-popup\src\css\main.scss" />
     <Content Include="Scripts\magnific-popup\src\css\_settings.scss" />
     <Content Include="Views\Reports\Show.cshtml" />
+    <Content Include="Scripts\shuffle\dist\shuffle.js.map" />
+    <Content Include="Scripts\shuffle\dist\shuffle.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

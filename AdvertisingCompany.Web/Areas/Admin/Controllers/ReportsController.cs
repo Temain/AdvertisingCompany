@@ -25,7 +25,7 @@ using AdvertisingCompany.Web.Results;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    // [Authorize(Roles = "Administrator")]
     [RoutePrefix("api/admin/reports")]
     public class ReportsController : BaseApiController
     {
@@ -34,67 +34,70 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        // GET: admin/api/reports
+        // GET: api/admin/addresses/5/reports
         [HttpGet]
-        [Route("")]
-        [ResponseType(typeof(ListAddressesReportsViewModel))]
-        public ListAddressesReportsViewModel GetReports(int? addressId = null, int? campaignId = null)
+        [Route("~/api/admin/addresses/{addressId:int}/reports")]
+        [ResponseType(typeof(ListAddressReportsViewModel))]
+        public ListAddressReportsViewModel GetAddressReports(int addressId)
         {
-            IQueryable<Address> addresses = null;
-            IQueryable<Campaign> campaigns = null;
-            if (addressId != null)
+            var address = UnitOfWork.Repository<Address>()
+                .GetQ(x => x.AddressId == addressId && x.DeletedAt == null,
+                    includeProperties: "Reports, Street.LocationType, Building.LocationType")
+                .SingleOrDefault();
+            if (address != null)
             {
-                addresses = UnitOfWork.Repository<Address>()
-                   .GetQ(x => x.AddressId == addressId && x.DeletedAt == null,
-                       includeProperties: "Reports, Street.LocationType, Building.LocationType");
-            }
-
-            if (campaignId != null)
-            {
-                campaigns = UnitOfWork.Repository<Campaign>()
-                    .GetQ(x => x.CampaignId == campaignId && x.DeletedAt == null,
-                        includeProperties: @"Client, Microdistricts, Microdistricts.Addresses.Reports,
-                            Microdistricts.Addresses.Street, Microdistricts.Addresses.Street.LocationType,
-                            Microdistricts.Addresses.Building, Microdistricts.Addresses.Building.LocationType");
-                if (campaigns != null && campaigns.Any())
-                {
-                    addresses = campaigns.SelectMany(x => x.Microdistricts).SelectMany(x => x.Addresses);
-                }
-            }
-
-            if (addresses != null)
-            {
-                var reports = addresses.SelectMany(x => x.Reports)
-                    .Where(x => x.CreatedAt != null && x.DeletedAt == null && x.CreatedAt.Value.Month == DateTime.Now.Month)
+                var reports = address.Reports
+                    .Where(x => x.DeletedAt == null && x.CreatedAt.Month == DateTime.Now.Month)
                     .ToList();
-                var reportViewModels = Mapper.Map<List<AddressReport>, List<AddressReportViewModel>>(reports);
 
-                var viewModel = new ListAddressesReportsViewModel
+                var reportViewModels = Mapper.Map<List<AddressReport>, List<AddressReportViewModel>>(reports);
+                var addressReports = new ListAddressReportsViewModel
                 {
+                    AddressName = address.ShortName,
                     AddressReports = reportViewModels
                 };
 
-                // Для одного адреса получаем сокращенное наименование
-                if (addressId != null)
-                {
-                    var address = addresses.FirstOrDefault();
-                    if (address != null)
-                    {
-                        viewModel.AddressName = address.ShortName;
-                    }
-                }
+                return addressReports;
+            }
 
-                // Для клиента получаем сокращенное наименование компании
-                if (campaigns != null)
-                {
-                    var campaign = campaigns.SingleOrDefault();
-                    if (campaign != null)
-                    {
-                        viewModel.ClientName = campaign.Client.CompanyName;
-                    }
-                }
+            return null;
+        }
 
-                return viewModel;
+        // GET: api/admin/campaigns/5/reports
+        [HttpGet]
+        [Route("~/api/admin/campaigns/{campaignId:int}/reports")]
+        [ResponseType(typeof(ListClientReportsViewModel))]
+        public ListClientReportsViewModel GetCampaignReports(int campaignId)
+        {
+            var campaign = UnitOfWork.Repository<Campaign>()
+                .GetQ(x => x.CampaignId == campaignId && x.Client.DeletedAt == null && x.DeletedAt == null,
+                    includeProperties: "Client, Microdistricts")
+                .SingleOrDefault();
+            if (campaign != null)
+            {
+                var clientMicrodistrictIds = campaign.Microdistricts.Select(x => x.MicrodistrictId);
+                var microdistrictsReports = UnitOfWork.Repository<AddressReport>()
+                    .Get(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId)
+                        && x.Address.DeletedAt == null && x.DeletedAt == null
+                        && x.CreatedAt.Month == DateTime.Now.Month,
+                        includeProperties: "Address, Address.Microdistrict, Address.Street.LocationType, Address.Building.LocationType")
+                    .GroupBy(g => new { g.Address.MicrodistrictId, g.Address.Microdistrict.MicrodistrictName, g.Address.Microdistrict.MicrodistrictShortName })
+                    .Select(x => new MicrodistrictReportsViewModel
+                    {
+                        MicrodistrictId = x.Key.MicrodistrictId,
+                        MicrodistrictName = x.Key.MicrodistrictName,
+                        MicrodistrictShortName = x.Key.MicrodistrictShortName,
+                        AddressReports = Mapper.Map<IEnumerable<AddressReport>, IEnumerable<AddressReportViewModel>>(x)
+                    })
+                    .ToList();
+
+                var clientReports = new ListClientReportsViewModel
+                {
+                    ClientName = campaign.Client.CompanyName,
+                    MicrodistrictsReports = microdistrictsReports
+                };
+
+                return clientReports;
             }
 
             return null;

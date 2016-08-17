@@ -12,6 +12,11 @@ namespace AdvertisingCompany.Domain.Models
     [Table("Person", Schema = "dbo")]
     public class Person
     {
+        public Person()
+        {
+            CreatedAt = DateTime.Now;
+        }
+
         /// <summary>
         /// Идентификатор
         /// </summary>
@@ -46,7 +51,7 @@ namespace AdvertisingCompany.Domain.Models
         /// Дата создания записи
         /// </summary>
         [JsonIgnore]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Дата обновления записи
