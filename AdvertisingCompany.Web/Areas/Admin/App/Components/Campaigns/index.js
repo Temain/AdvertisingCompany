@@ -175,9 +175,11 @@
                     });
                 },
                 success: function (response) {
-                    self.selectedCampaign(null);
                     self.init();
+
                     $("#delete-popup").modal("hide");
+                    self.selectedCampaign(null);
+
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
                         message: "&nbsp;Рекламная кампания успешно удалена."

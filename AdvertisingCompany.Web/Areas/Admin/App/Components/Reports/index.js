@@ -75,6 +75,7 @@
                 },
                 error: function (response) {
                     $("#delete-popup").modal("hide");
+
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',
                         message: "&nbsp;Произошла ошибка при удалении файла."
@@ -84,7 +85,10 @@
                 },
                 success: function (response) {                 
                     self.init();
+
                     $("#delete-popup").modal("hide");
+                    self.selectedReport(null);
+
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
                         message: "&nbsp;Файл успешно удалён."
@@ -93,8 +97,6 @@
                     });
                 }
             });
-
-            self.selectedReport(null);
         };
 
         self.init = function() {

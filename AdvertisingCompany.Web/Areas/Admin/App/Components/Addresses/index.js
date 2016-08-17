@@ -176,9 +176,11 @@
                     });
                 },
                 success: function (response) {
-                    self.selectedAddress(null);
                     self.init();
+
                     $("#delete-popup").modal("hide");
+                    self.selectedAddress(null);
+
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
                         message: "&nbsp;Адрес успешно удалён."

@@ -127,13 +127,20 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
 
             Mapper.Map<EditClientViewModel, Client>(viewModel, client);
-            client.UpdatedAt = DateTime.Now;
 
+            var account = client.ApplicationUsers.FirstOrDefault();
+            if (account != null)
+            {
+                account.Email = viewModel.Email;
+            }
+
+            client.UpdatedAt = DateTime.Now;
             UnitOfWork.Repository<Client>().Update(client);
 
             try
             {
                 UnitOfWork.Save();
+                UserManager.Update(account);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -276,6 +283,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 var result = UserManager.AddPassword(account.Id, viewModel.Password);
                 if (result == IdentityResult.Success)
                 {
+                    UserManager.SendEmail(account.Id, "ООО \"ИТ Альянс\"",
+                        String.Format("Ваш пароль учётной записи был изменён: <br/><br/>Новый пароль: {0}", viewModel.Password));
+
                     Logger.Info("Изменение пароля клиента. ClientId={0}, ApplicationuserId = {1}", viewModel.ClientId, account.Id);
 
                     return StatusCode(HttpStatusCode.OK);

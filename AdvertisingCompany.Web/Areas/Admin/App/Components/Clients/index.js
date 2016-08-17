@@ -219,7 +219,7 @@
                     $("#change-password-popup").modal("hide");
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
-                        message: "&nbsp;Пароль клиента успешно изменён."
+                        message: "&nbsp;Пароль клиента успешно изменён.<br/>На email клиента было отправлено письмо с новым паролем."
                     }, {
                         type: 'success',
                         z_index: 9999
@@ -250,9 +250,11 @@
                     });
                 },
                 success: function (response) {
-                    self.selectedClient(null);
                     self.init();
+
                     $("#delete-popup").modal("hide");
+                    self.selectedClient(null);
+
                     $.notify({
                         icon: 'fa fa-exclamation-triangle',
                         message: "&nbsp;Клиент успешно удалён."
