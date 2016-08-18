@@ -38,11 +38,15 @@
                     var imageGrids = $('.grid-with-images');
                     $.each(imageGrids, function (index, imageGrid) {
                         // var element = document.getElementById('grid');
-                        window.myShuffle = new Shuffle(imageGrid, {
+                        var shuffle = new Shuffle(imageGrid, {
                             itemSelector: '.js-item',
                             sizer: document.getElementById('.sizer-element')
                         });
-                    });
+
+                        $('#nav-state-toggle').click(function () {
+                            shuffle.update();
+                        });
+                    });                   
 
                     // Инициализация MagnificPopup
                     $('.grid-with-images').magnificPopup({

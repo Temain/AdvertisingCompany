@@ -187,8 +187,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     user.ClientId = client.ClientId;
                     UserManager.Update(user);
 
-                    UserManager.SendEmail(user.Id, "ООО \"ИТ Альянс\"",
-                        String.Format("Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1}", viewModel.UserName, viewModel.Password));
+                    //UserManager.SendEmail(user.Id, "ООО \"ИТ Альянс\"",
+                    //    String.Format("Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1}", viewModel.UserName, viewModel.Password));
                 }
                 else
                 {
@@ -275,21 +275,28 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 return BadRequest();
             }
 
-            var account = client.ApplicationUsers.FirstOrDefault();
-            if (account != null)
+            try
             {
-                UserManager.RemovePassword(account.Id);
-
-                var result = UserManager.AddPassword(account.Id, viewModel.Password);
-                if (result == IdentityResult.Success)
+                var account = client.ApplicationUsers.FirstOrDefault();
+                if (account != null)
                 {
-                    UserManager.SendEmail(account.Id, "ООО \"ИТ Альянс\"",
-                        String.Format("Ваш пароль учётной записи был изменён: <br/><br/>Новый пароль: {0}", viewModel.Password));
+                    UserManager.RemovePassword(account.Id);
 
-                    Logger.Info("Изменение пароля клиента. ClientId={0}, ApplicationuserId = {1}", viewModel.ClientId, account.Id);
+                    var result = UserManager.AddPassword(account.Id, viewModel.Password);
+                    if (result == IdentityResult.Success)
+                    {
+                        //UserManager.SendEmail(account.Id, "ООО \"ИТ Альянс\"",
+                        //    String.Format("Ваш пароль учётной записи был изменён: <br/><br/>Новый пароль: {0}", viewModel.Password));
 
-                    return StatusCode(HttpStatusCode.OK);
+                        Logger.Info("Изменение пароля клиента. ClientId={0}, ApplicationuserId = {1}", viewModel.ClientId, account.Id);
+
+                        return StatusCode(HttpStatusCode.OK);
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Logger.Error(ex);
             }
 
             return BadRequest(ModelState);
