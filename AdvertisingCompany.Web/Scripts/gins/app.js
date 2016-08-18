@@ -373,7 +373,7 @@ $(function(){
      * Specify a function to execute when a page was reloaded with pjax.
      * @param fn A function to execute
      */
-    SingAppView.prototype.onPageLoad = function(fn){
+    SingAppView.prototype.onPageLoad = function (fn) {
         this._addPageCallback(this.pageLoadCallbacks, fn);
     };
 
@@ -539,7 +539,7 @@ $(function(){
     initAppPlugins();
     initAppFunctions();
     initAppFixes();
-    initDemoFunctions();
+    // initDemoFunctions();
 });
 
 /**
@@ -823,40 +823,38 @@ function initAppFixes(){
  * Demo-only functions. Does not affect the core Sing functionality.
  * Should be removed when used in real app.
  */
-function initDemoFunctions(){
-    !function($){
-        $('#load-notifications-btn').on('ajax-load:end', function () {
-            setTimeout(function(){
-                $('#notifications-list').find('.bg-attention').removeClass('bg-attention');
-            }, 10000)
-        });
-        $('#notifications-toggle').find('input').on('ajax-load:end', function(){
-            $('#notifications-list').find('[data-toggle=tooltip]').tooltip();
-        });
+//function initDemoFunctions(){
+//    !function($){
+//        $('#load-notifications-btn').on('ajax-load:end', function () {
+//            setTimeout(function(){
+//                $('#notifications-list').find('.bg-attention').removeClass('bg-attention');
+//            }, 10000)
+//        });
+//        $('#notifications-toggle').find('input').on('ajax-load:end', function(){
+//            $('#notifications-list').find('[data-toggle=tooltip]').tooltip();
+//        });
 
-        $('[data-toggle="chat-sidebar"]').one('click', function(){
-            setTimeout(function(){
-                $('.chat-sidebar-user-group:first-of-type .list-group-item:first-child').addClass('active')
-                    .find('.fa-circle').after('<span class="badge badge-danger pull-right animated bounceInDown">3</span>');
-            }, 1000)
-        });
+//        $('[data-toggle="chat-sidebar"]').one('click', function(){
+//            setTimeout(function(){
+//                $('.chat-sidebar-user-group:first-of-type .list-group-item:first-child').addClass('active')
+//                    .find('.fa-circle').after('<span class="badge badge-danger pull-right animated bounceInDown">3</span>');
+//            }, 1000)
+//        });
+       
+//        setTimeout(function(){
+//            var $chatNotification = $('#chat-notification');
+//            $chatNotification.removeClass('hide').addClass('animated fadeIn')
+//                .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+//                    $chatNotification.removeClass('animated fadeIn');
+//                    setTimeout(function(){
+//                        $chatNotification.addClass('animated fadeOut')
+//                            .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+//                              $chatNotification.addClass('hide');
+//                            });
+//                    }, 4000);
+//                });
+//            $chatNotification.siblings('[data-toggle="chat-sidebar"]').append('<i class="chat-notification-sing animated bounceIn"></i>')
+//        }, 4000)       
 
-        /*
-        setTimeout(function(){
-            var $chatNotification = $('#chat-notification');
-            $chatNotification.removeClass('hide').addClass('animated fadeIn')
-                .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-                    $chatNotification.removeClass('animated fadeIn');
-                    setTimeout(function(){
-                        $chatNotification.addClass('animated fadeOut')
-                            .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-                              $chatNotification.addClass('hide');
-                            });
-                    }, 4000);
-                });
-            $chatNotification.siblings('[data-toggle="chat-sidebar"]').append('<i class="chat-notification-sing animated bounceIn"></i>')
-        }, 4000)
-        */
-
-    }(jQuery);
-}
+//    }(jQuery);
+//}

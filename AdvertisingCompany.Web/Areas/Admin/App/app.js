@@ -86,7 +86,22 @@
             }
         };
 
-        self.initSidebar = function () {
+        self.initSidebar = function () {         
+            var sidebar = $('#sidebar');
+            var url = window.location.hash;
+            var newActiveLink = sidebar.find('a[href*="' + url + '"]').filter(function () {
+                return this.hash === url;
+            });
+
+            // collapse .collapse only if new and old active links belong to different .collapse
+            if (!newActiveLink.is('.active > .collapse > li > a')) {
+                sidebar.find('.active .active').closest('.collapse').collapse('hide');
+            }
+            sidebar.find('.active').removeClass('active');
+
+            newActiveLink.closest('li').addClass('active')
+                .parents('li').addClass('active');
+
             $('.sidebar-nav ul > li > a').click(function () {
                 $('.sidebar-nav ul > li').removeClass('active');
                 $(this).parent().addClass('active');
