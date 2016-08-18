@@ -20,6 +20,9 @@
         self.responsiblePersonId = ko.observable(params.responsiblePersonId || '');
         self.responsiblePersonName = ko.observable(params.responsiblePersonName || '');
         self.companyName = ko.observable(params.companyName || '');
+        self.email = ko.observable(params.email || '');
+        self.phoneNumber = ko.observable(params.phoneNumber || '');
+        self.additionalPhoneNumber = ko.observable(params.additionalPhoneNumber || '');
         self.activityTypeName = ko.observable(params.activityTypeName || '');
         self.microdistrictIds = ko.observableArray(params.microdistrictIds || []).extend({
             required: {

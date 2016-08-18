@@ -38,6 +38,21 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
         public string CompanyName { get; set; }
 
         /// <summary>
+        /// Адрес электронной почты [Client]
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Номер телефона [Client]
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// Дополнительный номер телефона [Client]
+        /// </summary>
+        public string AdditionalPhoneNumber { get; set; }
+
+        /// <summary>
         /// Род деятельности [Client]
         /// </summary>
         public string ActivityTypeName { get; set; }
@@ -95,6 +110,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                 .ForMember(m => m.ResponsiblePersonId, opt => opt.MapFrom(s => s.ResponsiblePersonId))
                 .ForMember(m => m.ResponsiblePersonName, opt => opt.MapFrom(s => s.ResponsiblePerson.FullName))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
+                .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
+                .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
+                .ForMember(m => m.AdditionalPhoneNumber, opt => opt.MapFrom(s => s.AdditionalPhoneNumber))
                 .ForMember(m => m.PlacementMonthId, opt => opt.MapFrom(s => DateTime.Now.Month))
                 .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory.ActivityCategoryName + " / " + s.ActivityType.ActivityTypeName))
                 .ForMember(m => m.Comment, opt => opt.Ignore());

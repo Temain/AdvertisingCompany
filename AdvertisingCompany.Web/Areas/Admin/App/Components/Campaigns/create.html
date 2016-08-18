@@ -6,88 +6,81 @@
 <h1 class="page-title">Формирование рекламной кампании</h1>
 <section class="widget">
     <div class="widget-body">
-        <form class="form-horizontal mrgtop24" role="form">
-            <fieldset>
-                <legend>Клиент</legend>
+        <section class="col-md-8">
+            <form class="form-horizontal mrgtop24" role="form">
+                <fieldset>
+                    <legend>Размещение</legend>
 
-                <div class="form-group">
-                    <label for="companyName" class="col-sm-4 control-label">Название компании</label>
-                    <div class="col-sm-7">
-                        <label id="companyName" class="control-label" data-bind="text: companyName"></label>
+                    <div class="form-group required">
+                        <label for="microdistrictIds" class="col-sm-4 control-label">Микрорайоны</label>
+                        <div class="col-sm-7">
+                            <select id="microdistrictIds" multiple="multiple" class="form-control" title="" data-size="12" data-bind="selectPicker: microdistrictIds, selectPickerOptions: { optionsArray : microdistricts }, optionsValue: 'microdistrictId', optionsText: 'microdistrictName', optionsCaption : '', optionsAfterRender: setMicrodistrictsContent"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="activityTypeName" class="col-sm-4 control-label">Род деятельности</label>
-                    <div class="col-sm-7">
-                        <label id="activityTypeName" class="control-label" data-bind="text: activityTypeName"></label>
+                    <div class="form-group required">
+                        <label for="placementMonthId" class="col-sm-4 control-label">Месяц</label>
+                        <div class="col-sm-7">
+                            <select id="placementMonthId" class="form-control" title="" data-size="12" data-bind="selectPicker: placementMonthId, selectPickerOptions: { optionsArray : placementMonths }, optionsValue: 'placementMonthId', optionsText: 'placementMonthName', optionsCaption : ''"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="responsiblePersonName" class="col-sm-4 control-label">Ответственное лицо</label>
-                    <div class="col-sm-7">
-                        <label id="responsiblePersonName" class="control-label" data-bind="text: responsiblePersonName"></label>
+                    <div class="form-group required">
+                        <label for="placementFormatId" class="col-sm-4 control-label">Формат</label>
+                        <div class="col-sm-7">
+                            <select id="placementFormatId" class="form-control" title="" data-size="12" data-bind="selectPicker: placementFormatId, selectPickerOptions: { optionsArray : placementFormats }, optionsValue: 'placementFormatId', optionsText: 'placementFormatName', optionsCaption : ''"></select>
+                        </div>
                     </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Размещение</legend>
+                    <div class="form-group required">
+                        <label for="placementCost" class="col-sm-4 control-label">Стоимость</label>
+                        <div class="col-sm-7">
+                            <input type="text" id="placementCost" class="form-control" data-bind="numeric: placementCost, value: placementCost">
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Оплата</legend>
 
-                <div class="form-group required">
-                    <label for="microdistrictIds" class="col-sm-4 control-label">Микрорайоны</label>
-                    <div class="col-sm-7">
-                        <select id="microdistrictIds" multiple="multiple" class="form-control" title="" data-size="12" data-bind="selectPicker: microdistrictIds, selectPickerOptions: { optionsArray : microdistricts }, optionsValue: 'microdistrictId', optionsText: 'microdistrictName', optionsCaption : '', optionsAfterRender: setMicrodistrictsContent"></select>
+                    <div class="form-group required">
+                        <label for="paymentOrderId" class="col-sm-4 control-label">Форма</label>
+                        <div class="col-sm-7">
+                            <select id="paymentOrderId" class="form-control" title="" data-size="12" data-bind="selectPicker: paymentOrderId, selectPickerOptions: { optionsArray : paymentOrders }, optionsValue: 'paymentOrderId', optionsText: 'paymentOrderName', optionsCaption : ''"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group required">
-                    <label for="placementMonthId" class="col-sm-4 control-label">Месяц</label>
-                    <div class="col-sm-7">
-                        <select id="placementMonthId" class="form-control" title="" data-size="12" data-bind="selectPicker: placementMonthId, selectPickerOptions: { optionsArray : placementMonths }, optionsValue: 'placementMonthId', optionsText: 'placementMonthName', optionsCaption : ''"></select>
+                    <div class="form-group required">
+                        <label for="paymentStatusId" class="col-sm-4 control-label">Статус</label>
+                        <div class="col-sm-7">
+                            <select id="paymentStatusId" class="form-control" title="" data-size="12" data-bind="selectPicker: paymentStatusId, selectPickerOptions: { optionsArray : paymentStatuses }, optionsValue: 'paymentStatusId', optionsText: 'paymentStatusName', optionsCaption : ''"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group required">
-                    <label for="placementFormatId" class="col-sm-4 control-label">Формат</label>
-                    <div class="col-sm-7">
-                        <select id="placementFormatId" class="form-control" title="" data-size="12" data-bind="selectPicker: placementFormatId, selectPickerOptions: { optionsArray : placementFormats }, optionsValue: 'placementFormatId', optionsText: 'placementFormatName', optionsCaption : ''"></select>
+                    <div class="form-group">
+                        <label for="comment" class="col-sm-4 control-label">Комментарий</label>
+                        <div class="col-sm-7">
+                            <textarea id="comment" class="form-control" data-bind="value: comment"></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group required">
-                    <label for="placementCost" class="col-sm-4 control-label">Стоимость</label>
-                    <div class="col-sm-7">
-                        <input type="text" id="placementCost" class="form-control" data-bind="numeric: placementCost, value: placementCost">
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Оплата</legend>
-
-                <div class="form-group required">
-                    <label for="paymentOrderId" class="col-sm-4 control-label">Форма</label>
-                    <div class="col-sm-7">
-                        <select id="paymentOrderId" class="form-control" title="" data-size="12" data-bind="selectPicker: paymentOrderId, selectPickerOptions: { optionsArray : paymentOrders }, optionsValue: 'paymentOrderId', optionsText: 'paymentOrderName', optionsCaption : ''"></select>
-                    </div>
-                </div>
-                <div class="form-group required">
-                    <label for="paymentStatusId" class="col-sm-4 control-label">Статус</label>
-                    <div class="col-sm-7">
-                        <select id="paymentStatusId" class="form-control" title="" data-size="12" data-bind="selectPicker: paymentStatusId, selectPickerOptions: { optionsArray : paymentStatuses }, optionsValue: 'paymentStatusId', optionsText: 'paymentStatusName', optionsCaption : ''"></select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="comment" class="col-sm-4 control-label">Комментарий</label>
-                    <div class="col-sm-7">
-                        <textarea id="comment" class="form-control" data-bind="value: comment"></textarea>
-                    </div>
-                </div>
-            </fieldset>
-            <div class="form-actions">
-                <div class="row">
-                    <div class="col-sm-offset-4 col-sm-7">
-                        <div class="btn-group btn-footer" role="group" aria-label="...">
-                            <button type="submit" class="btn btn-success" data-bind="click: submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                </fieldset>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-sm-offset-4 col-sm-7">
+                            <div class="btn-group btn-footer" role="group" aria-label="...">
+                                <button type="submit" class="btn btn-success" data-bind="click: submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </form>
+        </section>
+        <section class="col-md-4">
+            <h4 class="text-muted no-margin">Информация о клиенте</h4>
+            <h3 class="company-name" data-bind="text: companyName"></h3>
+            <div>
+                <strong data-bind="text: activityTypeName"></strong>
+                <br>
+                <span data-bind="text: responsiblePersonName"></span><br>
+
+                <abbr title="Адрес электронной почты">e-mail:</abbr> <span data-bind="text: email"></span><br>
+                <abbr title="Номер телефона">телефон:</abbr> <span data-bind="text: phoneNumber"></span><br>
+                <abbr title="Дополнительный номер телефона" data-bind="if: additionalPhoneNumber() != null">доп:</abbr> <span data-bind="text: additionalPhoneNumber"></span>
             </div>
-        </form>
+        </section>       
     </div>
 </section>
