@@ -29,21 +29,6 @@
                 },
                 error: function(response) {},
                 success: function(response) {
-                    //ko.mapping.fromJS(
-                    //    response.microdistrictsReports,
-                    //    {
-                    //        key: function(data) {
-                    //            return ko.utils.unwrapObservable(data.addressReportId);
-                    //        },
-                    //        create: function(options) {
-                    //            var reportViewModel = new AddressReportViewModel(options.data);
-                    //            // ko.serverSideValidator.updateKoModel(clientViewModel);
-                    //            return reportViewModel;
-                    //        }
-                    //    },
-                    //    self.microdistrictsReports
-                    //);
-
                     ko.mapping.fromJS(response.microdistrictsReports, {}, self.microdistrictsReports);
                     self.clientName(response.clientName);
 
@@ -58,12 +43,6 @@
                             sizer: document.getElementById('.sizer-element')
                         });
                     });
-
-                    //var element = document.getElementById('grid');
-                    //window.myShuffle = new Shuffle(element, {
-                    //    itemSelector: '.js-item',
-                    //    sizer: document.getElementById('.sizer-element')
-                    //});
 
                     // Инициализация MagnificPopup
                     $('.grid-with-images').magnificPopup({

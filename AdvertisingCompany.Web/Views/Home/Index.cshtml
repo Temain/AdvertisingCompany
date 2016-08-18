@@ -1,6 +1,6 @@
 ﻿@using AdvertisingCompany.Web.Models;
-@model IEnumerable<AddressReportViewModel>
-@{ 
+@model List<MicrodistrictReportsViewModel>
+@{
     ViewBag.Title = "Рекламная компания | Фотоотчёты";
 }
 
@@ -11,37 +11,57 @@
     </div>
 }
 
-<div class="gallery" id="grid">
-    @{
-        var microdistrictsReports = Model.GroupBy(g => new { g.MicrodistrictId, g.MicrodistrictName, g.MicrodistrictShortName })
-            .Select(x => new { Microdistrict = x.Key, Reports = x.ToList() });
-        foreach (var microdistrictReports in microdistrictsReports)
+@foreach (MicrodistrictReportsViewModel microdistrict in Model)
+{
+    <div class="row row-np">
+        <h2 class="page-header">@microdistrict.MicrodistrictShortName <small>@microdistrict.MicrodistrictName</small></h2>
+    </div>
+
+    <div class="row row-np grid-with-images shuffle">
+
+        @foreach (AddressReportViewModel report in microdistrict.AddressReports)
         {
-            <div class="row">
-                <h1 class="page-header">@microdistrictReports.Microdistrict.MicrodistrictShortName <small>@microdistrictReports.Microdistrict.MicrodistrictName</small></h1>
-            </div>
-            <div class="row">
-                @foreach (AddressReportViewModel report in microdistrictReports.Reports)
-                {
-                    <div class="col-sm-8 col-md-6 gallery-item" data-title="@report.ImageName">
-                        <div class="thumbnail">
-                            <a href=@("/reports/" + report.AddressReportId)><img src=@("data:" + report.ImageMimeType + ";base64," + report.ImageThumbnail) alt="..."></a>
-                            <div class="caption">
-                                <h5 class="light">@report.AddressName</h5>
-                            </div>
-                        </div>
+            <figure class="js-item img-item col-3@sm col-3@xs">
+                <div class="aspect aspect--4x3">
+                    <div class="aspect__inner js-item-preview">
+                        <a href="@("/reports/" + report.AddressReportId)"><img src="@("data:" + report.ImageMimeType + ";base64," + report.ImageThumbnail)"></a>
                     </div>
-                }
-            </div>
+                </div>
+                <figcaption class="caption">
+                    <h5 class="mt-0 mb-xs">@report.AddressName</h5>                  
+                    @*<ul class="post-links">
+                        <li><a>Файл : <span data-bind="text: imageName"></span></a></li>
+                        <li><a>Размер : <span data-bind="text: filesize(imageLength(), {base: 10, round: 0})"></span></a></li>
+                    </ul>
+                    <ul class="post-links" data-bind="visible: comment">
+                        <li><a>Комментарий : </a><span data-bind="text : comment"></span></li>
+                    </ul>*@
+                </figcaption>
+            </figure>
         }
-    }
-</div>
+
+        <div class="col-1@sm sizer-element"></div>
+    </div>
+}
 
 @section Scripts {
+
     <script>
         $(function () {
-            $('#grid').magnificPopup({
-                delegate: '.thumbnail > a',
+            // Инициализация ShuffleJS
+            var Shuffle = window.shuffle;
+            var imageGrids = $('.grid-with-images');
+            $.each(imageGrids, function (index, imageGrid) {
+                // var element = document.getElementById('grid');
+                var shuffle = new Shuffle(imageGrid, {
+                    itemSelector: '.js-item',
+                    sizer: document.getElementById('.sizer-element')
+                });
+            });
+
+            // Инициализация MagnificPopup
+            $('.grid-with-images').magnificPopup({
+                delegate: '.js-item-preview a',
                 type: 'image',
                 gallery: {
                     enabled: false

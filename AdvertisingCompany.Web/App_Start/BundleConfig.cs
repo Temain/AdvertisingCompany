@@ -81,6 +81,10 @@
 
             bundles.Add(new StyleBundle("~/styles/magnific-popup")
                 .Include("~/Content/magnific-popup/magnific-popup.css"));
+
+            bundles.Add(new StyleBundle("~/styles/shuffle")
+                .Include("~/Content/shuffle/style.css")
+                .Include("~/Content/shuffle/shuffle-styles.css"));
         }
 
         /// <summary>
@@ -229,6 +233,10 @@
             Bundle paceBundle = new ScriptBundle("~/bundles/pace")
                 .Include("~/Scripts/pace/pace.min.js");
             bundles.Add(paceBundle);
+
+            Bundle shuffleBundle = new ScriptBundle("~/bundles/shuffle")
+                .Include("~/Scripts/shuffle/dist/shuffle.js");
+            bundles.Add(shuffleBundle);
 
             // Script bundle for the site. The fall-back scripts are for when a CDN fails, in this case we load a local
             // copy of the script instead.

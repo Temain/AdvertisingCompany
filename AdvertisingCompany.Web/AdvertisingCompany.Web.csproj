@@ -350,6 +350,7 @@
     <Compile Include="Models\Mapping\IHaveCustomMappings.cs" />
     <Compile Include="Models\Mapping\IMapFrom.cs" />
     <Compile Include="Models\MeViewModels.cs" />
+    <Compile Include="Models\MicrodistrictReportsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -633,7 +634,6 @@
     <Content Include="Areas\Admin\App\Components\Clients\index.html" />
     <Content Include="Areas\Admin\App\Components\Clients\create.html" />
     <Content Include="Areas\Admin\App\Components\Clients\edit.html" />
-    <Content Include="Areas\Admin\App\Components\Reports\index-old.html" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

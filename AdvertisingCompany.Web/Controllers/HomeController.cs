@@ -29,16 +29,22 @@ namespace AdvertisingCompany.Web.Controllers
                 .SelectMany(x => x.Microdistricts)
                 .Select(x => x.MicrodistrictId);
 
-            var reports = UnitOfWork.Repository<AddressReport>()
-                .GetQ(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId) 
+            var clientReports = UnitOfWork.Repository<AddressReport>()
+                .Get(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId) 
                     && x.Address.DeletedAt == null && x.DeletedAt == null
                     && x.CreatedAt.Month == DateTime.Now.Month,
                     includeProperties: "Address, Address.Microdistrict, Address.Street.LocationType, Address.Building.LocationType")
+                .GroupBy(g => new { g.Address.MicrodistrictId, g.Address.Microdistrict.MicrodistrictName, g.Address.Microdistrict.MicrodistrictShortName })
+                .Select(x => new MicrodistrictReportsViewModel
+                {
+                    MicrodistrictId = x.Key.MicrodistrictId,
+                    MicrodistrictName = x.Key.MicrodistrictName,
+                    MicrodistrictShortName = x.Key.MicrodistrictShortName,
+                    AddressReports = Mapper.Map<IEnumerable<AddressReport>, IEnumerable<AddressReportViewModel>>(x)
+                })
                 .ToList();
 
-            var reportViewModels = Mapper.Map<List<AddressReport>, List<AddressReportViewModel>>(reports);
-
-            return View(reportViewModels ?? new List<AddressReportViewModel>());
+            return View(clientReports ?? new List<MicrodistrictReportsViewModel>());
         }
     }
 }
