@@ -334,10 +334,10 @@ figure {
   .col-offset-12\@sm {
     margin-left: 100%; }
   .container {
-    padding-left: 7%;
+    padding-left: 7%; 
     padding-right: 7%; }
-  .row {
-    max-width: 1200px; } }
+  .shuffle.row {
+    max-width: 1200px; }}
 
 @media screen and (min-width: 1024px) {
   .col-1\@md, .col-2\@md, .col-3\@md, .col-4\@md, .col-5\@md, .col-6\@md, .col-7\@md, .col-8\@md, .col-9\@md, .col-10\@md, .col-11\@md, .col-12\@md {
