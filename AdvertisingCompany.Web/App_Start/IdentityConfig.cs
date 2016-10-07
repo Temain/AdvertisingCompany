@@ -22,6 +22,7 @@ namespace AdvertisingCompany.Web
         public Task SendAsync(IdentityMessage message)
         {
             // настройка логина, пароля отправителя
+            var company = "ООО \"ИТ Альянс\"";
             var from = "temain@mail.ru";
             var password = "rU50_$jkl";
 
@@ -36,6 +37,7 @@ namespace AdvertisingCompany.Web
 
             // создаем письмо: message.Destination - адрес получателя
             var mail = new MailMessage(from, message.Destination);
+            mail.From = new MailAddress(from, company);
             mail.Subject = message.Subject;
             mail.Body = message.Body;
             mail.IsBodyHtml = true;

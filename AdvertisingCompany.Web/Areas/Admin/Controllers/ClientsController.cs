@@ -140,7 +140,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             try
             {
                 UnitOfWork.Save();
-                UserManager.Update(account);
+                // UserManager.Update(account);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -187,8 +187,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     user.ClientId = client.ClientId;
                     UserManager.Update(user);
 
-                    //UserManager.SendEmail(user.Id, "ООО \"ИТ Альянс\"",
-                    //    String.Format("Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1}", viewModel.UserName, viewModel.Password));
+                    UserManager.SendEmail(user.Id, "Регистрация",
+                        String.Format(@"Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1} <br/>
+                            Просмотреть отчёты можно по адресу <a href='http://alliance-ip.tk'>alliance-ip.tk</a>", viewModel.UserName, viewModel.Password));
                 }
                 else
                 {
@@ -285,8 +286,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     var result = UserManager.AddPassword(account.Id, viewModel.Password);
                     if (result == IdentityResult.Success)
                     {
-                        //UserManager.SendEmail(account.Id, "ООО \"ИТ Альянс\"",
-                        //    String.Format("Ваш пароль учётной записи был изменён: <br/><br/>Новый пароль: {0}", viewModel.Password));
+                        UserManager.SendEmail(account.Id, "Изменение пароля",
+                            String.Format(@"Ваш пароль учётной записи был изменён: <br/><br/>Новый пароль: {0}<br/>
+                                Просмотреть отчёты можно по адресу <a href='http://alliance-ip.tk'>alliance-ip.tk</a>", viewModel.Password));
 
                         Logger.Info("Изменение пароля клиента. ClientId={0}, ApplicationuserId = {1}", viewModel.ClientId, account.Id);
 
