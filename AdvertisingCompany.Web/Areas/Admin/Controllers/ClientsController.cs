@@ -20,7 +20,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, Manager")]
     [RoutePrefix("api/admin/clients")]
     public class ClientsController : BaseApiController
     {
@@ -35,11 +35,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [ResponseType(typeof(ListClientsViewModel))]
         public ListClientsViewModel GetClients(string query = null, int page = 1, int pageSize = 10)
         {
-            //var cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total", true);
-            //var ramCounter = new PerformanceCounter("Memory", "Available MBytes", true);
-            //Logger.Info("Процессор: " + Convert.ToInt32(cpuCounter.NextValue()).ToString() + "%" + 
-            //    "; Память: " + Convert.ToInt32(ramCounter.NextValue()).ToString() + "Mb");
-
             var clientsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
@@ -170,6 +165,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [Route("")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Administrator")]
         public IHttpActionResult PostClient(CreateClientViewModel viewModel)
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
@@ -314,6 +310,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpDelete]
         [Route("{id:int}")]
         [ResponseType(typeof(Client))]
+        [Authorize(Roles = "Administrator")]
         public IHttpActionResult DeleteClient(int id)
         {
             var client = UnitOfWork.Repository<Client>()

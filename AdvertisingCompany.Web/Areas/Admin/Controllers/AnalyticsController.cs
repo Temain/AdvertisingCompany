@@ -9,7 +9,7 @@ using AdvertisingCompany.Web.Controllers;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, Manager")]
     [RoutePrefix("api/admin/analytics")]
     public class AnalyticsController : BaseApiController
     {

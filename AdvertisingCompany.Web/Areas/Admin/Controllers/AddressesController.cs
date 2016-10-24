@@ -18,7 +18,7 @@ using AutoMapper;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, Manager")]
     [RoutePrefix("api/admin/addresses")]
     public class AddressesController : BaseApiController
     {

@@ -18,7 +18,7 @@ using AdvertisingCompany.Web.Areas.Admin.Models.Campaign;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, Manager")]
     [RoutePrefix("api/admin/activity/categories")]
     public class ActivityCategoriesController : BaseApiController
     {

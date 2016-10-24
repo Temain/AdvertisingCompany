@@ -25,7 +25,7 @@ using AdvertisingCompany.Web.Results;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    // [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, Manager")]
     [RoutePrefix("api/admin/reports")]
     public class ReportsController : BaseApiController
     {

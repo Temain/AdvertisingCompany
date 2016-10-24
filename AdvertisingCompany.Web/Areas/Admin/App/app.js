@@ -1,5 +1,5 @@
-﻿define(['jquery', 'knockout', 'sammy', 'routes', 'components', 'user', 'knockout.validation.server-side', 'common', 'underscore'],
-function ($, ko, sammy, routes, components, UserViewModel, koValidation, common, _)
+﻿define(['jquery', 'knockout', 'sammy', 'routes', 'components', 'knockout.validation.server-side', 'common', 'underscore'],
+function ($, ko, sammy, routes, components, koValidation, common, _)
 {
     function AppViewModel() {
         var self = this;
@@ -22,13 +22,28 @@ function ($, ko, sammy, routes, components, UserViewModel, koValidation, common,
             }
         });
 
-        self.setAccessToken = function (accessToken) {
-            sessionStorage.setItem("accessToken", accessToken);
+        self.setAuthData = function (data) {
+            sessionStorage.setItem("accessToken", data.access_token);
+            sessionStorage.setItem("userRoles", data.roles);
         };
 
         self.getAccessToken = function () {
             return sessionStorage.getItem("accessToken");
         };
+
+        self.isUserInRole = function (roleName) {
+            var rolesInSession = sessionStorage.getItem("userRoles");
+            if (rolesInSession.length) {
+                var roles = rolesInSession.split(",");
+                for (i = 0; i < roles.length; i++) {
+                    if (roles[i] == roleName) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         function cleanUpLocation() {
             window.location.hash = "";
@@ -46,9 +61,7 @@ function ($, ko, sammy, routes, components, UserViewModel, koValidation, common,
                     var fragment = window.common.getFragment();
                     if (fragment.access_token) {
                         window.location.hash = fragment.state || '';
-                        self.setAccessToken(fragment.access_token);
-
-                        self.user = new UserViewModel(fragment);
+                        self.setAuthData(fragment);
 
                         self.isInitialized(true);
                     } else {

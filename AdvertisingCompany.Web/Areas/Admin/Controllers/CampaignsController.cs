@@ -17,7 +17,7 @@ using AutoMapper;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, Manager")]
     [RoutePrefix("api/admin/campaigns")]
     public class CampaignsController : BaseApiController
     {
@@ -190,6 +190,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [Route("~/api/admin/clients/{clientId:int}/campaigns")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "Administrator")]
         public IHttpActionResult PostCampaign([FromUri] int clientId, [FromBody] CreateCampaignViewModel viewModel)
         {
             var client = UnitOfWork.Repository<Client>()
@@ -279,6 +280,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpDelete]
         [Route("{id:int}")]
         [ResponseType(typeof(Client))]
+        [Authorize(Roles = "Administrator")]
         public IHttpActionResult DeleteCampaign(int id)
         {
             var campaign = UnitOfWork.Repository<Campaign>()

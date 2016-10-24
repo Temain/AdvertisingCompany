@@ -10,7 +10,7 @@ using AdvertisingCompany.Web.Controllers;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, Manager")]
     public class HomeController : BaseController
     {
         public HomeController(IUnitOfWork unitOfWork)
