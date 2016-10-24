@@ -16,7 +16,7 @@
                 });
 
                 // Клиенты
-                register('clients', {  require: rootPath + 'clients/index' });
+                register('clients', { require: rootPath + 'clients/index' });
                 register('client-create', { require: rootPath + 'clients/create' });
                 register('client-edit', { require: rootPath + 'clients/edit' });
 

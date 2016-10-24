@@ -373,6 +373,7 @@
     <Content Include="Areas\Admin\App\Components\Activity\Categories\index.js" />
     <Content Include="Areas\Admin\App\Components\Activity\Types\create.js" />
     <Content Include="Areas\Admin\App\Components\Activity\Types\edit.js" />
+    <Content Include="Areas\Admin\App\user.js" />
     <Content Include="Content\dropzone\dropzone.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />

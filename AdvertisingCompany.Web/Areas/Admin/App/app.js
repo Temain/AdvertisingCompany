@@ -1,5 +1,5 @@
-﻿define(['jquery', 'knockout', 'sammy', 'routes', 'components', 'knockout.validation.server-side',
-    'common', 'underscore'], function ($, ko, sammy, routes, components, koValidation, common, _)
+﻿define(['jquery', 'knockout', 'sammy', 'routes', 'components', 'user', 'knockout.validation.server-side', 'common', 'underscore'],
+function ($, ko, sammy, routes, components, UserViewModel, koValidation, common, _)
 {
     function AppViewModel() {
         var self = this;
@@ -10,6 +10,7 @@
 
         self.views = {};
         self.routes = routes;
+        self.user = {};
         self.isInitialized = ko.observable(false);
 
         // Отображаемый компонент 
@@ -46,6 +47,8 @@
                     if (fragment.access_token) {
                         window.location.hash = fragment.state || '';
                         self.setAccessToken(fragment.access_token);
+
+                        self.user = new UserViewModel(fragment);
 
                         self.isInitialized(true);
                     } else {

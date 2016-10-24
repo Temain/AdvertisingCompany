@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security.OAuth;
 
@@ -36,6 +39,17 @@ namespace AdvertisingCompany.Web.Providers
             }
 
             return Task.FromResult<object>(null);
+        }
+
+        public override Task AuthorizationEndpointResponse(OAuthAuthorizationEndpointResponseContext context)
+        {
+            var userRoles = context.Identity.Claims
+                .Where(c => c.Type == ClaimTypes.Role)
+                .Select(x => x.Value);
+
+            context.AdditionalResponseParameters.Add("roles", string.Join(",", userRoles));
+
+            return base.AuthorizationEndpointResponse(context);
         }
     }
 }

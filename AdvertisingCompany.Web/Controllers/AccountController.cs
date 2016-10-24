@@ -50,6 +50,7 @@ namespace AdvertisingCompany.Web.Controllers
         {
             var claims = new ClaimsPrincipal(User).Claims.ToArray();
             var identity = new ClaimsIdentity(claims, "Bearer");
+            // identity.AddClaim(new Claim(ClaimTypes.Role, "ADMINROLE"));
             AuthenticationManager.SignIn(identity);
 
             Logger.Info("Успешный вход в систему.");

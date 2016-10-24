@@ -5,6 +5,7 @@
         'app': 'areas/admin/app/app',
         'routes': 'areas/admin/app/routes.config',
         'components': 'areas/admin/app/components.config',
+        'user': 'areas/admin/app/user',
         'bootstrap': 'scripts/bootstrap/bootstrap.min',
         'bootstrap-select': 'scripts/bootstrap-select/bootstrap-select.min',
         'bootstrap-datetimepicker': 'scripts/bootstrap-datetimepicker/bootstrap-datetimepicker',
