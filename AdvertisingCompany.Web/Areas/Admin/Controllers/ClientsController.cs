@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -34,6 +35,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [ResponseType(typeof(ListClientsViewModel))]
         public ListClientsViewModel GetClients(string query = null, int page = 1, int pageSize = 10)
         {
+            //var cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total", true);
+            //var ramCounter = new PerformanceCounter("Memory", "Available MBytes", true);
+            //Logger.Info("Процессор: " + Convert.ToInt32(cpuCounter.NextValue()).ToString() + "%" + 
+            //    "; Память: " + Convert.ToInt32(ramCounter.NextValue()).ToString() + "Mb");
+
             var clientsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),

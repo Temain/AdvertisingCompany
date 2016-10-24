@@ -489,6 +489,12 @@ namespace AdvertisingCompany.Web.Controllers
                     _signInManager.Dispose();
                     _signInManager = null;
                 }
+
+                if (UnitOfWork != null)
+                {
+                    UnitOfWork.Dispose();
+                    UnitOfWork = null;
+                }
             }
 
             base.Dispose(disposing);

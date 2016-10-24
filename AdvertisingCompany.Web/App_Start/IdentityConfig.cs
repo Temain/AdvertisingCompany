@@ -23,17 +23,16 @@ namespace AdvertisingCompany.Web
         {
             // настройка логина, пароля отправителя
             var company = "ООО \"ИТ Альянс\"";
-            var from = "temain@mail.ru";
+            var from = "mail@it-alliance.tk";
             var password = "rU50_$jkl";
 
             // адрес и порт smtp-сервера, с которого мы и будем отправлять письмо
-            // SmtpClient client = new SmtpClient("smtp.yandex.ru", 25); 
-            SmtpClient client = new SmtpClient("smtp.mail.ru", 25);
+            SmtpClient client = new SmtpClient("mail.it-alliance.tk", 25);
 
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
             client.Credentials = new System.Net.NetworkCredential(from, password);
-            client.EnableSsl = true;
+            // client.EnableSsl = true;
 
             // создаем письмо: message.Destination - адрес получателя
             var mail = new MailMessage(from, message.Destination);

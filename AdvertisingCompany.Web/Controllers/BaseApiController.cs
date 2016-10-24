@@ -81,6 +81,12 @@ namespace AdvertisingCompany.Web.Controllers
                     _userManager.Dispose();
                     _userManager = null;
                 }
+
+                if (UnitOfWork != null)
+                {
+                    UnitOfWork.Dispose();
+                    UnitOfWork = null;
+                }
             }
 
             base.Dispose(disposing);

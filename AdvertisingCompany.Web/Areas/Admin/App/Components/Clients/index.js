@@ -32,7 +32,9 @@
                 headers: {
                     'Authorization': 'Bearer ' + app.getAccessToken()
                 },
-                error: function (response) { },
+                error: function (response) {
+                    console.log(response);
+                },
                 success: function (response) {
                     ko.mapping.fromJS(
                         response.clients,
