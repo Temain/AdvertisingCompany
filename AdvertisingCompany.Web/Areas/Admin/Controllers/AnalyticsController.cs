@@ -10,6 +10,7 @@ using AdvertisingCompany.Web.Controllers;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
+    [RoutePrefix("api/admin/analytics")]
     public class AnalyticsController : BaseApiController
     {
         public AnalyticsController(IUnitOfWork unitOfWork)
@@ -17,6 +18,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
+        [HttpGet]
+        [Route("")]
         public IHttpActionResult Get()
         {
             return Ok("Всё ок!");

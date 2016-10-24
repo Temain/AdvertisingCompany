@@ -61,7 +61,7 @@ namespace AdvertisingCompany.Domain.Models
         /// Дата создания записи
         /// </summary>
         [JsonIgnore]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Дата обновления записи

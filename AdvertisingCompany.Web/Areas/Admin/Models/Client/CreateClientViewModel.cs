@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using AdvertisingCompany.Domain.Models;
 using AdvertisingCompany.Web.Areas.Admin.Models.ActivityType;
@@ -46,6 +47,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         [Display(Name = "Дополнительный номер телефона")]
         public string AdditionalPhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "Введите адрес электронной почты.")]
         [Display(Name = "Адрес электронной почты")]
         [EmailAddress]
         public string Email { get; set; }
@@ -55,7 +57,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Введите пароль.")]
-        [StringLength(100, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Пароль должен содержать не менее {2} символов.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
@@ -65,6 +67,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Комментарий")]
+        public string Comment { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
         {
@@ -78,8 +83,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
                 .ForMember(m => m.ResponsiblePerson, opt => opt.MapFrom(s => s))
                 .ForMember(m => m.ClientStatusId, opt => opt.MapFrom(s => ClientStatuses.Active))
+                .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
                 .ForMember(m => m.ApplicationUsers, opt => opt.Ignore())
-                .ForMember(m => m.CreatedAt, opt => opt.Ignore());
+                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => DateTime.Now));
 
             configuration.CreateMap<CreateClientViewModel, Person>("ClientPerson")
                 .ForMember(m => m.LastName, opt => opt.MapFrom(s => s.ResponsiblePersonLastName))

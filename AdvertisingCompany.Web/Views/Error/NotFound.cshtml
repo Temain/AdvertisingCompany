@@ -1,35 +1,43 @@
 ﻿@model HandleErrorInfo
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
     ViewBag.Title = "Учет клиентов рекламной компании | Ошибка";
 }
 
-<div class="container">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/content/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/styles/app")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container">
+        <main id="content" class="error-container" role="main">
+            <div class="row mrgbtm24">
+                <div class="col-lg-8 col-sm-12 col-xs-20 col-lg-offset-8 col-sm-offset-6 col-xs-offset-2">
+                    <div class="error-container">
+                        <h1 class="error-code">404</h1>
+                        <p class="error-info">
+                            Ошибка, страница не найдена.
+                        </p>
+                        @*<p class="error-help mb"></p>*@
+                    </div>
+                </div>
+            </div>
 
-    <div class="error-template">
-        <h1 class="text-danger">
-            Ошибка 404!
-        </h1>
-        <div>
-            Запрошенная Вами страница не найдена!
-        </div>
-        <div>
-            Обратитесь в службу поддержки по телефону 6-36.
-        </div>
-        <div class="error-actions">
-            <a href="/" class="btn btn-default btn-lg">
-                <span class="glyphicon glyphicon-home"></span>
-                Вернуться на главную страницу
-            </a>
-        </div>
+            @if (User.IsInRole("Administrator"))
+            {
+                <blockquote style="text-align: left;">
+                    <p>@Model.Exception.Message</p>
+                    <footer>@Model.Exception.StackTrace</footer>
+                </blockquote>
+            }
+        </main>
     </div>
-
-    @if (User.IsInRole("Administrator"))
-    {
-        <blockquote>
-            <p>@Model.Exception.Message</p>
-            <footer>@Model.Exception.StackTrace</footer>
-        </blockquote>
-    }
-
-</div>
+</body>
+</html>

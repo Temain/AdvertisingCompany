@@ -1,0 +1,193 @@
+﻿<div data-bind="visible: isInitialized">
+    <ol class="breadcrumb">
+        <li>CRM</li>
+        <li class="active">Рекламные поверхности</li>
+    </ol>
+    <h1 class="page-title">Рекламные поверхности</h1>
+    <!--<div class="mrgbtm24">
+        <a href="/admin/#addresses/create" class="btn btn-warning"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Добавить адрес</a>
+    </div>-->
+    <section class="widget">
+        <div class="widget-body">
+            <div class="dataTables_wrapper form-inline no-footer">
+                <div class="row mrgbtm12">
+                    <div class="col-md-6 hidden-xs">
+                        <div class="table-actions dataTables_length" id="datatable-table_length">
+                            <a class="btn btn-default action" data-bind="attr : { href : '/admin/#addresses/create' }, style: { marginRight : selectedAddress() != null ? '1em' : '0' }, tooltip: { title: 'Добавить адрес', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-plus"></i></a>
+
+                            <div class="btn-group" role="group" style="margin-right: 1em;" data-bind="if: selectedAddress() != null" aria-label="...">
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#addresses/' + selectedAddress().addressId() + '/edit' }, tooltip: { title: 'Перейти к редактированию адреса', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-default action" data-bind="tooltip: { title: 'Загрузить отчёт', placement: 'bottom', trigger: 'hover' }, click : showUploadModal"><i class="glyphicon glyphicon-cloud-upload"></i></a>
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#addresses/' + selectedAddress().addressId() + '/reports' }, tooltip: { title: 'Просмотреть отчёты', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-picture-o"></i></a>                           
+                                <a class="btn btn-default action" data-bind="tooltip: { title: 'Удалить адрес', placement: 'bottom', trigger: 'hover' }, click : showDeleteModal"><i class="fa fa-trash-o" style="font-size: 1.2em;"></i></a>
+                            </div>
+
+                            <label>
+                                <!--Показать-->
+                                <select id="pageSize" class="form-control" title="" data-size="10" data-bind="selectPicker: pageSize, selectPickerOptions : { optionsArray : pageSizes, width: '70px' }, event : { change: pageSizeChanged }"></select>
+                                <!--записей-->
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="datatable-table_filter" class="pull-right">
+                            <label>Поиск:<input type="search" class="form-control input-rounded ml-sm" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', event:{keyup:search}"></label>
+                        </div>
+                    </div>
+                </div>
+                <div id="progress" class="row" style="display: none">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="progress progress-striped active mt">
+                            <div class="progress-bar progress-bar-info fw-semi-bold" style="width: 100%;">
+                                Загрузка...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 3%">&nbsp;#</th>
+                            <th style="width: 20%">Управляющая компания / ТСЖ</th>
+                            <th style="width: 12%">Микрорайон</th>
+                            <th style="width: 15%">Улица</th>
+                            <th style="width: 8%" class="text-center">Дом</th>
+                            <th style="width: 8%" class="text-center">Подъездов</th>
+                            <th style="width: 8%" class="text-center">Поверхностей</th>
+                            <th style="width: 8%" class="text-center">Этажей</th>
+                            <th style="width: 8%" class="text-center">Договор от</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: addresses">
+                        <tr data-bind="css: { 'selected': $parent.isSelected($data) }">
+                            <!--<td data-bind="text: ((($parent.page() - 1) * $parent.pageSize()) + $index() + 1) + '.'"></td>-->
+                            <td>
+                                <div class="checkbox">
+                                    <input type="checkbox" data-bind="attr: { id: 'checkbox' + addressId() }, checked: $parent.isSelected($data), click: $parent.selectAddress">
+                                    <label data-bind="attr: { for: 'checkbox' + addressId() }"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <span data-bind="text: managementCompanyName"></span>
+                            </td>
+                            <td data-bind="text: microdistrictShortName"></td>
+                            <td data-bind="text: streetName"></td>
+                            <td class="text-center" data-bind="text: buildingNumber"></td>
+                            <td class="text-center" data-bind="text: numberOfEntrances"></td>
+                            <td class="text-center" data-bind="text: numberOfSurfaces"></td>
+                            <td class="text-center" data-bind="text: numberOfFloors"></td>
+                            <td class="text-center" data-bind="text: contractDate"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ko if: addresses().length > 0 -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + addresses().length) + ' из ' + ((pagesCount() - 1) * pageSize() + addresses().length) + ' записей'"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- ko if: pagesCount() > 1 -->
+                        <div class="dataTables_paginate paging_bootstrap">
+                            <ul class="pagination no-margin">
+                                <li class="prev disabled">
+                                    <a href="#" aria-label="Previous">
+                                        Предыдущая
+                                    </a>
+                                </li>
+
+                                <!-- ko foreach: new Array(pagesCount()) -->
+                                <!-- ko if: $index() >= $parent.page() - 4 && $index() <= $parent.page() + 2 -->
+                                <li data-bind="attr: { 'class' : $parent.page() == ($index() + 1) ? 'active' : '' }">
+                                    <a href="#" data-bind="text: $index() + 1, click: function () { $parent.pageChanged($index() + 1); }"></a>
+                                </li>
+                                <!-- /ko -->
+                                <!-- /ko -->
+
+                                <li class="next">
+                                    <a href="#" aria-label="Next">
+                                        Следующая
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Upload modal -->
+<div id="upload-popup" class="modal fade" tabindex="-1" role="dialog" data-bind="if: selectedAddress() != null">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2>Загрузка отчётов<br /><small data-bind="text : selectedAddress().streetName() + ' ' + selectedAddress().buildingNumber()">Адрес</small> <i class="fa fa-building-o" aria-hidden="true"></i></h2>
+            </div>
+            <div class="modal-body">
+                <div class="popup-wrap">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div id="imageDropzone" class="dropzone">
+                                            <div class="dz-message">
+                                                <strong>Для загрузки перетащите файлы сюда.</strong><br>
+                                                <span class="note">(или просто нажмите на эту область)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group field">
+                                    <div class="col-sm-12">
+                                        <textarea name="comment" id="comment" class="form-control" placeholder="Комментарий" data-bind="value: comment"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row mrgtop12">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="submit" class="btn btn-success pull-right" data-bind="disable: loadingFiles, click: uploadFiles"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Delete modal -->
+<div id="delete-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2>Удаление</h2>
+            </div>
+            <div class="modal-body">
+                <div data-bind="if: selectedAddress() != null">
+                    Вы действительно хотите удалить адрес
+                    <span data-bind="text: selectedAddress().streetName() + ' ' + selectedAddress().buildingNumber()"></span>?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row mrgtop12">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Отмена</button>
+                        <button type="submit" class="btn btn-danger" data-bind="click: deleteAddress"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

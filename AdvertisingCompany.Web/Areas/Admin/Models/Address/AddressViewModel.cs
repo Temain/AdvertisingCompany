@@ -57,7 +57,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Address
                 .ForMember(m => m.NumberOfEntrances, opt => opt.MapFrom(s => s.NumberOfEntrances))
                 .ForMember(m => m.NumberOfSurfaces, opt => opt.MapFrom(s => s.NumberOfSurfaces))
                 .ForMember(m => m.NumberOfFloors, opt => opt.MapFrom(s => s.NumberOfFloors))
-                .ForMember(m => m.ContractDate, opt => opt.MapFrom(s => s.ContractDate.HasValue ? s.ContractDate.Value.ToShortDateString() : ""));
+                .ForMember(m => m.ContractDate, opt => opt.MapFrom(s => s.ContractDate.HasValue ? s.ContractDate.Value.ToString("dd.MM.yyyy") : ""));
         }
     }
 }

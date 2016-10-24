@@ -50,6 +50,7 @@ namespace AdvertisingCompany.Web.Controllers
         {
             var claims = new ClaimsPrincipal(User).Claims.ToArray();
             var identity = new ClaimsIdentity(claims, "Bearer");
+            // identity.AddClaim(new Claim(ClaimTypes.Role, "ADMINROLE"));
             AuthenticationManager.SignIn(identity);
 
             Logger.Info("Успешный вход в систему.");
@@ -156,7 +157,7 @@ namespace AdvertisingCompany.Web.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
+                    ModelState.AddModelError("", "Неверный логин или пароль.");
                     return View(model);
             }
         }
@@ -488,6 +489,12 @@ namespace AdvertisingCompany.Web.Controllers
                 {
                     _signInManager.Dispose();
                     _signInManager = null;
+                }
+
+                if (UnitOfWork != null)
+                {
+                    UnitOfWork.Dispose();
+                    UnitOfWork = null;
                 }
             }
 

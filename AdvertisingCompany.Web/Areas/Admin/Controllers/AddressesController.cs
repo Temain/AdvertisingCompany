@@ -19,7 +19,7 @@ using AutoMapper;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/addresses")]
+    [RoutePrefix("api/admin/addresses")]
     public class AddressesController : BaseApiController
     {
         public AddressesController(IUnitOfWork unitOfWork)
@@ -27,18 +27,18 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        // GET: admin/api/addresses
+        // GET: api/admin/addresses
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListAddressesViewModel))]
-        public ListAddressesViewModel GetAddresses(string query, int page = 1, int pageSize = 10)
+        public ListAddressesViewModel GetAddresses(string query = null, int page = 1, int pageSize = 10)
         {
             var addressesList = UnitOfWork.Repository<Address>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: @"Region, Region.LocationLevel, Region.LocationType, District, District.LocationLevel, District.LocationType, 
-                            City, City.LocationLevel, City.LocationType, Street, Street.LocationLevel, Street.LocationType,
-                            Building, Building.LocationLevel, Building.LocationType, Microdistrict");
+                    includeProperties: @"Region.LocationLevel, Region.LocationType, District.LocationLevel, District.LocationType, 
+                            City.LocationLevel, City.LocationType, Street.LocationLevel, Street.LocationType,
+                            Building.LocationLevel, Building.LocationType, Microdistrict");
 
             if (query != null)
             {
@@ -61,7 +61,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return viewModel;
         }
 
-        // GET: admin/api/addresses/0 (new) or admin/api/addresses/5 (edit)
+        // GET: api/admin/addresses/0 (new) or api/admin/addresses/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateAddressViewModel))]
@@ -83,9 +83,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 var address = UnitOfWork.Repository<Address>()
                     .GetQ(x => x.AddressId == id && x.DeletedAt == null,
-                        includeProperties: @"Region, Region.LocationLevel, Region.LocationType, District, District.LocationLevel, District.LocationType, 
-                            City, City.LocationLevel, City.LocationType, Street, Street.LocationLevel, Street.LocationType,
-                            Building, Building.LocationLevel, Building.LocationType")
+                        includeProperties: @"Region.LocationLevel, Region.LocationType, District.LocationLevel, District.LocationType, 
+                            City.LocationLevel, City.LocationType, Street.LocationLevel, Street.LocationType,
+                            Building.LocationLevel, Building.LocationType")
                     .SingleOrDefault();
                 if (address == null)
                 {
@@ -100,7 +100,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
 
-        // PUT: admin/api/addresses/5
+        // PUT: api/admin/addresses/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
@@ -109,9 +109,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var addressInDb = UnitOfWork.Repository<Address>()
                 .GetQ(x => x.AddressId == viewModel.AddressId && x.DeletedAt == null,
-                    includeProperties: @"Region, Region.LocationLevel, Region.LocationType, Region.Parent, District, District.LocationLevel, District.Locationtype, District.Parent, 
-                        City, City.LocationType, City.LocationLevel, City.Parent, Street, Street.LocationLevel, Street.LocationType, Street.Parent, 
-                        Building, Building.LocationLevel, Building.LocationType, Building.Parent, Microdistrict")
+                    includeProperties: @"Region.LocationLevel, Region.LocationType, Region.Parent, District.LocationLevel, District.Locationtype, District.Parent, 
+                        City.LocationType, City.LocationLevel, City.Parent, Street.LocationLevel, Street.LocationType, Street.Parent, 
+                        Building.LocationLevel, Building.LocationType, Building.Parent, Microdistrict")
                 .SingleOrDefault();
             if (addressInDb == null)
             {
@@ -176,7 +176,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/addresses
+        // POST: api/admin/addresses
         [HttpPost]
         [Route("")]
         [KoJsonValidate]
@@ -315,22 +315,22 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
         }
 
-        // DELETE: admin/api/addresses/5
+        // DELETE: api/admin/addresses/5
         [HttpDelete]
-        [Route("")]
-        [ResponseType(typeof(Client))]
+        [Route("{id:int}")]
+        [ResponseType(typeof(void))]
         public IHttpActionResult DeleteAddress(int id)
         {
-            var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == id && x.DeletedAt == null)
+            var address = UnitOfWork.Repository<Address>()
+                .GetQ(x => x.AddressId == id && x.DeletedAt == null)
                 .SingleOrDefault();
-            if (client == null)
+            if (address == null)
             {
                 return NotFound();
             }
 
-            client.DeletedAt = DateTime.Now;
-            UnitOfWork.Repository<Client>().Update(client);
+            address.DeletedAt = DateTime.Now;
+            UnitOfWork.Repository<Address>().Update(address);
 
             try
             {
@@ -350,7 +350,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
             Logger.Info("Удаление адреса. AddressId={0}", id);
 
-            return Ok(client);
+            return Ok();
         }
 
         private bool AddressExists(int id)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AdvertisingCompany.Web.Models.Mapping;
 
@@ -23,6 +24,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         /// </summary>
         public int ActivityTypeId { get; set; }
         public string ActivityTypeName { get; set; }
+        public string ActivityCategoryName { get; set; }
 
         /// <summary>
         /// Ответственное лицо
@@ -60,7 +62,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         /// <summary>
         /// Дата создания записи
         /// </summary>
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
+
+        /// <summary>
+        /// Комментарий
+        /// </summary>
+        public string Comment { get; set; }
 
 
         public void CreateMappings(AutoMapper.IConfiguration configuration)
@@ -70,7 +77,8 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.CampaignId, opt => opt.MapFrom(s => s.Campaigns.FirstOrDefault().CampaignId))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
                 .ForMember(m => m.ActivityTypeId, opt => opt.MapFrom(s => s.ActivityTypeId))
-                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory + "/" + s.ActivityType.ActivityTypeName))
+                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityTypeName))
+                .ForMember(m => m.ActivityCategoryName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory.ActivityCategoryName))
                 .ForMember(m => m.ResponsiblePersonId, opt => opt.MapFrom(s => s.ResponsiblePersonId))
                 .ForMember(m => m.ResponsiblePersonShortName, opt => opt.MapFrom(s => s.ResponsiblePerson.ShortName))
                 .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
@@ -80,7 +88,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.ClientStatusId, opt => opt.MapFrom(s => s.ClientStatusId))
                 .ForMember(m => m.ClientStatusName, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusName))
                 .ForMember(m => m.ClientStatusLabelClass, opt => opt.MapFrom(s => s.ClientStatus.ClientStatusLabelClass))
-                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt.HasValue ? s.CreatedAt.Value.ToShortDateString() : ""));
+                .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
+                // .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt.HasValue ? s.CreatedAt.Value.ToString("dd.MM.yyyy") : ""))
+                .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt));
         }
     }
 }

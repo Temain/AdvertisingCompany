@@ -1,0 +1,66 @@
+﻿<div data-bind="visible: isInitialized">
+    <ol class="breadcrumb">
+        <li>CRM</li>
+        <li class="active">Отчёты</li>
+    </ol>
+    <div>
+        <h1 class="page-title">
+            Фотоотчёты<br />
+            <small data-bind="visible: addressId, text : 'Адрес: г.Краснодар ' + addressName()"></small>
+        </h1>
+    </div>
+
+    <div class="alert alert-info" role="alert" data-bind="visible: addressReports().length == 0">
+        Не загружено ни одного фотоотчёта.
+    </div>
+
+    <div id="grid" class="row grid-with-images shuffle mrgtop36">
+        <!-- ko foreach: addressReports -->
+        <figure class="js-item img-item col-3@sm col-3@xs">
+            <div class="aspect aspect--4x3">
+                <div class="aspect__inner js-item-preview">
+                    <a data-bind="attr: { href: '/api/admin/reports/' + addressReportId() }"><img data-bind="attr: { src: 'data:' + imageMimeType() + ';base64,' + imageThumbnail() }"></a>
+                </div>
+            </div>
+            <figcaption class="caption">
+                <h5 class="mt-0 mb-xs display-inline-block" data-bind="text: imageName"></h5>
+                <div class="mt-0 mb-xs display-inline-block pull-right"><a href="#" data-bind="tooltip: { title: 'Удалить', placement: 'left', trigger: 'hover' }, click : $parent.showDeleteModal"><i class="fa fa-times" aria-hidden="true"></i></a></div>
+                <ul class="post-links">
+                    <li><a>Дата : <span data-bind="text: reportDate"></span></a></li>
+                    <li><a>Размер : <span data-bind="text: filesize(imageLength(), {base: 10, round: 0})"></span></a></li>
+                </ul>
+                <ul class="post-links" data-bind="visible: comment">
+                    <li><a>Комментарий : </a><span data-bind="text : comment"></span></li>
+                </ul>
+            </figcaption>
+        </figure>
+        <!-- /ko -->
+        <div class="col-1@sm sizer-element"></div>
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div id="delete-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2>Удаление</h2>
+            </div>
+            <div class="modal-body">
+                <div data-bind="if: selectedReport() != null">
+                    Вы действительно хотите удалить файл
+                    <span data-bind="text: selectedReport().imageName()"></span>?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row mrgtop12">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Отмена</button>
+                        <button type="submit" class="btn btn-danger" data-bind="click: deleteReport"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

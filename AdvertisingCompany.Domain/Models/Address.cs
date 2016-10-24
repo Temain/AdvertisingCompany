@@ -97,7 +97,7 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Дата создания записи
         /// </summary>
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Дата обновления записи
@@ -121,8 +121,8 @@ namespace AdvertisingCompany.Domain.Models
         {
             get
             {
-                return Street.LocationType.LocationTypeShortName + "." + Street.LocationName + " " +
-                       Building.LocationType.LocationTypeShortName + "." + Building.LocationName;
+                return Street.LocationType.LocationTypeShortName + ". " + Street.LocationName + " " +
+                       Building.LocationType.LocationTypeShortName + ". " + Building.LocationName;
             }
         }
     }

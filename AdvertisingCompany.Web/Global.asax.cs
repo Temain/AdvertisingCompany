@@ -17,7 +17,7 @@ namespace AdvertisingCompany.Web
     {
         protected void Application_Start()
         {
-            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerSelector), new AreaHttpControllerSelector(GlobalConfiguration.Configuration));
+            // GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerSelector), new AreaHttpControllerSelector(GlobalConfiguration.Configuration));
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -27,7 +27,7 @@ namespace AdvertisingCompany.Web
             AutoMapperConfig.Configure();
 
             // All attribute routes
-            var allDirectRoutes = WebApiConfig.GlobalObservableDirectRouteProvider.DirectRoutes;
+            // var allDirectRoutes = WebApiConfig.GlobalObservableDirectRouteProvider.DirectRoutes;
         }
 
         // Обработка HTTP исключений

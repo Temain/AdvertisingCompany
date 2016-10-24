@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
@@ -18,7 +21,7 @@ using Microsoft.AspNet.Identity;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/clients")]
+    [RoutePrefix("api/admin/clients")]
     public class ClientsController : BaseApiController
     {
         public ClientsController(IUnitOfWork unitOfWork)
@@ -26,16 +29,21 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        // GET: admin/api/clients
+        // GET: api/admin/clients
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListClientsViewModel))]
-        public ListClientsViewModel GetClients(string query, int page = 1, int pageSize = 10)
+        public ListClientsViewModel GetClients(string query = null, int page = 1, int pageSize = 10)
         {
+            //var cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total", true);
+            //var ramCounter = new PerformanceCounter("Memory", "Available MBytes", true);
+            //Logger.Info("Процессор: " + Convert.ToInt32(cpuCounter.NextValue()).ToString() + "%" + 
+            //    "; Память: " + Convert.ToInt32(ramCounter.NextValue()).ToString() + "Mb");
+
             var clientsList = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: "Campaigns, ActivityType, ResponsiblePerson, ApplicationUsers, ClientStatus");
+                    includeProperties: "Campaigns, ActivityType.ActivityCategory, ResponsiblePerson, ApplicationUsers, ClientStatus");
 
             if (query != null)
             {
@@ -61,7 +69,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return viewModel;
         }
 
-        // GET: admin/api/clients/0 (new) or admin/api/clients/5 (edit)
+        // GET: api/admin/clients/0 (new) or api/admin/clients/5 (edit)
         [HttpGet]
         [Route("{id:int}")]
         [ResponseType(typeof(CreateClientViewModel))]
@@ -69,7 +77,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public IHttpActionResult GetClient(int id)
         {
             var activityTypes = UnitOfWork.Repository<ActivityType>()
-                .Get(orderBy: o => o.OrderBy(p => p.ActivityCategory))
+                .Get(x => x.DeletedAt == null, 
+                    includeProperties: "ActivityCategory", 
+                    orderBy: o => o.OrderBy(p => p.ActivityCategory.ActivityCategoryName))
                 .ToList();
             var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
 
@@ -98,7 +108,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
 
-        // PUT: admin/api/clients/5
+        // PUT: api/admin/clients/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
@@ -123,13 +133,20 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
 
             Mapper.Map<EditClientViewModel, Client>(viewModel, client);
-            client.UpdatedAt = DateTime.Now;
 
+            var account = client.ApplicationUsers.FirstOrDefault();
+            if (account != null)
+            {
+                account.Email = viewModel.Email;
+            }
+
+            client.UpdatedAt = DateTime.Now;
             UnitOfWork.Repository<Client>().Update(client);
 
             try
             {
                 UnitOfWork.Save();
+                // UserManager.Update(account);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -148,7 +165,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/clients
+        // POST: api/admin/clients
         [HttpPost]
         [Route("")]
         [KoJsonValidate]
@@ -157,22 +174,44 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var client = Mapper.Map<CreateClientViewModel, Client>(viewModel);
 
-            var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
-            var result = UserManager.Create(user, viewModel.Password);
-            if (result.Succeeded)
+            try
             {
-                UnitOfWork.Repository<Client>().Insert(client);
-                UnitOfWork.Save();
-
-                user.ClientId = client.ClientId;
-                UserManager.Update(user);
-            }
-            else
-            {
-                foreach (var error in result.Errors)
+                var user = new ApplicationUser { UserName = viewModel.UserName, Email = viewModel.Email };
+                var result = UserManager.Create(user, viewModel.Password);
+                if (result.Succeeded)
                 {
-                    ModelState.AddModelError("Shared", error);
+                    if (!RoleManager.RoleExists("Client"))
+                    {
+                        RoleManager.Create(new ApplicationRole { Name = "Client" });
+                    }
+
+                    UserManager.AddToRole(user.Id, "Client");
+
+                    UnitOfWork.Repository<Client>().Insert(client);
+                    UnitOfWork.Save();
+
+                    user.ClientId = client.ClientId;
+                    UserManager.Update(user);
+
+                    UserManager.SendEmail(user.Id, "Регистрация",
+                        String.Format(@"Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1} <br/>
+                            Просмотреть отчёты можно по адресу <a href='http://alliance-ip.tk'>alliance-ip.tk</a>", viewModel.UserName, viewModel.Password));
                 }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("Shared", error);
+                    }
+                }
+            }
+            catch (SmtpException smtp)
+            {
+                ModelState.AddModelError("Shared", "Произошла ошибка при отправке письма с учётными данными. " + smtp.Message);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("Shared", ex.Message);
             }
 
             // См. атрибут KoJsonValidate 
@@ -186,6 +225,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return Ok(new { clientId = client.ClientId });
         }
 
+        // PUT: api/admin/clients/5/status/2
         [HttpPut]
         [Route("{clientId:int}/status/{statusId:int}")]
         [ResponseType(typeof(void))]
@@ -226,9 +266,53 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // DELETE: admin/api/clients/5
+        // PUT: api/admin/clients/5/change_password
+        [HttpPut]
+        [Route("{clientId:int}/change_password")]
+        [KoJsonValidate]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult ChangePassword(ChangePasswordViewModel viewModel)
+        {
+            var client = UnitOfWork.Repository<Client>()
+                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
+                    includeProperties: "ApplicationUsers")
+                .SingleOrDefault();
+            if (client == null)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var account = client.ApplicationUsers.FirstOrDefault();
+                if (account != null)
+                {
+                    UserManager.RemovePassword(account.Id);
+
+                    var result = UserManager.AddPassword(account.Id, viewModel.Password);
+                    if (result == IdentityResult.Success)
+                    {
+                        UserManager.SendEmail(account.Id, "Изменение пароля",
+                            String.Format(@"Ваш пароль учётной записи был изменён: <br/><br/>Новый пароль: {0}<br/>
+                                Просмотреть отчёты можно по адресу <a href='http://alliance-ip.tk'>alliance-ip.tk</a>", viewModel.Password));
+
+                        Logger.Info("Изменение пароля клиента. ClientId={0}, ApplicationuserId = {1}", viewModel.ClientId, account.Id);
+
+                        return StatusCode(HttpStatusCode.OK);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.Error(ex);
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        // DELETE: api/admin/clients/5
         [HttpDelete]
-        [Route("")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Client))]
         public IHttpActionResult DeleteClient(int id)
         {

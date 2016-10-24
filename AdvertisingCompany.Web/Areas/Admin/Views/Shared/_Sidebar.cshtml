@@ -10,12 +10,13 @@
                 </span>
                 <!-- .circle is a pretty cool way to add a bit of beauty to raw data.
                 should be used with bg-* and text-* classes for colors -->
-                <span class="circle bg-warning fw-bold text-gray-dark">
+                @*<span class="circle bg-warning fw-bold text-gray-dark">
                     13
                 </span>
                 &nbsp;
                 Philip <strong>Smith</strong>
-                <b class="caret"></b>
+                <b class="caret"></b>*@
+                <strong>@ViewBag.UserName</strong>
             </a>
             <!-- #notifications-dropdown-menu goes here when screen collapsed to xs or sm -->
         </div>
@@ -47,17 +48,18 @@
             <li>
                 <a href="#sidebar-dictionary" data-toggle="collapse" data-parent="#sidebar">
                     <span class="icon">
-                        <i class="fa fa-book"></i>
+                        <i class="glyphicon glyphicon-book"></i>
                     </span>
                     Справочники
                     <i class="toggle fa fa-angle-down"></i>
                 </a>
                 <ul id="sidebar-dictionary" class="collapse in">
-                    <li><a href="#activities">Виды деятельности</a></li>
+                    <li><a href="#activity/categories">Категории деятельности</a></li>
+                    <li><a href="#activity/types">Виды деятельности</a></li>
                 </ul>
             </li>
             <li class="active">
-                <a href="#" data-parent="#sidebar" data-bind="click: navigateToAnalytics">
+                <a href="#analytics" data-parent="#sidebar">
                     <span class="icon">
                         <i class="glyphicon glyphicon-stats"></i>
                     </span>
@@ -66,7 +68,7 @@
             </li>
         </ul>
 
-        <h5 class="sidebar-nav-title">Метки <a class="action-link" href="#"><i class="glyphicon glyphicon-plus"></i></a></h5>
+        @*<h5 class="sidebar-nav-title">Метки <a class="action-link" href="#"><i class="glyphicon glyphicon-plus"></i></a></h5>
         <ul class="sidebar-labels">
             <li>
                 <a href="#">
@@ -86,6 +88,6 @@
                     <span class="label-name">Важно</span>
                 </a>
             </li>
-        </ul>
+        </ul>*@
     </div>
 </nav>

@@ -59,8 +59,9 @@ namespace AdvertisingCompany.Domain.DataAccess
                 {
                     _context.Dispose();
                 }
+
+                this._disposed = true;
             }
-            this._disposed = true;
         }
 
         public void Dispose()

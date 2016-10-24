@@ -14,13 +14,14 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.ActivityType
 
         [Required]
         [Display(Name = "Наименование категории вида деятельности")]
-        public string ActivityCategory { get; set; }
+        public string ActivityCategoryName { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<ActivityTypeViewModel, Domain.Models.ActivityType>("ActivityType");
 
-            configuration.CreateMap<Domain.Models.ActivityType, ActivityTypeViewModel>("ActivityType");
+            configuration.CreateMap<Domain.Models.ActivityType, ActivityTypeViewModel>("ActivityType")
+                .ForMember(m => m.ActivityCategoryName, opt => opt.MapFrom(s => s.ActivityCategory.ActivityCategoryName));
         }
     }
 }

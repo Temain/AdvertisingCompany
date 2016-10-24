@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using AdvertisingCompany.Web.Models;
+using System.Net.Mail;
 
 namespace AdvertisingCompany.Web
 {
@@ -20,8 +21,27 @@ namespace AdvertisingCompany.Web
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Подключите здесь службу почты для отправки сообщения.
-            return Task.FromResult(0);
+            // настройка логина, пароля отправителя
+            var company = "ООО \"ИТ Альянс\"";
+            var from = "mail@it-alliance.tk";
+            var password = "rU50_$jkl";
+
+            // адрес и порт smtp-сервера, с которого мы и будем отправлять письмо
+            SmtpClient client = new SmtpClient("mail.it-alliance.tk", 25);
+
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential(from, password);
+            // client.EnableSsl = true;
+
+            // создаем письмо: message.Destination - адрес получателя
+            var mail = new MailMessage(from, message.Destination);
+            mail.From = new MailAddress(from, company);
+            mail.Subject = message.Subject;
+            mail.Body = message.Body;
+            mail.IsBodyHtml = true;
+
+            return client.SendMailAsync(mail);
         }
     }
 
@@ -55,11 +75,11 @@ namespace AdvertisingCompany.Web
             // Настройка логики проверки паролей
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = true,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequiredLength = 4,
+                RequireNonLetterOrDigit = false,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Настройка параметров блокировки по умолчанию

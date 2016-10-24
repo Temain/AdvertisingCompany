@@ -18,7 +18,7 @@ using AutoMapper;
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [RoutePrefix("admin/api/campaigns")]
+    [RoutePrefix("api/admin/campaigns")]
     public class CampaignsController : BaseApiController
     {
         public CampaignsController(IUnitOfWork unitOfWork)
@@ -26,16 +26,16 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
         }
 
-        // GET: admin/api/campaigns
+        // GET: api/admin/campaigns
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListCampaignsViewModel))]
-        public ListCampaignsViewModel GetCampaigns(string query, int page = 1, int pageSize = 10)
+        public ListCampaignsViewModel GetCampaigns(string query = null, int page = 1, int pageSize = 10)
         {
             var campaignsList = UnitOfWork.Repository<Campaign>()
-                .GetQ(x => x.DeletedAt == null,
+                .GetQ(x => x.DeletedAt == null && x.Client.DeletedAt == null,
                     orderBy: o => o.OrderByDescending(c => c.CreatedAt),
-                    includeProperties: "Client, Client.ActivityType, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
+                    includeProperties: @"Client.ActivityType.ActivityCategory, Microdistricts, PlacementFormat, PaymentOrder, PaymentStatus");
 
             if (query != null)
             {
@@ -61,16 +61,16 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return viewModel;
         }
 
-        // GET: admin/api/clients/5/campaigns/0 (new) or admin/api/clients/5/campaigns/8 (edit)
+        // GET: api/admin/clients/5/campaigns/0 (new) or api/admin/clients/5/campaigns/8 (edit)
         [HttpGet]
-        [Route("~/admin/api/clients/{clientId:int}/campaigns/{campaignId:int}")]
+        [Route("~/api/admin/clients/{clientId:int}/campaigns/{campaignId:int}")]
         [ResponseType(typeof(CreateCampaignViewModel))]
         // [ResponseType(typeof(EditCampaignViewModel))]
         public IHttpActionResult GetCampaign(int clientId, int campaignId)
         {
             var client = UnitOfWork.Repository<Client>()
                 .GetQ(x => x.ClientId == clientId && x.DeletedAt == null,
-                    includeProperties: "ResponsiblePerson, ActivityType")
+                    includeProperties: "ResponsiblePerson, ActivityType.ActivityCategory")
                 .SingleOrDefault();
 
             if (client == null)
@@ -98,7 +98,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 .ToList();
             var paymentStatusViewModels = Mapper.Map<IEnumerable<PaymentStatus>, IEnumerable<PaymentStatusViewModel>>(paymentStatuses);
 
-            var placementMonths = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames
+            var placementMonths = System.Globalization.CultureInfo.GetCultureInfo("ru-RU").DateTimeFormat.MonthNames
                 .Select((month, index) => new PlacementMonthViewModel { PlacementMonthId = index, PlacementMonthName = month })
                 .Where(x => !String.IsNullOrEmpty(x.PlacementMonthName));
 
@@ -116,7 +116,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 var campaign = UnitOfWork.Repository<Campaign>()
                     .Get(x => x.CampaignId == campaignId && x.DeletedAt == null,
-                        includeProperties: "Client, Client.ResponsiblePerson, Client.ActivityType, Microdistricts")
+                        includeProperties: "Client.ResponsiblePerson, Microdistricts")
                     .SingleOrDefault();
                 if (campaign == null)
                 {
@@ -135,7 +135,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         }
 
 
-        // PUT: admin/api/campaigns/5
+        // PUT: api/admin/campaigns/5
         [HttpPut]
         [Route("")]
         [KoJsonValidate]
@@ -144,7 +144,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         {
             var campaign = UnitOfWork.Repository<Campaign>()
                 .Get(x => x.CampaignId == viewModel.CampaignId && x.DeletedAt == null,
-                    includeProperties: "Client, Client.ResponsiblePerson, Client.ActivityType")
+                    includeProperties: "Client.ResponsiblePerson")
                 .SingleOrDefault();
             if (campaign == null)
             {
@@ -185,9 +185,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: admin/api/clients/5/campaigns
+        // POST: api/admin/clients/5/campaigns
         [HttpPost]
-        [Route("~/admin/api/clients/{clientId:int}/campaigns")]
+        [Route("~/api/admin/clients/{clientId:int}/campaigns")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
         public IHttpActionResult PostCampaign([FromUri] int clientId, [FromBody] CreateCampaignViewModel viewModel)
@@ -275,9 +275,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // DELETE: admin/api/campaigns/5
+        // DELETE: api/admin/campaigns/5
         [HttpDelete]
-        [Route("")]
+        [Route("{id:int}")]
         [ResponseType(typeof(Client))]
         public IHttpActionResult DeleteCampaign(int id)
         {

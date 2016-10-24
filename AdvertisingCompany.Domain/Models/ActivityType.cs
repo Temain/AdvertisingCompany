@@ -23,10 +23,25 @@ namespace AdvertisingCompany.Domain.Models
         public string ActivityTypeName { get; set; }
 
         /// <summary>
-        /// Наименование категории вида деятельности
+        /// Категория вида деятельности
         /// </summary>
-        [Required]
-        public string ActivityCategory { get; set; }
+        public int ActivityCategoryId { get; set; }
+        public ActivityCategory ActivityCategory { get; set; }
+
+        /// <summary>
+        /// Дата создания записи
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// Дата обновления записи
+        /// </summary>
+        public DateTime? UpdatedAt { get; set; }
+
+        /// <summary>
+        /// Дата удаления записи
+        /// </summary>
+        public DateTime? DeletedAt { get; set; }
 
         /// <summary>
         /// Клиенты рекламной компании

@@ -1,0 +1,152 @@
+﻿<div data-bind="visible: isInitialized">
+    <ol class="breadcrumb">
+        <li>CRM</li>
+        <li class="active">Рекламные кампании</li>
+    </ol>
+    <h1 class="page-title">Рекламные кампании</h1>
+    <section class="widget">
+        <div class="widget-body">
+            <div class="dataTables_wrapper form-inline no-footer">
+                <div class="row mrgbtm12">
+                    <div class="col-md-6 hidden-xs">
+                        <div class="table-actions dataTables_length" id="datatable-table_length">
+                            <div class="btn-group" role="group" data-bind="if: selectedCampaign() != null, style: { marginRight: selectedCampaign() != null ? '1em' : '0' }" aria-label="...">
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedCampaign().clientId() + '/campaigns/' + selectedCampaign().campaignId() +'/edit' }, tooltip: { title: 'Перейти к редактированию информации о кампании', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-default action" data-bind="attr : { href : '/admin/#clients/' + selectedCampaign().clientId() + '/campaigns/' + selectedCampaign().campaignId() + '/reports' }, tooltip: { title: 'Просмотреть фотоотчёты выбранных микрорайонов', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-picture-o"></i></a>                               
+                                <a class="btn btn-default action" data-bind="tooltip: { title: 'Удалить рекламную кампанию', placement: 'bottom', trigger: 'hover' }, click : showDeleteModal"><i class="fa fa-trash-o" style="font-size: 1.2em;"></i></a>
+                            </div>
+
+                            <label>
+                                <!--Показать-->
+                                <select id="pageSize" class="form-control" title="" data-size="10" data-bind="selectPicker: pageSize, selectPickerOptions : { optionsArray : pageSizes, width: '70px' }, event : { change: pageSizeChanged }"></select>
+                                <!--записей-->
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="datatable-table_filter" class="pull-right">
+                            <label>Поиск:<input type="search" class="form-control input-rounded ml-sm" data-bind="value: searchQuery, valueUpdate: 'afterkeydown', event:{keyup:search}"></label>
+                        </div>
+                    </div>
+                </div>
+                <div id="progress" class="row" style="display: none">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="progress progress-striped active mt">
+                            <div class="progress-bar progress-bar-info fw-semi-bold" style="width: 100%;">
+                                Загрузка...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 3%">&nbsp;#</th>
+                            <th class="col-md-4">Клиент</th>
+                            <th class="col-md-2">Деятельность</th>
+                            <th class="col-md-2">Микрорайоны</th>
+                            <th class="col-md-1 text-center">Формат</th>
+                            <th class="col-md-1 text-center">Стоимость</th>
+                            <th class="col-md-1 text-center">Форма оплаты</th>
+                            <th class="col-md-1">Статус оплаты</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: campaigns">
+                        <!-- ko if: $parent.isMonthChanged($index(), $data) -->
+                        <tr class="delimiter"><td colspan="8" data-bind="text: $parent.monthNameAndYear($data.createdAt())">Месяц</td></tr>
+                        <!-- /ko -->
+
+                        <tr data-bind="css: { 'selected': $parent.isSelected($data) }">
+                            <td>
+                                <div class="checkbox">
+                                    <input type="checkbox" data-bind="attr: { id: 'checkbox' + campaignId() }, checked: $parent.isSelected($data), click: $parent.selectCampaign">
+                                    <label data-bind="attr: { for: 'checkbox' + campaignId() }"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <span data-bind="text: clientName"></span><br />
+                                <small data-bind="text: comment"></small>
+                            </td>
+                            <td>
+                                <span data-bind="text: activityTypeName"></span><br />
+                                <small data-bind="text: activityCategoryName"></small>
+                            </td>
+                            <td>
+                                <ul data-bind="foreach: microdistrictNames" style="padding-left: 20px;">
+                                    <li data-bind="text: $data"></li>
+                                </ul>
+                            </td>
+                            <td class="text-center" data-bind="text: placementFormatName"></td>
+                            <td class="text-center" data-bind="text: placementCost"></td>
+                            <td class="text-center" data-bind="text: paymentOrderName"></td>
+                            <td>
+                                <select data-bind="attr: { 'data-style' : 'btn-' + paymentStatusLabelClass() }, selectPicker: paymentStatusId, selectPickerOptions: { optionsArray : $parent.paymentStatuses, initValue : paymentStatusInitialId, initialized : paymentStatusInitialized }, optionsValue: 'paymentStatusId', optionsText: 'paymentStatusName', event : { change : $parent.paymentStatusChanged }"></select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ko if: campaigns().length > 0 -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="dataTables_info" data-bind="text: 'Записи с ' + (((page() - 1) * pageSize()) + 1) + ' до ' + (((page() - 1) * pageSize()) + campaigns().length) + ' из ' + ((pagesCount() - 1) * pageSize() + campaigns().length) + ' записей'"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- ko if: pagesCount() > 1 -->
+                        <div class="dataTables_paginate paging_bootstrap">
+                            <ul class="pagination no-margin">
+                                <li class="prev disabled">
+                                    <a href="#" aria-label="Previous">
+                                        Предыдущая
+                                    </a>
+                                </li>
+
+                                <!-- ko foreach: new Array(pagesCount()) -->
+                                <!-- ko if: $index() >= $parent.page() - 4 && $index() <= $parent.page() + 2 -->
+                                <li data-bind="attr: { 'class' : $parent.page() == ($index() + 1) ? 'active' : '' }">
+                                    <a href="#" data-bind="text: $index() + 1, click: function () { $parent.pageChanged($index() + 1); }"></a>
+                                </li>
+                                <!-- /ko -->
+                                <!-- /ko -->
+
+                                <li class="next">
+                                    <a href="#" aria-label="Next">
+                                        Следующая
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Delete modal -->
+<div id="delete-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2>Удаление</h2>
+            </div>
+            <div class="modal-body">
+                <div data-bind="if: selectedCampaign() != null">
+                    Вы действительно хотите удалить рекламню кампанию клиента
+                    <span data-bind="text: selectedCampaign().clientName()"></span>?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row mrgtop12">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Отмена</button>
+                        <button type="submit" class="btn btn-danger" data-bind="click: deleteCampaign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,72 @@
-﻿@section SPAViews {
-    @Html.Partial("_Home")
+﻿@using AdvertisingCompany.Web.Models;
+@model List<MicrodistrictReportsViewModel>
+@{
+    ViewBag.Title = "Рекламная компания | Фотоотчёты";
 }
-@section Scripts{
-    @Scripts.Render("~/bundles/app")
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info" role="alert">
+        Не загружено ни одного фотоотчёта.
+    </div>
+}
+
+@foreach (MicrodistrictReportsViewModel microdistrict in Model)
+{
+    <div class="row row-np">
+        <h2 class="page-header">@microdistrict.MicrodistrictShortName <small>@microdistrict.MicrodistrictName</small></h2>
+    </div>
+
+    <div class="row row-np grid-with-images shuffle">
+
+        @foreach (AddressReportViewModel report in microdistrict.AddressReports)
+        {
+            <figure class="js-item img-item col-3@sm col-3@xs">
+                <div class="aspect aspect--4x3">
+                    <div class="aspect__inner js-item-preview">
+                        <a href="@("/reports/" + report.AddressReportId)"><img src="@("data:" + report.ImageMimeType + ";base64," + report.ImageThumbnail)"></a>
+                    </div>
+                </div>
+                <figcaption class="caption">
+                    <h5 class="mt-0 mb-xs">@report.AddressName</h5>                  
+                    @*<ul class="post-links">
+                        <li><a>Файл : <span data-bind="text: imageName"></span></a></li>
+                        <li><a>Размер : <span data-bind="text: filesize(imageLength(), {base: 10, round: 0})"></span></a></li>
+                    </ul>
+                    <ul class="post-links" data-bind="visible: comment">
+                        <li><a>Комментарий : </a><span data-bind="text : comment"></span></li>
+                    </ul>*@
+                </figcaption>
+            </figure>
+        }
+
+        <div class="col-1@sm sizer-element"></div>
+    </div>
+}
+
+@section Scripts {
+
+    <script>
+        $(function () {
+            // Инициализация ShuffleJS
+            var Shuffle = window.shuffle;
+            var imageGrids = $('.grid-with-images');
+            $.each(imageGrids, function (index, imageGrid) {
+                // var element = document.getElementById('grid');
+                var shuffle = new Shuffle(imageGrid, {
+                    itemSelector: '.js-item',
+                    sizer: document.getElementById('.sizer-element')
+                });
+            });
+
+            // Инициализация MagnificPopup
+            $('.grid-with-images').magnificPopup({
+                delegate: '.js-item-preview a',
+                type: 'image',
+                gallery: {
+                    enabled: false
+                }
+            });
+        });
+    </script>
 }

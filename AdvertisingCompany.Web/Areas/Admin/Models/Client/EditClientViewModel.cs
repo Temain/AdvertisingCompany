@@ -48,6 +48,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         [Display(Name = "Дополнительный номер телефона")]
         public string AdditionalPhoneNumber { get; set; }
 
+        [Required(ErrorMessage = "Введите адрес электронной почты.")]
         [Display(Name = "Адрес электронной почты")]
         [EmailAddress]
         public string Email { get; set; }
@@ -55,6 +56,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         [Required(ErrorMessage = "Введите имя пользователя.")]
         [Display(Name = "Логин")]
         public string UserName { get; set; }
+
+        [Display(Name = "Комментарий")]
+        public string Comment { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
         {
@@ -78,6 +82,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
                 .ForMember(m => m.AdditionalPhoneNumber, opt => opt.MapFrom(s => s.AdditionalPhoneNumber))
                 .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
+                .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
                 .ForMember(m => m.ResponsiblePerson, opt => opt.MapFrom(s => s))
                 .ForMember(m => m.ApplicationUsers, opt => opt.Ignore())
                 .ForMember(m => m.ResponsiblePersonId, opt => opt.Ignore())

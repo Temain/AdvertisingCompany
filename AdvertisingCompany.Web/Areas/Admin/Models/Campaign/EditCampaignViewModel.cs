@@ -39,6 +39,21 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
         public string CompanyName { get; set; }
 
         /// <summary>
+        /// Адрес электронной почты [Client]
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Номер телефона [Client]
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
+        /// Дополнительный номер телефона [Client]
+        /// </summary>
+        public string AdditionalPhoneNumber { get; set; }
+
+        /// <summary>
         /// Род деятельности [Client]
         /// </summary>
         public string ActivityTypeName { get; set; }
@@ -96,8 +111,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                 .ForMember(m => m.ResponsiblePersonId, opt => opt.MapFrom(s => s.ResponsiblePersonId))
                 .ForMember(m => m.ResponsiblePersonName, opt => opt.MapFrom(s => s.ResponsiblePerson.FullName))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.CompanyName))
+                .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))
+                .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
+                .ForMember(m => m.AdditionalPhoneNumber, opt => opt.MapFrom(s => s.AdditionalPhoneNumber))
                 .ForMember(m => m.PlacementMonthId, opt => opt.MapFrom(s => DateTime.Now.Month))
-                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory + " / " + s.ActivityType.ActivityTypeName));
+                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory.ActivityCategoryName + " / " + s.ActivityType.ActivityTypeName));
 
             configuration.CreateMap<Domain.Models.Campaign, EditCampaignViewModel>("Campaign")
                 .ForMember(m => m.ClientId, opt => opt.MapFrom(s => s.ClientId))
@@ -105,7 +123,10 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                 .ForMember(m => m.ResponsiblePersonId, opt => opt.MapFrom(s => s.Client.ResponsiblePersonId))
                 .ForMember(m => m.ResponsiblePersonName, opt => opt.MapFrom(s => s.Client.ResponsiblePerson.FullName))
                 .ForMember(m => m.CompanyName, opt => opt.MapFrom(s => s.Client.CompanyName))
-                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory + " / " + s.Client.ActivityType.ActivityTypeName))
+                .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Client.Email))
+                .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.Client.PhoneNumber))
+                .ForMember(m => m.AdditionalPhoneNumber, opt => opt.MapFrom(s => s.Client.AdditionalPhoneNumber))
+                .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory.ActivityCategoryName + " / " + s.Client.ActivityType.ActivityTypeName))
                 .ForMember(m => m.MicrodistrictIds, opt => opt.MapFrom(s => s.Microdistricts.Select(x => x.MicrodistrictId)))
                 .ForMember(m => m.PlacementMonthId, opt => opt.MapFrom(s => s.PlacementMonthId))
                 .ForMember(m => m.PlacementFormatId, opt => opt.MapFrom(s => s.PlacementFormatId))

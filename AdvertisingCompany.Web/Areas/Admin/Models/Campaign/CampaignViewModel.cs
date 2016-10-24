@@ -28,6 +28,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
         /// Род деятельности [Client]
         /// </summary>
         public string ActivityTypeName { get; set; }
+        public string ActivityCategoryName { get; set; }
 
         /// <summary>
         /// Микрорайоны размещения рекламы
@@ -57,17 +58,30 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
         public string PaymentStatusLabelClass { get; set; }
         public IEnumerable<PaymentStatusViewModel> PaymentStatuses { get; set; } 
 
+        /// <summary>
+        /// Комментарий
+        /// </summary>
+        public string Comment { get; set; }
+
+        /// <summary>
+        /// Дата создания
+        /// </summary>
+        public DateTime? CreatedAt { get; set; }
+
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Domain.Models.Campaign, CampaignViewModel>("Campaign")
                .ForMember(m => m.ClientId, opt => opt.MapFrom(s => s.ClientId))
                .ForMember(m => m.ClientName, opt => opt.MapFrom(s => s.Client.CompanyName))
-               .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory + " / " + s.Client.ActivityType.ActivityTypeName))
+               .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityTypeName))
+               .ForMember(m => m.ActivityCategoryName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory.ActivityCategoryName))
                .ForMember(m => m.MicrodistrictNames, opt => opt.MapFrom(s => s.Microdistricts.Select(x => x.MicrodistrictShortName)))
                .ForMember(m => m.PlacementFormatName, opt => opt.MapFrom(s => s.PlacementFormat.PlacementFormatName))
                .ForMember(m => m.PaymentOrderName, opt => opt.MapFrom(s => s.PaymentOrder.PaymentOrderName))
                .ForMember(m => m.PaymentStatusId, opt => opt.MapFrom(s => s.PaymentStatusId))
                .ForMember(m => m.PaymentStatusName, opt => opt.MapFrom(s => s.PaymentStatus.PaymentStatusName))
+               .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
+               .ForMember(m => m.CreatedAt, opt => opt.MapFrom(s => s.CreatedAt))
                .ForMember(m => m.PaymentStatusLabelClass, opt => opt.MapFrom(s => s.PaymentStatus.PaymentStatusLabelClass));
         }
     }

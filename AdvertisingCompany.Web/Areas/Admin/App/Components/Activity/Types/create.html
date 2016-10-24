@@ -1,0 +1,35 @@
+﻿<ol class="breadcrumb">
+    <li>CRM</li>
+    <li>Виды деятельности</li>
+    <li class="active">Добавление нового вида деятельности</li>
+</ol>
+<h1 class="page-title">Добавление нового вида деятельности</h1>
+<section class="widget">
+    <div class="widget-body">
+        <form class="form-horizontal mrgtop24" role="form">
+            <fieldset>
+                <div class="form-group required">
+                    <label for="activityCategoryId" class="col-sm-4 control-label">Категория</label>
+                    <div class="col-sm-6">
+                        <select id="activityCategoryId" class="form-control" title="" data-size="12" data-live-search="true" data-bind="selectPicker: activityCategoryId, selectPickerOptions: { optionsArray : activityCategories }, optionsValue: 'activityCategoryId', optionsText: 'activityCategoryName', optionsCaption : ''"></select>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="activityTypeName" class="col-sm-4 control-label">Наименование вида</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="activityTypeName" class="form-control" data-bind="value: activityTypeName">
+                    </div>
+                </div>               
+            </fieldset>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-sm-offset-4 col-sm-7">
+                        <div class="btn-group btn-footer" role="group" aria-label="...">
+                            <button type="submit" class="btn btn-success" data-bind="click: submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

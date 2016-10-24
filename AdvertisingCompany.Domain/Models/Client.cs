@@ -57,12 +57,18 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Электронная почта
         /// </summary>
+        [Required]
         public string Email { get; set; }
+
+        /// <summary>
+        /// Комментарий
+        /// </summary>
+        public string Comment { get; set; }
 
         /// <summary>
         /// Дата создания записи
         /// </summary>
-        public DateTime? CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Дата обновления записи
