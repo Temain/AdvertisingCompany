@@ -362,6 +362,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\App\components.config.js" />
+    <Content Include="Areas\Admin\App\Components\Profile\index.html" />
+    <Content Include="Areas\Admin\App\Components\Profile\index.js" />
     <Content Include="Areas\Admin\App\Components\Reports\client-reports.js" />
     <Content Include="Areas\Admin\App\Components\Reports\address-reports.html" />
     <Content Include="Areas\Admin\App\Components\Reports\client-reports.html" />

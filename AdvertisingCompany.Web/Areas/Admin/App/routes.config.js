@@ -13,6 +13,11 @@
                 sammy(function() {
                     this.post('/account/logoff/', function() { return true; });
 
+                    // Профиль пользователя
+                    this.get('#profile', function () {
+                        app.componentName('profile');
+                    });
+
                     // Клиенты
                     this.get('#clients', function() {
                         app.componentName('clients');

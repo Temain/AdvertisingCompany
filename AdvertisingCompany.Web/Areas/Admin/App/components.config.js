@@ -11,9 +11,13 @@
                 var rootPath = 'areas/admin/app/components/';
                 var register = ko.components.register;
 
+                // Аналитика
                 register('analytics', {
                     require: rootPath + 'analytics/index'
                 });
+
+                // Профиль пользователя
+                register('profile', { require: rootPath + 'profile/index' });
 
                 // Клиенты
                 register('clients', { require: rootPath + 'clients/index' });
