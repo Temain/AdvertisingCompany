@@ -44,6 +44,9 @@
                 // Фотоотчёты
                 register('address-reports', { require: rootPath + 'reports/address-reports' });
                 register('client-reports', { require: rootPath + 'reports/client-reports' });
+
+                // Календарь
+                register('calendar', { require: rootPath + 'calendar/index' });
             }
         }
     }());

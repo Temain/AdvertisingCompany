@@ -10,6 +10,10 @@
         'bootstrap-datetimepicker': 'scripts/bootstrap-datetimepicker/bootstrap-datetimepicker',
         'bootstrap-typeahead': 'scripts/typeahead/bootstrap3-typeahead.min',
         'jquery': 'scripts/jquery/jquery-1.10.2.min',
+        'jquery-ui-core': 'scripts/jquery-ui/ui/core',
+        'jquery-ui-widget': 'scripts/jquery-ui/ui/widget',
+        'jquery-ui-mouse': 'scripts/jquery-ui/ui/mouse',
+        'jquery-ui-draggable': 'scripts/jquery-ui/ui/draggable',
         'knockout': 'scripts/knockout/knockout-3.4.0.debug',
         'knockout.mapping': 'scripts/knockout/knockout.mapping-latest.debug',
         'knockout.validation': 'scripts/knockout/knockout.validation.min',
@@ -28,6 +32,7 @@
         'gins': 'scripts/gins/app',
         'gins-settings': 'scripts/gins/settings',
         'gins-gallery': 'scripts/gins/gallery',
+        'gins-calendar': 'scripts/gins/calendar',
         'widgster': 'scripts/widgster/widgster',
         'jquery-slimscroll': 'scripts/jquery-slimscroll/jquery.slimscroll.min',
         'pace': 'scripts/pace/pace.min',
@@ -43,7 +48,9 @@
         'shuffle': 'scripts/shuffle/dist/shuffle.min',
         'evenheights': 'scripts/shuffle/dist/evenheights',
         'file-size': 'scripts/filesize.min',
-        'dropzone': 'scripts/dropzone/dropzone-amd-module'
+        'dropzone': 'scripts/dropzone/dropzone-amd-module',
+        'fullcalendar': 'scripts/fullcalendar/fullcalendar.min',
+        'fullcalendar-locale': 'scripts/fullcalendar/dist/lang/ru'
     },
     shim: {
         'app': ['gins'],
@@ -67,6 +74,12 @@
             deps: ['jquery', 'magnific-popup', 'shuffle'],
             exports: 'initGallery'
         },
+        'gins-calendar': {
+            deps: [
+                'jquery', 'fullcalendar'
+            ],
+            exports: 'initCalendar'
+        },
         'magnific-popup' : {
             deps: ['jquery']   
         },
@@ -89,6 +102,8 @@
         'kladr-with-map' : {
             deps: ['kladr', 'ymaps'],
             exports: 'kladrWithMap'
-        }
+        },
+        'fullcalendar': ['moment', 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-draggable' ],
+        'fullcalendar-locale': ['fullcalendar']
     }
 }

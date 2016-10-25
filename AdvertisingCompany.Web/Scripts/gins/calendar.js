@@ -1,6 +1,6 @@
-$(function(){
-    function pageLoad(){
-        $('#external-events').find('div.external-event').each(function() {
+﻿var initCalendar = function () {
+    function pageLoad() {
+        $('#external-events').find('div.external-event').each(function () {
 
             // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
             // it doesn't need to have a start or end
@@ -30,10 +30,30 @@ $(function(){
                 center: '',
                 right: ''
             },
-
+            allDayText: 'Весь день',
+            axisFormat: 'HH:mm',
+            // time formats
+            titleFormat: {
+                month: 'MMMM yyyy',
+                week: "MMM d[ yyyy]{ '&#8212;'[ MMM] d yyyy}",
+                day: 'dddd, MMM d, yyyy'
+            },
+            columnFormat: {
+                month: 'ddd',
+                week: 'ddd d.M',
+                day: 'dddd d.M'
+            },
+            timeFormat: { // for event elements
+                '': 'h(:mm)t' // default
+            },
+            lang: 'ru',
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'οюнь', 'οюль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthNamesShort: ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.'],
+            dayNames: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+            dayNamesShort: ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"],
             selectable: true,
             selectHelper: true,
-            select: function(start, end, allDay) {
+            select: function (start, end, allDay) {
                 var $modal = $("#edit-modal"),
                     $btn = $('#create-event');
                 $btn.off('click');
@@ -58,9 +78,9 @@ $(function(){
                 $calendar.fullCalendar('unselect');
             },
             editable: true,
-            droppable:true,
+            droppable: true,
 
-            drop: function(date, allDay) { // this function is called when something is dropped
+            drop: function (date, allDay) { // this function is called when something is dropped
 
                 // retrieve the dropped element's stored Event Object
                 var originalEventObject = $(this).data('eventObject');
@@ -94,13 +114,13 @@ $(function(){
                 },
                 {
                     title: 'Long Event',
-                    start: new Date(y, m, d+5),
-                    end: new Date(y, m, d+7)
+                    start: new Date(y, m, d + 5),
+                    end: new Date(y, m, d + 7)
                 },
                 {
                     id: 999,
                     title: 'Repeating Event',
-                    start: new Date(y, m, d-3, 16, 0),
+                    start: new Date(y, m, d - 3, 16, 0),
                     allDay: false
                 },
                 {
@@ -113,17 +133,17 @@ $(function(){
                 }
             ],
 
-            eventClick: function(event) {
+            eventClick: function (event) {
                 // opens events in a popup window
-                if (event.url){
+                if (event.url) {
                     window.open(event.url, 'gcalevent', 'width=700,height=600');
                     return false
                 } else {
                     var $modal = $("#myModal"),
                         $modalLabel = $("#myModalLabel");
                     $modalLabel.html(event.title);
-                    $modal.find(".modal-body p").html(function(){
-                        if (event.allDay){
+                    $modal.find(".modal-body p").html(function () {
+                        if (event.allDay) {
                             return "All day event"
                         } else {
                             return "Start At: <strong>" + event.start.getHours() + ":" + (event.start.getMinutes() == 0 ? "00" : event.start.getMinutes()) + "</strong></br>"
@@ -136,41 +156,44 @@ $(function(){
 
         });
 
-        $("#calendar-switcher").find("label").click(function(){
-            $calendar.fullCalendar( 'changeView', $(this).find('input').val() )
+        $("#calendar-switcher").find("label").click(function () {
+            $calendar.fullCalendar('changeView', $(this).find('input').val())
         });
 
         var currentDate = $calendar.fullCalendar('getDate');
 
         $('#calender-current-date').html(
-                $.fullCalendar.formatDate(currentDate, "MMM yyyy") +
-                " - <span class='fw-semi-bold'>" +
-                $.fullCalendar.formatDate(currentDate, "dddd") +
-                "</span>"
+            moment(currentDate).lang("ru").format('MMMM YYYY').capitalize() +
+            " - <span class='fw-semi-bold'>" +
+            moment(currentDate).lang("ru").format("dddd").capitalize() +
+            "</span>"
         );
 
 
-        $('#calender-prev').click(function(){
-            $calendar.fullCalendar( 'prev' );
+        $('#calender-prev').click(function () {
+            $calendar.fullCalendar('prev');
             currentDate = $calendar.fullCalendar('getDate');
             $('#calender-current-date').html(
-                    $.fullCalendar.formatDate(currentDate, "MMM yyyy") +
-                    " - <span class='fw-semi-bold'>" +
-                    $.fullCalendar.formatDate(currentDate, "dddd") +
-                    "</span>"
+                moment(currentDate).lang("ru").format('MMMM YYYY').capitalize() +
+                " - <span class='fw-semi-bold'>" +
+                moment(currentDate).lang("ru").format("dddd").capitalize() +
+                "</span>"
             );
         });
-        $('#calender-next').click(function(){
-            $calendar.fullCalendar( 'next' );
+        $('#calender-next').click(function () {
+            $calendar.fullCalendar('next');
             currentDate = $calendar.fullCalendar('getDate');
             $('#calender-current-date').html(
-                    $.fullCalendar.formatDate(currentDate, "MMM yyyy") +
-                    " - <span class='fw-semi-bold'>" +
-                    $.fullCalendar.formatDate(currentDate, "dddd") +
-                    "</span>"
+                moment(currentDate).lang("ru").format('MMMM YYYY').capitalize() +
+                " - <span class='fw-semi-bold'>" +
+                moment(currentDate).lang("ru").format("dddd").capitalize() +
+                "</span>"
             );
         });
     }
     pageLoad();
-    SingApp.onPageLoad(pageLoad);
-});
+};
+
+String.prototype.capitalize = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}

@@ -97,6 +97,11 @@
                         app.componentName('activity-type-edit');
                     });
 
+                    // Календарь
+                    this.get('#calendar', function () {
+                        app.componentName('calendar');
+                    });
+
                     // Аналитика
                     this.get('#analytics', function() {
                         app.componentName('analytics');
