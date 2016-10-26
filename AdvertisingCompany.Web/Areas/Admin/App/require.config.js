@@ -14,6 +14,7 @@
         'jquery-ui-widget': 'scripts/jquery-ui/ui/widget',
         'jquery-ui-mouse': 'scripts/jquery-ui/ui/mouse',
         'jquery-ui-draggable': 'scripts/jquery-ui/ui/draggable',
+        'jquery-ui-resizable': 'scripts/jquery-ui/ui/resizable',
         'knockout': 'scripts/knockout/knockout-3.4.0.debug',
         'knockout.mapping': 'scripts/knockout/knockout.mapping-latest.debug',
         'knockout.validation': 'scripts/knockout/knockout.validation.min',
@@ -103,7 +104,7 @@
             deps: ['kladr', 'ymaps'],
             exports: 'kladrWithMap'
         },
-        'fullcalendar': ['moment', 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-draggable' ],
+        'fullcalendar': ['moment', 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-draggable', 'jquery-ui-resizable'],
         'fullcalendar-locale': ['fullcalendar']
     }
 }

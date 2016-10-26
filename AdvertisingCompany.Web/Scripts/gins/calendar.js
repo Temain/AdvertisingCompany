@@ -1,4 +1,7 @@
-﻿var initCalendar = function () {
+﻿var initCalendar = function (options) {
+    
+    var saveEvent = options.saveEvent || function () { };
+
     function pageLoad() {
         $('#external-events').find('div.external-event').each(function () {
 
@@ -32,6 +35,7 @@
             },
             allDayText: 'Весь день',
             axisFormat: 'HH:mm',
+
             // time formats
             titleFormat: {
                 month: 'MMMM yyyy',
@@ -44,33 +48,33 @@
                 day: 'dddd d.M'
             },
             timeFormat: { // for event elements
-                '': 'h(:mm)t' // default
+                '': 'HH:mm' // default
             },
             lang: 'ru',
             monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'οюнь', 'οюль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
             monthNamesShort: ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.'],
             dayNames: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
-            dayNamesShort: ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"],
+            dayNamesShort: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
             selectable: true,
             selectHelper: true,
             select: function (start, end, allDay) {
-                var $modal = $("#edit-modal"),
-                    $btn = $('#create-event');
+                var $modal = $("#createModal"),
+                    $btn = $('#createEvent');
                 $btn.off('click');
                 $btn.click(function () {
                     var title = $("#event-name").val();
                     if (title) {
-                        $calendar.fullCalendar('renderEvent',
-                            {
-                                title: title,
-                                start: start,
-                                end: end,
-                                allDay: allDay,
-                                backgroundColor: '#64bd63',
-                                textColor: '#fff'
-                            },
-                            true
-                        );
+                        var event =  {
+                            title: title,
+                            start: start,
+                            end: end,
+                            allDay: allDay,
+                            backgroundColor: '#64bd63',
+                            textColor: '#fff'
+                        };
+
+                        $calendar.fullCalendar('renderEvent', event, true);
+                        saveEvent(event);
                     }
                     $calendar.fullCalendar('unselect');
                 });
@@ -79,7 +83,6 @@
             },
             editable: true,
             droppable: true,
-
             drop: function (date, allDay) { // this function is called when something is dropped
 
                 // retrieve the dropped element's stored Event Object
@@ -137,17 +140,17 @@
                 // opens events in a popup window
                 if (event.url) {
                     window.open(event.url, 'gcalevent', 'width=700,height=600');
-                    return false
+                    return false;
                 } else {
-                    var $modal = $("#myModal"),
-                        $modalLabel = $("#myModalLabel");
+                    var $modal = $("#editModal"),
+                        $modalLabel = $("#editModalLabel");
                     $modalLabel.html(event.title);
                     $modal.find(".modal-body p").html(function () {
                         if (event.allDay) {
-                            return "All day event"
+                            return "На весь день";
                         } else {
-                            return "Start At: <strong>" + event.start.getHours() + ":" + (event.start.getMinutes() == 0 ? "00" : event.start.getMinutes()) + "</strong></br>"
-                                + (event.end == null ? "" : "End At: <strong>" + event.end.getHours() + ":" + (event.end.getMinutes() == 0 ? "00" : event.end.getMinutes()) + "</strong>")
+                            return "Начало: <strong>" + event.start.getHours() + ":" + (event.start.getMinutes() == 0 ? "00" : event.start.getMinutes()) + "</strong></br>"
+                                + (event.end == null ? "" : "Окончание: <strong>" + event.end.getHours() + ":" + (event.end.getMinutes() == 0 ? "00" : event.end.getMinutes()) + "</strong>");
                         }
                     }());
                     $modal.modal('show');
@@ -157,7 +160,7 @@
         });
 
         $("#calendar-switcher").find("label").click(function () {
-            $calendar.fullCalendar('changeView', $(this).find('input').val())
+            $calendar.fullCalendar('changeView', $(this).find('input').val());
         });
 
         var currentDate = $calendar.fullCalendar('getDate');
@@ -168,7 +171,6 @@
             moment(currentDate).lang("ru").format("dddd").capitalize() +
             "</span>"
         );
-
 
         $('#calender-prev').click(function () {
             $calendar.fullCalendar('prev');
