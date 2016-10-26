@@ -23,11 +23,14 @@ namespace AdvertisingCompany.Domain.Context
         public DbSet<PaymentStatus> PaymentStatuses { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<PlacementFormat> PlacementFormats { get; set; }
+        public DbSet<Calendar> Calendar { get; set; }
 
 
         public ApplicationDbContext()
             : base("AdvertisingCompanyConnection", throwIfV1Schema: false)
         {
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public static ApplicationDbContext Create()
@@ -37,8 +40,6 @@ namespace AdvertisingCompany.Domain.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // this.Configuration.LazyLoadingEnabled = false;
-
             // Отключаем каскадное удаление данных в связанных таблицах
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();

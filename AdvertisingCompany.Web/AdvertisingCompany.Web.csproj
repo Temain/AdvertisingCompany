@@ -261,6 +261,7 @@
     <Compile Include="Areas\Admin\Controllers\ActivityCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\AnalyticsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AddressesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CalendarController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportsController.cs" />
     <Compile Include="Areas\Admin\Controllers\CampaignsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientsController.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Areas\Admin\Models\Address\LocationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\MicrodistrictViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\AddressViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Calendar\CalendarViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\CampaignViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\EditCampaignViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\CreateCampaignViewModel.cs" />

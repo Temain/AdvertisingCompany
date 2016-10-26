@@ -1,6 +1,8 @@
 ﻿var initCalendar = function (options) {
     
-    var saveEvent = options.saveEvent || function () { };
+    var events = options.events || [];
+    var createEvent = options.createEvent || function () { };
+    var editEvent = options.editEvent || function () { };
 
     function pageLoad() {
         $('#external-events').find('div.external-event').each(function () {
@@ -51,7 +53,7 @@
                 '': 'HH:mm' // default
             },
             lang: 'ru',
-            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'οюнь', 'οюль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
             monthNamesShort: ['Янв.', 'Фев.', 'Март', 'Апр.', 'Май', 'Июнь', 'Июль', 'Авг.', 'Сент.', 'Окт.', 'Ноя.', 'Дек.'],
             dayNames: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
             dayNamesShort: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
@@ -104,37 +106,39 @@
                 $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
 
                 $(this).remove();
-
             },
-
+            eventDrop: function(event, delta, revertFunc) {
+                editEvent(event);
+            },
+            events : events,
             // US Holidays
-            events: [
-                {
-                    title: 'All Day Event',
-                    start: new Date(y, m, 1),
-                    backgroundColor: '#79A5F0',
-                    textColor: '#fff'
-                },
-                {
-                    title: 'Long Event',
-                    start: new Date(y, m, d + 5),
-                    end: new Date(y, m, d + 7)
-                },
-                {
-                    id: 999,
-                    title: 'Repeating Event',
-                    start: new Date(y, m, d - 3, 16, 0),
-                    allDay: false
-                },
-                {
-                    title: 'Click for Flatlogic',
-                    start: new Date(y, m, 28),
-                    end: new Date(y, m, 29),
-                    url: 'http://flatlogic.com/',
-                    backgroundColor: '#e5603b',
-                    textColor: '#fff'
-                }
-            ],
+            //events: [
+            //    {
+            //        title: 'All Day Event',
+            //        start: new Date(y, m, 1),
+            //        backgroundColor: '#79A5F0',
+            //        textColor: '#fff'
+            //    },
+            //    {
+            //        title: 'Long Event',
+            //        start: new Date(y, m, d + 5),
+            //        end: new Date(y, m, d + 7)
+            //    },
+            //    {
+            //        id: 999,
+            //        title: 'Repeating Event',
+            //        start: new Date(y, m, d - 3, 16, 0),
+            //        allDay: false
+            //    },
+            //    {
+            //        title: 'Click for Flatlogic',
+            //        start: new Date(y, m, 28),
+            //        end: new Date(y, m, 29),
+            //        url: 'http://flatlogic.com/',
+            //        backgroundColor: '#e5603b',
+            //        textColor: '#fff'
+            //    }
+            //],
 
             eventClick: function (event) {
                 // opens events in a popup window

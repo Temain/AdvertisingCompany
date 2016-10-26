@@ -39,6 +39,8 @@ namespace AdvertisingCompany.Domain.Models
         public int? ClientId { get; set; }
         public Client Client { get; set; }
 
+        public ICollection<Calendar> Calendar { get; set; }
+
         public DateTime CreatedAt { get; set; }
     }
 }

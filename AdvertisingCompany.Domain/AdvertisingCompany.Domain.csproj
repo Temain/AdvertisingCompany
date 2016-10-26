@@ -176,10 +176,19 @@
     <Compile Include="Migrations\201608172311056_MakeCreatedAtRequired.Designer.cs">
       <DependentUpon>201608172311056_MakeCreatedAtRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610260844231_AddCalendarTable.cs" />
+    <Compile Include="Migrations\201610260844231_AddCalendarTable.Designer.cs">
+      <DependentUpon>201610260844231_AddCalendarTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610261030468_AddApplicationUserToCalendar.cs" />
+    <Compile Include="Migrations\201610261030468_AddApplicationUserToCalendar.Designer.cs">
+      <DependentUpon>201610261030468_AddApplicationUserToCalendar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\ActivityType.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
+    <Compile Include="Models\Calendar.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Client.cs" />
@@ -278,6 +287,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608172311056_MakeCreatedAtRequired.resx">
       <DependentUpon>201608172311056_MakeCreatedAtRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610260844231_AddCalendarTable.resx">
+      <DependentUpon>201610260844231_AddCalendarTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610261030468_AddApplicationUserToCalendar.resx">
+      <DependentUpon>201610261030468_AddApplicationUserToCalendar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

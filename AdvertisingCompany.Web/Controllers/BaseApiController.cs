@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
 using AdvertisingCompany.Domain.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using NLog;
 
