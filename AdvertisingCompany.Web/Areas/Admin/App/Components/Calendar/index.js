@@ -32,19 +32,20 @@
                         initCalendar({
                             events: events,
                             createEvent: self.createEvent,
-                            editEvent: self.editEvent
+                            editEvent: self.editEvent,
+                            deleteEvent: self.deleteEvent
                         });
                     }, 1000);
                 }
             });
         };
 
-        self.createEvent = function (event) {
+        self.createEvent = function (event, onSuccess) {
             var postData = {
                 CalendarId: event.id || 0,
                 Title: event.title,
-                Start: event.start,
-                End: event.end,
+                Start: event.start ? moment(event.start).format() : null,
+                End: event.end ? moment(event.end).format() : null,
                 AllDay: event.allDay,
                 Color: event.backgroundColor
             };
@@ -56,7 +57,9 @@
                 contentType: "application/json; charset=utf-8",
                 headers: { 'Authorization': 'Bearer ' + app.getAccessToken() },
                 error: function(response) { console.log(response); },
-                success: function(response) { }
+                success: function (response) {
+                    onSuccess(response.id);
+                }
             });
         };
 
@@ -64,8 +67,8 @@
             var putData = {
                 CalendarId: event.id,
                 Title: event.title,
-                Start: event.start,
-                End: event.end,
+                Start: event.start ? moment(event.start).format() : null,
+                End: event.end ? moment(event.end).format() : null,
                 AllDay: event.allDay,
                 Color: event.backgroundColor
             }
@@ -74,6 +77,17 @@
                 method: 'put',
                 url: '/api/admin/calendar/',
                 data: JSON.stringify(putData),
+                contentType: "application/json; charset=utf-8",
+                headers: { 'Authorization': 'Bearer ' + app.getAccessToken() },
+                error: function (response) { console.log(response); },
+                success: function (response) { }
+            });
+        };
+
+        self.deleteEvent = function (eventId) {
+            $.ajax({
+                method: 'delete',
+                url: '/api/admin/calendar/' + eventId,
                 contentType: "application/json; charset=utf-8",
                 headers: { 'Authorization': 'Bearer ' + app.getAccessToken() },
                 error: function (response) { console.log(response); },

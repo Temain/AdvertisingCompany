@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using AdvertisingCompany.Domain.DataAccess.Interfaces;
@@ -27,14 +28,16 @@ namespace AdvertisingCompany.Web.Controllers
             var clientMicrodistrictIds = UnitOfWork.Repository<Campaign>()
                 .GetQ(x => x.ClientId == UserProfile.ClientId && x.Client.DeletedAt == null && x.DeletedAt == null)
                 .SelectMany(x => x.Microdistricts)
+                .AsNoTracking()
                 .Select(x => x.MicrodistrictId);
 
             var clientReports = UnitOfWork.Repository<AddressReport>()
-                .Get(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId) 
+                .GetQ(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId) 
                     && x.Address.DeletedAt == null && x.DeletedAt == null
                     && x.CreatedAt.Month == DateTime.Now.Month,
                     includeProperties: "Address, Address.Microdistrict, Address.Street.LocationType, Address.Building.LocationType")
                 .GroupBy(g => new { g.Address.MicrodistrictId, g.Address.Microdistrict.MicrodistrictName, g.Address.Microdistrict.MicrodistrictShortName })
+                .AsNoTracking()
                 .Select(x => new MicrodistrictReportsViewModel
                 {
                     MicrodistrictId = x.Key.MicrodistrictId,

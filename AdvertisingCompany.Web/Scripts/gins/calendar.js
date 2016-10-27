@@ -3,6 +3,7 @@
     var events = options.events || [];
     var createEvent = options.createEvent || function () { };
     var editEvent = options.editEvent || function () { };
+    var deleteEvent = options.deleteEvent || function () { };
 
     function pageLoad() {
         $('#external-events').find('div.external-event').each(function () {
@@ -73,10 +74,18 @@
                             allDay: allDay,
                             backgroundColor: '#64bd63',
                             textColor: '#fff'
-                        };
+                        };                       
 
-                        $calendar.fullCalendar('renderEvent', event, true);
-                        saveEvent(event);
+                        $btn.button('loading');
+
+                        createEvent(event, function (eventId) {
+                            event.id = eventId;
+                            $calendar.fullCalendar('renderEvent', event, true);
+
+                            $btn.button('reset');
+
+                            $modal.modal('hide');
+                        });
                     }
                     $calendar.fullCalendar('unselect');
                 });
@@ -84,33 +93,7 @@
                 $calendar.fullCalendar('unselect');
             },
             editable: true,
-            droppable: true,
-            drop: function (date, allDay) { // this function is called when something is dropped
-
-                // retrieve the dropped element's stored Event Object
-                var originalEventObject = $(this).data('eventObject');
-
-                // we need to copy it, so that multiple events don't have a reference to the same object
-                var copiedEventObject = $.extend({}, originalEventObject);
-
-                // assign it the date that was reported
-                copiedEventObject.start = date;
-                copiedEventObject.allDay = allDay;
-
-                var $categoryClass = $(this).data('event-class');
-                if ($categoryClass)
-                    copiedEventObject['className'] = [$categoryClass];
-
-                // render the event on the calendar
-                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-                $(this).remove();
-            },
-            eventDrop: function(event, delta, revertFunc) {
-                editEvent(event);
-            },
-            events : events,
+            events: events,
             // US Holidays
             //events: [
             //    {
@@ -139,7 +122,6 @@
             //        textColor: '#fff'
             //    }
             //],
-
             eventClick: function (event) {
                 // opens events in a popup window
                 if (event.url) {
@@ -148,52 +130,91 @@
                 } else {
                     var $modal = $("#editModal"),
                         $modalLabel = $("#editModalLabel");
+                        $btn = $('#deleteEvent');
                     $modalLabel.html(event.title);
                     $modal.find(".modal-body p").html(function () {
                         if (event.allDay) {
-                            return "На весь день";
+                            return "Событие продлится весь день";
                         } else {
                             return "Начало: <strong>" + event.start.getHours() + ":" + (event.start.getMinutes() == 0 ? "00" : event.start.getMinutes()) + "</strong></br>"
                                 + (event.end == null ? "" : "Окончание: <strong>" + event.end.getHours() + ":" + (event.end.getMinutes() == 0 ? "00" : event.end.getMinutes()) + "</strong>");
                         }
                     }());
+
+                    $btn.off('click');
+                    $btn.click(function () {
+                        deleteEvent(event.id);
+                        $calendar.fullCalendar('removeEvents', event.id);
+                    });
+
                     $modal.modal('show');
                 }
-            }
+            },
+            droppable: true,
+            drop: function (date, allDay) { // this function is called when something is dropped
 
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+
+                var $categoryClass = $(this).data('event-class');
+                if ($categoryClass)
+                    copiedEventObject['className'] = [$categoryClass];
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                $(this).remove();
+            },
+            eventDrop: function(event, delta, revertFunc) {
+                editEvent(event);
+            },
+            eventResize: function (event, delta, revertFunc) {
+                editEvent(event);
+            }
         });
 
         $("#calendar-switcher").find("label").click(function () {
             $calendar.fullCalendar('changeView', $(this).find('input').val());
         });
 
-        var currentDate = $calendar.fullCalendar('getDate');
+        var currentDate = moment($calendar.fullCalendar('getDate')).lang('ru');
 
         $('#calender-current-date').html(
-            moment(currentDate).lang("ru").format('MMMM YYYY').capitalize() +
-            " - <span class='fw-semi-bold'>" +
-            moment(currentDate).lang("ru").format("dddd").capitalize() +
-            "</span>"
+            currentDate.format('MMMM YYYY').capitalize() 
+            //" - <span class='fw-semi-bold'>" +
+            //currentDate.format("dddd").capitalize() +
+            //", " + currentDate.format("d") +
+            //"</span>"
         );
 
         $('#calender-prev').click(function () {
             $calendar.fullCalendar('prev');
-            currentDate = $calendar.fullCalendar('getDate');
+            currentDate = moment($calendar.fullCalendar('getDate')).lang('ru');
             $('#calender-current-date').html(
-                moment(currentDate).lang("ru").format('MMMM YYYY').capitalize() +
-                " - <span class='fw-semi-bold'>" +
-                moment(currentDate).lang("ru").format("dddd").capitalize() +
-                "</span>"
+                currentDate.format('MMMM YYYY').capitalize()
+                //" - <span class='fw-semi-bold'>" +
+                //currentDate.format("dddd").capitalize() +
+                //", " + currentDate.format("d") +
+                //"</span>"
             );
         });
         $('#calender-next').click(function () {
             $calendar.fullCalendar('next');
-            currentDate = $calendar.fullCalendar('getDate');
+            currentDate = moment($calendar.fullCalendar('getDate')).lang('ru');
             $('#calender-current-date').html(
-                moment(currentDate).lang("ru").format('MMMM YYYY').capitalize() +
-                " - <span class='fw-semi-bold'>" +
-                moment(currentDate).lang("ru").format("dddd").capitalize() +
-                "</span>"
+                currentDate.format('MMMM YYYY').capitalize() 
+                //" - <span class='fw-semi-bold'>" +
+                //currentDate.format("dddd").capitalize() +
+                //", " + currentDate.format("d") +
+                //"</span>"
             );
         });
     }

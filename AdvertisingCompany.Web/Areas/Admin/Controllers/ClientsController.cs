@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
@@ -48,6 +49,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var clients = clientsList
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
+                .AsNoTracking()
                 .ToList();
 
             var clientViewModels = Mapper.Map<List<Client>, List<ClientViewModel>>(clients);
@@ -111,7 +113,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public IHttpActionResult PutClient(EditClientViewModel viewModel)
         {
             var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
+                .GetQ(x => x.ClientId == viewModel.ClientId && x.DeletedAt == null,
                     includeProperties: "ResponsiblePerson, ApplicationUsers")
                 .SingleOrDefault();
             if (client == null)

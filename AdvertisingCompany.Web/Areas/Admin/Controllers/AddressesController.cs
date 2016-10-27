@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -48,6 +49,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var addresses = addressesList
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
+                .AsNoTracking()
                 .ToList();
 
             var addressViewModels = Mapper.Map<List<Address>, List<AddressViewModel>>(addresses);

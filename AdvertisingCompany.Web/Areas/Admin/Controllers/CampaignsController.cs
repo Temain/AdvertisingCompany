@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -45,6 +46,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var campaigns = campaignsList
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
+                .AsNoTracking()
                 .ToList();
 
             var campaignViewModels = Mapper.Map<List<Campaign>, List<CampaignViewModel>>(campaigns);

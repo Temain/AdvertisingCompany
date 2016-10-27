@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
@@ -34,6 +35,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
             var calendar = UnitOfWork.Repository<Calendar>()
                 .GetQ(x => x.ApplicationUserId == user.Id)
+                .AsNoTracking()
                 .Select(x => new CalendarViewModel
                 {
                     CalendarId = x.CalendarId,
@@ -66,7 +68,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             UnitOfWork.Repository<Calendar>().Insert(calendarEvent);
             UnitOfWork.Save();
 
-            return Ok();
+            return Ok(new { Id = calendarEvent.CalendarId });
         }
 
         // PUT: api/admin/calendar/5
@@ -124,7 +126,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            UnitOfWork.Repository<Client>().Delete(calendar);
+            UnitOfWork.Repository<Calendar>().Delete(id);
 
             try
             {
@@ -141,8 +143,6 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     throw;
                 }
             }
-
-            Logger.Info("Удаление клиента. ClientId={0}", id);
 
             return Ok(calendar);
         }

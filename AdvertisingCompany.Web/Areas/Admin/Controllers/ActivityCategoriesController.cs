@@ -15,6 +15,7 @@ using AdvertisingCompany.Web.Controllers;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using AdvertisingCompany.Web.Areas.Admin.Models.Campaign;
+using System.Data.Entity;
 
 namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 {
@@ -44,6 +45,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var categories = categoriesList
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
+                .AsNoTracking()
                 .ToList();
 
             var categoryViewModels = Mapper.Map<List<ActivityCategory>, List<ActivityCategoryViewModel>>(categories);
