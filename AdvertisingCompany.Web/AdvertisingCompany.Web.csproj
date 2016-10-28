@@ -279,6 +279,7 @@
     <Compile Include="Areas\Admin\Models\Address\LocationViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\MicrodistrictViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Address\AddressViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Analytics\AnalyticsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Calendar\CalendarViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\CampaignViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\EditCampaignViewModel.cs" />
@@ -1164,7 +1165,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\Analytics\" />
     <Folder Include="Scripts\pace\themes\black\" />
     <Folder Include="Scripts\pace\themes\blue\" />
     <Folder Include="Scripts\pace\themes\green\" />
