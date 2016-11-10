@@ -38,6 +38,7 @@ namespace AdvertisingCompany.Web.Controllers
                     includeProperties: "Address, Address.Microdistrict, Address.Street.LocationType, Address.Building.LocationType")
                 .GroupBy(g => new { g.Address.MicrodistrictId, g.Address.Microdistrict.MicrodistrictName, g.Address.Microdistrict.MicrodistrictShortName })
                 .AsNoTracking()
+                .ToList()
                 .Select(x => new MicrodistrictReportsViewModel
                 {
                     MicrodistrictId = x.Key.MicrodistrictId,
@@ -49,5 +50,11 @@ namespace AdvertisingCompany.Web.Controllers
 
             return View(clientReports ?? new List<MicrodistrictReportsViewModel>());
         }
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    UnitOfWork.Dispose();
+        //    base.Dispose(disposing);
+        //}
     }
 }
