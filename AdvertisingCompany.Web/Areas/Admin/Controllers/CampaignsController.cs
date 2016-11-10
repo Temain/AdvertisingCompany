@@ -139,14 +139,14 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
         // PUT: api/admin/campaigns/5
         [HttpPut]
-        [Route("")]
+        [Route("~/api/admin/clients/{clientId:int}/campaigns")]
         [KoJsonValidate]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCampaign(EditCampaignViewModel viewModel)
         {
             var campaign = UnitOfWork.Repository<Campaign>()
                 .Get(x => x.CampaignId == viewModel.CampaignId && x.DeletedAt == null,
-                    includeProperties: "Client.ResponsiblePerson")
+                    includeProperties: "Client.ResponsiblePerson, Microdistricts")
                 .SingleOrDefault();
             if (campaign == null)
             {
@@ -162,6 +162,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
 
             Mapper.Map<EditCampaignViewModel, Campaign>(viewModel, campaign);
+
+            var microdistrictsOnForm = UnitOfWork.Repository<Microdistrict>()
+                .GetQ(x => viewModel.MicrodistrictIds.Contains(x.MicrodistrictId))
+                .ToList();
+            campaign.Microdistricts = microdistrictsOnForm;
             campaign.UpdatedAt = DateTime.Now;
 
             UnitOfWork.Repository<Campaign>().Update(campaign);

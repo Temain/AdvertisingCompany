@@ -164,7 +164,7 @@
                     if (responseText) {
                         responseText = JSON.parse(responseText);
                         var modelState = responseText.modelState;
-                        if (modelState.shared) {
+                        if (modelState && modelState.shared) {
                             var message = '<strong>&nbsp;Рекламная кампания не сохранена.</strong><ul>';
                             $.each(modelState.shared, function(index, error) {
                                 message += '<li>' + error + '</li>';

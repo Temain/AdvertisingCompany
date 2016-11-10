@@ -142,6 +142,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                 .ForMember(m => m.PaymentOrderId, opt => opt.MapFrom(s => s.PaymentOrderId))
                 .ForMember(m => m.PaymentStatusId, opt => opt.MapFrom(s => s.PaymentStatusId))
                 .ForMember(m => m.Comment, opt => opt.MapFrom(s => s.Comment))
+                .ForMember(m => m.Microdistricts, opt => opt.Ignore())
                 .ForMember(m => m.CreatedAt, opt => opt.Ignore());
         }
     }
