@@ -32,13 +32,16 @@ namespace AdvertisingCompany.Web.Controllers
                 .Select(x => x.MicrodistrictId);
 
             var clientReports = UnitOfWork.Repository<AddressReport>()
-                .GetQ(x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId) 
-                    && x.Address.DeletedAt == null && x.DeletedAt == null
-                    && x.CreatedAt.Month == DateTime.Now.Month,
-                    includeProperties: "Address, Address.Microdistrict, Address.Street.LocationType, Address.Building.LocationType")
-                .GroupBy(g => new { g.Address.MicrodistrictId, g.Address.Microdistrict.MicrodistrictName, g.Address.Microdistrict.MicrodistrictShortName })
+                .GetQ(
+                    filter: x => clientMicrodistrictIds.Contains(x.Address.MicrodistrictId)
+                        && x.Address.DeletedAt == null && x.DeletedAt == null
+                        && x.CreatedAt.Month == DateTime.Now.Month,
+                    includeProperties: "Address.Microdistrict, Address.Street.LocationType, Address.Building.LocationType")               
                 .AsNoTracking()
-                .ToList()
+                .ToList();
+
+            var viewModel = clientReports
+                .GroupBy(g => new { g.Address.MicrodistrictId, g.Address.Microdistrict.MicrodistrictName, g.Address.Microdistrict.MicrodistrictShortName })
                 .Select(x => new MicrodistrictReportsViewModel
                 {
                     MicrodistrictId = x.Key.MicrodistrictId,
@@ -48,13 +51,7 @@ namespace AdvertisingCompany.Web.Controllers
                 })
                 .ToList();
 
-            return View(clientReports ?? new List<MicrodistrictReportsViewModel>());
+            return View(viewModel ?? new List<MicrodistrictReportsViewModel>());
         }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    UnitOfWork.Dispose();
-        //    base.Dispose(disposing);
-        //}
     }
 }
