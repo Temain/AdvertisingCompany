@@ -281,6 +281,8 @@
     <Compile Include="Areas\Admin\Models\Address\AddressViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Analytics\AnalyticsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Calendar\CalendarViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Calendar\MonthEventsViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\Calendar\ShowEventsViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\CampaignViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\EditCampaignViewModel.cs" />
     <Compile Include="Areas\Admin\Models\Campaign\CreateCampaignViewModel.cs" />

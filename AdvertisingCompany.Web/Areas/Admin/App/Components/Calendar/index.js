@@ -4,10 +4,19 @@
     function CalendarViewModel(params) {
         var self = this;
 
+        self.selectedYear = ko.observable(new Date().getFullYear());
+        self.monthsEvents = ko.observableArray([]);
+        self.monthsEventsByYear = ko.computed(function () {
+            return ko.utils.arrayFilter(self.monthsEvents(), function (monthEvents) {
+                return monthEvents.yearNumber == self.selectedYear();
+            });
+        });
+
         self.isInitialized = ko.observable(false);
 
         self.init = function () {
             self.isInitialized(false);
+
             $.ajax({
                 method: 'get',
                 url: '/api/admin/calendar',
@@ -15,7 +24,9 @@
                 headers: { 'Authorization': 'Bearer ' + app.getAccessToken() },
                 error: function (response) { console.log(response); },
                 success: function (data) {
-                    var events = $.map(data, function (element) {
+                    self.monthsEvents(data.monthsEvents);
+
+                    var events = $.map(data.events, function (element) {
                         return {
                             id: element.calendarId,
                             title: element.title,
@@ -93,6 +104,20 @@
                 error: function (response) { console.log(response); },
                 success: function (response) { }
             });
+        };
+
+        self.setMonth = function (monthNumber) {
+            var currentDate = moment($("#calendar").fullCalendar('getDate')).lang('ru');
+            $("#calendar").fullCalendar('gotoDate', currentDate.get('year'), monthNumber);
+
+            currentDate = moment($("#calendar").fullCalendar('getDate')).lang('ru');
+            $('#calender-current-date').html(currentDate.format('MMMM YYYY').capitalize());
+        };
+
+        self.monthName = function (monthNumber) {
+            var fakeDate = new Date(2016, monthNumber, 1);
+            var result = moment(fakeDate).locale('ru').format('MMMM');
+            return result.charAt(0).toUpperCase() + result.slice(1);
         };
 
         return self;

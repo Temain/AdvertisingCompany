@@ -21,7 +21,7 @@
                 <div class='external-event bg-warning text-white' data-event-class="bg-warning text-white">Open windows</div>
             </div>
         </div>-->
-        <div class="col-md-8 col-lg-8">
+        <div class="col-md-6 col-lg-6">
             <section class="widget">
                 <div class="widget-body">
                     <div class="calendar-controls">
@@ -102,6 +102,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="col-md-6 col-lg-6" data-bind="foreach: monthsEventsByYear">
+            <button class="btn btn-default month-btn" data-bind="click: function(data, event) { $parent.setMonth(data.monthNumber - 1); }">
+                <span data-bind="text: $parent.monthName($data.monthNumber - 1)" class="month-name"></span><span class="badge" data-bind="text: count">4</span>
+            </button>
+            <br />
         </div>
     </div>
 </div>

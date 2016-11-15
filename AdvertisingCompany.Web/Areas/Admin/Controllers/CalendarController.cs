@@ -28,12 +28,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         // GET: api/admin/calendar
         [HttpGet]
         [Route("")]
-        [ResponseType(typeof(CalendarViewModel))]
-        public List<CalendarViewModel> GetCalendar()
+        [ResponseType(typeof(ShowEventsViewModel))]
+        public ShowEventsViewModel GetCalendar()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
 
-            var calendar = UnitOfWork.Repository<Calendar>()
+            var events = UnitOfWork.Repository<Calendar>()
                 .GetQ(x => x.ApplicationUserId == user.Id)
                 .AsNoTracking()
                 .Select(x => new CalendarViewModel
@@ -47,7 +47,23 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 })
                 .ToList();
 
-            return calendar;
+            var monthsEvents = events
+                .GroupBy(g => new { g.Start.Value.Year, g.Start.Value.Month })
+                .Select(x => new MonthEventsViewModel
+                {
+                    YearNumber = x.Key.Year,
+                    MonthNumber = x.Key.Month,
+                    Count = x.Count()
+                })
+                .ToList();
+
+            var viewModel = new ShowEventsViewModel
+            {
+                Events = events,
+                MonthsEvents = monthsEvents
+            };
+
+            return viewModel;
         }
 
         // POST: api/admin/calendar

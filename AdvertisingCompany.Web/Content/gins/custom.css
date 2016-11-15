@@ -286,7 +286,7 @@ button.dropdown-toggle {
 }
 
 /***********************************/
-/**     CUSTOM COLORPICKER        **/
+/**           CALENDAR            **/
 /***********************************/
 .colorpicker-radio input[type="radio"] {
     display:none; 
@@ -306,4 +306,14 @@ button.dropdown-toggle {
     height: 1em !important;
     display: inline-block;
     margin-right: 3px;
+}
+
+.month-btn {
+    width: 10em;
+    margin-bottom: 0.5em;
+}
+
+.month-name {
+    width: 8em;
+    float: right;
 }
