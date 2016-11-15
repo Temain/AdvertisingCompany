@@ -174,8 +174,8 @@
             if (!item) return;
 
             $(option).text(item.activityTypeName);
-            $(option).attr('data-subtext', "<br/><span class='description'>" + item.activityCategoryName + "</span>");
-            //$(option).attr('title', item.Abbreviation());
+            // $(option).attr('data-subtext', "<br/><span class='description'>" + item.activityCategoryName + "</span>");
+            // $(option).attr('title', item.Abbreviation());
 
             ko.applyBindingsToNode(option, {}, item);
         };

@@ -46,6 +46,11 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
         public double? PlacementCost { get; set; }
 
         /// <summary>
+        /// Месяц размещения
+        /// </summary>
+        public int PlacementMonthId { get; set; }
+
+        /// <summary>
         /// Форма оплаты
         /// </summary>
         public string PaymentOrderName { get; set; }
@@ -77,6 +82,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Campaign
                .ForMember(m => m.ActivityCategoryName, opt => opt.MapFrom(s => s.Client.ActivityType.ActivityCategory.ActivityCategoryName))
                .ForMember(m => m.MicrodistrictNames, opt => opt.MapFrom(s => s.Microdistricts.Select(x => x.MicrodistrictShortName)))
                .ForMember(m => m.PlacementFormatName, opt => opt.MapFrom(s => s.PlacementFormat.PlacementFormatName))
+               .ForMember(m => m.PlacementMonthId, opt => opt.MapFrom(s => s.PlacementMonthId))
                .ForMember(m => m.PaymentOrderName, opt => opt.MapFrom(s => s.PaymentOrder.PaymentOrderName))
                .ForMember(m => m.PaymentStatusId, opt => opt.MapFrom(s => s.PaymentStatusId))
                .ForMember(m => m.PaymentStatusName, opt => opt.MapFrom(s => s.PaymentStatus.PaymentStatusName))

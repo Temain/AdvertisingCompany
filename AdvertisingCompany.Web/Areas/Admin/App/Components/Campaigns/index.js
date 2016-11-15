@@ -144,6 +144,12 @@
             return false;
         };
 
+        self.monthName = function (monthNumber) {
+            var fakeDate = new Date(2016, monthNumber, 1);
+            var result = moment(fakeDate).locale('ru').format('MMMM');
+            return result.charAt(0).toUpperCase() + result.slice(1);
+        };
+
         self.monthNameAndYear = function (date) {
             var result = moment(date).locale('ru').format('MMMM YYYY');
             return result.charAt(0).toUpperCase() + result.slice(1);
@@ -204,6 +210,7 @@
         self.microdistrictNames = ko.observableArray(campaign.microdistrictNames || []);
         self.placementFormatName = ko.observable(campaign.placementFormatName || '');
         self.placementCost = ko.observable(campaign.placementCost || '');
+        self.placementMonthId = ko.observable(campaign.placementMonthId || '');
         self.paymentOrderName = ko.observable(campaign.paymentOrderName || '');
         self.paymentStatusId = ko.observable(campaign.paymentStatusId || '');
         self.paymentStatusInitialId = ko.observable(campaign.paymentStatusId || '');

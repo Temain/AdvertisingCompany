@@ -76,7 +76,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             var activityTypes = UnitOfWork.Repository<ActivityType>()
                 .Get(x => x.DeletedAt == null, 
                     includeProperties: "ActivityCategory", 
-                    orderBy: o => o.OrderBy(p => p.ActivityCategory.ActivityCategoryName))
+                    orderBy: o => o.OrderBy(p => p.ActivityTypeName))
                 .ToList();
             var activityTypeViewModels = Mapper.Map<IEnumerable<ActivityType>, IEnumerable<ActivityTypeViewModel>>(activityTypes);
 
@@ -316,7 +316,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         public IHttpActionResult DeleteClient(int id)
         {
             var client = UnitOfWork.Repository<Client>()
-                .Get(x => x.ClientId == id && x.DeletedAt == null)
+                .Get(
+                    filter: x => x.ClientId == id && x.DeletedAt == null,
+                    includeProperties: "ApplicationUsers")
                 .SingleOrDefault();
             if (client == null)
             {
@@ -324,6 +326,18 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
             }
 
             client.DeletedAt = DateTime.Now;
+
+            // Для добавления клиентов с этим email'ом в дальнейшем
+            var deleteGuid = Guid.NewGuid();
+            client.Email += "_" + deleteGuid;
+
+            var applicationUsers = client.ApplicationUsers;
+            foreach (var user in applicationUsers)
+            {
+                user.Email += "_" + deleteGuid;
+                user.UserName += "_" + deleteGuid;
+            }
+
             UnitOfWork.Repository<Client>().Update(client);
 
             try
@@ -341,10 +355,16 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     throw;
                 }
             }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+
+                throw;
+            }
 
             Logger.Info("Удаление клиента. ClientId={0}", id);
 
-            return Ok(client);
+            return Ok();
         }
 
         private bool ClientExists(int id)

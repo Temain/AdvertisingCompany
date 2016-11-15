@@ -42,9 +42,10 @@
                     <thead>
                         <tr>
                             <th style="width: 3%">&nbsp;#</th>
-                            <th class="col-md-4">Клиент</th>
+                            <th class="col-md-3">Клиент</th>
                             <th class="col-md-2">Деятельность</th>
                             <th class="col-md-2">Микрорайоны</th>
+                            <th class="col-md-1 text-center">Месяц</th>
                             <th class="col-md-1 text-center">Формат</th>
                             <th class="col-md-1 text-center">Стоимость</th>
                             <th class="col-md-1 text-center">Форма оплаты</th>
@@ -76,6 +77,7 @@
                                     <li data-bind="text: $data"></li>
                                 </ul>
                             </td>
+                            <td class="text-center" data-bind="text: $parent.monthName($data.placementMonthId())"></td>
                             <td class="text-center" data-bind="text: placementFormatName"></td>
                             <td class="text-center" data-bind="text: placementCost"></td>
                             <td class="text-center" data-bind="text: paymentOrderName"></td>
