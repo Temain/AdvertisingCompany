@@ -66,13 +66,15 @@
                 $btn.off('click');
                 $btn.click(function () {
                     var title = $("#event-name").val();
+                    var color = $('input[name=color]:checked').val();
+
                     if (title) {
                         var event =  {
                             title: title,
                             start: start,
                             end: end,
                             allDay: allDay,
-                            backgroundColor: '#64bd63',
+                            backgroundColor: color,
                             textColor: '#fff'
                         };                       
 

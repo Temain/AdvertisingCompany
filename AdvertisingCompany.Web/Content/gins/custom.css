@@ -94,6 +94,10 @@ input.required {
     text-align: center;
 }
 
+.sidebar-nav > li > a .icon.centered > i {
+    left: 0;
+}
+
 .avatar-lg {
     width: 7.5em;
     height: 7.5em;
@@ -279,4 +283,27 @@ button.dropdown-toggle {
     list-style: none;
     padding-left: 15px;
     margin-bottom: 0;
+}
+
+/***********************************/
+/**     CUSTOM COLORPICKER        **/
+/***********************************/
+.colorpicker-radio input[type="radio"] {
+    display:none; 
+}
+
+.colorpicker-radio input[type="radio"]:checked + label { 
+    border-bottom: 1px solid #666666;
+}
+
+.colorpicker-radio label {
+    margin-right: 1em;
+    cursor: pointer;
+}
+
+.colorpicker-radio label .status-color {
+    width: 1em !important;
+    height: 1em !important;
+    display: inline-block;
+    margin-right: 3px;
 }
