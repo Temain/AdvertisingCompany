@@ -1,5 +1,7 @@
-﻿define(['jquery', 'knockout', 'sammy', 'fullcalendar-locale', 'gins-calendar',
-'text!/areas/admin/app/components/calendar/index.html'], function ($, ko, sammy, fc, initCalendar, template) {
+﻿define(['jquery', 'knockout', 'knockout.mapping', 'sammy', 'fullcalendar-locale', 'gins-calendar',
+'text!/areas/admin/app/components/calendar/index.html'], function ($, ko, koMapping, sammy, fc, initCalendar, template) {
+
+    ko.mapping = koMapping;
 
     function CalendarViewModel(params) {
         var self = this;
@@ -7,8 +9,12 @@
         self.selectedYear = ko.observable(new Date().getFullYear());
         self.monthsEvents = ko.observableArray([]);
         self.monthsEventsByYear = ko.computed(function () {
-            return ko.utils.arrayFilter(self.monthsEvents(), function (monthEvents) {
+            var events = ko.utils.arrayFilter(self.monthsEvents(), function (monthEvents) {
                 return monthEvents.yearNumber == self.selectedYear();
+            });
+
+            return events.sort(function (first, second) {
+                return first.monthNumber == second.monthNumber ? 0 : (first.monthNumber < second.monthNumber ? -1 : 1);
             });
         });
 
@@ -24,7 +30,20 @@
                 headers: { 'Authorization': 'Bearer ' + app.getAccessToken() },
                 error: function (response) { console.log(response); },
                 success: function (data) {
-                    self.monthsEvents(data.monthsEvents);
+                    ko.mapping.fromJS(
+                        data.monthsEvents,
+                        {
+                            create: function (options) {
+                                var monthEvents = {
+                                    yearNumber: options.data.yearNumber,
+                                    monthNumber: options.data.monthNumber,
+                                    count: ko.observable(options.data.count)
+                                };
+                                return monthEvents;
+                            }
+                        },
+                        self.monthsEvents
+                    );
 
                     var events = $.map(data.events, function (element) {
                         return {
@@ -44,7 +63,8 @@
                             events: events,
                             createEvent: self.createEvent,
                             editEvent: self.editEvent,
-                            deleteEvent: self.deleteEvent
+                            deleteEvent: self.deleteEvent,
+                            setYear: self.setYear
                         });
                     }, 1000);
                 }
@@ -70,6 +90,7 @@
                 error: function(response) { console.log(response); },
                 success: function (response) {
                     onSuccess(response.id);
+                    self.eventsAddedOrDeleted(event.start, 1);
                 }
             });
         };
@@ -95,15 +116,42 @@
             });
         };
 
-        self.deleteEvent = function (eventId) {
+        self.deleteEvent = function (event) {
             $.ajax({
                 method: 'delete',
-                url: '/api/admin/calendar/' + eventId,
+                url: '/api/admin/calendar/' + event.id,
                 contentType: "application/json; charset=utf-8",
                 headers: { 'Authorization': 'Bearer ' + app.getAccessToken() },
                 error: function (response) { console.log(response); },
-                success: function (response) { }
+                success: function (response) {
+                    self.eventsAddedOrDeleted(event.start, -1);
+                }
             });
+        };
+
+        self.eventsAddedOrDeleted = function (date, count) {
+            if (!date) return;
+
+            var eventMonth = moment(date).get('month') + 1;
+            var eventYear = moment(date).get('year');
+
+            var monthEvents = ko.utils.arrayFirst(self.monthsEvents(), function (item) {
+                return item.yearNumber === eventYear && item.monthNumber === eventMonth;
+            });
+
+            if (monthEvents) {
+                monthEvents.count(monthEvents.count() + count);
+
+                if (!monthEvents.count()) {
+                    self.monthsEvents.remove(monthEvents);
+                }
+            } else {
+                self.monthsEvents.push({ yearNumber: eventYear, monthNumber: eventMonth, count: ko.observable(1) });
+            }
+        };
+
+        self.setYear = function (year) {
+            self.selectedYear(year);
         };
 
         self.setMonth = function (monthNumber) {
@@ -111,7 +159,7 @@
             $("#calendar").fullCalendar('gotoDate', currentDate.get('year'), monthNumber);
 
             currentDate = moment($("#calendar").fullCalendar('getDate')).lang('ru');
-            $('#calender-current-date').html(currentDate.format('MMMM YYYY').capitalize());
+            $('#calendar-current-date').html(currentDate.format('MMMM YYYY').capitalize());
         };
 
         self.monthName = function (monthNumber) {

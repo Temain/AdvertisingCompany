@@ -6,7 +6,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-title" id="calender-current-date"><span class="fw-semi-bold"></span></h1>
+            <h1 class="page-title" id="calendar-current-date"><span class="fw-semi-bold"></span></h1>
         </div>
     </div>
     <div class="row">
@@ -21,13 +21,13 @@
                 <div class='external-event bg-warning text-white' data-event-class="bg-warning text-white">Open windows</div>
             </div>
         </div>-->
-        <div class="col-md-6 col-lg-6">
+        <div class="col-md-8 col-lg-8">
             <section class="widget">
                 <div class="widget-body">
                     <div class="calendar-controls">
                         <div class="btn-group ">
-                            <button class="btn btn-default" id="calender-prev"><i class="fa fa-angle-left"></i></button>
-                            <button class="btn btn-default" id="calender-next"><i class="fa fa-angle-right"></i></button>
+                            <button class="btn btn-default" id="calendar-prev"><i class="fa fa-angle-left"></i></button>
+                            <button class="btn btn-default" id="calendar-next"><i class="fa fa-angle-right"></i></button>
                         </div>
                         <div id="calendar-switcher" class="btn-group pull-right" data-toggle="buttons">
                             <label class="btn btn-default active">
@@ -104,7 +104,7 @@
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-6" data-bind="foreach: monthsEventsByYear">
+        <div class="col-md-4 col-lg-4" data-bind="foreach: monthsEventsByYear">
             <button class="btn btn-default month-btn" data-bind="click: function(data, event) { $parent.setMonth(data.monthNumber - 1); }">
                 <span data-bind="text: $parent.monthName($data.monthNumber - 1)" class="month-name"></span><span class="badge" data-bind="text: count">4</span>
             </button>

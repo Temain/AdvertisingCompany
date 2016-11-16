@@ -4,6 +4,7 @@
     var createEvent = options.createEvent || function () { };
     var editEvent = options.editEvent || function () { };
     var deleteEvent = options.deleteEvent || function () { };
+    var setYear = options.setYear || function () { };
 
     function pageLoad() {
         $('#external-events').find('div.external-event').each(function () {
@@ -146,7 +147,7 @@
 
                     $btn.off('click');
                     $btn.click(function () {
-                        deleteEvent(event.id);
+                        deleteEvent(event);
                         $calendar.fullCalendar('removeEvents', event.id);
                     });
 
@@ -190,7 +191,7 @@
 
         var currentDate = moment($calendar.fullCalendar('getDate')).lang('ru');
 
-        $('#calender-current-date').html(
+        $('#calendar-current-date').html(
             currentDate.format('MMMM YYYY').capitalize() 
             //" - <span class='fw-semi-bold'>" +
             //currentDate.format("dddd").capitalize() +
@@ -198,27 +199,32 @@
             //"</span>"
         );
 
-        $('#calender-prev').click(function () {
+        $('#calendar-prev').click(function () {
             $calendar.fullCalendar('prev');
             currentDate = moment($calendar.fullCalendar('getDate')).lang('ru');
-            $('#calender-current-date').html(
+            $('#calendar-current-date').html(
                 currentDate.format('MMMM YYYY').capitalize()
                 //" - <span class='fw-semi-bold'>" +
                 //currentDate.format("dddd").capitalize() +
                 //", " + currentDate.format("d") +
                 //"</span>"
             );
+
+            setYear(currentDate.get('year'));
         });
-        $('#calender-next').click(function () {
+
+        $('#calendar-next').click(function () {
             $calendar.fullCalendar('next');
             currentDate = moment($calendar.fullCalendar('getDate')).lang('ru');
-            $('#calender-current-date').html(
+            $('#calendar-current-date').html(
                 currentDate.format('MMMM YYYY').capitalize() 
                 //" - <span class='fw-semi-bold'>" +
                 //currentDate.format("dddd").capitalize() +
                 //", " + currentDate.format("d") +
                 //"</span>"
             );
+
+            setYear(currentDate.get('year'));
         });
     }
     pageLoad();
