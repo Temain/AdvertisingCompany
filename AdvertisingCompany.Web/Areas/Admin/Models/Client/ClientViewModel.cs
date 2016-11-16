@@ -80,7 +80,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
                 .ForMember(m => m.ActivityTypeName, opt => opt.MapFrom(s => s.ActivityType.ActivityTypeName))
                 .ForMember(m => m.ActivityCategoryName, opt => opt.MapFrom(s => s.ActivityType.ActivityCategory.ActivityCategoryName))
                 .ForMember(m => m.ResponsiblePersonId, opt => opt.MapFrom(s => s.ResponsiblePersonId))
-                .ForMember(m => m.ResponsiblePersonShortName, opt => opt.MapFrom(s => s.ResponsiblePerson.ShortName))
+                .ForMember(m => m.ResponsiblePersonShortName, opt => opt.MapFrom(s => s.ResponsiblePerson.FullName))
                 .ForMember(m => m.PhoneNumber, opt => opt.MapFrom(s => s.PhoneNumber))
                 .ForMember(m => m.AdditionalPhoneNumber, opt => opt.MapFrom(s => s.AdditionalPhoneNumber))
                 .ForMember(m => m.Email, opt => opt.MapFrom(s => s.Email))

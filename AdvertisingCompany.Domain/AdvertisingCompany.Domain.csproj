@@ -184,6 +184,10 @@
     <Compile Include="Migrations\201610261030468_AddApplicationUserToCalendar.Designer.cs">
       <DependentUpon>201610261030468_AddApplicationUserToCalendar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611161315488_PersonLastNameNotRequired.cs" />
+    <Compile Include="Migrations\201611161315488_PersonLastNameNotRequired.Designer.cs">
+      <DependentUpon>201611161315488_PersonLastNameNotRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityCategory.cs" />
     <Compile Include="Models\ActivityType.cs" />
@@ -293,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610261030468_AddApplicationUserToCalendar.resx">
       <DependentUpon>201610261030468_AddApplicationUserToCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611161315488_PersonLastNameNotRequired.resx">
+      <DependentUpon>201611161315488_PersonLastNameNotRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

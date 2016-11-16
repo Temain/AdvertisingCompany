@@ -32,13 +32,7 @@
         self.activityTypes = ko.observableArray(params.activityTypes || []);
 
         self.responsiblePersonId = ko.observable(params.responsiblePersonId || '');
-        self.responsiblePersonLastName = ko.observable(params.responsiblePersonLastName || '').extend({
-            required: {
-                params: true,
-                message: "Введите фамилию.",
-                onlyIf: function() { return self.isValidationEnabled(); }
-            }
-        });
+        self.responsiblePersonLastName = ko.observable(params.responsiblePersonLastName || '');
         self.responsiblePersonFirstName = ko.observable(params.responsiblePersonFirstName || '').extend({
             required: {
                 params: true,

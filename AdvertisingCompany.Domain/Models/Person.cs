@@ -25,7 +25,7 @@ namespace AdvertisingCompany.Domain.Models
         /// <summary>
         /// Фамилия
         /// </summary>
-        [Required]
+        // [Required]
         [StringLength(500)]
         public string LastName { get; set; }
 
@@ -80,7 +80,14 @@ namespace AdvertisingCompany.Domain.Models
         {
             get
             {
-                var fullName = LastName + " " + FirstName;
+                var fullName = "";
+                if (!String.IsNullOrEmpty(LastName))
+                {
+                    fullName += LastName + " ";
+                }
+
+                fullName += FirstName;
+
                 if (!String.IsNullOrEmpty(MiddleName))
                 {
                     fullName += " " + MiddleName;
@@ -97,7 +104,15 @@ namespace AdvertisingCompany.Domain.Models
             get
             {
                 const string initialTerminator = ".";
-                var shortName = LastName + " " + FirstName[0] + initialTerminator;
+                var shortName = "";
+
+                if (!String.IsNullOrEmpty(LastName))
+                {
+                    shortName += LastName + " ";
+                }
+
+                shortName += FirstName[0] + initialTerminator;
+
                 if (!String.IsNullOrEmpty(MiddleName))
                 {
                     shortName += MiddleName[0] + initialTerminator;

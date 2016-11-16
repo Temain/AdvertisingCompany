@@ -27,7 +27,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         /// </summary>
         public int ResponsiblePersonId { get; set; }
 
-        [Required(ErrorMessage = "Введите фамилию.")]
+        // [Required(ErrorMessage = "Введите фамилию.")]
         [Display(Name = "Фамилия")]
         public string ResponsiblePersonLastName { get; set; }
 
