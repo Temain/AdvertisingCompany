@@ -84,6 +84,7 @@
             }
         });
         self.comment = ko.observable(params.comment || '');
+        self.sendMail = ko.observable(false);
 
         self.init = function() {
             $.ajax({
@@ -167,9 +168,15 @@
                     }
 
                     self.isValidationEnabled(false);
+
+                    var message = "&nbsp;Клиент успешно сохранён.";
+                    if (self.sendMail()) {
+                        message += "<br/>На email клиента отправлено письмо с учётными данными.";
+                    }
+
                     $.notify({
                         icon: 'glyphicon glyphicon-ok',
-                        message: "&nbsp;Клиент успешно сохранён.<br/>На email клиента отправлено письмо с учётными данными."
+                        message: message
                     }, {
                         type: 'success'
                     });

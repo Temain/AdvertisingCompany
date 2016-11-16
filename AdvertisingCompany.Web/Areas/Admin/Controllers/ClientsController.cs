@@ -191,9 +191,12 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     user.ClientId = client.ClientId;
                     UserManager.Update(user);
 
-                    UserManager.SendEmail(user.Id, "Регистрация",
-                        String.Format(@"Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1} <br/>
-                            Просмотреть отчёты можно по адресу <a href='http://alliance-ip.tk'>alliance-ip.tk</a>", viewModel.UserName, viewModel.Password));
+                    if (viewModel.SendMail)
+                    {
+                        UserManager.SendEmail(user.Id, "Регистрация",
+                          String.Format(@"Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1} <br/>
+                                Просмотреть отчёты можно по адресу <a href='http://alliance-ip.tk'>alliance-ip.tk</a>", viewModel.UserName, viewModel.Password));
+                    }                 
                 }
                 else
                 {

@@ -71,6 +71,9 @@ namespace AdvertisingCompany.Web.Areas.Admin.Models.Client
         [Display(Name = "Комментарий")]
         public string Comment { get; set; }
 
+        [Display(Name = "Отправить письмо")]
+        public bool SendMail { get; set; }
+
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<Domain.Models.Client, CreateClientViewModel>("Client");
