@@ -112,8 +112,11 @@
             });
         };
 
-        self.submit = function() {
+        self.submit = function () {
+            $("#editClient").button("loading");
+
             self.isValidationEnabled(true);
+
             var postData = ko.toJSON(self);
 
             $.ajax({
@@ -123,6 +126,9 @@
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     'Authorization': 'Bearer ' + app.getAccessToken()
+                },
+                complete: function() {
+                    $("#editClient").button("reset");
                 },
                 error: function(response) {
                     var responseText = response.responseText;

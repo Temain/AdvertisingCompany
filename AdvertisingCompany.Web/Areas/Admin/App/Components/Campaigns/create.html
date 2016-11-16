@@ -8,7 +8,7 @@
     <div class="widget-body">
         <div class="row">
             <section class="col-md-8">
-                <form class="form-horizontal mrgtop24" role="form">
+                <form class="form-horizontal" role="form">
                     <fieldset>
                         <legend>Размещение</legend>
 
@@ -63,7 +63,9 @@
                         <div class="row">
                             <div class="col-sm-offset-4 col-sm-7">
                                 <div class="btn-group btn-footer" role="group" aria-label="...">
-                                    <button type="submit" class="btn btn-success" data-bind="click: submit"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                                    <button type="submit" id="createCampaign" class="btn btn-success" data-bind="click: submit" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Сохранение">
+                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Сохранить
+                                    </button>
                                 </div>
                             </div>
                         </div>

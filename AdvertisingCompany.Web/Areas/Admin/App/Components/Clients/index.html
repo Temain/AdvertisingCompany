@@ -144,7 +144,7 @@
     </section>
 </div>
 
-<!-- Change password modal -->
+<!-- Модальное окно изменения пароля -->
 <div id="change-password-popup" class="modal fade" tabindex="-1" role="dialog" data-bind="if: selectedClient() != null">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -176,7 +176,9 @@
                 <div class="row mrgtop12">
                     <div class="col-sm-offset-4 col-sm-8">
                         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Отмена</button>
-                        <button type="submit" class="btn btn-success" data-bind="click: changePassword"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Сохранить</button>
+                        <button type="submit" id="changePassword" class="btn btn-success" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Сохранение" data-bind="click: changePassword">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Сохранить
+                        </button>
                     </div>
                 </div>
             </div>

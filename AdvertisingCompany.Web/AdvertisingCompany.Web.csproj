@@ -385,6 +385,7 @@
     <Content Include="Content\dropzone\dropzone.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\avatar2.png" />
     <Content Include="Content\images\shadow_header.png" />
     <Content Include="Content\shuffle\prism.css" />
     <Content Include="Content\shuffle\shuffle-styles.css" />

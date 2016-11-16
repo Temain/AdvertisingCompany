@@ -110,9 +110,9 @@
         };
 
         self.submit = function (toNextStage) {
-            // $("#createClientBtn").button('loading');
-
+            self.disableOrEnableButtons(false, toNextStage);
             self.isValidationEnabled(true);
+
             var postData = ko.toJSON(self);
 
             $.ajax({
@@ -122,6 +122,9 @@
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     'Authorization': 'Bearer ' + app.getAccessToken()
+                },
+                complete: function () {
+                    self.disableOrEnableButtons(true, toNextStage);
                 },
                 error: function(response) {
                     var responseText = response.responseText;
@@ -173,6 +176,18 @@
                 }
             });
         }
+
+        self.disableOrEnableButtons = function (isDisabled, hasNextStage) {
+            var action = isDisabled ? 'reset' : 'loading';
+
+            if (hasNextStage) {
+                $("#createClient").prop("disabled", !isDisabled);
+                $("#createCampaign").button(action);
+            } else {
+                $("#createClient").button(action);
+                $("#createCampaign").prop("disabled", !isDisabled);
+            }
+        };
 
         self.setActivityTypeOptionContent = function(option, item) {
             if (!item) return;

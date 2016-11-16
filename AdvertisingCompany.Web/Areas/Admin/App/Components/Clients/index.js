@@ -167,8 +167,11 @@
         };
 
         self.changePassword = function () {
+            $("#changePassword").button("loading");
+
             var viewModel = self.changePasswordViewModel;
             viewModel.isValidationEnabled(true);
+
             var postData = ko.toJSON(viewModel);
 
             $.ajax({
@@ -178,6 +181,9 @@
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     'Authorization': 'Bearer ' + app.getAccessToken()
+                },
+                complete: function() {
+                    $("#changePassword").button("reset");
                 },
                 error: function (response) {
                     var responseText = response.responseText;
