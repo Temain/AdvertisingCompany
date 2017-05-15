@@ -78,5 +78,25 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
 
             return Ok(analyticsViewModel);
         }
+
+        [HttpGet]
+        [Route("clients_by_category")]
+        public IHttpActionResult ClientsByActivityCategory()
+        {
+            var clients = UnitOfWork.Repository<Client>()
+                .GetQ(x => x.DeletedAt == null,
+                    /*orderBy: o => o.OrderByDescending(c => c.CreatedAt),*/
+                    includeProperties: "ActivityType.ActivityCategory")
+                .GroupBy(x => new { x.ActivityType.ActivityCategoryId, x.ActivityType.ActivityCategory.ActivityCategoryName })
+                .Select(x => new
+                {
+                    name = x.Key.ActivityCategoryName,
+                    y = x.Count()
+                })
+                .OrderByDescending(x => x.y)
+                .ToList();
+
+            return Ok(clients);
+        }
     }
 }

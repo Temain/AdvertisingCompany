@@ -51,7 +51,10 @@
         'file-size': 'scripts/filesize.min',
         'dropzone': 'scripts/dropzone/dropzone-amd-module',
         'fullcalendar': 'scripts/fullcalendar/fullcalendar.min',
-        'fullcalendar-locale': 'scripts/fullcalendar/dist/lang/ru'
+        'fullcalendar-locale': 'scripts/fullcalendar/dist/lang/ru',
+        'highcharts': 'scripts/highcharts/highcharts',
+        'highcharts-funnel': 'scripts/highcharts/modules/funnel',
+        'ymaps': 'scripts/ymaps/api-maps.yandex.ru'
     },
     shim: {
         'app': ['gins'],
@@ -105,6 +108,15 @@
             exports: 'kladrWithMap'
         },
         'fullcalendar': ['moment', 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse', 'jquery-ui-draggable', 'jquery-ui-resizable'],
-        'fullcalendar-locale': ['fullcalendar']
+        'fullcalendar-locale': ['fullcalendar'],
+        'highcharts': {
+            exports: 'Highcharts'
+        },
+        'highcharts-funnel': {
+            deps: ['highcharts']
+        },
+        'ymaps': {
+            exports: 'ymaps'
+        },
     }
 }

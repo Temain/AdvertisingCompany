@@ -32,7 +32,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
         [HttpGet]
         [Route("")]
         [ResponseType(typeof(ListAddressesViewModel))]
-        public ListAddressesViewModel GetAddresses(string query = null, int page = 1, int pageSize = 10)
+        public ListAddressesViewModel GetAddresses(string query = null, int page = 1, int pageSize = 10, bool all = false)
         {
             var addressesList = UnitOfWork.Repository<Address>()
                 .GetQ(x => x.DeletedAt == null,
@@ -46,11 +46,19 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 addressesList = addressesList.Where(x => x.ManagementCompanyName.Contains(query));
             }
 
-            var addresses = addressesList
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .AsNoTracking()
-                .ToList();
+            List<Address> addresses = null;
+            if (all)
+            {
+                addresses = addressesList.ToList();
+            }
+            else
+            {
+                addresses = addressesList
+                   .Skip((page - 1) * pageSize)
+                   .Take(pageSize)
+                   .AsNoTracking()
+                   .ToList();
+            }
 
             var addressViewModels = Mapper.Map<List<Address>, List<AddressViewModel>>(addresses);
 
@@ -61,6 +69,27 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                 Page = page
             };
             return viewModel;
+        }
+
+        // GET: api/admin/addresses/coordinates
+        [HttpGet]
+        [Route("coordinates")]
+        public IHttpActionResult GetCoordinates()
+        {
+            var coordinates = UnitOfWork.Repository<Address>()
+                .GetQ(x => x.DeletedAt == null,
+                    orderBy: o => o.OrderByDescending(c => c.CreatedAt),
+                    includeProperties: @"Region.LocationLevel, Region.LocationType, District.LocationLevel, District.LocationType, 
+                            City.LocationLevel, City.LocationType, Street.LocationLevel, Street.LocationType,
+                            Building.LocationLevel, Building.LocationType, Microdistrict")
+                .Select(x => new
+                {
+                    Latitude = x.Latitude,
+                    Longitude = x.Longitude
+                })
+                .ToList();
+
+            return Ok(coordinates);
         }
 
         // GET: api/admin/addresses/0 (new) or api/admin/addresses/5 (edit)

@@ -31,6 +31,7 @@
 
                 // Рекламные полотна (адреса)
                 register('addresses', { require: rootPath + 'addresses/index' });
+                register('addresses-show', { require: rootPath + 'addresses/show' });
                 register('address-create', { require: rootPath + 'addresses/create' });
                 register('address-edit', { require: rootPath + 'addresses/edit' });
 

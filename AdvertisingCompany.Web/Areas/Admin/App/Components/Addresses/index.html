@@ -13,7 +13,8 @@
                 <div class="row mrgbtm12">
                     <div class="col-md-6 hidden-xs">
                         <div class="table-actions dataTables_length" id="datatable-table_length">
-                            <a class="btn btn-default action" data-bind="attr : { href : '/admin/#addresses/create' }, style: { marginRight : selectedAddress() != null ? '1em' : '0' }, tooltip: { title: 'Добавить адрес', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-plus"></i></a>
+                            <a class="btn btn-default action" data-bind="attr : { href : '/admin/#addresses/create' }, tooltip: { title: 'Добавить адрес', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-plus"></i></a>
+                            <a class="btn btn-default action" data-bind="attr : { href : '/admin/#addresses/show' }, style: { marginRight : selectedAddress() != null ? '1em' : '0' }, tooltip: { title: 'Показать все на карте', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-map-marker"></i></a>
 
                             <div class="btn-group" role="group" style="margin-right: 1em;" data-bind="if: selectedAddress() != null" aria-label="...">
                                 <a class="btn btn-default action" data-bind="attr : { href : '/admin/#addresses/' + selectedAddress().addressId() + '/edit' }, tooltip: { title: 'Перейти к редактированию адреса', placement: 'bottom', trigger: 'hover' }"><i class="fa fa-pencil"></i></a>

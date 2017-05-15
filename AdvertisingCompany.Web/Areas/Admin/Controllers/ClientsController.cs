@@ -195,7 +195,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     {
                         UserManager.SendEmail(user.Id, "Регистрация",
                           String.Format(@"Ваши учётные данные для доступа к просмотру фотоотчётов: <br/><br/>Логин: {0} <br/>Пароль: {1} <br/>
-                                Просмотреть отчёты можно по адресу <a href='http://alliance-ip.tk'>alliance-ip.tk</a>", viewModel.UserName, viewModel.Password));
+                                Просмотреть отчёты можно по адресу <a href='http://inform93.ru'>inform93.ru</a>", viewModel.UserName, viewModel.Password));
                     }                 
                 }
                 else
@@ -295,7 +295,7 @@ namespace AdvertisingCompany.Web.Areas.Admin.Controllers
                     {
                         UserManager.SendEmail(account.Id, "Изменение пароля",
                             String.Format(@"Ваш пароль учётной записи был изменён: <br/><br/>Новый пароль: {0}<br/>
-                                Просмотреть отчёты можно по адресу <a href='http://alliance-ip.tk'>alliance-ip.tk</a>", viewModel.Password));
+                                Просмотреть отчёты можно по адресу <a href='http://inform93.ru'>inform93.ru</a>", viewModel.Password));
 
                         Logger.Info("Изменение пароля клиента. ClientId={0}, ApplicationuserId = {1}", viewModel.ClientId, account.Id);
 

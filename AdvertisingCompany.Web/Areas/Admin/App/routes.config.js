@@ -57,6 +57,10 @@
                         app.componentName('address-create');
                     });
 
+                    this.get('#addresses/show', function () {
+                        app.componentName('addresses-show');
+                    });
+
                     this.get('#addresses/:id/edit', function () {
                         current.params['addressId'] = this.params['id'];
                         app.componentName('address-edit');
