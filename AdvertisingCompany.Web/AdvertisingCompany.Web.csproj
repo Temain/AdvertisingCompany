@@ -1139,6 +1139,7 @@
     <Content Include="Scripts\underscore\underscore.min.js" />
     <Content Include="Scripts\widgster\widgster.js" />
     <Content Include="Scripts\ymaps\api-maps.yandex.ru.js" />
+    <Content Include="Scripts\ymaps\api-maps.yandex2.ru.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
